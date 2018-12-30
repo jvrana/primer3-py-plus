@@ -4,7 +4,7 @@ import webbrowser
 from collections import OrderedDict
 from collections import namedtuple
 from copy import deepcopy
-
+from collections import Counter
 import pandas as pd
 import primer3
 
@@ -249,7 +249,7 @@ def combine_and_sort_results(results):
     return sorted(all_results, key=lambda x: x['PAIR']['PENALTY'])
 
 
-def dispatch_iterable(params):
+def dispatch_iterable(params, max_results=10):
     """
     Dispatches the function to combine and sorts results if an argument is an iterable indicated in `params`.
 
@@ -273,6 +273,8 @@ def dispatch_iterable(params):
                 iterable_args = itertools.product(*new_args)
                 results = []
                 for _args in iterable_args:
+                    if max_results > 0 and len(results) > max_results:
+                        break
                     results.append(f(*_args, **kwargs)[0])
                 return combine_and_sort_results(results)
             else:
@@ -861,7 +863,6 @@ class Primer3Design(object):
     ])
     def check_pcr_primers(self, template, p1, p2, include_region=(), size_range=(), opt_size=None, target=None,
                               addnl_params={}, max_iterations=None, gradient=None):
-
         d = self.copy() \
             .set_template(template) \
             .set_included(include_region) \
@@ -874,13 +875,9 @@ class Primer3Design(object):
                 d.set_target_from_template(template, target)
             else:
                 d.set_target(target)
-
-        return d.set(addnl_params) \
         return d.set(addnl_params) \
             .set_task('generic') \
             .run(max_iterations=max_iterations, gradient=gradient)
-
-
 
     def pick_sequencing_primers(self, template, target, left_only=False, right_only=False,
                                 addnl_params={}, max_iterations=None, gradient=None):
@@ -940,12 +937,36 @@ class Primer3Design(object):
         d.set(addnl_params)
         return d.run()
 
-    def combine_results(self, results):
-        all_results = []
-        i = 0
-        for result in results:
-            all_results += list(result.values())
-        return sorted(all_results, key=lambda x: x['PAIR']['PENALTY'])
+    @staticmethod
+    def _summarize_reasons(reasons):
+        reason_dict = {}
+        for reason in reasons:
+            for k, v in reason.items():
+                if 'EXPLAIN' in k:
+                    for m in re.finditer('\s*([\w\s\-]+)\s+(\d+)', v):
+                        reason_token = m.group(1)
+                        num = int(m.group(2))
+                        reason_dict.setdefault(k, Counter())[reason_token] += num
+        return {k: dict(v) for k, v in reason_dict.items()}
+
+    @classmethod
+    def combine_results(cls, results):
+        """
+        Combine and sort results. Combine all explainations
+
+        :param results:
+        :type results:
+        :return:
+        :rtype:
+        """
+        all_pairs = []
+        all_reasons = []
+        for r in results:
+            all_pairs += list(r[0].values())
+            all_reasons.append(r[1])
+        sorted_pairs = sorted(all_pairs, key=lambda x: x['PAIR']['PENALTY'])
+        explain = cls._summarize_reasons(all_reasons)
+        return sorted_pairs, explain
 
     def _get_index_of_match(self, template, sequence):
         matches = []

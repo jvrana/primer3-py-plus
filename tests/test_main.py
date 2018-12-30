@@ -131,7 +131,7 @@ def test_check_many_primers(gfp):
     ]
 
     rprimers = [
-        'a' * 60 + 'gtagtgacaagtgttggccatgga'
+        'gtagtgacaagtgttggccatgga'
     ]
     results = designer.check_primers(lprimers, rprimers)
     print(results)
@@ -148,7 +148,7 @@ def test_check_pcr_primers(gfp):
 
     rprimers = [
         'tcaacaagaattgggac',
-        'gtagtgacaagtgttggccatgga'
+        'gtagtgacaagtgttggccatgga',
     ]
     results = designer.check_pcr_primers(gfp, lprimers, rprimers, size_range=(40, 400))
     print(results)
