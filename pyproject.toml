@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "primer3plus"
+version = "0.1.1"
+description = ""
+authors = ["Justin Vrana <justin.vrana@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+primer3-py = "^0.6.0"
+pandas = "^0.25.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.0"
+black = {version = "^18.3-alpha.0", allows-prereleases = true}
+pre-commit = "^1.18"
+keats = "^0.2.26"
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
