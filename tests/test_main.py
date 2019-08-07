@@ -1,11 +1,6 @@
 import pytest
-
+import json
 from primer3plus.p3p import Primer3Params, Primer3Design
-
-
-@pytest.fixture(scope='session')
-def gfp():
-    return 'atggccgatgatgaagttgccgccctcgctgcagccccggtagaaaaaatgagtaaaggagaagaacttttcactggagttgtcccaattcttgttgaattagatggtgatgttaatgggcacaaattttctgtcagtggagagggtgaaggtgatgcaacatacggaaaacttacccttaaatttatttgcactactggaaaactacctgttccatggccaacacttgtcactactttctgttatggtgttcaatgcttttcaagatacccagatcatatgaaacggcatgactttttcaagagtgccatgcccgaaggttatgtacaggaaagaactatatttttcaaagatgacgggaactacaagacacgtgctgaagtcaagtttgaaggtgatacccttgttaatagaatcgagttaaaaggtattgattttaaagaagatggaaacattcttggacacaaattggaatacaactataactcacacaatgtatacatcatggcagacaaacaaaagaatggaatcaaagttaacttcaaaattagacacaacattgaagatggaagcgttcaactagcagaccattatcaacaaaatactccaattggcgatggccctgtccttttaccagacaaccattacctgtccacacaatctgccctttcgaaagatcccaacgaaaagagagaccacatggtccttcttgagtttgtaacagctgctgggattacacatggcatggatgaactatacaaatag'
 
 
 def test_primer3_params_init():
@@ -16,19 +11,18 @@ def test_primer3_params_init():
 
 def test_set():
     params = Primer3Params()
-    params['SEQUENCE_TEMPLATE'] = 'agtacaga'
-    assert params['SEQUENCE_TEMPLATE'] == 'agtacaga'
+    params["SEQUENCE_TEMPLATE"] = "agtacaga"
+    assert params["SEQUENCE_TEMPLATE"] == "agtacaga"
 
 
 def test_update_values():
     params = Primer3Params()
-    params.update({
-        'SEQUENCE_TEMPLATE': 'gggaggagag',
-        'SEQUENCE_INCLUDED_REGION': [500, 700]
-    })
+    params.update(
+        {"SEQUENCE_TEMPLATE": "gggaggagag", "SEQUENCE_INCLUDED_REGION": [500, 700]}
+    )
 
-    assert params['SEQUENCE_TEMPLATE'] == 'gggaggagag'
-    assert params['SEQUENCE_INCLUDED_REGION'] == [500, 700]
+    assert params["SEQUENCE_TEMPLATE"] == "gggaggagag"
+    assert params["SEQUENCE_INCLUDED_REGION"] == [500, 700]
 
 
 def test_df():
@@ -36,23 +30,22 @@ def test_df():
     params.df()
 
 
-@pytest.mark.parametrize('parse', [True, False])
+@pytest.mark.parametrize("parse", [True, False])
 def test_basic_design(parse, gfp):
     designer = Primer3Design()
-    print(designer.params['PRIMER_OPT_SIZE'])
-    results = designer.design({
-        'SEQUENCE_TEMPLATE': gfp,
-        'SEQUENCE_INCLUDED_REGION': [100, 300]
-    }, {
-        'PRIMER_PICK_ANYWAY': False
-    }, parse=parse)
+    print(designer.params["PRIMER_OPT_SIZE"])
+    results = designer.design(
+        {"SEQUENCE_TEMPLATE": gfp, "SEQUENCE_INCLUDED_REGION": [100, 300]},
+        {"PRIMER_PICK_ANYWAY": False},
+        parse=parse,
+    )
     print(results)
 
 
 def test_check_primers():
     designer = Primer3Design()
-    p1 = 'atgatgaagttgccgccct'
-    p2 = 'tcccaattcttgttgaattagatggtgat'
+    p1 = "atgatgaagttgccgccct"
+    p2 = "tcccaattcttgttgaattagatggtgat"
     pairs, other = designer.check_primers(p1, p2)
     print(pairs)
 
@@ -67,7 +60,9 @@ def test_pick_cloning_primers(gfp):
 
 def test_pick_pcr_primers(gfp):
     designer = Primer3Design()
-    pairs, other = designer.pick_pcr_primers(gfp, (300, 400), (200, 1000), max_iterations=15)
+    pairs, other = designer.pick_pcr_primers(
+        gfp, (300, 400), (200, 1000), max_iterations=15
+    )
     for p in pairs:
         print(pairs[p])
     assert pairs
@@ -75,7 +70,7 @@ def test_pick_pcr_primers(gfp):
 
 def test_pick_right_pcr_primer(gfp):
     designer = Primer3Design()
-    pairs, other = designer.pick_sequencing_primers(gfp, 'actggagttgtcccaattc')
+    pairs, other = designer.pick_sequencing_primers(gfp, "actggagttgtcccaattc")
     for p in pairs:
         print(pairs[p])
     assert pairs
@@ -83,39 +78,43 @@ def test_pick_right_pcr_primer(gfp):
 
 def test_pick_left_pcr_primer(gfp):
     designer = Primer3Design()
-    right_primer = 'tcccaattcttgttgaattagatggtgat'
-    pairs, other = designer.pick_left_pcr_primer(gfp, right_primer, [], (100, 1000), max_iterations=15)
+    right_primer = "tcccaattcttgttgaattagatggtgat"
+    pairs, other = designer.pick_left_pcr_primer(
+        gfp, right_primer, [], (100, 1000), max_iterations=15
+    )
     for p in pairs:
         print(pairs[p])
 
 
 def test_pick_sequencing_primer(gfp):
     designer = Primer3Design()
-    pairs, other = designer.pick_sequencing_primers(gfp, 'gagttgtcccaattcttgttgaattagat')
+    pairs, other = designer.pick_sequencing_primers(
+        gfp, "gagttgtcccaattcttgttgaattagat"
+    )
     print(pairs)
 
 
 def test_pick_left_sequencing_primer(gfp):
     designer = Primer3Design()
-    pairs, other = designer.pick_sequencing_primers(gfp, 'gatgaagttgccgccctcg', left_only=True)
+    pairs, other = designer.pick_sequencing_primers(
+        gfp, "gatgaagttgccgccctcg", left_only=True
+    )
     print(other)
     print(pairs)
 
 
 def test_pick_right_sequencing_primer(gfp):
     designer = Primer3Design()
-    pairs, other = designer.pick_sequencing_primers(gfp, 'gagttgtcccaattcttgttgaattagat', right_only=True)
+    pairs, other = designer.pick_sequencing_primers(
+        gfp, "gagttgtcccaattcttgttgaattagat", right_only=True
+    )
     print(pairs)
 
 
 def test_pick_right_pcr_primers(gfp):
     designer = Primer3Design()
 
-    primers = [
-        gfp[20:40],
-        gfp[60:85],
-        gfp[120:145]
-    ]
+    primers = [gfp[20:40], gfp[60:85], gfp[120:145]]
 
     pairs = designer.pick_right_pcr_primer(gfp, primers, size_range=(200, 300))
     print(pairs)
@@ -124,15 +123,9 @@ def test_pick_right_pcr_primers(gfp):
 def test_check_many_primers(gfp):
     designer = Primer3Design()
 
-    lprimers = [
-        gfp[20:40],
-        gfp[60:85],
-        gfp[120:145]
-    ]
+    lprimers = [gfp[20:40], gfp[60:85], gfp[120:145]]
 
-    rprimers = [
-        'gtagtgacaagtgttggccatgga'
-    ]
+    rprimers = ["gtagtgacaagtgttggccatgga"]
     results = designer.check_primers(lprimers, rprimers)
     print(results)
 
@@ -140,17 +133,8 @@ def test_check_many_primers(gfp):
 def test_check_pcr_primers(gfp):
     designer = Primer3Design()
 
-    lprimers = [
-        gfp[20:40],
-        gfp[60:85],
-        gfp[120:145]
-    ]
+    lprimers = [gfp[20:40], gfp[60:85], gfp[120:145]]
 
-    rprimers = [
-        'tcaacaagaattgggac',
-        'gtagtgacaagtgttggccatgga',
-    ]
+    rprimers = ["tcaacaagaattgggac", "gtagtgacaagtgttggccatgga"]
     results = designer.check_pcr_primers(gfp, lprimers, rprimers, size_range=(40, 400))
-    print(results)
-
-
+    print(json.dumps(results, indent=2))

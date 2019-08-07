@@ -7,39 +7,60 @@ from copy import deepcopy
 from collections import Counter
 import pandas as pd
 import primer3
+from typing import Dict, Any
+import itertools
+from functools import wraps
+from primer3plus.log import logger
 
 here = os.path.dirname(os.path.abspath(__file__))
 
 
 class Primer3Params(object):
-    POST_LOAD_DEFAULTS = {
-        'PRIMER_EXPLAIN_FLAG': 1
-    }
-    default_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'primer3_params_raw.txt')
+    """
+    Reads the Primer3 documentation and creates the appropriate parameters.
+    """
+
+    POST_LOAD_DEFAULTS = {"PRIMER_EXPLAIN_FLAG": 1}
+    default_file_path = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), "primer3_params_raw.txt"
+    )
 
     def __init__(self, params=None):
         if params is None:
             params = {}
         self.defaults = self._open_primer3_params()
-        self.SEQUENCE = self._named_tuple_from_dict('sequence', self.defaults['sequence'])
-        self.GLOBAL = self._named_tuple_from_dict('global', self.defaults['global'])
-        self.PROGRAM = self._named_tuple_from_dict('program', self.defaults['program'])
-        self.OTHER = self._named_tuple_from_dict('other', self.defaults['other'])
-        self._all = ['SEQUENCE', 'GLOBAL', 'PROGRAM', 'OTHER']
+        self.SEQUENCE = self._named_tuple_from_dict(
+            "sequence", self.defaults["sequence"]
+        )
+        self.GLOBAL = self._named_tuple_from_dict("global", self.defaults["global"])
+        self.PROGRAM = self._named_tuple_from_dict("program", self.defaults["program"])
+        self.OTHER = self._named_tuple_from_dict("other", self.defaults["other"])
+        self._all = ["SEQUENCE", "GLOBAL", "PROGRAM", "OTHER"]
         self.update(self.POST_LOAD_DEFAULTS)
         self.update(params)
 
     def reset(self):
+        """
+        Reset all parameters.
+
+        :return: None
+        """
         for key in self._all:
             setattr(self, key.upper(), self._named_tuple_from_dict(key.lower()))
 
-    def update(self, value_dict):
+    def update(self, value_dict: Dict[str, Any]):
+        """
+        Update parameters.
+
+        :param value_dict:
+        :return:
+        """
         for key in self._all:
             param_tuple = getattr(self, key)
             param_dict = param_tuple._asdict()
             for k, v in value_dict.items():
                 if k in param_dict:
-                    param_dict[k]['value'] = v
+                    param_dict[k]["value"] = v
             data = self.defaults[key.lower()]
             data.update(param_dict)
             new_tuple = self._named_tuple_from_dict(key, data)
@@ -51,7 +72,7 @@ class Primer3Params(object):
     def __getitem__(self, key):
         for param_type, param_dict in self.asdict().items():
             if key in param_dict:
-                return param_dict[key]['value']
+                return param_dict[key]["value"]
 
     def __contains__(self, key):
         for param_type, param_dict in self.asdict().items():
@@ -63,13 +84,13 @@ class Primer3Params(object):
         return getattr(self, key)
 
     def value(self, key):
-        return self[key]['value']
+        return self[key]["value"]
 
     def description(self, key):
-        return self[key]['description']
+        return self[key]["description"]
 
     def default(self, key):
-        return self[key]['default']
+        return self[key]["default"]
 
     def valuedict(self, clean=False):
         data = self.asdict(values_only=True)
@@ -82,7 +103,7 @@ class Primer3Params(object):
         for ptype in self._all:
             paramdict = self._gettype(ptype)._asdict()
             if values_only:
-                d[ptype] = {k: v['value'] for k, v in paramdict.items()}
+                d[ptype] = {k: v["value"] for k, v in paramdict.items()}
             else:
                 d[ptype] = paramdict
         return d
@@ -104,46 +125,46 @@ class Primer3Params(object):
         """
 
         params = {}
-        pattern = '(?P<name>\w+)\s+\((?P<type>[\w\s]+)\;\s+default\s+(?P<default>.+)\)\n(?P<description>.+)\n\n'
+        pattern = "(?P<name>\w+)\s+\((?P<type>[\w\s]+)\;\s+default\s+(?P<default>.+)\)\n(?P<description>.+)\n\n"
 
         type_dict = {
-            'size range list': list,
-            'string': str,
-            'interval list': list,
-            'nucleotide sequence': str,
-            'int': int,
-            'space separated integers': list,
-            'float': float,
-            'ambiguous nucleotide sequence': str,
-            'boolean': bool
+            "size range list": list,
+            "string": str,
+            "interval list": list,
+            "nucleotide sequence": str,
+            "int": int,
+            "space separated integers": list,
+            "float": float,
+            "ambiguous nucleotide sequence": str,
+            "boolean": bool,
         }
 
         for m in re.finditer(pattern, docstr):
             data = m.groupdict()
-            data['type_raw'] = data['type']
-            data['type'] = type_dict[data['type']]
+            data["type_raw"] = data["type"]
+            data["type"] = type_dict[data["type"]]
 
-            default = data['default']
-            data['default_raw'] = default
-            if data['type'] is str:
-                if default == 'empty':
-                    default = ''
+            default = data["default"]
+            data["default_raw"] = default
+            if data["type"] is str:
+                if default == "empty":
+                    default = ""
                 default = str(default)
-            elif data['type'] is list:
-                if default == 'empty':
+            elif data["type"] is list:
+                if default == "empty":
                     default = []
-                elif re.match('(\d+)-(\d+)', default):
-                    list_match = re.match('(\d+)-(\d+)', default)
+                elif re.match("(\d+)-(\d+)", default):
+                    list_match = re.match("(\d+)-(\d+)", default)
                     default = [int(list_match.group(1)), int(list_match.group(2))]
                 default = list(default)
-            elif data['type'] is bool:
+            elif data["type"] is bool:
                 default = bool(int(default))
             else:
-                default = data['type'](default)
+                default = data["type"](default)
 
-            data['default'] = default
-            data['value'] = default
-            name = data['name']
+            data["default"] = default
+            data["value"] = default
+            name = data["name"]
             params[name] = data
 
         return params
@@ -152,7 +173,7 @@ class Primer3Params(object):
     def _open_primer3_params(cls, filepath=None):
         if filepath is None:
             filepath = cls.default_file_path
-        with open(filepath, 'r') as f:
+        with open(filepath, "r") as f:
             params_txt = f.read()
             params = cls._parse_primer3_docs(params_txt)
         sequence_args = {}
@@ -161,20 +182,20 @@ class Primer3Params(object):
         other_args = {}
 
         for k, v in params.items():
-            if k.startswith('SEQUENCE'):
+            if k.startswith("SEQUENCE"):
                 sequence_args[k] = v
-            elif k.startswith('PRIMER'):
+            elif k.startswith("PRIMER"):
                 global_args[k] = v
-            elif k.startswith('P3'):
+            elif k.startswith("P3"):
                 program_args[k] = v
             else:
                 raise Exception("Parameter {} not recognized".format(k))
 
         return {
-            'sequence': sequence_args,
-            'global': global_args,
-            'program': program_args,
-            'other': other_args
+            "sequence": sequence_args,
+            "global": global_args,
+            "program": program_args,
+            "other": other_args,
         }
 
     @staticmethod
@@ -185,18 +206,16 @@ class Primer3Params(object):
         :rtype:
         """
         cleaned = dict(params)
-        ignore = [
-            'SEQUENCE_ID',
-        ]
+        ignore = ["SEQUENCE_ID"]
         for k in params:
             if k not in ignore:
                 v = params[k]
-                if hasattr(v, '__len__') and len(v) == 0:
+                if hasattr(v, "__len__") and len(v) == 0:
                     cleaned.pop(k)
         return cleaned
 
     @staticmethod
-    def param_values(param_dict, key='value'):
+    def param_values(param_dict, key="value"):
         return {k: v[key] for k, v in param_dict.items()}
 
     def df(self) -> pd.DataFrame:
@@ -204,13 +223,13 @@ class Primer3Params(object):
         for param_type, params in self.asdict().items():
             for name, param in params.items():
                 row = OrderedDict()
-                row['name'] = name
-                row['param_type'] = param_type
-                row['value'] = param['value']
-                row['default'] = param['default']
-                row['type'] = str(param['type'])
-                row['type_raw'] = param['type_raw']
-                row['description'] = param['description']
+                row["name"] = name
+                row["param_type"] = param_type
+                row["value"] = param["value"]
+                row["default"] = param["default"]
+                row["type"] = str(param["type"])
+                row["type_raw"] = param["type_raw"]
+                row["description"] = param["description"]
                 rows.append(row)
         return pd.DataFrame(rows, columns=rows[0].keys())
 
@@ -236,9 +255,6 @@ def dict_diff(d1, d2):
 
 PARAMS = Primer3Params()
 
-import itertools
-from functools import wraps
-
 
 def combine_and_sort_results(results):
     """Combine and sort results"""
@@ -246,7 +262,7 @@ def combine_and_sort_results(results):
     i = 0
     for result in results:
         all_results += list(result.values())
-    return sorted(all_results, key=lambda x: x['PAIR']['PENALTY'])
+    return sorted(all_results, key=lambda x: x["PAIR"]["PENALTY"])
 
 
 def dispatch_iterable(params, max_results=10):
@@ -255,6 +271,7 @@ def dispatch_iterable(params, max_results=10):
 
     e.g. `params = [(1, (type, list)]` will dispatch the function if the first argument is a list or tuple.
     """
+
     def wrapped(f):
         @wraps(f)
         def _wrapped(*args, **kwargs):
@@ -279,23 +296,26 @@ def dispatch_iterable(params, max_results=10):
                 return combine_and_sort_results(results)
             else:
                 return f(*args, **kwargs)
+
         return _wrapped
+
     return wrapped
 
 
 class Primer3Design(object):
+    # {param: (delta, min, max)
     DEFAULT_GRADIENT = dict(
-        PRIMER_MAX_SIZE=(1, PARAMS['PRIMER_MAX_SIZE'], 36),
-        PRIMER_MIN_SIZE=(-1, 16, PARAMS['PRIMER_MAX_SIZE']),
-        PRIMER_MAX_TM=(1, PARAMS['PRIMER_MAX_SIZE'], 80),
-        PRIMER_MIN_TM=(-1, 48, PARAMS['PRIMER_MIN_TM']),
-        PRIMER_MAX_HAIRPIN_TH=(1, PARAMS['PRIMER_MAX_HAIRPIN_TH'], 60)
+        PRIMER_MAX_SIZE=(1, PARAMS["PRIMER_MAX_SIZE"], 36),
+        PRIMER_MIN_SIZE=(-1, 16, PARAMS["PRIMER_MAX_SIZE"]),
+        PRIMER_MAX_TM=(1, PARAMS["PRIMER_MAX_SIZE"], 80),
+        PRIMER_MIN_TM=(-1, 48, PARAMS["PRIMER_MIN_TM"]),
+        PRIMER_MAX_HAIRPIN_TH=(1, PARAMS["PRIMER_MAX_HAIRPIN_TH"], 60),
     )
 
     def __init__(self):
         self.params = Primer3Params()
         self.iterations = 5
-
+        self.logger = logger(self)
 
     @staticmethod
     def _parse_primer3_results(results_dict):
@@ -307,34 +327,34 @@ class Primer3Design(object):
         :return:
         :rtype:
         """
-        num_pairs = results_dict['PRIMER_PAIR_NUM_RETURNED']
-        num_left = results_dict['PRIMER_LEFT_NUM_RETURNED']
-        num_right = results_dict['PRIMER_RIGHT_NUM_RETURNED']
+        num_pairs = results_dict["PRIMER_PAIR_NUM_RETURNED"]
+        num_left = results_dict["PRIMER_LEFT_NUM_RETURNED"]
+        num_right = results_dict["PRIMER_RIGHT_NUM_RETURNED"]
 
         pairs = {}
         other = {}
         for i in range(max([num_pairs, num_left, num_right])):
             pairs.setdefault(i, {})
-        key_pattern = 'PRIMER_(?P<label>[a-zA-Z]+)_(?P<pair_id>\d+)_(?P<key>.+)'
-        location_pattern = 'PRIMER_(?P<label>[a-zA-Z]+)_(?P<pair_id>\d+)\s*$'
+        key_pattern = "PRIMER_(?P<label>[a-zA-Z]+)_(?P<pair_id>\d+)_(?P<key>.+)"
+        location_pattern = "PRIMER_(?P<label>[a-zA-Z]+)_(?P<pair_id>\d+)\s*$"
         for k in results_dict:
             m = re.match(key_pattern, k)
             loc_m = re.match(location_pattern, k)
             if m:
                 groupdict = m.groupdict()
-                pair_id = int(groupdict['pair_id'])
-                label = groupdict['label']
-                key = groupdict['key']
+                pair_id = int(groupdict["pair_id"])
+                label = groupdict["label"]
+                key = groupdict["key"]
                 pairdict = pairs[pair_id]
                 pairdict.setdefault(label, {})
                 pairdict[label][key] = results_dict[k]
             elif loc_m:
                 groupdict = loc_m.groupdict()
-                pair_id = int(groupdict['pair_id'])
-                label = groupdict['label']
+                pair_id = int(groupdict["pair_id"])
+                label = groupdict["label"]
                 pairdict = pairs[pair_id]
                 pairdict.setdefault(label, {})
-                pairdict[label]['location'] = results_dict[k]
+                pairdict[label]["location"] = results_dict[k]
             else:
                 other[k] = results_dict[k]
         return pairs, other
@@ -342,24 +362,30 @@ class Primer3Design(object):
     @classmethod
     def _design_from_params(cls, params: Primer3Params, parse=True) -> list:
         param_dict = params.valuedict(clean=True)
-        results = primer3.bindings.designPrimers(param_dict['SEQUENCE'], param_dict['GLOBAL'])
+        results = primer3.bindings.designPrimers(
+            param_dict["SEQUENCE"], param_dict["GLOBAL"]
+        )
         if parse:
             results = cls._parse_primer3_results(results)
         return results
 
-    @classmethod
-    def design_from_params(cls, params: Primer3Params, parse=True, max_iterations=None, gradient=None) -> list:
+    def design_from_params(
+        self, params: Primer3Params, parse=True, max_iterations=None, gradient=None
+    ) -> list:
         if gradient is None:
             gradient = {}
-        gradient_dict = cls.DEFAULT_GRADIENT
+        gradient_dict = self.DEFAULT_GRADIENT
         gradient_dict.update(gradient)
 
-        for i in range(max_iterations):
-            pairs, other = cls._design_from_params(params, parse)
+        for i in self.logger.tqdm(
+            range(max_iterations), "INFO", desc="Design iteration"
+        ):
+            pairs, other = self._design_from_params(params, parse)
             if pairs:
                 return pairs, other
             else:
-                cls.apply_gradient(params, gradient_dict=gradient_dict)
+                self.apply_gradient(params, gradient_dict=gradient_dict)
+                self.logger.info("Relaxed parameters")
         return pairs, other
 
     def run(self, parse=True, max_iterations=None, gradient=None) -> list:
@@ -367,7 +393,13 @@ class Primer3Design(object):
             max_iterations = self.iterations
         return self.design_from_params(self.params, parse, max_iterations, gradient)
 
-    def design(self, new_seq_args: dict, new_global_args: dict, parse=True, return_with_params=False) -> list:
+    def design(
+        self,
+        new_seq_args: dict,
+        new_global_args: dict,
+        parse=True,
+        return_with_params=False,
+    ) -> list:
         params = self.params.copy()
         params.update(new_seq_args)
         params.update(new_global_args)
@@ -376,17 +408,16 @@ class Primer3Design(object):
             return results, params
         return results
 
-    @classmethod
     def apply_gradient(cls, params, gradient_dict=None):
         if gradient_dict is None:
             gradient_dict = cls.DEFAULT_GRADIENT
 
         update = {}
-        for k, v in gradient_dict.items():
-            x = params[k] + v[0]
-            mn = v[1]
-            mx = v[2]
-            update[k] = max(min(x, mx), mn)
+        for param_key, gradient_tuple in gradient_dict.items():
+            delta, mn, mx = gradient_tuple
+            val = params[param_key] + delta
+            # perform clip
+            update[param_key] = max(min(val, mx), mn)
         params.update(update)
         return params
 
@@ -438,9 +469,7 @@ class Primer3Design(object):
         :return:
         :rtype:
         """
-        self.params.update({
-            'SEQUENCE_TEMPLATE': template
-        })
+        self.params.update({"SEQUENCE_TEMPLATE": template})
         return self
 
     def set_task(self, task: str):
@@ -554,13 +583,11 @@ class Primer3Design(object):
         :return:
         :rtype:
         """
-        self.params.update({
-            'PRIMER_TASK': task
-        })
+        self.params.update({"PRIMER_TASK": task})
         return self
 
-    def cloning(self):
-        return self.set_task('pick_cloning_primers')
+    def set_cloning_task(self):
+        return self.set_task("pick_cloning_primers")
 
     # TODO: set_iterations, set_num_return, set_force_return, set_gradient
 
@@ -569,17 +596,14 @@ class Primer3Design(object):
         return self
 
     def set_num_return(self, n):
-        return self.set({
-            'PRIMER_NUM_RETURN': n
-        })
+        return self.set({"PRIMER_NUM_RETURN": n})
 
     def set_size(self, interval: tuple, opt=None):
         if opt is None:
             opt = int(sum(interval) / 2.0)
-        return self.set({
-            'PRIMER_PRODUCT_SIZE_RANGE': interval,
-            'PRIMER_PRODUCT_OPT_SIZE': opt
-        })
+        return self.set(
+            {"PRIMER_PRODUCT_SIZE_RANGE": interval, "PRIMER_PRODUCT_OPT_SIZE": opt}
+        )
 
     def set_left(self, primer: str):
         """
@@ -591,22 +615,13 @@ class Primer3Design(object):
         :return:
         :rtype:
         """
-        return self.set({
-            'SEQUENCE_PRIMER': primer,
-            'PRIMER_PICK_RIGHT_PRIMER': 1,
-        })
+        return self.set({"SEQUENCE_PRIMER": primer, "PRIMER_PICK_RIGHT_PRIMER": 1})
 
     def set_left_only(self):
-        return self.set({
-            'PRIMER_PICK_LEFT_PRIMER': 1,
-            'PRIMER_PICK_RIGHT_PRIMER': 0,
-        })
+        return self.set({"PRIMER_PICK_LEFT_PRIMER": 1, "PRIMER_PICK_RIGHT_PRIMER": 0})
 
     def set_right_only(self):
-        return self.set({
-            'PRIMER_PICK_LEFT_PRIMER': 0,
-            'PRIMER_PICK_RIGHT_PRIMER': 1,
-        })
+        return self.set({"PRIMER_PICK_LEFT_PRIMER": 0, "PRIMER_PICK_RIGHT_PRIMER": 1})
 
     def set_right(self, primer: str):
         """
@@ -618,10 +633,9 @@ class Primer3Design(object):
         :return:
         :rtype:
         """
-        return self.set({
-            'SEQUENCE_PRIMER_REVCOMP': primer,
-            'PRIMER_PICK_LEFT_PRIMER': 1,
-        })
+        return self.set(
+            {"SEQUENCE_PRIMER_REVCOMP": primer, "PRIMER_PICK_LEFT_PRIMER": 1}
+        )
 
     def set_internal(self, primer: str):
         """
@@ -636,15 +650,9 @@ class Primer3Design(object):
 
     def set_primers(self, p1: str, p2: str):
         if p1:
-            self.set({
-                'SEQUENCE_PRIMER': p1,
-                'PRIMER_PICK_LEFT_PRIMER': 1,
-            })
+            self.set({"SEQUENCE_PRIMER": p1, "PRIMER_PICK_LEFT_PRIMER": 1})
         if p2:
-            self.set({
-                'SEQUENCE_PRIMER_REVCOMP': p2,
-                'PRIMER_PICK_RIGHT_PRIMER': 1,
-            })
+            self.set({"SEQUENCE_PRIMER_REVCOMP": p2, "PRIMER_PICK_RIGHT_PRIMER": 1})
         return self
 
     def set_included(self, interval: tuple):
@@ -661,9 +669,7 @@ class Primer3Design(object):
         :return:
         :rtype:
         """
-        return self.set({
-            'SEQUENCE_INCLUDED_REGION': interval
-        })
+        return self.set({"SEQUENCE_INCLUDED_REGION": interval})
 
     def set_target(self, interval: tuple):
         """
@@ -682,9 +688,7 @@ class Primer3Design(object):
         :return:
         :rtype:
         """
-        return self.set({
-            'SEQUENCE_TARGET': interval
-        })
+        return self.set({"SEQUENCE_TARGET": interval})
 
     def set_target_from_template(self, template, target):
         if isinstance(target, str):
@@ -712,9 +716,7 @@ class Primer3Design(object):
         :return:
         :rtype:
         """
-        return self.set({
-            'SEQUENCE_EXCLUDED_REGION': interval
-        })
+        return self.set({"SEQUENCE_EXCLUDED_REGION": interval})
 
     def set_pick_anyway(self, b=1):
         """
@@ -726,11 +728,11 @@ class Primer3Design(object):
         :return:
         :rtype:
         """
-        return self.set({
-            'PRIMER_PICK_ANYWAY': b
-        })
+        return self.set({"PRIMER_PICK_ANYWAY": b})
 
-    def pick_cloning_primers(self, seq, addnl_params={}, max_iterations=None, gradient=None):
+    def pick_cloning_primers(
+        self, seq, addnl_params={}, max_iterations=None, gradient=None
+    ):
         """
         Design a left primer given the template and right primer sequences.
 
@@ -745,18 +747,28 @@ class Primer3Design(object):
         :return: tuple of designed primers (dict) and other parameters (dict)
         :rtype: tuple
         """
-        return self.copy() \
-            .set_template(seq) \
-            .set_included([0, len(seq)]) \
-            .set_size([len(seq), len(seq)]) \
-            .set(addnl_params) \
-            .set_task('pick_cloning_primers') \
+        return (
+            self.copy()
+            .set_template(seq)
+            .set_included([0, len(seq)])
+            .set_size([len(seq), len(seq)])
+            .set(addnl_params)
+            .set_task("pick_cloning_primers")
             .run(max_iterations=max_iterations, gradient=gradient)
+        )
 
-    def pick_pcr_primers(self, template, include_region, size_range, opt_size=None,
-                         addnl_params={}, max_iterations=None, gradient=None):
+    def pick_pcr_primers(
+        self,
+        template,
+        include_region,
+        size_range,
+        opt_size=None,
+        addnl_params={},
+        max_iterations=None,
+        gradient=None,
+    ):
         """
-        Design a left primer given the template and right primer sequences.
+        Design a left and right primers given the template sequence.
 
         :param template: template to pick primers from
         :type template: basestring
@@ -775,19 +787,28 @@ class Primer3Design(object):
         :return: tuple of designed primers (dict) and other parameters (dict)
         :rtype: tuple
         """
-        return self.copy() \
-            .set_template(template) \
-            .set_included(include_region) \
-            .set_size(size_range, opt_size) \
-            .set(addnl_params) \
-            .set_task('generic') \
+        return (
+            self.copy()
+            .set_template(template)
+            .set_included(include_region)
+            .set_size(size_range, opt_size)
+            .set(addnl_params)
+            .set_task("generic")
             .run(max_iterations=max_iterations, gradient=gradient)
+        )
 
-    @dispatch_iterable([
-        (2, (list, tuple))
-    ])
-    def pick_left_pcr_primer(self, template, primer, include_region, size_range, opt_size=None,
-                             addnl_params={}, max_iterations=None, gradient=None) -> tuple:
+    @dispatch_iterable([(2, (list, tuple))])
+    def pick_left_pcr_primer(
+        self,
+        template,
+        primer,
+        include_region,
+        size_range,
+        opt_size=None,
+        addnl_params={},
+        max_iterations=None,
+        gradient=None,
+    ) -> tuple:
         """
         Design a left primer given the template and right primer sequences.
 
@@ -810,22 +831,31 @@ class Primer3Design(object):
         :return: tuple of designed primers (dict) and other parameters (dict)
         :rtype: tuple
         """
-        return self.copy() \
-            .set_template(template) \
-            .set_included(include_region) \
-            .set_size(size_range, opt_size) \
-            .set_right(primer) \
-            .set(addnl_params) \
-            .set_task('generic') \
+        return (
+            self.copy()
+            .set_template(template)
+            .set_included(include_region)
+            .set_size(size_range, opt_size)
+            .set_right(primer)
+            .set(addnl_params)
+            .set_task("generic")
             .run(max_iterations=max_iterations, gradient=gradient)
+        )
 
     # TODO: add target to pick pcr primers
 
-    @dispatch_iterable([
-        (2, (list, tuple))
-    ])
-    def pick_right_pcr_primer(self, template, primer, include_region=(), size_range=(), opt_size=None,
-                              addnl_params={}, max_iterations=None, gradient=None):
+    @dispatch_iterable([(2, (list, tuple))])
+    def pick_right_pcr_primer(
+        self,
+        template,
+        primer,
+        include_region=(),
+        size_range=(),
+        opt_size=None,
+        addnl_params={},
+        max_iterations=None,
+        gradient=None,
+    ):
         """
         Design a left primer given the template and right primer sequences.
 
@@ -848,39 +878,61 @@ class Primer3Design(object):
         :return: tuple of designed primers (dict) and other parameters (dict)
         :rtype: tuple
         """
-        return self.copy() \
-            .set_template(template) \
-            .set_included(include_region) \
-            .set_size(size_range, opt_size) \
-            .set_left(primer) \
-            .set(addnl_params) \
-            .set_task('generic') \
+        return (
+            self.copy()
+            .set_template(template)
+            .set_included(include_region)
+            .set_size(size_range, opt_size)
+            .set_left(primer)
+            .set(addnl_params)
+            .set_task("generic")
             .run(max_iterations=max_iterations, gradient=gradient)
+        )
 
-    @dispatch_iterable([
-        (2, (list, tuple)),
-        (3, (list, tuple)),
-    ])
-    def check_pcr_primers(self, template, p1, p2, include_region=(), size_range=(), opt_size=None, target=None,
-                              addnl_params={}, max_iterations=None, gradient=None):
-        d = self.copy() \
-            .set_template(template) \
-            .set_included(include_region) \
-            .set_size(size_range, opt_size) \
-            .set_left(p1) \
+    @dispatch_iterable([(2, (list, tuple)), (3, (list, tuple))])
+    def check_pcr_primers(
+        self,
+        template,
+        p1,
+        p2,
+        include_region=(),
+        size_range=(),
+        opt_size=None,
+        target=None,
+        addnl_params={},
+        max_iterations=None,
+        gradient=None,
+    ):
+        design = (
+            self.copy()
+            .set_template(template)
+            .set_included(include_region)
+            .set_size(size_range, opt_size)
+            .set_left(p1)
             .set_right(p2)
+        )
 
         if target:
             if isinstance(target, str):
-                d.set_target_from_template(template, target)
+                design.set_target_from_template(template, target)
             else:
-                d.set_target(target)
-        return d.set(addnl_params) \
-            .set_task('generic') \
+                design.set_target(target)
+        return (
+            design.set(addnl_params)
+            .set_task("generic")
             .run(max_iterations=max_iterations, gradient=gradient)
+        )
 
-    def pick_sequencing_primers(self, template, target, left_only=False, right_only=False,
-                                addnl_params={}, max_iterations=None, gradient=None):
+    def pick_sequencing_primers(
+        self,
+        template,
+        target,
+        left_only=False,
+        right_only=False,
+        addnl_params={},
+        max_iterations=None,
+        gradient=None,
+    ):
         """
         Pick sequencing primers for a template given a target
 
@@ -897,8 +949,8 @@ class Primer3Design(object):
         :return: tuple of designed primers (dict) and other parameters (dict)
         :rtype: tuple
         """
-        d = self.copy().set_task('pick_sequencing_primers')
-        d.set({'PRIMER_SEQUENCING_LEAD': 50})
+        d = self.copy().set_task("pick_sequencing_primers")
+        d.set({"PRIMER_SEQUENCING_LEAD": 50})
         d.set_template(template)
         if isinstance(target, str):
             d.set_target_from_template(template, target)
@@ -911,14 +963,10 @@ class Primer3Design(object):
         d.set(addnl_params)
         return d.run(max_iterations=max_iterations, gradient=gradient)
 
-
-    @dispatch_iterable([
-        (1, (tuple, list)),
-        (2, (tuple, list))
-    ])
-    def check_primers(self, p1, p2, template='', addnl_params={}):
+    @dispatch_iterable([(1, (tuple, list)), (2, (tuple, list))])
+    def check_primers(self, p1, p2, template="", addnl_params={}):
         """
-        Check a primer pair
+        Check the penalty score for a primer pair against an optional template.
 
         :param p1: primer sequence
         :type p1: basestring
@@ -929,7 +977,7 @@ class Primer3Design(object):
         :return: tuple of designed primers (dict) and other parameters (dict)
         :rtype: tuple
         """
-        d = self.copy().set_task('check_primers')
+        d = self.copy().set_task("check_primers")
         d.set_primers(p1, p2)
         d.set_pick_anyway()
         if template:
@@ -942,8 +990,8 @@ class Primer3Design(object):
         reason_dict = {}
         for reason in reasons:
             for k, v in reason.items():
-                if 'EXPLAIN' in k:
-                    for m in re.finditer('\s*([\w\s\-]+)\s+(\d+)', v):
+                if "EXPLAIN" in k:
+                    for m in re.finditer("\s*([\w\s\-]+)\s+(\d+)", v):
                         reason_token = m.group(1)
                         num = int(m.group(2))
                         reason_dict.setdefault(k, Counter())[reason_token] += num
@@ -952,7 +1000,7 @@ class Primer3Design(object):
     @classmethod
     def combine_results(cls, results):
         """
-        Combine and sort results. Combine all explainations
+        Combine and sort results. Combine all explainations.
 
         :param results:
         :type results:
@@ -964,7 +1012,7 @@ class Primer3Design(object):
         for r in results:
             all_pairs += list(r[0].values())
             all_reasons.append(r[1])
-        sorted_pairs = sorted(all_pairs, key=lambda x: x['PAIR']['PENALTY'])
+        sorted_pairs = sorted(all_pairs, key=lambda x: x["PAIR"]["PENALTY"])
         explain = cls._summarize_reasons(all_reasons)
         return sorted_pairs, explain
 
@@ -1046,10 +1094,14 @@ class Primer3Design(object):
     #     params.update(update_dict)
     #     return self.design_from_params(params, max_iterations=max_iterations, gradient=gradient)
 
+    # TODO: bayesian optimization for PENALTY vs results
+
     @staticmethod
     def open_help():
-        webhelp = 'https://htmlpreview.github.io/?https://github.com/libnano/primer3-py/master/' + \
-                  'primer3/src/libprimer3/primer3_manual.htm'
+        webhelp = (
+            "https://htmlpreview.github.io/?https://github.com/libnano/primer3-py/master/"
+            + "primer3/src/libprimer3/primer3_manual.htm"
+        )
         webbrowser.open(webhelp)
 
     def copy(self):
