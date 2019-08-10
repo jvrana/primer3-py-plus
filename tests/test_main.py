@@ -138,7 +138,9 @@ def test_check_pcr_primers(gfp):
     lprimers = [gfp[20:40], gfp[60:85], gfp[120:145]]
 
     rprimers = ["tcaacaagaattgggac", "gtagtgacaagtgttggccatgga"]
-    pairs, other = designer.check_pcr_primers(gfp, lprimers, rprimers, size_range=(40, 400))
+    pairs, other = designer.check_pcr_primers(
+        gfp, lprimers, rprimers, size_range=(40, 400)
+    )
     print(json.dumps(pairs, indent=2))
     print(json.dumps(other, indent=2))
 
@@ -147,12 +149,9 @@ def test_ok_pair_region_list(gfp):
 
     designer = Primer3Design()
 
-    region_ok_list = [(100,100,400,200)]
+    region_ok_list = [(100, 100, 400, 200)]
     designer.params.update(
-        {
-            "SEQUENCE_PRIMER_PAIR_OK_REGION_LIST": region_ok_list,
-            "SEQUENCE": gfp
-        }
+        {"SEQUENCE_PRIMER_PAIR_OK_REGION_LIST": region_ok_list, "SEQUENCE": gfp}
     )
     designer.set_template(gfp)
     designer.set_task("generic")

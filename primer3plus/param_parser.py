@@ -15,7 +15,6 @@ class ParamTypes(object):
 
 
 class ParameterType(object):
-
     def __init__(self, name, description, type, default):
         self.name = name
         self.description = description
@@ -30,11 +29,11 @@ class ParameterType(object):
             cls=self.__class__.__name__,
             name=self.name,
             type=self.type,
-            default=self.default
+            default=self.default,
         )
 
-class Parameter(ParameterType):
 
+class Parameter(ParameterType):
     def __init__(self, ptype, value=None):
         self.ptype = ptype
         self._value = None
@@ -50,7 +49,11 @@ class Parameter(ParameterType):
     @value.setter
     def value(self, v):
         if not issubclass(self.ptype.type, type(v)):
-            raise TypeError("Paramater {ptype} must be of type {type}".format(ptype=self.ptype, type=self.ptype.type))
+            raise TypeError(
+                "Paramater {ptype} must be of type {type}".format(
+                    ptype=self.ptype, type=self.ptype.type
+                )
+            )
         self._value = self.ptype.type(v)
 
     @property
@@ -70,7 +73,7 @@ class Parameter(ParameterType):
             name=self.name,
             type=self.ptype.type,
             value=self.value,
-            default=self.ptype.default
+            default=self.ptype.default,
         )
 
     def __repr__(self):
@@ -91,14 +94,13 @@ class Params(MutableMapping):
     def _post_load(self) -> dict:
         self.update(self.POST_LOAD_DEFAULTS)
 
-
     def _load(self, param_dict):
         for k, v in param_dict.items():
             ptype = ParameterType(
-                name=v['name'],
-                type=v['type'],
-                default=v['default'],
-                description=v['description']
+                name=v["name"],
+                type=v["type"],
+                default=v["default"],
+                description=v["description"],
             )
             p = Parameter(ptype, ptype.default)
             self.params[p.name] = p
@@ -138,10 +140,12 @@ class Params(MutableMapping):
             copied.params[k] = v.copy()
         return copied
 
+
 class ParamParser(object):
     """
     Reads the Primer3 documentation and creates the appropriate parameters.
     """
+
     default_file_path = os.path.join(
         os.path.dirname(os.path.abspath(__file__)), "primer3_params_raw.txt"
     )
@@ -160,7 +164,7 @@ class ParamParser(object):
         """
 
         params = {}
-        pattern = "(?P<name>\w+)\s+\((?P<type>[\w\s\"]+)\;\s+default\s+(?P<default>.+)\)\n(?P<description>.+)\n\n"
+        pattern = '(?P<name>\w+)\s+\((?P<type>[\w\s"]+)\;\s+default\s+(?P<default>.+)\)\n(?P<description>.+)\n\n'
 
         type_dict = {
             "size range list": list,
@@ -172,8 +176,8 @@ class ParamParser(object):
             "float": float,
             "ambiguous nucleotide sequence": str,
             "boolean": bool,
-            "semicolon separated list of integer \"quadruples\"": list,
-            "semicolon separated list of integer quadruples": list
+            'semicolon separated list of integer "quadruples"': list,
+            "semicolon separated list of integer quadruples": list,
         }
 
         for m in re.finditer(pattern, docstr):

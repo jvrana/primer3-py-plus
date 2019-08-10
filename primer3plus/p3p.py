@@ -131,7 +131,7 @@ class Primer3Params(object):
         """
 
         params = {}
-        pattern = "(?P<name>\w+)\s+\((?P<type>[\w\s\"]+)\;\s+default\s+(?P<default>.+)\)\n(?P<description>.+)\n\n"
+        pattern = '(?P<name>\w+)\s+\((?P<type>[\w\s"]+)\;\s+default\s+(?P<default>.+)\)\n(?P<description>.+)\n\n'
 
         type_dict = {
             "size range list": list,
@@ -143,8 +143,8 @@ class Primer3Params(object):
             "float": float,
             "ambiguous nucleotide sequence": str,
             "boolean": bool,
-            "semicolon separated list of integer \"quadruples\"": list,
-            "semicolon separated list of integer quadruples": list
+            'semicolon separated list of integer "quadruples"': list,
+            "semicolon separated list of integer quadruples": list,
         }
 
         for m in re.finditer(pattern, docstr):
@@ -263,6 +263,7 @@ def dict_diff(d1, d2):
 
 PARAMS = Primer3Params()
 
+
 def _summarize_reasons(reasons):
     reason_dict = {}
     for reason in reasons:
@@ -273,6 +274,7 @@ def _summarize_reasons(reasons):
                     num = int(m.group(2))
                     reason_dict.setdefault(k, Counter())[reason_token] += num
     return {k: dict(v) for k, v in reason_dict.items()}
+
 
 def combine_results(results):
     """
