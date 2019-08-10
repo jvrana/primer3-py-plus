@@ -138,5 +138,5 @@ def test_check_pcr_primers(gfp):
     lprimers = [gfp[20:40], gfp[60:85], gfp[120:145]]
 
     rprimers = ["tcaacaagaattgggac", "gtagtgacaagtgttggccatgga"]
-    results = designer.check_pcr_primers(gfp, lprimers, rprimers, size_range=(40, 400))
-    print(json.dumps(results, indent=2))
+    pairs, other = designer.check_pcr_primers(gfp, lprimers, rprimers, size_range=(40, 400))
+    print(json.dumps(pairs, indent=2))
