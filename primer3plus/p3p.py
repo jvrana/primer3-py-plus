@@ -14,7 +14,12 @@ from primer3plus.log import logger
 
 here = os.path.dirname(os.path.abspath(__file__))
 
-
+# TODO: set relaxation ON or OFF
+# TODO: group 'tasks' into an attribute
+# TODO: better help documentation
+# TODO: a CLI for quick design
+# TODO: params should have attributes
+# TODO: hardcode the attributes, with a helper method for determining primer version and boulderIO
 class Primer3Params(object):
     """
     Reads the Primer3 documentation and creates the appropriate parameters.
