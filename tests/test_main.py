@@ -158,3 +158,4 @@ def test_ok_pair_region_list(gfp):
     designer.set_task("generic")
     pairs, other = designer.run()
     print(pairs)
+    print(other)
