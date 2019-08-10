@@ -21,6 +21,8 @@ here = os.path.dirname(os.path.abspath(__file__))
 # TODO: params should have attributes
 # TODO: hardcode the attributes, with a helper method for determining primer version and boulderIO
 # TODO: parse to boulderIO
+
+
 class Primer3Params(object):
     """
     Reads the Primer3 documentation and creates the appropriate parameters.

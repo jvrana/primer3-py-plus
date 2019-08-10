@@ -125,7 +125,9 @@ class BoulderIO(MutableMapping):
             yield k
 
     def _by_category(self, category):
-        return {k: v for k, v in self.params.items() if v.ptype.category == category}
+        return {
+            k: v.value for k, v in self.params.items() if v.ptype.category == category
+        }
 
     def globals(self, clean=True):
         data = self._by_category(ParamTypes.GLOBAL)
@@ -279,3 +281,10 @@ class ParamParser(object):
     @classmethod
     def open(cls, filepath=None):
         return cls._open_primer3_params(filepath)
+
+
+def default_boulderio():
+    param_dict = ParamParser._open_primer3_params()
+    boulderio = BoulderIO()
+    boulderio._load(param_dict)
+    return boulderio
