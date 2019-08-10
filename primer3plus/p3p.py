@@ -125,7 +125,7 @@ class Primer3Params(object):
         """
 
         params = {}
-        pattern = "(?P<name>\w+)\s+\((?P<type>[\w\s]+)\;\s+default\s+(?P<default>.+)\)\n(?P<description>.+)\n\n"
+        pattern = "(?P<name>\w+)\s+\((?P<type>[\w\s\"]+)\;\s+default\s+(?P<default>.+)\)\n(?P<description>.+)\n\n"
 
         type_dict = {
             "size range list": list,
@@ -137,6 +137,8 @@ class Primer3Params(object):
             "float": float,
             "ambiguous nucleotide sequence": str,
             "boolean": bool,
+            "semicolon separated list of integer \"quadruples\"": list,
+            "semicolon separated list of integer quadruple": list
         }
 
         for m in re.finditer(pattern, docstr):
@@ -406,7 +408,6 @@ class Primer3Design(object):
                 return pairs, other
             else:
                 self.apply_gradient(params, gradient_dict=gradient_dict)
-                self.logger.info("Relaxed parameters")
         return pairs, other
 
     def run(self, parse=True, max_iterations=None, gradient=None) -> list:

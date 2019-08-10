@@ -140,3 +140,4 @@ def test_check_pcr_primers(gfp):
     rprimers = ["tcaacaagaattgggac", "gtagtgacaagtgttggccatgga"]
     pairs, other = designer.check_pcr_primers(gfp, lprimers, rprimers, size_range=(40, 400))
     print(json.dumps(pairs, indent=2))
+    print(json.dumps(other, indent=2))
