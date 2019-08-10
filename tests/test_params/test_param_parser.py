@@ -1,4 +1,4 @@
-from primer3plus.param_parser import ParamParser, Params
+from primer3plus.param_parser import ParamParser, BoulderIO
 
 import pytest
 
@@ -7,7 +7,7 @@ import pytest
 def params():
     param_data = ParamParser.open()
 
-    params = Params()
+    params = BoulderIO()
     params._load(param_data)
     return params
 
@@ -19,7 +19,7 @@ def test_open(params):
 def test_open_and_load():
     param_data = ParamParser.open()
 
-    params = Params()
+    params = BoulderIO()
     params._load(param_data)
 
 
@@ -75,3 +75,15 @@ class TestCopy(object):
             params_copy.params["SEQUENCE_TARGET"].ptype
             is params.params["SEQUENCE_TARGET"].ptype
         )
+
+
+class TestCategory(object):
+    def test_global(self, params):
+        assert params.globals
+
+    def test_sequence(self, params):
+        assert params.sequence
+
+    ## not implemented
+    # def test_program(self, params):
+    #     assert params.program

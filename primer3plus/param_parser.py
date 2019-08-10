@@ -11,15 +11,16 @@ class ParamTypes(object):
     PROGRAM = "PROGRAM"
     OTHER = "OTHER"
     SEQUENCE = "SEQUENCE"
-    TYPE = "PTYPE"
+    CATEGORY = "category"
 
 
 class ParameterType(object):
-    def __init__(self, name, description, type, default):
+    def __init__(self, name, description, type, default, category):
         self.name = name
         self.description = description
         self.type = type
         self.default = default
+        self.category = category
 
     def __repr__(self):
         return str(self)
@@ -80,7 +81,7 @@ class Parameter(ParameterType):
         return str(self)
 
 
-class Params(MutableMapping):
+class BoulderIO(MutableMapping):
 
     POST_LOAD_DEFAULTS = {"PRIMER_EXPLAIN_FLAG": 1}
 
@@ -101,6 +102,7 @@ class Params(MutableMapping):
                 type=v["type"],
                 default=v["default"],
                 description=v["description"],
+                category=v[ParamTypes.CATEGORY],
             )
             p = Parameter(ptype, ptype.default)
             self.params[p.name] = p
@@ -122,6 +124,33 @@ class Params(MutableMapping):
         for k, v in self.params.items():
             yield k
 
+    def _by_category(self, category):
+        return {k: v for k, v in self.params.items() if v.ptype.category == category}
+
+    def globals(self, clean=True):
+        data = self._by_category(ParamTypes.GLOBAL)
+        if clean:
+            data = self._clean_dictionary(data)
+        return data
+
+    def program(self, clean=True):
+        data = self._by_category(ParamTypes.PROGRAM)
+        if clean:
+            data = self._clean_dictionary(data)
+        return data
+
+    def sequence(self, clean=True):
+        data = self._by_category(ParamTypes.SEQUENCE)
+        if clean:
+            data = self._clean_dictionary(data)
+        return data
+
+    def other(self, clean=True):
+        data = self._by_category(ParamTypes.OTHER)
+        if clean:
+            data = self._clean_dictionary(data)
+        return data
+
     def set_defaults(self):
         for v in self.params.values():
             v.set_default()
@@ -135,10 +164,26 @@ class Params(MutableMapping):
             yield k, v.value
 
     def copy(self):
-        copied = Params()
+        copied = BoulderIO()
         for k, v in self.params.items():
             copied.params[k] = v.copy()
         return copied
+
+    @staticmethod
+    def _clean_dictionary(params: dict) -> dict:
+        """
+        Removes empty lists and empty strings from params
+        :return:
+        :rtype:
+        """
+        cleaned = dict(params)
+        ignore = ["SEQUENCE_ID"]
+        for k in params:
+            if k not in ignore:
+                v = params[k]
+                if hasattr(v, "__len__") and len(v) == 0:
+                    cleaned.pop(k)
+        return cleaned
 
 
 class ParamParser(object):
@@ -210,22 +255,6 @@ class ParamParser(object):
 
         return params
 
-    @staticmethod
-    def _clean_dictionary(params: dict) -> dict:
-        """
-        Removes empty lists and empty strings from params
-        :return:
-        :rtype:
-        """
-        cleaned = dict(params)
-        ignore = ["SEQUENCE_ID"]
-        for k in params:
-            if k not in ignore:
-                v = params[k]
-                if hasattr(v, "__len__") and len(v) == 0:
-                    cleaned.pop(k)
-        return cleaned
-
     @classmethod
     def _open_primer3_params(cls, filepath=None):
         if filepath is None:
@@ -243,7 +272,7 @@ class ParamParser(object):
                 param_type = ParamTypes.PROGRAM
             else:
                 raise Exception("Parameter {} not recognized".format(k))
-            v[ParamTypes.TYPE] = param_type
+            v[ParamTypes.CATEGORY] = param_type
 
         return params
 
