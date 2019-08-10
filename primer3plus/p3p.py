@@ -138,7 +138,7 @@ class Primer3Params(object):
             "ambiguous nucleotide sequence": str,
             "boolean": bool,
             "semicolon separated list of integer \"quadruples\"": list,
-            "semicolon separated list of integer quadruple": list
+            "semicolon separated list of integer quadruples": list
         }
 
         for m in re.finditer(pattern, docstr):
