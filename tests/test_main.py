@@ -78,7 +78,7 @@ def test_pick_right_pcr_primer(gfp):
 
 def test_pick_left_pcr_primer(gfp):
     designer = Primer3Design()
-    right_primer = "tcccaattcttgttgaattagatggtgat"
+    right_primer = "ctatttgtatagttcat"
     pairs, other = designer.pick_left_pcr_primer(
         gfp, right_primer, [], (100, 1000), max_iterations=15
     )
@@ -109,6 +109,7 @@ def test_pick_right_sequencing_primer(gfp):
         gfp, "gagttgtcccaattcttgttgaattagat", right_only=True
     )
     print(pairs)
+    print(other)
 
 
 def test_pick_right_pcr_primers(gfp):
@@ -116,8 +117,9 @@ def test_pick_right_pcr_primers(gfp):
 
     primers = [gfp[20:40], gfp[60:85], gfp[120:145]]
 
-    pairs = designer.pick_right_pcr_primer(gfp, primers, size_range=(200, 300))
+    pairs, other = designer.pick_right_pcr_primer(gfp, primers, size_range=(200, 300))
     print(pairs)
+    print(other)
 
 
 def test_check_many_primers(gfp):

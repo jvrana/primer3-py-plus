@@ -255,14 +255,34 @@ def dict_diff(d1, d2):
 
 PARAMS = Primer3Params()
 
+def _summarize_reasons(reasons):
+    reason_dict = {}
+    for reason in reasons:
+        for k, v in reason.items():
+            if "EXPLAIN" in k:
+                for m in re.finditer("\s*([\w\s\-]+)\s+(\d+)", v):
+                    reason_token = m.group(1)
+                    num = int(m.group(2))
+                    reason_dict.setdefault(k, Counter())[reason_token] += num
+    return {k: dict(v) for k, v in reason_dict.items()}
 
-def combine_and_sort_results(results):
-    """Combine and sort results"""
-    all_results = []
-    i = 0
-    for result in results:
-        all_results += list(result.values())
-    return sorted(all_results, key=lambda x: x["PAIR"]["PENALTY"])
+def combine_results(results):
+    """
+    Combine and sort results. Combine all explainations.
+
+    :param results:
+    :type results:
+    :return:
+    :rtype:
+    """
+    all_pairs = []
+    all_reasons = []
+    for r in results:
+        all_pairs += list(r[0].values())
+        all_reasons.append(r[1])
+    sorted_pairs = sorted(all_pairs, key=lambda x: x["PAIR"]["PENALTY"])
+    explain = _summarize_reasons(all_reasons)
+    return sorted_pairs, explain
 
 
 def dispatch_iterable(params, max_results=10):
@@ -292,8 +312,8 @@ def dispatch_iterable(params, max_results=10):
                 for _args in iterable_args:
                     if max_results > 0 and len(results) > max_results:
                         break
-                    results.append(f(*_args, **kwargs)[0])
-                return combine_and_sort_results(results)
+                    results.append(f(*_args, **kwargs))
+                return combine_results(results)
             else:
                 return f(*args, **kwargs)
 
@@ -366,7 +386,8 @@ class Primer3Design(object):
             param_dict["SEQUENCE"], param_dict["GLOBAL"]
         )
         if parse:
-            results = cls._parse_primer3_results(results)
+            pairs, other = cls._parse_primer3_results(results)
+            return pairs, other
         return results
 
     def design_from_params(
@@ -984,37 +1005,6 @@ class Primer3Design(object):
             d.set_template(template)
         d.set(addnl_params)
         return d.run()
-
-    @staticmethod
-    def _summarize_reasons(reasons):
-        reason_dict = {}
-        for reason in reasons:
-            for k, v in reason.items():
-                if "EXPLAIN" in k:
-                    for m in re.finditer("\s*([\w\s\-]+)\s+(\d+)", v):
-                        reason_token = m.group(1)
-                        num = int(m.group(2))
-                        reason_dict.setdefault(k, Counter())[reason_token] += num
-        return {k: dict(v) for k, v in reason_dict.items()}
-
-    @classmethod
-    def combine_results(cls, results):
-        """
-        Combine and sort results. Combine all explainations.
-
-        :param results:
-        :type results:
-        :return:
-        :rtype:
-        """
-        all_pairs = []
-        all_reasons = []
-        for r in results:
-            all_pairs += list(r[0].values())
-            all_reasons.append(r[1])
-        sorted_pairs = sorted(all_pairs, key=lambda x: x["PAIR"]["PENALTY"])
-        explain = cls._summarize_reasons(all_reasons)
-        return sorted_pairs, explain
 
     def _get_index_of_match(self, template, sequence):
         matches = []
