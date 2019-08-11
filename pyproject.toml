@@ -7,8 +7,8 @@ authors = ["Justin Vrana <justin.vrana@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.7"
 primer3-py = "^0.6.0"
-pandas = "^0.25.0"
 loggable-jdv = "^0.1.2"
+biopython = "^1.74"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.0"
