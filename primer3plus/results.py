@@ -1,7 +1,7 @@
 import re
 
 
-def _parse_primer3_results(results_dict):
+def parse_primer3_results(results_dict):
     """
     Parse the primer3 results.
 

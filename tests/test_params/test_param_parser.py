@@ -1,5 +1,4 @@
-from primer3plus.param_parser import ParamParser, BoulderIO
-
+from primer3plus.params import ParamParser, BoulderIO
 import pytest
 
 

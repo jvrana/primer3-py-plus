@@ -4,6 +4,10 @@ To run designs, you copy the underlying parameters and change certain values.
 There should be a number of presets available to run certain design tasks
 
 There should also be a relaxation parameter (a subclass of Design?)
+
+Async option
+
+Design with overhangs
 """
 
 from functools import wraps
@@ -11,8 +15,8 @@ import itertools
 import webbrowser
 from collections import Counter
 import primer3
-from .result_parser import _parse_primer3_results
-from .param_parser import default_boulderio
+from .results import parse_primer3_results
+from .params import default_boulderio
 from typing import Tuple, List, Dict
 import re
 
@@ -85,34 +89,7 @@ def dispatch_iterable(params, max_results=10):
     return wrapped
 
 
-class DesignBase(object):
-
-    DEFAULT_PARAMS = default_boulderio()
-
-    def __init__(self):
-        self.params = self.DEFAULT_PARAMS.copy()
-
-    def run(self, params=None) -> Tuple[List[Dict], List[Dict]]:
-        if params is None:
-            params = self.params
-        results = primer3.bindings.designPrimers(params.sequence(), params.globals())
-        pairs, explain = _parse_primer3_results(results)
-        return pairs, explain
-
-    @staticmethod
-    def open_help():
-        webhelp = (
-            "https://htmlpreview.github.io/?https://github.com/libnano/primer3-py/master/"
-            + "primer3/src/libprimer3/primer3_manual.htm"
-        )
-        webbrowser.open(webhelp)
-
-    def copy(self):
-        designer = self.__class__()
-        designer.params = self.params.copy()
-
-
-class Presets(object):
+class DesignPresets(object):
     def __init__(self, design):
         self._design = design
 
@@ -409,7 +386,37 @@ class Presets(object):
         return self._set({"PRIMER_PICK_ANYWAY": b})
 
 
+class DesignBase(object):
+
+    DEFAULT_PARAMS = default_boulderio()
+
+    def __init__(self):
+        self.params = self.DEFAULT_PARAMS.copy()
+
+    def run(self, params=None) -> Tuple[List[Dict], List[Dict]]:
+        if params is None:
+            params = self.params
+        results = primer3.bindings.designPrimers(params.sequence(), params.globals())
+        pairs, explain = parse_primer3_results(results)
+        return pairs, explain
+
+    @staticmethod
+    def open_help():
+        webhelp = (
+            "https://htmlpreview.github.io/?https://github.com/libnano/primer3-py/master/"
+            + "primer3/src/libprimer3/primer3_manual.htm"
+        )
+        webbrowser.open(webhelp)
+
+    def copy(self):
+        designer = self.__class__()
+        designer.params = self.params.copy()
+
+    def __copy__(self):
+        return self.copy()
+
+
 class Design(DesignBase):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.set = Presets(self)
+        self.set = DesignPresets(self)
