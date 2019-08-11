@@ -1,4 +1,4 @@
-from primer3plus.utils import reverse_complement, initial_matches
+from primer3plus.utils import reverse_complement, iter_anneal
 
 
 def test_reverse_complement():
@@ -6,10 +6,20 @@ def test_reverse_complement():
     print(reverse_complement(s))
 
 
-def test_init_matches():
+def test_anneal():
     s = "ACGTGTATGTGATGATGTGCGTGTGTCGTGTAGCTTATTATATGCGGAGTCGTTGATGCTGTGAGT"
-    match = list(initial_matches(s, ["AAAAAGTGCGTGTGTCGTGTAG"]))[0]
+    fwd, rev = iter_anneal(s, ["AAAAAGTGCGTGTGTCGTGTAG"])
+    match = list(fwd)[0]
     assert match["start"] == 16
     assert match["end"] == 33
     assert match["anneal"] == "GTGCGTGTGTCGTGTAG"
     assert match["overhang"] == "AAAAA"
+    print(match)
+
+
+def test_anneal_end():
+    s = "ACGTGTATGTGATGATGTGCGTGTGTCGTGTAGCTTATTATATGCGGAGTCGTTGATGCTGTGAGT"
+    fwd, rev = iter_anneal(s, [s[-16:]])
+    match = list(fwd)[0]
+    assert match["start"] == len(s) - 16
+    assert match["end"] == len(s)

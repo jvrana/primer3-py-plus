@@ -25,9 +25,7 @@ def _extend_match(seq, primer, length, end):
     return anneal
 
 
-def initial_matches(
-    seq: str, primer_list: typing.List[typing.Tuple[str, str]], n_bases=9
-):
+def _iter_anneal(seq: str, primer_list: typing.List[typing.Tuple[str, str]], n_bases=9):
     li = iter(
         (i, i + n_bases, seq[i : i + n_bases]) for i in range(len(seq) - n_bases + 1)
     )
@@ -37,7 +35,6 @@ def initial_matches(
             name = None
         else:
             p, name = p
-        x = [end - len(p), end + 1]
         length = end - start
         if anneal == p[-length:]:
             anneal = _extend_match(seq, p, length, end)
@@ -45,6 +42,13 @@ def initial_matches(
                 "name": name,
                 "anneal": anneal,
                 "overhang": p[: -len(anneal)],
+                "primer": p,
                 "end": end,
                 "start": end - len(anneal),
             }
+
+
+def iter_anneal(seq: str, primer_list: typing.List[typing.Tuple[str, str]], n_bases=9):
+    fwd = _iter_anneal(seq, primer_list, n_bases)
+    rev = _iter_anneal(reverse_complement(seq), primer_list, n_bases)
+    return fwd, rev

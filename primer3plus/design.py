@@ -16,7 +16,7 @@ import webbrowser
 from collections import Counter
 import primer3
 from .results import parse_primer3_results
-from .params import default_boulderio
+from .params import DOCURL, default_boulderio
 from typing import Tuple, List, Dict
 import re
 
@@ -242,7 +242,7 @@ class DesignPresets(object):
     def primer_num_return(self, n):
         return self._set({"PRIMER_NUM_RETURN": n})
 
-    def size(self, interval: tuple, opt=None):
+    def product_size(self, interval: tuple, opt=None):
         """
         Set the product size. Optionally include the optimal size.
 
@@ -402,11 +402,7 @@ class DesignBase(object):
 
     @staticmethod
     def open_help():
-        webhelp = (
-            "https://htmlpreview.github.io/?https://github.com/libnano/primer3-py/master/"
-            + "primer3/src/libprimer3/primer3_manual.htm"
-        )
-        webbrowser.open(webhelp)
+        webbrowser.open(DOCURL)
 
     def copy(self):
         designer = self.__class__()

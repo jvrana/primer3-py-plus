@@ -1,9 +1,9 @@
 import os
 import re
-from copy import deepcopy, copy
 from collections import MutableMapping
-
-# TODO: move default file to 'data'
+from copy import deepcopy
+import webbrowser
+from .expected_params import expected_opts
 
 
 class ParamTypes(object):
@@ -12,6 +12,13 @@ class ParamTypes(object):
     OTHER = "OTHER"
     SEQUENCE = "SEQUENCE"
     CATEGORY = "category"
+
+
+class Constants(object):
+    DOCURL = "https://htmlpreview.github.io/?https://github.com/libnano/primer3-py/master/primer3/src/libprimer3/primer3_manual.htm"
+    REL_PARAM_PATH = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), "..", "primer3_params_raw.txt"
+    )
 
 
 class ParameterType(object):
@@ -82,8 +89,8 @@ class Parameter(ParameterType):
 
 
 class BoulderIO(MutableMapping):
-
     POST_LOAD_DEFAULTS = {"PRIMER_EXPLAIN_FLAG": 1}
+    EXPECTED = expected_opts[:]
 
     def __init__(self):
         self.params = {}
@@ -95,7 +102,7 @@ class BoulderIO(MutableMapping):
     def _post_load(self) -> dict:
         self.update(self.POST_LOAD_DEFAULTS)
 
-    def _load(self, param_dict):
+    def load(self, param_dict):
         for k, v in param_dict.items():
             ptype = ParameterType(
                 name=v["name"],
@@ -107,15 +114,46 @@ class BoulderIO(MutableMapping):
             p = Parameter(ptype, ptype.default)
             self.params[p.name] = p
         self._post_load()
+        missing = self._check_missing()
+        if missing:
+            raise ValueError(
+                "The following keys are missing: {}".format(" ".join(missing))
+            )
+
+    def _check_missing(self):
+        missing = []
+        for key in self.EXPECTED:
+            if key not in self:
+                missing.append(key)
+        return missing
+
+    def _raise_no_key(self, key):
+        return KeyError(
+            "{key} not in params. See docs for help: {url}".format(
+                key=key, url=Constants.DOCURL
+            )
+        )
+
+    def __contains__(self, key):
+        return key in self.params
 
     def __setitem__(self, key, value):
-        self.params[key].value = value
+        try:
+            self.params[key].value = value
+        except KeyError:
+            raise self._raise_no_key(key)
 
     def __getitem__(self, key):
-        return self.params[key].value
+        try:
+            return self.params[key].value
+        except KeyError:
+            raise self._raise_no_key(key)
 
     def __delitem__(self, key):
-        self.params[key].set_default()
+        try:
+            self.params[key].set_default()
+        except KeyError:
+            raise self._raise_no_key(key)
 
     def __len__(self):
         return len(self.params)
@@ -123,6 +161,15 @@ class BoulderIO(MutableMapping):
     def __iter__(self):
         for k, v in self.params.items():
             yield k
+
+    def online_help(self, open=False, key=None):
+        if key:
+            url = "{url}#{key}".format(Constants.DOCURL, key)
+        else:
+            url = Constants.DOCURL
+        if open:
+            webbrowser.open(url)
+        return url
 
     def _by_category(self, category):
         return {
@@ -193,10 +240,6 @@ class ParamParser(object):
     Reads the Primer3 documentation and creates the appropriate parameters.
     """
 
-    default_file_path = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)), "primer3_params_raw.txt"
-    )
-
     @staticmethod
     def _parse_primer3_docs(docstr):
         """
@@ -211,7 +254,12 @@ class ParamParser(object):
         """
 
         params = {}
-        pattern = '(?P<name>\w+)\s+\((?P<type>[\w\s"]+)\;\s+default\s+(?P<default>.+)\)\n(?P<description>.+)\n\n'
+
+        expected_names = "(?P<name>{})".format("|".join(expected_opts))
+
+        catch_all = "^{name_pattern}(?P<rest>\s+\(.+)\n".format(
+            name_pattern=expected_names
+        )
 
         type_dict = {
             "size range list": list,
@@ -221,46 +269,63 @@ class ParamParser(object):
             "int": int,
             "space separated integers": list,
             "float": float,
+            "decimal": float,
             "ambiguous nucleotide sequence": str,
             "boolean": bool,
             'semicolon separated list of integer "quadruples"': list,
             "semicolon separated list of integer quadruples": list,
         }
 
-        for m in re.finditer(pattern, docstr):
-            data = m.groupdict()
-            data["type_raw"] = data["type"]
-            data["type"] = type_dict[data["type"]]
+        for caught in re.finditer(catch_all, docstr, flags=re.MULTILINE):
+            caught_dict = caught.groupdict()
+            name = caught_dict["name"]
+            rest = caught_dict["rest"]
 
-            default = data["default"]
-            data["default_raw"] = default
-            if data["type"] is str:
+            pattern = "\s+\((?P<type>.+?);\s+default\s+(?P<default>.+)\)"
+            m = re.match(pattern, rest)
+            if not m:
+                raise Exception("Did not catch:\n{}".format(caught.group(0)))
+
+            type_str = m.groupdict()["type"]
+            type_str = re.match("([a-zA-z\s]+)", type_str).group(1).strip()
+            default = m.groupdict()["default"]
+            ptype = type_dict[type_str]
+
+            if ptype is str:
                 if default == "empty":
                     default = ""
                 default = str(default)
-            elif data["type"] is list:
+            elif ptype is list:
                 if default == "empty":
                     default = []
                 elif re.match("(\d+)-(\d+)", default):
                     list_match = re.match("(\d+)-(\d+)", default)
                     default = [int(list_match.group(1)), int(list_match.group(2))]
                 default = list(default)
-            elif data["type"] is bool:
+            elif ptype is bool:
                 default = bool(int(default))
+            elif ptype is int:
+                default = int(default)
+            elif ptype is float:
+                default = float(default)
             else:
-                default = data["type"](default)
+                raise ValueError(str(caught.group(0)))
 
-            data["default"] = default
-            data["value"] = default
-            name = data["name"]
-            params[name] = data
-
+            params[name] = {
+                "name": name,
+                "type": ptype,
+                "type_raw": type_str,
+                "default": default,
+                "description": "",
+            }
+        if not params:
+            raise Exception("Could not load parameters")
         return params
 
     @classmethod
     def _open_primer3_params(cls, filepath=None):
         if filepath is None:
-            filepath = cls.default_file_path
+            filepath = Constants.REL_PARAM_PATH
         with open(filepath, "r") as f:
             params_txt = f.read()
             params = cls._parse_primer3_docs(params_txt)
@@ -284,7 +349,7 @@ class ParamParser(object):
 
 
 def default_boulderio():
-    param_dict = ParamParser._open_primer3_params()
+    param_dict = ParamParser.open()
     boulderio = BoulderIO()
-    boulderio._load(param_dict)
+    boulderio.load(param_dict)
     return boulderio

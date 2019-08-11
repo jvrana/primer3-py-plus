@@ -7,7 +7,7 @@ def params():
     param_data = ParamParser.open()
 
     params = BoulderIO()
-    params._load(param_data)
+    params.load(param_data)
     return params
 
 
@@ -19,7 +19,7 @@ def test_open_and_load():
     param_data = ParamParser.open()
 
     params = BoulderIO()
-    params._load(param_data)
+    params.load(param_data)
 
 
 class TestIter(object):
