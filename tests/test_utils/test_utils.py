@@ -1,4 +1,4 @@
-from primer3plus.utils import reverse_complement, iter_anneal
+from primer3plus.utils import reverse_complement, anneal
 
 
 def test_reverse_complement():
@@ -8,7 +8,7 @@ def test_reverse_complement():
 
 def test_anneal():
     s = "ACGTGTATGTGATGATGTGCGTGTGTCGTGTAGCTTATTATATGCGGAGTCGTTGATGCTGTGAGT"
-    fwd, rev = iter_anneal(s, ["AAAAAGTGCGTGTGTCGTGTAG"])
+    fwd, rev = anneal(s, ["AAAAAGTGCGTGTGTCGTGTAG"])
     match = list(fwd)[0]
     assert match["start"] == 16
     assert match["end"] == 33
@@ -19,7 +19,7 @@ def test_anneal():
 
 def test_anneal_end():
     s = "ACGTGTATGTGATGATGTGCGTGTGTCGTGTAGCTTATTATATGCGGAGTCGTTGATGCTGTGAGT"
-    fwd, rev = iter_anneal(s, [s[-16:]])
+    fwd, rev = anneal(s, [s[-16:]])
     match = list(fwd)[0]
     assert match["start"] == len(s) - 16
     assert match["end"] == len(s)

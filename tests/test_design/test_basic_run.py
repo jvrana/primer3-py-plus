@@ -1,6 +1,6 @@
 from primer3plus.design import Design
 import random
-from primer3plus.utils import reverse_complement, iter_anneal
+from primer3plus.utils import reverse_complement, anneal
 
 
 def test_init():
@@ -19,7 +19,7 @@ def test_set(gfp):
 
 def check_primers(gfp, primerlist):
 
-    fwd, rev = iter_anneal(gfp, primerlist, n_bases=16)
+    fwd, rev = anneal(gfp, primerlist, n_bases=16)
 
     span_region_ok = []
     for primer in fwd:
@@ -27,7 +27,7 @@ def check_primers(gfp, primerlist):
         l = len(primer["anneal"])
         span_region_ok.append([s, l, -1, -1])
     for primer in rev:
-        s = len(gfp) - primer["end"]
+        s = primer["start"]
         l = len(primer["anneal"])
         span_region_ok.append([-1, -1, s, l])
     return span_region_ok

@@ -48,7 +48,15 @@ def _iter_anneal(seq: str, primer_list: typing.List[typing.Tuple[str, str]], n_b
             }
 
 
-def iter_anneal(seq: str, primer_list: typing.List[typing.Tuple[str, str]], n_bases=9):
-    fwd = _iter_anneal(seq, primer_list, n_bases)
-    rev = _iter_anneal(reverse_complement(seq), primer_list, n_bases)
+def anneal(seq: str, primer_list: typing.List[typing.Tuple[str, str]], n_bases=9):
+    fwd = list(_iter_anneal(seq, primer_list, n_bases))
+    for f in fwd:
+        f["strand"] = 1
+
+    rev = list(_iter_anneal(reverse_complement(seq), primer_list, n_bases))
+    for r in rev:
+        r["strand"] = -1
+        r["end"] = len(seq) - r["start"]
+        r["start"] = len(seq) - r["end"]
+
     return fwd, rev

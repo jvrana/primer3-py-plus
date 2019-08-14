@@ -402,6 +402,12 @@ class DesignBase(object):
         PRIMER_MIN_TM=(-1, 48, DEFAULT_PARAMS["PRIMER_MIN_TM"]),
         PRIMER_MAX_HAIRPIN_TH=(1, DEFAULT_PARAMS["PRIMER_MAX_HAIRPIN_TH"], 60),
     )
+    CHECK_PRIMERS = "check_primers"
+    GENERIC = "generic"
+    PICK_PRIMER_LIST = "pick_primer_list"
+    PICK_SEQUENCING_PRIMERS = "pick_sequencing_primers"
+    PICK_CLONING_PRIMERS = "pick_cloning_primers"
+    PICK_DISCRIMINATIVE_PRIMERS = "pick_discriminative_primers"
 
     def __init__(self):
         self.params = self.DEFAULT_PARAMS.copy()
@@ -417,10 +423,10 @@ class DesignBase(object):
     def run_and_optimize(self, max_iterations, params=None, gradient=DEFAULT_GRADIENT):
         if params is None:
             params = self.params
-        n_return = params["PRIMER_NUM_RETURN"]
+        # n_return = params["PRIMER_NUM_RETURN"]
         pairs, explain = self.run(params)
         i = 0
-        while i < max_iterations and len(pairs) < n_return:
+        while i < max_iterations and len(pairs) == 0:
             i += 1
             update = self._update_dict(params, gradient=gradient)
             if update:

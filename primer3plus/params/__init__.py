@@ -1,7 +1,6 @@
-from .params import BoulderIO, ParamParser, Constants, default_boulderio
+from .params import BoulderIO, ParamParser, default_boulderio
+from primer3plus.constants import DOCURL
 
-
-DOCURL = Constants.DOCURL
 
 # # perform check
 # from .check import _expected_opts

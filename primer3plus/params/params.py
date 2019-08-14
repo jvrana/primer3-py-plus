@@ -14,11 +14,9 @@ class ParamTypes(object):
     CATEGORY = "category"
 
 
-class Constants(object):
-    DOCURL = "https://htmlpreview.github.io/?https://github.com/libnano/primer3-py/master/primer3/src/libprimer3/primer3_manual.htm"
-    REL_PARAM_PATH = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)), "..", "primer3_params_raw.txt"
-    )
+REL_PARAM_PATH = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "..", "primer3_params_raw.txt"
+)
 
 
 class ParameterType(object):
@@ -325,7 +323,7 @@ class ParamParser(object):
     @classmethod
     def _open_primer3_params(cls, filepath=None):
         if filepath is None:
-            filepath = Constants.REL_PARAM_PATH
+            filepath = REL_PARAM_PATH
         with open(filepath, "r") as f:
             params_txt = f.read()
             params = cls._parse_primer3_docs(params_txt)
