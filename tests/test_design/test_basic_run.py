@@ -1,19 +1,10 @@
 from primer3plus.design import Design
 import random
 from primer3plus.utils import reverse_complement, iter_anneal
-from itertools import chain
 
 
 def test_init():
     design = Design()
-
-
-def iter_random_primer(n, seq, l):
-
-    for i in range(n):
-        start = random.randint(0, len(seq) - l)
-        end = start + l
-        yield seq[start:end]
 
 
 def test_set(gfp):
@@ -42,10 +33,21 @@ def check_primers(gfp, primerlist):
     return span_region_ok
 
 
-def test_gfp(gfp):
-    fwd_primers = list(iter_random_primer(10, gfp, 16))
-    rev_primers = list(iter_random_primer(10, reverse_complement(gfp), 16))
+def test_gfp(gfp, iter_random_primer):
+    fwd_primers = list(iter_random_primer(25, gfp[:250], 16))
+    rev_primers = list(iter_random_primer(25, reverse_complement(gfp)[:250], 16))
+
     primers = fwd_primers + rev_primers
+
+    # from itertools import product
+    #
+    # for f, r in product(fwd_primers,  rev_primers):
+    #     design = Design()
+    #     design.set.left_sequence(f)
+    #     design.set.right_sequence(r)
+    #     design.set.task('check_primers')
+    #     design.set.template(gfp)
+    #     design.run()
 
     region_ok = check_primers(gfp, primers)
     # print(region_ok[:1])

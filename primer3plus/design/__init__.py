@@ -16,7 +16,9 @@ import webbrowser
 from collections import Counter
 import primer3
 from .results import parse_primer3_results
-from .params import DOCURL, default_boulderio
+from primer3plus.params import DOCURL, default_boulderio
+from primer3plus.log import logger
+from .interfaces import ParameterAccessor
 from typing import Tuple, List, Dict
 import re
 
@@ -386,12 +388,24 @@ class DesignPresets(object):
         return self._set({"PRIMER_PICK_ANYWAY": b})
 
 
+def clip(x, mn, mx):
+    return max(min(x, mx), mn)
+
+
 class DesignBase(object):
 
     DEFAULT_PARAMS = default_boulderio()
+    DEFAULT_GRADIENT = dict(
+        PRIMER_MAX_SIZE=(1, DEFAULT_PARAMS["PRIMER_MAX_SIZE"], 36),
+        PRIMER_MIN_SIZE=(-1, 16, DEFAULT_PARAMS["PRIMER_MAX_SIZE"]),
+        PRIMER_MAX_TM=(1, DEFAULT_PARAMS["PRIMER_MAX_SIZE"], 80),
+        PRIMER_MIN_TM=(-1, 48, DEFAULT_PARAMS["PRIMER_MIN_TM"]),
+        PRIMER_MAX_HAIRPIN_TH=(1, DEFAULT_PARAMS["PRIMER_MAX_HAIRPIN_TH"], 60),
+    )
 
     def __init__(self):
         self.params = self.DEFAULT_PARAMS.copy()
+        self.logger = logger(self)
 
     def run(self, params=None) -> Tuple[List[Dict], List[Dict]]:
         if params is None:
@@ -399,6 +413,37 @@ class DesignBase(object):
         results = primer3.bindings.designPrimers(params.sequence(), params.globals())
         pairs, explain = parse_primer3_results(results)
         return pairs, explain
+
+    def run_and_optimize(self, max_iterations, params=None, gradient=DEFAULT_GRADIENT):
+        if params is None:
+            params = self.params
+        n_return = params["PRIMER_NUM_RETURN"]
+        pairs, explain = self.run(params)
+        i = 0
+        while i < max_iterations and len(pairs) < n_return:
+            i += 1
+            update = self._update_dict(params, gradient=gradient)
+            if update:
+                self.logger.info("Updated: {}".format(update))
+            else:
+                break
+            self.params.update(update)
+            pairs, explain = self.run(params)
+        return pairs, explain
+
+    @staticmethod
+    def _update_dict(params, gradient):
+        update = {}
+        for param_key, gradient_tuple in gradient.items():
+            delta, mn, mx = gradient_tuple
+            try:
+                val = params[param_key] + delta
+                val = clip(val, mn, mx)
+                if params[param_key] != val:
+                    update[param_key] = val
+            except Exception as e:
+                raise e
+        return update
 
     @staticmethod
     def open_help():
@@ -413,6 +458,8 @@ class DesignBase(object):
 
 
 class Design(DesignBase):
+    P = ParameterAccessor()
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.set = DesignPresets(self)

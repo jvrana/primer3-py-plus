@@ -1,5 +1,6 @@
 import re
 
+
 expected_primer_opts_txt = """
 PRIMER_DNA_CONC	PRIMER_MASK_KMERLIST_PATH	PRIMER_PAIR_WT_PRODUCT_SIZE_LT
 PRIMER_DNTP_CONC	PRIMER_MASK_KMERLIST_PREFIX	PRIMER_PAIR_WT_PRODUCT_TM_GT
@@ -64,7 +65,7 @@ SEQUENCE_FORCE_RIGHT_START	SEQUENCE_PRIMER	SEQUENCE_TEMPLATE
 SEQUENCE_ID	SEQUENCE_PRIMER_PAIR_OK_REGION_LIST
 """
 
-expected_opts = []
+_expected_opts = []
 
-expected_opts += re.split("\s+", expected_primer_opts_txt.strip())
-expected_opts += re.split("\s+", expected_global_opts_txt.strip())
+_expected_opts += re.split("\s+", expected_primer_opts_txt.strip())
+_expected_opts += re.split("\s+", expected_global_opts_txt.strip())

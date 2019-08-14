@@ -3,7 +3,7 @@ import re
 from collections import MutableMapping
 from copy import deepcopy
 import webbrowser
-from .expected_params import expected_opts
+from .expected_opts import _expected_opts
 
 
 class ParamTypes(object):
@@ -90,7 +90,7 @@ class Parameter(ParameterType):
 
 class BoulderIO(MutableMapping):
     POST_LOAD_DEFAULTS = {"PRIMER_EXPLAIN_FLAG": 1}
-    EXPECTED = expected_opts[:]
+    EXPECTED = _expected_opts[:]
 
     def __init__(self):
         self.params = {}
@@ -255,7 +255,7 @@ class ParamParser(object):
 
         params = {}
 
-        expected_names = "(?P<name>{})".format("|".join(expected_opts))
+        expected_names = "(?P<name>{})".format("|".join(_expected_opts))
 
         catch_all = "^{name_pattern}(?P<rest>\s+\(.+)\n".format(
             name_pattern=expected_names
