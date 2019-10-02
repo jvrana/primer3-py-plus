@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>API Reference &#8212; primer3plus 0.1.2 documentation</title>
+    <title>API Reference &#8212; primer3plus 0.1.3 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
@@ -39,7 +39,7 @@
 <span id="api-design"></span><h2>Design<a class="headerlink" href="#design" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="primer3plus.Design">
-<em class="property">class </em><code class="sig-prename descclassname">primer3plus.</code><code class="sig-name descname">Design</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#Design"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.Design" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">primer3plus.</code><code class="sig-name descname">Design</code><a class="reference internal" href="../_modules/primer3plus/design.html#Design"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.Design" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">primer3plus.design.DesignBase</span></code></p>
 <p>Initialize a new design. Set parameters using
 <a class="reference internal" href="#primer3plus.Design.set" title="primer3plus.Design.set"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Design.set()</span></code></a>, which
@@ -83,8 +83,8 @@ design.run()
 <dt id="primer3plus.Design.run_and_optimize">
 <code class="sig-name descname">run_and_optimize</code><span class="sig-paren">(</span><em class="sig-param">max_iterations</em>, <em class="sig-param">params=None</em>, <em class="sig-param">gradient=None</em><span class="sig-paren">)</span><a class="headerlink" href="#primer3plus.Design.run_and_optimize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Design primers. If primer design is unsuccessful, relax parameters
-as defined in primer3plust.Design.DEFAULT_GRADIENT. Repeat for the specified number
-of max_iterations.</p>
+as defined in primer3plust.Design.DEFAULT_GRADIENT. Repeat for the specified
+number of max_iterations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -107,7 +107,8 @@ dictionary off 3 tuples, the step the min and the max.</p></li>
 <dl class="method">
 <dt id="primer3plus.Design.set">
 <em class="property">property </em><code class="sig-name descname">set</code><a class="headerlink" href="#primer3plus.Design.set" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the <a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a> instance for this design.</p>
+<dd><p>Return the <a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a>
+instance for this design.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a></p>
@@ -122,7 +123,8 @@ dictionary off 3 tuples, the step the min and the max.</p></li>
 <em class="property">class </em><code class="sig-prename descclassname">primer3plus.design.</code><code class="sig-name descname">DesignPresets</code><span class="sig-paren">(</span><em class="sig-param">design</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignPresets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignPresets" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Interface for setting design parameters. This is typically accessed from
-a <a class="reference internal" href="#primer3plus.Design" title="primer3plus.Design"><code class="xref py py-class docutils literal notranslate"><span class="pre">Design</span></code></a> instance’s <a class="reference internal" href="#primer3plus.Design.set" title="primer3plus.Design.set"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Design</span></code></a> method. As in:</p>
+a <a class="reference internal" href="#primer3plus.Design" title="primer3plus.Design"><code class="xref py py-class docutils literal notranslate"><span class="pre">Design</span></code></a> instance’s
+<a class="reference internal" href="#primer3plus.Design.set" title="primer3plus.Design.set"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Design</span></code></a> method. As in:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>design = Design()
 design.set.left_sequence(&quot;AGGGAGATAGATA&quot;)
 design.run()
@@ -177,7 +179,9 @@ repetitive elements such as ALUs or LINEs.</p>
 <a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_EXCLUDED_REGION">http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_EXCLUDED_REGION</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>interval</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – interval of &lt;start&gt;,&lt;length&gt;</p>
+<dd class="field-odd"><p><strong>interval</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]]]) – One of the following: the sequence of the target region,
+a tuple of the interval of &lt;start&gt;,&lt;length&gt;, or a list of
+tuples of &lt;start&gt;,&lt;length&gt;</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a></p>
@@ -201,7 +205,9 @@ has the form.</p>
 &lt;length&gt; is the number of subsequent bases in the primer-picking region.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>interval</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – interval of &lt;start&gt;,&lt;length&gt;</p>
+<dd class="field-odd"><p><strong>interval</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]]]) – One of the following: the sequence of the target region,
+a tuple of the interval of &lt;start&gt;,&lt;length&gt;, or a list of
+tuples of &lt;start&gt;,&lt;length&gt;</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a></p>
@@ -387,15 +393,13 @@ specific constraints.</p>
 <dl class="method">
 <dt id="primer3plus.design.DesignPresets.product_size">
 <code class="sig-name descname">product_size</code><span class="sig-paren">(</span><em class="sig-param">interval</em>, <em class="sig-param">opt=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignPresets.product_size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignPresets.product_size" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the product size. Optionally include the optimal size. If optimal size is
-not provided, the size is assemed to be average of the provided
-interval.</p>
+<dd><p>Set the product size. Optionally include the optimal size.</p>
 <p><a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#PRIMER_PRODUCT_SIZE_RANGE">http://primer3.ut.ee/primer3web_help.htm#PRIMER_PRODUCT_SIZE_RANGE</a>
 <a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#PRIMER_PRODUCT_OPT_SIZE">http://primer3.ut.ee/primer3web_help.htm#PRIMER_PRODUCT_OPT_SIZE</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>interval</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – a tuple of &lt;min&gt;,&lt;max&gt;</p></li>
+<li><p><strong>interval</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]]]) – a tuple of &lt;min&gt;,&lt;max&gt; or a list of such tuples</p></li>
 <li><p><strong>opt</strong> – optional product size as an int.</p></li>
 </ul>
 </dd>
@@ -445,7 +449,9 @@ PRIMER_TASK=pick_sequencing_primers. See PRIMER_TASK for more information.</p>
 <a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_TARGET">http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_TARGET</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>interval</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – interval of &lt;start&gt;,&lt;length&gt;</p>
+<dd class="field-odd"><p><strong>interval</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]]]) – One of the following: the sequence of the target region,
+a tuple of the interval of &lt;start&gt;,&lt;length&gt;, or a list of
+tuples of &lt;start&gt;,&lt;length&gt;</p>
 </dd>
 </dl>
 <p>:return self</p>

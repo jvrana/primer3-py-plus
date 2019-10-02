@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>primer3plus.design &#8212; primer3plus 0.1.2 documentation</title>
+    <title>primer3plus.design &#8212; primer3plus 0.1.3 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
@@ -49,6 +49,7 @@ from functools import wraps
 from typing import Dict
 from typing import List
 from typing import Tuple
+from typing import Union
 
 import primer3
 
@@ -56,7 +57,7 @@ from .interfaces import ParameterAccessor
 from .results import parse_primer3_results
 from primer3plus.log import logger
 from primer3plus.params import default_boulderio
-from primer3plus.params import DOCURL
+from primer3plus.constants import DOCURL
 
 
 def _summarize_reasons(reasons):
@@ -71,14 +72,14 @@ def _summarize_reasons(reasons):
     return {k: dict(v) for k, v in reason_dict.items()}
 
 
-def combine_results(results):
+def combine_results(res):
     &quot;&quot;&quot;Combine and sort results. Combine all explainations.
 
     :param results: :type results: :return: :rtype:
     &quot;&quot;&quot;
     all_pairs = []
     all_reasons = []
-    for r in results:
+    for r in res:
         all_pairs += list(r[0].values())
         all_reasons.append(r[1])
     sorted_pairs = sorted(all_pairs, key=lambda x: x[&quot;PAIR&quot;][&quot;PENALTY&quot;])
@@ -110,12 +111,12 @@ def dispatch_iterable(params, max_results=10):
                     new_args.append([arg])
             if is_iterable:
                 iterable_args = itertools.product(*new_args)
-                results = []
+                res = []
                 for _args in iterable_args:
-                    if max_results &gt; 0 and len(results) &gt; max_results:
+                    if 0 &lt; max_results &lt; len(res):
                         break
-                    results.append(f(*_args, **kwargs))
-                return combine_results(results)
+                    res.append(f(*_args, **kwargs))
+                return combine_results(res)
             else:
                 return f(*args, **kwargs)
 
@@ -127,7 +128,8 @@ def dispatch_iterable(params, max_results=10):
 <div class="viewcode-block" id="DesignPresets"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets">[docs]</a>class DesignPresets:
     &quot;&quot;&quot;
     Interface for setting design parameters. This is typically accessed from
-    a :class:`Design &lt;primer3plus.Design&gt;` instance&#39;s :meth:`Design &lt;primer3plus.Design.set&gt;` method. As in:
+    a :class:`Design &lt;primer3plus.Design&gt;` instance&#39;s
+    :meth:`Design &lt;primer3plus.Design.set&gt;` method. As in:
 
     .. code-block::
 
@@ -144,7 +146,9 @@ def dispatch_iterable(params, max_results=10):
         &quot;&quot;&quot;
         self._design = design
 
-    def _interval_from_sequences(self, template: str, target: str) -&gt; Tuple[int, int]:
+    def _interval_from_sequences(
+        self, template: str, target: str
+    ) -&gt; Union[None, Tuple[int, int]]:
         if isinstance(target, str):
             matches = self._get_index_of_match(template, target)
             if not matches:
@@ -155,7 +159,8 @@ def dispatch_iterable(params, max_results=10):
                 return None
             return matches[0]
 
-    def _get_index_of_match(self, template: str, sequence: str) -&gt; Tuple[int, int]:
+    @staticmethod
+    def _get_index_of_match(template: str, sequence: str) -&gt; List[Tuple[int, int]]:
         matches = []
         for m in re.finditer(sequence, template, re.IGNORECASE):
             matches.append((m.start(0), m.end(0)))
@@ -221,26 +226,30 @@ def dispatch_iterable(params, max_results=10):
         &quot;&quot;&quot;
         return self._set({&quot;PRIMER_NUM_RETURN&quot;: n})</div>
 
-<div class="viewcode-block" id="DesignPresets.product_size"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.product_size">[docs]</a>    def product_size(self, interval: Tuple[int, int], opt=None) -&gt; DesignPresets:
+<div class="viewcode-block" id="DesignPresets.product_size"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.product_size">[docs]</a>    def product_size(
+        self, interval: Union[Tuple[int, int], List[Tuple[int, int]]], opt=None
+    ) -&gt; DesignPresets:
         &quot;&quot;&quot;
-        Set the product size. Optionally include the optimal size. If optimal size is
-        not provided, the size is assemed to be average of the provided
-        interval.
+        Set the product size. Optionally include the optimal size.
 
         http://primer3.ut.ee/primer3web_help.htm#PRIMER_PRODUCT_SIZE_RANGE
         http://primer3.ut.ee/primer3web_help.htm#PRIMER_PRODUCT_OPT_SIZE
 
-        :param interval: a tuple of &lt;min&gt;,&lt;max&gt;
+        :param interval: a tuple of &lt;min&gt;,&lt;max&gt; or a list of such tuples
         :param opt: optional product size as an int.
         :return: self
         &quot;&quot;&quot;
-        if opt is None:
-            opt = int(sum(interval) / 2.0)
-        return self._set(
-            {&quot;PRIMER_PRODUCT_SIZE_RANGE&quot;: interval, &quot;PRIMER_PRODUCT_OPT_SIZE&quot;: opt}
-        )</div>
+        if isinstance(interval, tuple):
+            interval = [interval]
+        if opt is not None:
+            return self._set(
+                {&quot;PRIMER_PRODUCT_SIZE_RANGE&quot;: interval, &quot;PRIMER_PRODUCT_OPT_SIZE&quot;: opt}
+            )
+        return self._set({&quot;PRIMER_PRODUCT_SIZE_RANGE&quot;: interval})</div>
 
-<div class="viewcode-block" id="DesignPresets.pair_region_list"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.pair_region_list">[docs]</a>    def pair_region_list(self, region_list: List[Tuple[int, int, int, int]]) -&gt; DesignPresets:
+<div class="viewcode-block" id="DesignPresets.pair_region_list"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.pair_region_list">[docs]</a>    def pair_region_list(
+        self, region_list: List[Tuple[int, int, int, int]]
+    ) -&gt; DesignPresets:
         &quot;&quot;&quot;
         The list of regions from which to design primers.
 
@@ -311,7 +320,9 @@ def dispatch_iterable(params, max_results=10):
 
         :param primer: :type primer: :return: :rtype:
         &quot;&quot;&quot;
-        self._set({&quot;SEQUENCE_INTERNAL_OLIGO&quot;: primer, &quot;PRIMER_PICK_INTERNAL_OLIGO&quot;: 1})</div>
+        return self._set(
+            {&quot;SEQUENCE_INTERNAL_OLIGO&quot;: primer, &quot;PRIMER_PICK_INTERNAL_OLIGO&quot;: 1}
+        )</div>
 
 <div class="viewcode-block" id="DesignPresets.primers"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.primers">[docs]</a>    def primers(self, p1: str, p2: str) -&gt; DesignPresets:
         &quot;&quot;&quot;
@@ -332,7 +343,20 @@ def dispatch_iterable(params, max_results=10):
             self.right_sequence(p2)
         return self</div>
 
-<div class="viewcode-block" id="DesignPresets.included"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.included">[docs]</a>    def included(self, interval: Tuple[int, int]) -&gt; DesignPresets:
+    def _parse_interval(
+        self, interval: Union[str, Tuple[int, int], List[Tuple[int, int]]]
+    ) -&gt; List[Tuple[int, int]]:
+        if isinstance(interval, str):
+            interval = self._interval_from_sequences(
+                self._design.params[&quot;SEQUENCE_TEMPLATE&quot;], interval
+            )
+        if isinstance(interval, tuple):
+            interval = [interval]
+        return interval
+
+<div class="viewcode-block" id="DesignPresets.included"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.included">[docs]</a>    def included(
+        self, interval: Union[str, Tuple[int, int], List[Tuple[int, int]]]
+    ) -&gt; DesignPresets:
         &quot;&quot;&quot;
         Specify interval from which primers must be selected.
         A sub-region of the given sequence in which to pick primers. For
@@ -345,12 +369,16 @@ def dispatch_iterable(params, max_results=10):
         &lt;start&gt;,&lt;length&gt; where &lt;start&gt; is the index of the first base to consider, and
         &lt;length&gt; is the number of subsequent bases in the primer-picking region.
 
-        :param interval: interval of &lt;start&gt;,&lt;length&gt;
+        :param interval: One of the following: the sequence of the target region,
+                         a tuple of the interval of &lt;start&gt;,&lt;length&gt;, or a list of
+                         tuples of &lt;start&gt;,&lt;length&gt;
         :return: self
         &quot;&quot;&quot;
-        return self._set({&quot;SEQUENCE_INCLUDED_REGION&quot;: interval})</div>
+        return self._set({&quot;SEQUENCE_INCLUDED_REGION&quot;: self._parse_interval(interval)})</div>
 
-<div class="viewcode-block" id="DesignPresets.target"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.target">[docs]</a>    def target(self, interval: Tuple[int, int]) -&gt; DesignPresets:
+<div class="viewcode-block" id="DesignPresets.target"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.target">[docs]</a>    def target(
+        self, interval: Union[str, Tuple[int, int], List[Tuple[int, int]]]
+    ) -&gt; DesignPresets:
         &quot;&quot;&quot;
         Specify the interval that designed primers must flank.
         If one or more targets is specified then a legal primer pair must
@@ -366,16 +394,16 @@ def dispatch_iterable(params, max_results=10):
         http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_TARGET
 
 
-        :param interval: interval of &lt;start&gt;,&lt;length&gt;
+        :param interval: One of the following: the sequence of the target region,
+                         a tuple of the interval of &lt;start&gt;,&lt;length&gt;, or a list of
+                         tuples of &lt;start&gt;,&lt;length&gt;
         :return self
         &quot;&quot;&quot;
-        if isinstance(interval, str):
-            interval = self._interval_from_sequences(
-                self._design.params[&quot;SEQUENCE_TEMPLATE&quot;], interval
-            )
-        return self._set({&quot;SEQUENCE_TARGET&quot;: interval})</div>
+        return self._set({&quot;SEQUENCE_TARGET&quot;: self._parse_interval(interval)})</div>
 
-<div class="viewcode-block" id="DesignPresets.excluded"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.excluded">[docs]</a>    def excluded(self, interval: Tuple[int, int]) -&gt; DesignPresets:
+<div class="viewcode-block" id="DesignPresets.excluded"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.excluded">[docs]</a>    def excluded(
+        self, interval: Union[str, Tuple[int, int], List[Tuple[int, int]]]
+    ) -&gt; DesignPresets:
         &quot;&quot;&quot;
         Primers and oligos may not overlap any region specified in this tag.
         The associated value must be a space-separated list of &lt;start&gt;,&lt;length&gt; pairs
@@ -387,14 +415,12 @@ def dispatch_iterable(params, max_results=10):
         http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_TEMPLATE
         http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_EXCLUDED_REGION
 
-        :param interval: interval of &lt;start&gt;,&lt;length&gt;
+        :param interval: One of the following: the sequence of the target region,
+                         a tuple of the interval of &lt;start&gt;,&lt;length&gt;, or a list of
+                         tuples of &lt;start&gt;,&lt;length&gt;
         :return: self
         &quot;&quot;&quot;
-        if isinstance(interval, str):
-            interval = self._interval_from_sequences(
-                self._design.params[&quot;SEQUENCE_TEMPLATE&quot;], interval
-            )
-        return self._set({&quot;SEQUENCE_EXCLUDED_REGION&quot;: interval})</div>
+        return self._set({&quot;SEQUENCE_EXCLUDED_REGION&quot;: self._parse_interval(interval)})</div>
 
 <div class="viewcode-block" id="DesignPresets.pick_anyway"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.pick_anyway">[docs]</a>    def pick_anyway(self, b=1) -&gt; DesignPresets:
         &quot;&quot;&quot;
@@ -416,7 +442,7 @@ def clip(x, mn, mx):
 
 class DesignBase:
 
-    DEFAULT_PARAMS = default_boulderio() #: default parameters
+    DEFAULT_PARAMS = default_boulderio()  #: default parameters
     DEFAULT_GRADIENT = dict(
         PRIMER_MAX_SIZE=(1, DEFAULT_PARAMS[&quot;PRIMER_MAX_SIZE&quot;], 36),
         PRIMER_MIN_SIZE=(-1, 16, DEFAULT_PARAMS[&quot;PRIMER_MAX_SIZE&quot;]),
@@ -443,16 +469,16 @@ class DesignBase:
         &quot;&quot;&quot;
         if params is None:
             params = self.params
-        results = primer3.bindings.designPrimers(params.sequence(), params.globals())
-        pairs, explain = parse_primer3_results(results)
+        res = primer3.bindings.designPrimers(params.sequence(), params.globals())
+        pairs, explain = parse_primer3_results(res)
         return pairs, explain
 
     def run_and_optimize(
         self, max_iterations, params=None, gradient=None
     ) -&gt; Tuple[List[dict], List[dict]]:
         &quot;&quot;&quot;Design primers. If primer design is unsuccessful, relax parameters
-        as defined in primer3plust.Design.DEFAULT_GRADIENT. Repeat for the specified number
-        of max_iterations.
+        as defined in primer3plust.Design.DEFAULT_GRADIENT. Repeat for the specified
+        number of max_iterations.
 
         :param max_iterations: the max number of iterations to perform relaxation
         :param params: optional parameters to provide
@@ -510,7 +536,7 @@ class DesignBase:
 <div class="viewcode-block" id="Design"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.Design">[docs]</a>class Design(DesignBase):
     P = ParameterAccessor()
 
-    def __init__(self, **kwargs):
+    def __init__(self):
         &quot;&quot;&quot;Initialize a new design. Set parameters using
         :meth:`Design.set`, which
         returns an instance of :class:`DesignPresets &lt;primer3plus.design.DesignPresets&gt;`
@@ -522,12 +548,13 @@ class DesignBase:
             design.set.left_sequence(&quot;GTAGTGCTTGTA&quot;)
             design.run()
         &quot;&quot;&quot;
-        super().__init__(**kwargs)
+        super().__init__()
         self._set = DesignPresets(self)
 
     @property
     def set(self) -&gt; DesignPresets:
-        &quot;&quot;&quot;Return the :class:`DesignPresets &lt;primer3plus.design.DesignPresets&gt;` instance for this design.&quot;&quot;&quot;
+        &quot;&quot;&quot;Return the :class:`DesignPresets &lt;primer3plus.design.DesignPresets&gt;`
+        instance for this design.&quot;&quot;&quot;
         return self._set</div>
 </pre></div>
 

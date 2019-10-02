@@ -1,4 +1,4 @@
-Results of doctest builder run on 2019-10-02 12:50:55
+Results of doctest builder run on 2019-10-02 13:16:38
 =====================================================
 
 Document: examples

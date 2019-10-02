@@ -21,9 +21,9 @@ import primer3
 
 from .interfaces import ParameterAccessor
 from .results import parse_primer3_results
+from primer3plus.constants import DOCURL
 from primer3plus.log import logger
 from primer3plus.params import default_boulderio
-from primer3plus.params import DOCURL
 
 
 def _summarize_reasons(reasons):

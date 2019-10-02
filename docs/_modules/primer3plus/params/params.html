@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>primer3plus.params.params &#8212; primer3plus 0.1.2 documentation</title>
+    <title>primer3plus.params.params &#8212; primer3plus 0.1.3 documentation</title>
     <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
@@ -75,7 +75,7 @@ class ParameterType:
         )
 
 
-class Parameter(ParameterType):
+class Parameter:
     def __init__(self, ptype, value=None):
         self.ptype = ptype
         self._value = None
@@ -92,8 +92,8 @@ class Parameter(ParameterType):
     def value(self, v):
         if not issubclass(self.ptype.type, type(v)):
             raise TypeError(
-                &quot;Paramater {ptype} must be of type {type}&quot;.format(
-                    ptype=self.ptype, type=self.ptype.type
+                &quot;Paramater {ptype} must be of type {type} not {nottype}&quot;.format(
+                    ptype=self.ptype, type=self.ptype.type, nottype=type(v)
                 )
             )
         self._value = self.ptype.type(v)
@@ -133,7 +133,7 @@ class Parameter(ParameterType):
         for k, v in data_dict.items():
             self[k] = v</div>
 
-    def _post_load(self) -&gt; dict:
+    def _post_load(self):
         self.update(self.POST_LOAD_DEFAULTS)
 
     def load(self, param_dict):
@@ -161,7 +161,8 @@ class Parameter(ParameterType):
                 missing.append(key)
         return missing
 
-    def _raise_no_key(self, key):
+    @staticmethod
+    def _raise_no_key(key):
         return KeyError(
             &quot;{key} not in params. See docs for help: {url}&quot;.format(key=key, url=DOCURL)
         )
@@ -194,9 +195,10 @@ class Parameter(ParameterType):
         for k, v in self.params.items():
             yield k
 
-    def online_help(self, open=False, key=None):
+    @staticmethod
+    def online_help(open=False, key=None):
         if key:
-            url = &quot;{url}#{key}&quot;.format(DOCURL, key)
+            url = &quot;{url}#{key}&quot;.format(url=DOCURL, key=key)
         else:
             url = DOCURL
         if open:

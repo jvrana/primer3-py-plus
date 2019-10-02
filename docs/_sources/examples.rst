@@ -7,6 +7,8 @@ Designing primers for cloning
 
     from primer3plus import Design
 
+Setting parameters values appears in the design's parameters:
+
 .. testcode::
 
     design = Design()
@@ -17,6 +19,7 @@ Designing primers for cloning
 
     ACGGGGAGTTGTCTGTAGGTTGATTATGTGTGTCGTGTGTGTATATGGGTCTGA
 
+Basic cloning task design:
 
 .. testcode::
 
@@ -80,3 +83,5 @@ Designing primers for cloning
      "PRIMER_INTERNAL_NUM_RETURNED": 0,
      "PRIMER_PAIR_NUM_RETURNED": 1
     }
+
+Design primers that target the region
