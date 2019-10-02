@@ -28,6 +28,32 @@ Python primer3 wrapper https://pypi.org/project/primer3-py/.
    design.set.left_sequence("AGCGTCGTGTATGGTAGTG")
    design.run_and_optimize(5)
 
+Setting parameters
+******************
+
+The preferred way to set parameters is to use the :meth:`primer3plus.Design.set` method.
+If you're using an interactive notebook or terminal, hitting `TAB` after typing
+`design.set` will provide all of the standard design settings
+
+.. code-block::
+
+   design = Design()
+   design.set.left_sequence('AGCGTCGTGTATGGTAGTG')
+
+However, if you know the key of the parameter you want to set, you can set it directly:
+
+.. code-block::
+
+   design.params['SEQUENCE_TEMPLATE'] = 'AGCGTCGTGTATGGTAGTG'
+
+You can list all of the available parameter keys using:
+
+.. code-block::
+
+   print(list(design.params))
+
+
+
 Installation
 ------------
 

@@ -32,7 +32,8 @@
           <div class="body" role="main">
             
   <h1>Source code for primer3plus.params.params</h1><div class="highlight"><pre>
-<span></span>import os
+<span></span>from __future__ import annotations
+import os
 import re
 import webbrowser
 from collections import MutableMapping
@@ -40,7 +41,7 @@ from copy import deepcopy
 
 from .expected_opts import _expected_opts
 from primer3plus.constants import DOCURL
-
+from typing import Dict, Any, Iterator
 
 class ParamTypes:
     GLOBAL = &quot;GLOBAL&quot;
@@ -57,6 +58,16 @@ REL_PARAM_PATH = os.path.join(
 
 class ParameterType:
     def __init__(self, name, description, type, default, category):
+        &quot;&quot;&quot;
+        Initialize a BoulderIO parameter type.
+
+        :param name: name of the parameter
+        :param description: description of the parameter
+        :param type: expected type of the parameter
+        :param default: default value of the parameter
+        :param category: parameter category (from &#39;sequence&#39;, &#39;program&#39;, &#39;globals&#39;, or
+                &#39;other&#39;)
+        &quot;&quot;&quot;
         self.name = name
         self.description = description
         self.type = type
@@ -76,7 +87,14 @@ class ParameterType:
 
 
 class Parameter:
-    def __init__(self, ptype, value=None):
+    def __init__(self, ptype: ParameterType, value=None):
+        &quot;&quot;&quot;
+        Initialize a parameter from a
+        :class:`Parameter &lt;primer3plus.params.ParameterType&gt;`
+
+        :param ptype: parameter type
+        :param value: value to set parameter
+        &quot;&quot;&quot;
         self.ptype = ptype
         self._value = None
         if value is None:
@@ -85,11 +103,22 @@ class Parameter:
             self.value = value
 
     @property
-    def value(self):
+    def value(self) -&gt; Any:
+        &quot;&quot;&quot;
+        Return the value of the parameter.
+
+        :return: Any
+        &quot;&quot;&quot;
         return self._value
 
     @value.setter
-    def value(self, v):
+    def value(self, v: Any):
+        &quot;&quot;&quot;
+        Set the value of the parameter
+
+        :param v: the value
+        :return: None
+        &quot;&quot;&quot;
         if not issubclass(self.ptype.type, type(v)):
             raise TypeError(
                 &quot;Paramater {ptype} must be of type {type} not {nottype}&quot;.format(
@@ -100,16 +129,31 @@ class Parameter:
 
     @property
     def name(self):
+        &quot;&quot;&quot;
+        Return the name of the parameter
+
+        :return: parameter name
+        &quot;&quot;&quot;
         return self.ptype.name
 
     def set_default(self):
+        &quot;&quot;&quot;
+        Set the parameter to its default.
+
+        :return: None
+        &quot;&quot;&quot;
         self.value = self.ptype.default
 
-    def copy(self):
+    def copy(self) -&gt; Parameter:
+        &quot;&quot;&quot;
+        Make a copy of this parameter.
+
+        :return: None
+        &quot;&quot;&quot;
         p = self.__class__(self.ptype, deepcopy(self.value))
         return p
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return &quot;&lt;{cls} {name} {type} value={value} default={default}&gt;&quot;.format(
             cls=self.__class__.__name__,
             name=self.name,
@@ -118,7 +162,7 @@ class Parameter:
             default=self.ptype.default,
         )
 
-    def __repr__(self):
+    def __repr__(self) -&gt; str:
         return str(self)
 
 
@@ -129,14 +173,26 @@ class Parameter:
     def __init__(self):
         self.params = {}
 
-<div class="viewcode-block" id="BoulderIO.update"><a class="viewcode-back" href="../../../developer/api_reference.html#primer3plus.params.BoulderIO.update">[docs]</a>    def update(self, data_dict):
+<div class="viewcode-block" id="BoulderIO.update"><a class="viewcode-back" href="../../../developer/api_reference.html#primer3plus.params.BoulderIO.update">[docs]</a>    def update(self, data_dict: Dict[str, Any]):
+        &quot;&quot;&quot;
+        Update the parameters from a dictionary of key:values.
+
+        :param data_dict: update dictionary
+        :return: None
+        &quot;&quot;&quot;
         for k, v in data_dict.items():
             self[k] = v</div>
 
     def _post_load(self):
         self.update(self.POST_LOAD_DEFAULTS)
 
-    def load(self, param_dict):
+<div class="viewcode-block" id="BoulderIO.load"><a class="viewcode-back" href="../../../developer/api_reference.html#primer3plus.params.BoulderIO.load">[docs]</a>    def load(self, param_dict):
+        &quot;&quot;&quot;
+        Load parameters from a dictionary.
+
+        :param param_dict:
+        :return:
+        &quot;&quot;&quot;
         for k, v in param_dict.items():
             ptype = ParameterType(
                 name=v[&quot;name&quot;],
@@ -152,7 +208,7 @@ class Parameter:
         if missing:
             raise ValueError(
                 &quot;The following keys are missing: {}&quot;.format(&quot; &quot;.join(missing))
-            )
+            )</div>
 
     def _check_missing(self):
         missing = []
@@ -167,78 +223,91 @@ class Parameter:
             &quot;{key} not in params. See docs for help: {url}&quot;.format(key=key, url=DOCURL)
         )
 
-    def __contains__(self, key):
-        return key in self.params
+<div class="viewcode-block" id="BoulderIO.online_help"><a class="viewcode-back" href="../../../developer/api_reference.html#primer3plus.params.BoulderIO.online_help">[docs]</a>    @staticmethod
+    def online_help(open=False, key=None) -&gt; str:
+        &quot;&quot;&quot;
+        Display online help in a browser tab.
 
-    def __setitem__(self, key, value):
-        try:
-            self.params[key].value = value
-        except KeyError:
-            raise self._raise_no_key(key)
-
-    def __getitem__(self, key):
-        try:
-            return self.params[key].value
-        except KeyError:
-            raise self._raise_no_key(key)
-
-    def __delitem__(self, key):
-        try:
-            self.params[key].set_default()
-        except KeyError:
-            raise self._raise_no_key(key)
-
-    def __len__(self):
-        return len(self.params)
-
-    def __iter__(self):
-        for k, v in self.params.items():
-            yield k
-
-    @staticmethod
-    def online_help(open=False, key=None):
+        :param open: if True, open browser tab. Else return url.
+        :param key: optional parameter key
+        :return:
+        &quot;&quot;&quot;
         if key:
             url = &quot;{url}#{key}&quot;.format(url=DOCURL, key=key)
         else:
             url = DOCURL
         if open:
             webbrowser.open(url)
-        return url
+        return url</div>
 
     def _by_category(self, category):
         return {
             k: v.value for k, v in self.params.items() if v.ptype.category == category
         }
 
-    def globals(self, clean=True):
+<div class="viewcode-block" id="BoulderIO.globals"><a class="viewcode-back" href="../../../developer/api_reference.html#primer3plus.params.BoulderIO.globals">[docs]</a>    def globals(self, clean=True) -&gt; Dict[str, Any]:
+        &quot;&quot;&quot;
+        Return global parameters.
+
+        :param clean: if True, will remove empty lists and empty strings from params.
+        :return: parameter values as a dict.
+        &quot;&quot;&quot;
         data = self._by_category(ParamTypes.GLOBAL)
         if clean:
             data = self._clean_dictionary(data)
-        return data
+        return data</div>
 
-    def program(self, clean=True):
+<div class="viewcode-block" id="BoulderIO.program"><a class="viewcode-back" href="../../../developer/api_reference.html#primer3plus.params.BoulderIO.program">[docs]</a>    def program(self, clean=True):
+        &quot;&quot;&quot;
+        Return program parameters.
+
+        :param clean: if True, will remove empty lists and empty strings from params.
+        :return: parameter values as a dict.
+        &quot;&quot;&quot;
         data = self._by_category(ParamTypes.PROGRAM)
         if clean:
             data = self._clean_dictionary(data)
-        return data
+        return data</div>
 
-    def sequence(self, clean=True):
+<div class="viewcode-block" id="BoulderIO.sequence"><a class="viewcode-back" href="../../../developer/api_reference.html#primer3plus.params.BoulderIO.sequence">[docs]</a>    def sequence(self, clean=True):
+        &quot;&quot;&quot;
+        Return sequence parameters.
+
+        :param clean: if True, will remove empty lists and empty strings from params.
+        :return: parameter values as a dict.
+        &quot;&quot;&quot;
         data = self._by_category(ParamTypes.SEQUENCE)
         if clean:
             data = self._clean_dictionary(data)
-        return data
+        return data</div>
 
-    def other(self, clean=True):
+<div class="viewcode-block" id="BoulderIO.other"><a class="viewcode-back" href="../../../developer/api_reference.html#primer3plus.params.BoulderIO.other">[docs]</a>    def other(self, clean=True):
+        &quot;&quot;&quot;
+        Return other parameters.
+
+        :param clean: if True, will remove empty lists and empty strings from params.
+        :return: parameter values as a dict.
+        &quot;&quot;&quot;
         data = self._by_category(ParamTypes.OTHER)
         if clean:
             data = self._clean_dictionary(data)
-        return data
+        return data</div>
 
-    def set_defaults(self):
+<div class="viewcode-block" id="BoulderIO.set_defaults"><a class="viewcode-back" href="../../../developer/api_reference.html#primer3plus.params.BoulderIO.set_defaults">[docs]</a>    def set_defaults(self):
+        &quot;&quot;&quot;
+        Set all parameters to their defaults.
+
+        :return:
+        &quot;&quot;&quot;
         for v in self.params.values():
-            v.set_default()
+            v.set_default()</div>
 
-<div class="viewcode-block" id="BoulderIO.values"><a class="viewcode-back" href="../../../developer/api_reference.html#primer3plus.params.BoulderIO.values">[docs]</a>    def values(self):
+<div class="viewcode-block" id="BoulderIO.values"><a class="viewcode-back" href="../../../developer/api_reference.html#primer3plus.params.BoulderIO.values">[docs]</a>    def values(self) -&gt; Iterator[Any]:
+        &quot;&quot;&quot;
+        Iterator for parameter values.
+
+        :return: iterator over parameter values
+        &quot;&quot;&quot;
         for v in self.params.values():
             yield v.value</div>
 
@@ -265,7 +334,36 @@ class Parameter:
                 v = params[k]
                 if hasattr(v, &quot;__len__&quot;) and len(v) == 0:
                     cleaned.pop(k)
-        return cleaned</div></div>
+        return cleaned</div>
+
+    def __contains__(self, key: str) -&gt; bool:
+        return key in self.params
+
+    def __setitem__(self, key: str, value: Any):
+        try:
+            self.params[key].value = value
+        except KeyError:
+            raise self._raise_no_key(key)
+
+    def __getitem__(self, key: str) -&gt; Any:
+        try:
+            return self.params[key].value
+        except KeyError:
+            raise self._raise_no_key(key)
+
+    def __delitem__(self, key: str):
+        try:
+            self.params[key].set_default()
+        except KeyError:
+            raise self._raise_no_key(key)
+
+    def __len__(self) -&gt; int:
+        return len(self.params)
+
+    def __iter__(self) -&gt; Iterator[str]:
+        for k, v in self.params.items():
+            yield k</div>
+
 
 
 class ParamParser:
@@ -352,7 +450,7 @@ class ParamParser:
         return params
 
     @classmethod
-    def _open_primer3_params(cls, filepath=None):
+    def _open_primer3_params(cls, filepath=None) -&gt; BoulderIO:
         if filepath is None:
             filepath = REL_PARAM_PATH
         with open(filepath, &quot;r&quot;) as f:
@@ -373,11 +471,22 @@ class ParamParser:
         return params
 
     @classmethod
-    def open(cls, filepath=None):
+    def open(cls, filepath=None) -&gt; BoulderIO:
+        &quot;&quot;&quot;
+        Open the parameters from the filepath.
+
+        :param filepath: filepath
+        :return:
+        &quot;&quot;&quot;
         return cls._open_primer3_params(filepath)
 
 
-def default_boulderio():
+def default_boulderio() -&gt; BoulderIO:
+    &quot;&quot;&quot;
+    Open the default parameters as a :class:`BoulderIO &lt;primer3plus.params.BoulderIO&gt;`
+
+    :return: the BoulderIO instance.
+    &quot;&quot;&quot;
     param_dict = ParamParser.open()
     boulderio = BoulderIO()
     boulderio.load(param_dict)

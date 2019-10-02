@@ -1,8 +1,13 @@
+from __future__ import annotations
+
 import os
 import re
 import webbrowser
 from collections import MutableMapping
 from copy import deepcopy
+from typing import Any
+from typing import Dict
+from typing import Iterator
 
 from .expected_opts import _expected_opts
 from primer3plus.constants import DOCURL
@@ -23,6 +28,16 @@ REL_PARAM_PATH = os.path.join(
 
 class ParameterType:
     def __init__(self, name, description, type, default, category):
+        """
+        Initialize a BoulderIO parameter type.
+
+        :param name: name of the parameter
+        :param description: description of the parameter
+        :param type: expected type of the parameter
+        :param default: default value of the parameter
+        :param category: parameter category (from 'sequence', 'program', 'globals', or
+                'other')
+        """
         self.name = name
         self.description = description
         self.type = type
@@ -42,7 +57,14 @@ class ParameterType:
 
 
 class Parameter:
-    def __init__(self, ptype, value=None):
+    def __init__(self, ptype: ParameterType, value=None):
+        """
+        Initialize a parameter from a
+        :class:`Parameter <primer3plus.params.ParameterType>`
+
+        :param ptype: parameter type
+        :param value: value to set parameter
+        """
         self.ptype = ptype
         self._value = None
         if value is None:
@@ -51,11 +73,22 @@ class Parameter:
             self.value = value
 
     @property
-    def value(self):
+    def value(self) -> Any:
+        """
+        Return the value of the parameter.
+
+        :return: Any
+        """
         return self._value
 
     @value.setter
-    def value(self, v):
+    def value(self, v: Any):
+        """
+        Set the value of the parameter
+
+        :param v: the value
+        :return: None
+        """
         if not issubclass(self.ptype.type, type(v)):
             raise TypeError(
                 "Paramater {ptype} must be of type {type} not {nottype}".format(
@@ -66,16 +99,34 @@ class Parameter:
 
     @property
     def name(self):
+        """
+        Return the name of the parameter
+
+        :return: parameter name
+        """
         return self.ptype.name
 
     def set_default(self):
+        """
+        Set the parameter to its default.
+
+        :return: None
+        """
         self.value = self.ptype.default
 
-    def copy(self):
+    def copy(self) -> Parameter:
+        """
+        Make a copy of this parameter.
+
+        :return: None
+        """
         p = self.__class__(self.ptype, deepcopy(self.value))
         return p
 
-    def __str__(self):
+    def help(self, open=False):
+        return "{}#{}".format(DOCURL, self.name)
+
+    def __str__(self) -> str:
         return "<{cls} {name} {type} value={value} default={default}>".format(
             cls=self.__class__.__name__,
             name=self.name,
@@ -84,7 +135,7 @@ class Parameter:
             default=self.ptype.default,
         )
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return str(self)
 
 
@@ -93,9 +144,15 @@ class BoulderIO(MutableMapping):
     EXPECTED = _expected_opts[:]
 
     def __init__(self):
-        self.params = {}
+        self._params = {}
 
-    def update(self, data_dict):
+    def update(self, data_dict: Dict[str, Any]):
+        """
+        Update the parameters from a dictionary of key:values.
+
+        :param data_dict: update dictionary
+        :return: None
+        """
         for k, v in data_dict.items():
             self[k] = v
 
@@ -103,6 +160,12 @@ class BoulderIO(MutableMapping):
         self.update(self.POST_LOAD_DEFAULTS)
 
     def load(self, param_dict):
+        """
+        Load parameters from a dictionary.
+
+        :param param_dict:
+        :return:
+        """
         for k, v in param_dict.items():
             ptype = ParameterType(
                 name=v["name"],
@@ -112,7 +175,7 @@ class BoulderIO(MutableMapping):
                 category=v[ParamTypes.CATEGORY],
             )
             p = Parameter(ptype, ptype.default)
-            self.params[p.name] = p
+            self._params[p.name] = p
         self._post_load()
         missing = self._check_missing()
         if missing:
@@ -133,36 +196,15 @@ class BoulderIO(MutableMapping):
             "{key} not in params. See docs for help: {url}".format(key=key, url=DOCURL)
         )
 
-    def __contains__(self, key):
-        return key in self.params
-
-    def __setitem__(self, key, value):
-        try:
-            self.params[key].value = value
-        except KeyError:
-            raise self._raise_no_key(key)
-
-    def __getitem__(self, key):
-        try:
-            return self.params[key].value
-        except KeyError:
-            raise self._raise_no_key(key)
-
-    def __delitem__(self, key):
-        try:
-            self.params[key].set_default()
-        except KeyError:
-            raise self._raise_no_key(key)
-
-    def __len__(self):
-        return len(self.params)
-
-    def __iter__(self):
-        for k, v in self.params.items():
-            yield k
-
     @staticmethod
-    def online_help(open=False, key=None):
+    def online_help(open=False, key=None) -> str:
+        """
+        Display online help in a browser tab.
+
+        :param open: if True, open browser tab. Else return url.
+        :param key: optional parameter key
+        :return:
+        """
         if key:
             url = "{url}#{key}".format(url=DOCURL, key=key)
         else:
@@ -173,49 +215,86 @@ class BoulderIO(MutableMapping):
 
     def _by_category(self, category):
         return {
-            k: v.value for k, v in self.params.items() if v.ptype.category == category
+            k: v.value for k, v in self._params.items() if v.ptype.category == category
         }
 
-    def globals(self, clean=True):
+    def _globals(self, clean=True) -> Dict[str, Any]:
+        """
+        Return global parameters.
+
+        :param clean: if True, will remove empty lists and empty strings from params.
+        :return: parameter values as a dict.
+        """
         data = self._by_category(ParamTypes.GLOBAL)
         if clean:
             data = self._clean_dictionary(data)
         return data
 
-    def program(self, clean=True):
+    def _program(self, clean=True):
+        """
+        Return program parameters.
+
+        :param clean: if True, will remove empty lists and empty strings from params.
+        :return: parameter values as a dict.
+        """
         data = self._by_category(ParamTypes.PROGRAM)
         if clean:
             data = self._clean_dictionary(data)
         return data
 
-    def sequence(self, clean=True):
+    def _sequence(self, clean=True):
+        """
+        Return sequence parameters.
+
+        :param clean: if True, will remove empty lists and empty strings from params.
+        :return: parameter values as a dict.
+        """
         data = self._by_category(ParamTypes.SEQUENCE)
         if clean:
             data = self._clean_dictionary(data)
         return data
 
-    def other(self, clean=True):
+    def _other(self, clean=True):
+        """
+        Return other parameters.
+
+        :param clean: if True, will remove empty lists and empty strings from params.
+        :return: parameter values as a dict.
+        """
         data = self._by_category(ParamTypes.OTHER)
         if clean:
             data = self._clean_dictionary(data)
         return data
 
+    def all(self):
+        return {k: v for k, v in self.items()}
+
     def set_defaults(self):
-        for v in self.params.values():
+        """
+        Set all parameters to their defaults.
+
+        :return:
+        """
+        for v in self._params.values():
             v.set_default()
 
-    def values(self):
-        for v in self.params.values():
+    def values(self) -> Iterator[Any]:
+        """
+        Iterator for parameter values.
+
+        :return: iterator over parameter values
+        """
+        for v in self._params.values():
             yield v.value
 
     def items(self):
-        for k, v in self.params.items():
+        for k, v in self._params.items():
             yield k, v.value
 
     def copy(self):
         copied = BoulderIO()
-        for k, v in self.params.items():
-            copied.params[k] = v.copy()
+        for k, v in self._params.items():
+            copied._params[k] = v.copy()
         return copied
 
     @staticmethod
@@ -232,6 +311,44 @@ class BoulderIO(MutableMapping):
                 if hasattr(v, "__len__") and len(v) == 0:
                     cleaned.pop(k)
         return cleaned
+
+    @property
+    def defs(self):
+        return dict(self._params)
+
+    def __contains__(self, key: str) -> bool:
+        return key in self._params
+
+    def __setitem__(self, key: str, value: Any):
+        try:
+            self._params[key].value = value
+        except KeyError:
+            raise self._raise_no_key(key)
+
+    def __getitem__(self, key: str) -> Any:
+        try:
+            return self._params[key].value
+        except KeyError:
+            raise self._raise_no_key(key)
+
+    def __delitem__(self, key: str):
+        try:
+            self._params[key].set_default()
+        except KeyError:
+            raise self._raise_no_key(key)
+
+    def __len__(self) -> int:
+        return len(self._params)
+
+    def __iter__(self) -> Iterator[str]:
+        for k, v in self._params.items():
+            yield k
+
+    def __str__(self):
+        return str(self._params)
+
+    def __repr__(self):
+        return str(self._params)
 
 
 class ParamParser:
@@ -318,7 +435,7 @@ class ParamParser:
         return params
 
     @classmethod
-    def _open_primer3_params(cls, filepath=None):
+    def _open_primer3_params(cls, filepath=None) -> BoulderIO:
         if filepath is None:
             filepath = REL_PARAM_PATH
         with open(filepath, "r") as f:
@@ -339,11 +456,22 @@ class ParamParser:
         return params
 
     @classmethod
-    def open(cls, filepath=None):
+    def open(cls, filepath=None) -> BoulderIO:
+        """
+        Open the parameters from the filepath.
+
+        :param filepath: filepath
+        :return:
+        """
         return cls._open_primer3_params(filepath)
 
 
-def default_boulderio():
+def default_boulderio() -> BoulderIO:
+    """
+    Open the default parameters as a :class:`BoulderIO <primer3plus.params.BoulderIO>`
+
+    :return: the BoulderIO instance.
+    """
     param_dict = ParamParser.open()
     boulderio = BoulderIO()
     boulderio.load(param_dict)

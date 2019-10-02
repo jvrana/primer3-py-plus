@@ -1,6 +1,6 @@
+from primer3plus import Design
 from primer3plus.design.interfaces import ParameterAccessor
 from primer3plus.design.interfaces import ParameterDescriptor
-from primer3plus.params import BoulderIO
 from primer3plus.params import default_boulderio
 
 
@@ -39,3 +39,12 @@ def test_accessor():
     assert foo.params["SEQUENCE_ID"] == "baz"
     assert not foo2.params["SEQUENCE_ID"] == "baz"
     assert not foo2.P.SEQUENCE_ID == "baz"
+
+
+def test_design_accessor():
+
+    design = Design()
+    design.P.SEQUENCE_ID = "baz"
+    design.SEQUENCE_ID = "baz"
+    assert design.params["SEQUENCE_ID"] == "baz"
+    # assert design.P.SEQUENCE_ID == 'baz'

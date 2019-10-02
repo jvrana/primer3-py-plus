@@ -73,17 +73,17 @@ class TestCopy:
         assert not params_copy["SEQUENCE_TARGET"] == [4]
 
         assert (
-            params_copy.params["SEQUENCE_TARGET"].ptype
-            is params.params["SEQUENCE_TARGET"].ptype
+            params_copy._params["SEQUENCE_TARGET"].ptype
+            is params._params["SEQUENCE_TARGET"].ptype
         )
 
 
 class TestCategory:
     def test_global(self, params):
-        assert params.globals
+        assert params._globals
 
     def test_sequence(self, params):
-        assert params.sequence
+        assert params._sequence
 
     ## not implemented
     # def test_program(self, params):

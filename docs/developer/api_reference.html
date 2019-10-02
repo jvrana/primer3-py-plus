@@ -118,6 +118,9 @@ instance for this design.</p>
 
 </dd></dl>
 
+</div>
+<div class="section" id="parameter-interface">
+<span id="api-parameter-interface"></span><h2>Parameter Interface<a class="headerlink" href="#parameter-interface" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="primer3plus.design.DesignPresets">
 <em class="property">class </em><code class="sig-prename descclassname">primer3plus.design.</code><code class="sig-name descname">DesignPresets</code><span class="sig-paren">(</span><em class="sig-param">design</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignPresets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignPresets" title="Permalink to this definition">¶</a></dt>
@@ -499,11 +502,17 @@ parameter.</p>
 </dl>
 </dd></dl>
 
+<dl class="method">
+<dt id="primer3plus.design.DesignPresets.update">
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param">update</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignPresets.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignPresets.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update an arbitrary parameter</p>
+</dd></dl>
+
 </dd></dl>
 
 </div>
-<div class="section" id="parameters">
-<span id="api-parameters"></span><h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="design-parameters">
+<span id="api-parameters"></span><h2>Design Parameters<a class="headerlink" href="#design-parameters" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="primer3plus.params.BoulderIO">
 <em class="property">class </em><code class="sig-prename descclassname">primer3plus.params.</code><code class="sig-name descname">BoulderIO</code><a class="reference internal" href="../_modules/primer3plus/params/params.html#BoulderIO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO" title="Permalink to this definition">¶</a></dt>
@@ -537,6 +546,23 @@ parameter.</p>
 <dd></dd></dl>
 
 <dl class="method">
+<dt id="primer3plus.params.BoulderIO.globals">
+<code class="sig-name descname">globals</code><span class="sig-paren">(</span><em class="sig-param">clean=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params/params.html#BoulderIO.globals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO.globals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return global parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>clean</strong> – if True, will remove empty lists and empty strings from params.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>parameter values as a dict.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="primer3plus.params.BoulderIO.items">
 <code class="sig-name descname">items</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; a set-like object providing a view on D's items<a class="reference internal" href="../_modules/primer3plus/params/params.html#BoulderIO.items"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO.items" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -545,6 +571,54 @@ parameter.</p>
 <dt id="primer3plus.params.BoulderIO.keys">
 <code class="sig-name descname">keys</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; a set-like object providing a view on D's keys<a class="headerlink" href="#primer3plus.params.BoulderIO.keys" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.params.BoulderIO.load">
+<code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="sig-param">param_dict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params/params.html#BoulderIO.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load parameters from a dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>param_dict</strong> – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.params.BoulderIO.online_help">
+<em class="property">static </em><code class="sig-name descname">online_help</code><span class="sig-paren">(</span><em class="sig-param">open=False</em>, <em class="sig-param">key=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params/params.html#BoulderIO.online_help"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO.online_help" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display online help in a browser tab.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>open</strong> – if True, open browser tab. Else return url.</p></li>
+<li><p><strong>key</strong> – optional parameter key</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.params.BoulderIO.other">
+<code class="sig-name descname">other</code><span class="sig-paren">(</span><em class="sig-param">clean=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params/params.html#BoulderIO.other"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO.other" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return other parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>clean</strong> – if True, will remove empty lists and empty strings from params.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>parameter values as a dict.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="primer3plus.params.BoulderIO.pop">
@@ -559,22 +633,76 @@ parameter.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="primer3plus.params.BoulderIO.program">
+<code class="sig-name descname">program</code><span class="sig-paren">(</span><em class="sig-param">clean=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params/params.html#BoulderIO.program"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO.program" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return program parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>clean</strong> – if True, will remove empty lists and empty strings from params.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>parameter values as a dict.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.params.BoulderIO.sequence">
+<code class="sig-name descname">sequence</code><span class="sig-paren">(</span><em class="sig-param">clean=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params/params.html#BoulderIO.sequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO.sequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return sequence parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>clean</strong> – if True, will remove empty lists and empty strings from params.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>parameter values as a dict.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.params.BoulderIO.set_defaults">
+<code class="sig-name descname">set_defaults</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params/params.html#BoulderIO.set_defaults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO.set_defaults" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set all parameters to their defaults.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="primer3plus.params.BoulderIO.setdefault">
 <code class="sig-name descname">setdefault</code><span class="sig-paren">(</span><em class="sig-param">k</em><span class="optional">[</span>, <em class="sig-param">d</em><span class="optional">]</span><span class="sig-paren">)</span> &#x2192; D.get(k,d), also set D[k]=d if k not in D<a class="headerlink" href="#primer3plus.params.BoulderIO.setdefault" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="primer3plus.params.BoulderIO.update">
-<code class="sig-name descname">update</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">E</em>, <span class="optional">]</span><em class="sig-param">**F</em><span class="sig-paren">)</span> &#x2192; None.  Update D from mapping/iterable E and F.<a class="reference internal" href="../_modules/primer3plus/params/params.html#BoulderIO.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO.update" title="Permalink to this definition">¶</a></dt>
-<dd><p>If E present and has a .keys() method, does:     for k in E: D[k] = E[k]
-If E present and lacks .keys() method, does:     for (k, v) in E: D[k] = v
-In either case, this is followed by: for k, v in F.items(): D[k] = v</p>
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param">data_dict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params/params.html#BoulderIO.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the parameters from a dictionary of key:values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data_dict</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]) – update dictionary</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="primer3plus.params.BoulderIO.values">
-<code class="sig-name descname">values</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; an object providing a view on D's values<a class="reference internal" href="../_modules/primer3plus/params/params.html#BoulderIO.values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO.values" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">values</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params/params.html#BoulderIO.values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO.values" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterator for parameter values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code>]</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>iterator over parameter values</p>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -602,7 +730,8 @@ In either case, this is followed by: for k, v in F.items(): D[k] = v</p>
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#design">Design</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#parameters">Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#parameter-interface">Parameter Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#design-parameters">Design Parameters</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">primer3plus change log</a></li>
