@@ -1,6 +1,9 @@
-import pytest
 import json
-from primer3plus.p3p import Primer3Params, Primer3Design
+
+import pytest
+
+from primer3plus.p3p import Primer3Design
+from primer3plus.p3p import Primer3Params
 
 
 def test_primer3_params_init():

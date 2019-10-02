@@ -1,6 +1,8 @@
-import pytest
-from primer3plus import logger
 import random
+
+import pytest
+
+from primer3plus import logger
 
 logger.set_level("INFO")
 

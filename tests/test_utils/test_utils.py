@@ -1,4 +1,5 @@
-from primer3plus.utils import reverse_complement, anneal
+from primer3plus.utils import anneal
+from primer3plus.utils import reverse_complement
 
 
 def test_reverse_complement():

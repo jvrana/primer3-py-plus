@@ -1,5 +1,7 @@
-from primer3plus.params import ParamParser, BoulderIO
 import pytest
+
+from primer3plus.params import BoulderIO
+from primer3plus.params import ParamParser
 
 
 @pytest.fixture(scope="function")
@@ -22,7 +24,7 @@ def test_open_and_load():
     params.load(param_data)
 
 
-class TestIter(object):
+class TestIter:
     def test_iter(self, params):
         x = list(params)
         assert len(x) == len(params)
@@ -39,7 +41,7 @@ class TestIter(object):
         print(x)
 
 
-class TestSettersAndGetters(object):
+class TestSettersAndGetters:
     def test_set_value_raises_type_error(self, params):
         with pytest.raises(TypeError):
             params["SEQUENCE_TARGET"] = 7
@@ -62,7 +64,7 @@ class TestSettersAndGetters(object):
         assert params["SEQUENCE_TARGET"] == []
 
 
-class TestCopy(object):
+class TestCopy:
     def test_copy(self, params):
 
         params_copy = params.copy()
@@ -76,7 +78,7 @@ class TestCopy(object):
         )
 
 
-class TestCategory(object):
+class TestCategory:
     def test_global(self, params):
         assert params.globals
 

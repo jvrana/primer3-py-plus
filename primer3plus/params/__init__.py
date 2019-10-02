@@ -1,4 +1,6 @@
-from .params import BoulderIO, ParamParser, default_boulderio
+from .params import BoulderIO
+from .params import default_boulderio
+from .params import ParamParser
 from primer3plus.constants import DOCURL
 
 

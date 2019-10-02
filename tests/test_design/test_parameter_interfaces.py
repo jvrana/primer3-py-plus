@@ -1,9 +1,11 @@
-from primer3plus.design.interfaces import ParameterDescriptor, ParameterAccessor
-from primer3plus.params import BoulderIO, default_boulderio
+from primer3plus.design.interfaces import ParameterAccessor
+from primer3plus.design.interfaces import ParameterDescriptor
+from primer3plus.params import BoulderIO
+from primer3plus.params import default_boulderio
 
 
 def test_descriptor():
-    class Foo(object):
+    class Foo:
 
         SEQUENCE_ID = ParameterDescriptor("SEQUENCE_ID")
 
@@ -20,7 +22,7 @@ def test_descriptor():
 
 
 def test_accessor():
-    class Foo(object):
+    class Foo:
 
         P = ParameterAccessor()
 

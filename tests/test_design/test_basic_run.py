@@ -1,6 +1,8 @@
-from primer3plus.design import Design
 import random
-from primer3plus.utils import reverse_complement, anneal
+
+from primer3plus.design import Design
+from primer3plus.utils import anneal
+from primer3plus.utils import reverse_complement
 
 
 def test_init():
