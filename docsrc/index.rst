@@ -16,43 +16,88 @@ Python primer3 wrapper https://pypi.org/project/primer3-py/.
 .. code-block:: python
 
    design = Design()
-   design.set.template("AGCGTCGTGTATGGTAGTGTATTTGCGTTGACGTTGCTGACGTCGTTGAGTCGT")
-   design.set.as_cloning_task()
+   design.presets.template("AGCGTCGTGTATGGTAGTGTATTTGCGTTGACGTTGCTGACGTCGTTGAGTCGT")
+   design.presets.as_cloning_task()
    design.run()
 
 .. code-block:: python
 
    design = Design()
-   design.set.template("AGCGTCGTGTATGGTAGTGTATTTGCGTTGACGTTGCTGACGTCGTTGAGTCGT")
-   design.set.as_cloning_task()
-   design.set.left_sequence("AGCGTCGTGTATGGTAGTG")
+   design.presets.template("AGCGTCGTGTATGGTAGTGTATTTGCGTTGACGTTGCTGACGTCGTTGAGTCGT")
+   design.presets.as_cloning_task()
+   design.presets.left_sequence("AGCGTCGTGTATGGTAGTG")
    design.run_and_optimize(5)
 
 Setting parameters
 ******************
 
-The preferred way to set parameters is to use the :meth:`primer3plus.Design.set` method.
+The preferred way to set parameters is to use the :meth:`primer3plus.Design.presets`
+property, which provides many helper methods for setting parameters.
 If you're using an interactive notebook or terminal, hitting `TAB` after typing
-`design.set` will provide all of the standard design settings
+`design.presets` will provide all of the standard design settings
 
 .. code-block::
 
    design = Design()
-   design.set.left_sequence('AGCGTCGTGTATGGTAGTG')
+   design.presets.left_sequence('AGCGTCGTGTATGGTAGTG')
+   design.presets.template('AGGGGCGGAGGTGTAGTCGTCGTTAGCGTTAGTCTA')
 
-However, if you know the key of the parameter you want to set, you can set it directly:
-
-.. code-block::
-
-   design.params['SEQUENCE_TEMPLATE'] = 'AGCGTCGTGTATGGTAGTG'
-
-You can list all of the available parameter keys using:
+You can also interact with the parameters more directly. To get the parameters, use
+the :meth:`get <primer3plus.Design.get>` method. From there you can set the value,
+print parameter information, set defaults
 
 .. code-block::
 
-   print(list(design.params))
+   param = design.get('LEFT_SEQUENCE')
 
+   # print parameter information
+   print(param)
 
+   # print help url
+   print(param.help())
+
+   # set a new value
+   param.value = "AGGTAGTAT"
+
+   # set back to the default value
+   param.set_default()
+
+You can set the value of the parameter using `value` or using the
+:meth:`set <primer3plus.Design.set` method:
+
+.. code-block::
+
+   design.set('LEFT_SEQUENCE', 'AGGTATTAGTATATGATAT')
+
+You can also access descriptors of the parameters. Since there
+are many parameters, this is useful in interactive environments:
+
+.. code-block:: python
+
+   design.SEQUENCE_ID.help()
+   design.SEQUENCE_ID.value = "Seq11123123"
+
+To view all of the parameters as a dictionary, use:
+
+.. code-block::
+
+   print(dict(design.params))
+
+Running designs
+***************
+
+To run, simply use the :meth:`run <primer3plus.Design.run>` method:
+
+.. code-block::
+
+   design.run()
+
+Provided is also a primer3 relaxation procedure, which will gradually relax
+parameters such as melting temperature and primer size until primer pairs are found:
+
+.. code-block::
+
+   design.run_and_optimize(5)  # run for max of 5 iterations
 
 Installation
 ------------

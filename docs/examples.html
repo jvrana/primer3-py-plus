@@ -35,23 +35,49 @@
             
   <div class="section" id="examples">
 <h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
-<p>Designing primers for cloning</p>
-<p>Setting parameters values appears in the design’s parameters:</p>
+<div class="section" id="setting-parameters">
+<h2>setting parameters<a class="headerlink" href="#setting-parameters" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="using-designpresets">
+<h3>using <a class="reference internal" href="developer/api_reference.html#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a><a class="headerlink" href="#using-designpresets" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">design</span> <span class="o">=</span> <span class="n">Design</span><span class="p">()</span>
-<span class="n">design</span><span class="o">.</span><span class="n">set</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;ACGGGGAGTTGTCTGTAGGTTGATTATGTGTGTCGTGTGTGTATATGGGTCTGA&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">design</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;SEQUENCE_TEMPLATE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;ACGGGGAGTTGTCTGTAGGTTGATTATGTGTGTCGTGTGTGTATATGGGTCTGA&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">design</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;SEQUENCE_TEMPLATE&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ACGGGGAGTTGTCTGTAGGTTGATTATGTGTGTCGTGTGTGTATATGGGTCTGA
 </pre></div>
 </div>
-<p>Basic cloning task design:</p>
+</div>
+<div class="section" id="from-a-single-key-value-pair">
+<h3>from a single key-value pair<a class="headerlink" href="#from-a-single-key-value-pair" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># preferred
+design.set(&#39;SEQUENCE_TEMPLATE&#39;, &#39;foo&#39;)
+
+# alternative ways of setting parameters using a known parameter name
+design.SEQUENCE_TEMPLATE.value = &#39;foo&#39;
+design.get(&#39;SEQUENCE_TEMPLATE&#39;).value = &#39;foo&#39;
+design.params[&#39;SEQUENCE_TEMPLATE&#39;] = &#39;foo&#39;
+</pre></div>
+</div>
+</div>
+<div class="section" id="from-a-dictionary">
+<h3>from a dictionary<a class="headerlink" href="#from-a-dictionary" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>design.update({
+    &#39;SEQUENCE_TEMPLATE&#39;: &quot;AGGGGTAGTAGTATGTGAAGGGGTAGTAGTATGTGAAGGGGTAGTAGTATGTGAAGGGGTAGTAGTATGTGA&quot;,
+    &#39;LEFT_SEQUENCE&#39;: &#39;TAGTAGTATGTGAAGG&#39;
+})
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="design-cloning-primers">
+<h2>Design cloning primers<a class="headerlink" href="#design-cloning-primers" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
 
 <span class="n">design</span> <span class="o">=</span> <span class="n">Design</span><span class="p">()</span>
-<span class="n">design</span><span class="o">.</span><span class="n">set</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s1">&#39;TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC&#39;</span><span class="p">)</span>
-<span class="n">design</span><span class="o">.</span><span class="n">set</span><span class="o">.</span><span class="n">as_cloning_task</span><span class="p">()</span>
-<span class="n">design</span><span class="o">.</span><span class="n">set</span><span class="o">.</span><span class="n">primer_num_return</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s1">&#39;TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC&#39;</span><span class="p">)</span>
+<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">as_cloning_task</span><span class="p">()</span>
+<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">primer_num_return</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">results</span><span class="p">,</span> <span class="n">explain</span> <span class="o">=</span> <span class="n">design</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
@@ -109,6 +135,112 @@
 </div>
 <p>Design primers that target the region</p>
 </div>
+<div class="section" id="designing-the-right-primer-only">
+<h2>Designing the right primer only<a class="headerlink" href="#designing-the-right-primer-only" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>design = Design()
+design.presets.template(&quot;TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC&quot;)
+design.presets.left_sequence(&#39;GTTATGTCACGCTTACATTCACG&#39;)
+design.presets.as_cloning_task()
+design.run()
+</pre></div>
+</div>
+</div>
+<div class="section" id="design-primers-targeting-interval">
+<h2>Design primers targeting interval<a class="headerlink" href="#design-primers-targeting-interval" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>design = Design()
+design.presets.template(&quot;TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC&quot;)
+design.presets.target((50, 150))
+design.run()
+</pre></div>
+</div>
+</div>
+<div class="section" id="relaxing-parameters">
+<h2>Relaxing parameters<a class="headerlink" href="#relaxing-parameters" title="Permalink to this headline">¶</a></h2>
+<p>In this example, the parameter conditions are too strict to find a primer pair
+the first time around:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">design</span> <span class="o">=</span> <span class="n">Design</span><span class="p">()</span>
+<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC&quot;</span><span class="p">)</span>
+<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">target</span><span class="p">((</span><span class="mi">25</span><span class="p">,</span> <span class="mi">150</span><span class="p">))</span>
+<span class="n">res</span><span class="p">,</span> <span class="n">explain</span> <span class="o">=</span> <span class="n">design</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Results: &quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Explain: &quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">explain</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Results:  {}
+Explain:  {
+ &quot;PRIMER_LEFT_EXPLAIN&quot;: &quot;considered 36, low tm 36, ok 0&quot;,
+ &quot;PRIMER_RIGHT_EXPLAIN&quot;: &quot;considered 515, low tm 238, high tm 104, ok 173&quot;,
+ &quot;PRIMER_PAIR_EXPLAIN&quot;: &quot;considered 0, ok 0&quot;,
+ &quot;PRIMER_LEFT_NUM_RETURNED&quot;: 0,
+ &quot;PRIMER_RIGHT_NUM_RETURNED&quot;: 0,
+ &quot;PRIMER_INTERNAL_NUM_RETURNED&quot;: 0,
+ &quot;PRIMER_PAIR_NUM_RETURNED&quot;: 0
+}
+</pre></div>
+</div>
+<p>We can run the relaxation procedure using <a class="reference internal" href="developer/api_reference.html#primer3plus.Design.run_and_optimize" title="primer3plus.Design.run_and_optimize"><code class="xref py py-meth docutils literal notranslate"><span class="pre">run_and_optimize</span></code></a>:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">design</span> <span class="o">=</span> <span class="n">Design</span><span class="p">()</span>
+<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC&quot;</span><span class="p">)</span>
+<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">target</span><span class="p">((</span><span class="mi">25</span><span class="p">,</span> <span class="mi">150</span><span class="p">))</span>
+<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">primer_num_return</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">res</span><span class="p">,</span> <span class="n">explain</span> <span class="o">=</span> <span class="n">design</span><span class="o">.</span><span class="n">run_and_optimize</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Gradient used: &quot;</span><span class="p">,</span> <span class="n">design</span><span class="o">.</span><span class="n">DEFAULT_GRADIENT</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Results: &quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Explain: &quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">explain</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Gradient used:  {&#39;PRIMER_MAX_SIZE&#39;: (1, 27, 36), &#39;PRIMER_MIN_SIZE&#39;: (-1, 16, 27), &#39;PRIMER_MAX_TM&#39;: (1, 27, 80), &#39;PRIMER_MIN_TM&#39;: (-1, 48, 57.0), &#39;PRIMER_MAX_HAIRPIN_TH&#39;: (1, 47.0, 60)}
+Results:  {
+ &quot;0&quot;: {
+  &quot;PAIR&quot;: {
+   &quot;PENALTY&quot;: 7.892226720976964,
+   &quot;COMPL_ANY_TH&quot;: 0.0,
+   &quot;COMPL_END_TH&quot;: 0.0,
+   &quot;PRODUCT_SIZE&quot;: 235
+  },
+  &quot;LEFT&quot;: {
+   &quot;PENALTY&quot;: 7.713186819997588,
+   &quot;SEQUENCE&quot;: &quot;TCATGTAATTAGTTATGTCACGCT&quot;,
+   &quot;location&quot;: [
+    0,
+    24
+   ],
+   &quot;TM&quot;: 56.28681318000241,
+   &quot;GC_PERCENT&quot;: 33.333333333333336,
+   &quot;SELF_ANY_TH&quot;: 0.0,
+   &quot;SELF_END_TH&quot;: 0.0,
+   &quot;HAIRPIN_TH&quot;: 0.0,
+   &quot;END_STABILITY&quot;: 5.07
+  },
+  &quot;RIGHT&quot;: {
+   &quot;PENALTY&quot;: 0.17903990097937594,
+   &quot;SEQUENCE&quot;: &quot;TTCGAGCGTCCCAAAACCTT&quot;,
+   &quot;location&quot;: [
+    234,
+    20
+   ],
+   &quot;TM&quot;: 60.179039900979376,
+   &quot;GC_PERCENT&quot;: 50.0,
+   &quot;SELF_ANY_TH&quot;: 0.0,
+   &quot;SELF_END_TH&quot;: 0.0,
+   &quot;HAIRPIN_TH&quot;: 0.0,
+   &quot;END_STABILITY&quot;: 3.5
+  }
+ }
+}
+Explain:  {
+ &quot;PRIMER_LEFT_EXPLAIN&quot;: &quot;considered 45, low tm 43, ok 2&quot;,
+ &quot;PRIMER_RIGHT_EXPLAIN&quot;: &quot;considered 618, GC content failed 1, low tm 250, high tm 99, ok 268&quot;,
+ &quot;PRIMER_PAIR_EXPLAIN&quot;: &quot;considered 1, ok 1&quot;,
+ &quot;PRIMER_LEFT_NUM_RETURNED&quot;: 1,
+ &quot;PRIMER_RIGHT_NUM_RETURNED&quot;: 1,
+ &quot;PRIMER_INTERNAL_NUM_RETURNED&quot;: 0,
+ &quot;PRIMER_PAIR_NUM_RETURNED&quot;: 1
+}
+</pre></div>
+</div>
+</div>
+</div>
 
 
           </div>
@@ -128,7 +260,19 @@
 
 <h3>Navigation</h3>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#setting-parameters">setting parameters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#using-designpresets">using <code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#from-a-single-key-value-pair">from a single key-value pair</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#from-a-dictionary">from a dictionary</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#design-cloning-primers">Design cloning primers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#designing-the-right-primer-only">Designing the right primer only</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#design-primers-targeting-interval">Design primers targeting interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#relaxing-parameters">Relaxing parameters</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="developer/api_reference.html">API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="developer/changelog.html">primer3plus change log</a></li>
 </ul>

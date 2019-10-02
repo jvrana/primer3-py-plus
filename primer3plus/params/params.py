@@ -3,7 +3,7 @@ from __future__ import annotations
 import os
 import re
 import webbrowser
-from collections import MutableMapping
+from collections import Mapping
 from copy import deepcopy
 from typing import Any
 from typing import Dict
@@ -139,7 +139,7 @@ class Parameter:
         return str(self)
 
 
-class BoulderIO(MutableMapping):
+class BoulderIO(Mapping):
     POST_LOAD_DEFAULTS = {"PRIMER_EXPLAIN_FLAG": 1}
     EXPECTED = _expected_opts[:]
 
@@ -331,11 +331,11 @@ class BoulderIO(MutableMapping):
         except KeyError:
             raise self._raise_no_key(key)
 
-    def __delitem__(self, key: str):
-        try:
-            self._params[key].set_default()
-        except KeyError:
-            raise self._raise_no_key(key)
+    # def __delitem__(self, key: str):
+    #     try:
+    #         self._params[key].set_default()
+    #     except KeyError:
+    #         raise self._raise_no_key(key)
 
     def __len__(self) -> int:
         return len(self._params)
@@ -345,9 +345,6 @@ class BoulderIO(MutableMapping):
             yield k
 
     def __str__(self):
-        return str(self._params)
-
-    def __repr__(self):
         return str(self._params)
 
 
@@ -468,7 +465,7 @@ class ParamParser:
 
 def default_boulderio() -> BoulderIO:
     """
-    Open the default parameters as a :class:`BoulderIO <primer3plus.params.BoulderIO>`
+    Open the default parameters as a :class:`BoulderIO <primer3plus.params.params>`
 
     :return: the BoulderIO instance.
     """

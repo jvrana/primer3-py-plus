@@ -46,13 +46,15 @@ import re
 import webbrowser
 from collections import Counter
 from functools import wraps
+from typing import Any
 from typing import Dict
 from typing import List
 from typing import Tuple
-from typing import Union, Any
+from typing import Union
 
 import primer3
 
+from .interfaces import AllParameters
 from .interfaces import ParameterAccessor
 from .results import parse_primer3_results
 from primer3plus.constants import DOCURL
@@ -87,44 +89,6 @@ def combine_results(res):
     return sorted_pairs, explain
 
 
-def dispatch_iterable(params, max_results=10):
-    &quot;&quot;&quot;Dispatches the function to combine and sorts results if an argument is
-    an iterable indicated in `params`.
-
-    e.g. `params = [(1, (type, list)]` will dispatch the function if the first argument
-    is a list or tuple.
-    &quot;&quot;&quot;
-
-    def wrapped(f):
-        @wraps(f)
-        def _wrapped(*args, **kwargs):
-            new_args = []
-            is_iterable = False
-            for pi, arg in enumerate(args):
-                s = False
-                for i, types in params:
-                    if pi == i and type(arg) in types:
-                        new_args.append(arg)
-                        s = True
-                        is_iterable = True
-                if not s:
-                    new_args.append([arg])
-            if is_iterable:
-                iterable_args = itertools.product(*new_args)
-                res = []
-                for _args in iterable_args:
-                    if 0 &lt; max_results &lt; len(res):
-                        break
-                    res.append(f(*_args, **kwargs))
-                return combine_results(res)
-            else:
-                return f(*args, **kwargs)
-
-        return _wrapped
-
-    return wrapped
-
-
 <div class="viewcode-block" id="DesignPresets"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets">[docs]</a>class DesignPresets:
     &quot;&quot;&quot;
     Interface for setting design parameters. This is typically accessed from
@@ -134,7 +98,7 @@ def dispatch_iterable(params, max_results=10):
     .. code-block::
 
         design = Design()
-        design.set.left_sequence(&quot;AGGGAGATAGATA&quot;)
+        design.presets.left_sequence(&quot;AGGGAGATAGATA&quot;)
         design.run()
     &quot;&quot;&quot;
 
@@ -297,7 +261,9 @@ def dispatch_iterable(params, max_results=10):
 
         :return: self
         &quot;&quot;&quot;
-        return self.update({&quot;PRIMER_PICK_LEFT_PRIMER&quot;: 1, &quot;PRIMER_PICK_RIGHT_PRIMER&quot;: 0})</div>
+        return self.update(
+            {&quot;PRIMER_PICK_LEFT_PRIMER&quot;: 1, &quot;PRIMER_PICK_RIGHT_PRIMER&quot;: 0}
+        )</div>
 
 <div class="viewcode-block" id="DesignPresets.pick_right_only"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.pick_right_only">[docs]</a>    def pick_right_only(self) -&gt; DesignPresets:
         &quot;&quot;&quot;
@@ -308,7 +274,9 @@ def dispatch_iterable(params, max_results=10):
 
         :return: self
         &quot;&quot;&quot;
-        return self.update({&quot;PRIMER_PICK_LEFT_PRIMER&quot;: 0, &quot;PRIMER_PICK_RIGHT_PRIMER&quot;: 1})</div>
+        return self.update(
+            {&quot;PRIMER_PICK_LEFT_PRIMER&quot;: 0, &quot;PRIMER_PICK_RIGHT_PRIMER&quot;: 1}
+        )</div>
 
 <div class="viewcode-block" id="DesignPresets.internal_sequence"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.internal_sequence">[docs]</a>    def internal_sequence(self, primer: str) -&gt; DesignPresets:
         &quot;&quot;&quot;The sequence of an internal oligo to check and around which to
@@ -451,12 +419,12 @@ class DesignBase:
         PRIMER_MIN_TM=(-1, 48, DEFAULT_PARAMS[&quot;PRIMER_MIN_TM&quot;]),
         PRIMER_MAX_HAIRPIN_TH=(1, DEFAULT_PARAMS[&quot;PRIMER_MAX_HAIRPIN_TH&quot;], 60),
     )  #: the default gradient to use for the :meth:`Design.run_and_optimize` method.
-    CHECK_PRIMERS = &quot;check_primers&quot;
-    GENERIC = &quot;generic&quot;
-    PICK_PRIMER_LIST = &quot;pick_primer_list&quot;
-    PICK_SEQUENCING_PRIMERS = &quot;pick_sequencing_primers&quot;
-    PICK_CLONING_PRIMERS = &quot;pick_cloning_primers&quot;
-    PICK_DISCRIMINATIVE_PRIMERS = &quot;pick_discriminative_primers&quot;
+    _CHECK_PRIMERS = &quot;check_primers&quot;
+    _GENERIC = &quot;generic&quot;
+    _PICK_PRIMER_LIST = &quot;pick_primer_list&quot;
+    _PICK_SEQUENCING_PRIMERS = &quot;pick_sequencing_primers&quot;
+    _PICK_CLONING_PRIMERS = &quot;pick_cloning_primers&quot;
+    _PICK_DISCRIMINATIVE_PRIMERS = &quot;pick_discriminative_primers&quot;
 
     def __init__(self):
         self.params = self.DEFAULT_PARAMS.copy()
@@ -470,7 +438,7 @@ class DesignBase:
         &quot;&quot;&quot;
         if params is None:
             params = self.params
-        res = primer3.bindings.designPrimers(params.sequence(), params.globals())
+        res = primer3.bindings.designPrimers(params._sequence(), params._globals())
         pairs, explain = parse_primer3_results(res)
         return pairs, explain
 
@@ -534,8 +502,7 @@ class DesignBase:
         return self.copy()
 
 
-<div class="viewcode-block" id="Design"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.Design">[docs]</a>class Design(DesignBase):
-    P = ParameterAccessor()
+<div class="viewcode-block" id="Design"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.Design">[docs]</a>class Design(DesignBase, AllParameters):
 
     def __init__(self):
         &quot;&quot;&quot;Initialize a new design. Set parameters using
@@ -545,18 +512,34 @@ class DesignBase:
         .. code-block::
 
             design = Design()
-            design.set.template(&quot;AGGCTGTAGTGCTTGTAGCTGGTTGCGTTACTGTG&quot;)
-            design.set.left_sequence(&quot;GTAGTGCTTGTA&quot;)
+            design.presets.template(&quot;AGGCTGTAGTGCTTGTAGCTGGTTGCGTTACTGTG&quot;)
+            design.presets.left_sequence(&quot;GTAGTGCTTGTA&quot;)
             design.run()
         &quot;&quot;&quot;
         super().__init__()
         self._set = DesignPresets(self)
 
+    def set(self, key, value):
+        self.params.defs[key].value = value
+
+    def get(self, key):
+        return self.params.defs[key]
+
     @property
-    def set(self) -&gt; DesignPresets:
+    def presets(self) -&gt; DesignPresets:
         &quot;&quot;&quot;Return the :class:`DesignPresets &lt;primer3plus.design.DesignPresets&gt;`
         instance for this design.&quot;&quot;&quot;
-        return self._set</div>
+        return self._set
+
+    def update(self, data: Dict[str, Any]):
+        return self.params.update(data)</div>
+
+
+def new(params=None):
+    &quot;&quot;&quot;Start a new design&quot;&quot;&quot;
+    design = Design()
+    if params:
+        design.params.update(params)
 </pre></div>
 
           </div>

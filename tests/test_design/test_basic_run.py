@@ -11,9 +11,9 @@ def test_init():
 
 def test_set(gfp):
     design = Design()
-    design.set.template(gfp)
-    design.set.left_sequence(gfp[60:85])
-    design.set.as_generic_task()
+    design.presets.template(gfp)
+    design.presets.left_sequence(gfp[60:85])
+    design.presets.as_generic_task()
     results = design.run()
     print(results)
     assert results
@@ -45,19 +45,19 @@ def test_gfp(gfp, iter_random_primer):
     #
     # for f, r in product(fwd_primers,  rev_primers):
     #     design = Design()
-    #     design.set.left_sequence(f)
-    #     design.set.right_sequence(r)
-    #     design.set.task('check_primers')
-    #     design.set.template(gfp)
+    #     design.presets.left_sequence(f)
+    #     design.presets.right_sequence(r)
+    #     design.presets.task('check_primers')
+    #     design.presets.template(gfp)
     #     design.run()
 
     region_ok = check_primers(gfp, primers)
     # print(region_ok[:1])
     design = Design()
-    design.set.template(gfp)
+    design.presets.template(gfp)
     print(region_ok)
-    design.set.pair_region_list(region_ok[:10])
-    design.set.product_size([50, 2000])
+    design.presets.pair_region_list(region_ok[:10])
+    design.presets.product_size([50, 2000])
     pairs, explain = design.run()
     print(explain)
     print(pairs)
@@ -66,6 +66,6 @@ def test_gfp(gfp, iter_random_primer):
 def test_product_size_list(gfp):
 
     design = Design()
-    design.set.template(gfp)
-    design.set.product_size([(50, 100), (200, 300)])
+    design.presets.template(gfp)
+    design.presets.product_size([(50, 100), (200, 300)])
     design.run()

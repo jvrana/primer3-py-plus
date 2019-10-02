@@ -9,10 +9,10 @@ def test_run_and_optimize_basic(gfp, iter_random_primer):
     fwd = gfp[:25]
     rev = reverse_complement(gfp[-25:])
     design = Design()
-    design.set.template(gfp)
-    design.set.left_sequence(fwd)
-    design.set.right_sequence(rev)
-    design.set.task("check_primers")
+    design.presets.template(gfp)
+    design.presets.left_sequence(fwd)
+    design.presets.right_sequence(rev)
+    design.presets.task("check_primers")
     pairs, explain = design.run()
     assert not pairs
 

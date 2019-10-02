@@ -39,26 +39,82 @@
 <p>Primer3Plus is a Python DNA primer design tool based off of primer3 <a class="footnote-reference brackets" href="#id3" id="id1">1</a> <a class="footnote-reference brackets" href="#id4" id="id2">2</a> and the
 Python primer3 wrapper <a class="reference external" href="https://pypi.org/project/primer3-py/">https://pypi.org/project/primer3-py/</a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">design</span> <span class="o">=</span> <span class="n">Design</span><span class="p">()</span>
-<span class="n">design</span><span class="o">.</span><span class="n">set</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;AGCGTCGTGTATGGTAGTGTATTTGCGTTGACGTTGCTGACGTCGTTGAGTCGT&quot;</span><span class="p">)</span>
-<span class="n">design</span><span class="o">.</span><span class="n">set</span><span class="o">.</span><span class="n">as_cloning_task</span><span class="p">()</span>
+<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;AGCGTCGTGTATGGTAGTGTATTTGCGTTGACGTTGCTGACGTCGTTGAGTCGT&quot;</span><span class="p">)</span>
+<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">as_cloning_task</span><span class="p">()</span>
 <span class="n">design</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">design</span> <span class="o">=</span> <span class="n">Design</span><span class="p">()</span>
-<span class="n">design</span><span class="o">.</span><span class="n">set</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;AGCGTCGTGTATGGTAGTGTATTTGCGTTGACGTTGCTGACGTCGTTGAGTCGT&quot;</span><span class="p">)</span>
-<span class="n">design</span><span class="o">.</span><span class="n">set</span><span class="o">.</span><span class="n">as_cloning_task</span><span class="p">()</span>
-<span class="n">design</span><span class="o">.</span><span class="n">set</span><span class="o">.</span><span class="n">left_sequence</span><span class="p">(</span><span class="s2">&quot;AGCGTCGTGTATGGTAGTG&quot;</span><span class="p">)</span>
+<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;AGCGTCGTGTATGGTAGTGTATTTGCGTTGACGTTGCTGACGTCGTTGAGTCGT&quot;</span><span class="p">)</span>
+<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">as_cloning_task</span><span class="p">()</span>
+<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">left_sequence</span><span class="p">(</span><span class="s2">&quot;AGCGTCGTGTATGGTAGTG&quot;</span><span class="p">)</span>
 <span class="n">design</span><span class="o">.</span><span class="n">run_and_optimize</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="section" id="setting-parameters">
+<h2>Setting parameters<a class="headerlink" href="#setting-parameters" title="Permalink to this headline">¶</a></h2>
+<p>The preferred way to set parameters is to use the <a class="reference internal" href="developer/api_reference.html#primer3plus.Design.presets" title="primer3plus.Design.presets"><code class="xref py py-meth docutils literal notranslate"><span class="pre">primer3plus.Design.presets()</span></code></a>
+property, which provides many helper methods for setting parameters.
+If you’re using an interactive notebook or terminal, hitting <cite>TAB</cite> after typing
+<cite>design.presets</cite> will provide all of the standard design settings</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>design = Design()
+design.presets.left_sequence(&#39;AGCGTCGTGTATGGTAGTG&#39;)
+design.presets.template(&#39;AGGGGCGGAGGTGTAGTCGTCGTTAGCGTTAGTCTA&#39;)
+</pre></div>
+</div>
+<p>You can also interact with the parameters more directly. To get the parameters, use
+the <code class="xref py py-meth docutils literal notranslate"><span class="pre">get</span></code> method. From there you can set the value,
+print parameter information, set defaults</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>param = design.get(&#39;LEFT_SEQUENCE&#39;)
+
+# print parameter information
+print(param)
+
+# print help url
+print(param.help())
+
+# set a new value
+param.value = &quot;AGGTAGTAT&quot;
+
+# set back to the default value
+param.set_default()
+</pre></div>
+</div>
+<p>You can set the value of the parameter using <cite>value</cite> or using the
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">set</span> <span class="pre">&lt;primer3plus.Design.set()</span></code> method:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>design.set(&#39;LEFT_SEQUENCE&#39;, &#39;AGGTATTAGTATATGATAT&#39;)
+</pre></div>
+</div>
+<p>You can also access descriptors of the parameters. Since there
+are many parameters, this is useful in interactive environments:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">design</span><span class="o">.</span><span class="n">SEQUENCE_ID</span><span class="o">.</span><span class="n">help</span><span class="p">()</span>
+<span class="n">design</span><span class="o">.</span><span class="n">SEQUENCE_ID</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="s2">&quot;Seq11123123&quot;</span>
+</pre></div>
+</div>
+<p>To view all of the parameters as a dictionary, use:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>print(dict(design.params))
+</pre></div>
+</div>
+</div>
+<div class="section" id="running-designs">
+<h2>Running designs<a class="headerlink" href="#running-designs" title="Permalink to this headline">¶</a></h2>
+<p>To run, simply use the <a class="reference internal" href="developer/api_reference.html#primer3plus.Design.run" title="primer3plus.Design.run"><code class="xref py py-meth docutils literal notranslate"><span class="pre">run</span></code></a> method:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>design.run()
+</pre></div>
+</div>
+<p>Provided is also a primer3 relaxation procedure, which will gradually relax
+parameters such as melting temperature and primer size until primer pairs are found:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>design.run_and_optimize(5)  # run for max of 5 iterations
+</pre></div>
+</div>
 <div class="section" id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pip install primer3plus -U
 </pre></div>
 </div>
 </div>
 <div class="section" id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<h3>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h3>
 <dl class="footnote brackets">
 <dt class="label" id="id3"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
 <dd><p>Untergasser A, Cutcutache I, Koressaar T, et al. Primer3–new capabilities and</p>
@@ -72,11 +128,24 @@ Python primer3 wrapper <a class="reference external" href="https://pypi.org/proj
 </dl>
 </div>
 </div>
+</div>
 <div class="section" id="table-of-contents">
 <h1>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#setting-parameters">setting parameters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="examples.html#using-designpresets">using <code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples.html#from-a-single-key-value-pair">from a single key-value pair</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples.html#from-a-dictionary">from a dictionary</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#design-cloning-primers">Design cloning primers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#designing-the-right-primer-only">Designing the right primer only</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#design-primers-targeting-interval">Design primers targeting interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#relaxing-parameters">Relaxing parameters</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="developer/api_reference.html">API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="developer/api_reference.html#design">Design</a></li>
 <li class="toctree-l2"><a class="reference internal" href="developer/api_reference.html#parameter-interface">Parameter Interface</a></li>

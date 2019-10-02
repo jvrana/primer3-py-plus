@@ -55,44 +55,6 @@ def combine_results(res):
     return sorted_pairs, explain
 
 
-def dispatch_iterable(params, max_results=10):
-    """Dispatches the function to combine and sorts results if an argument is
-    an iterable indicated in `params`.
-
-    e.g. `params = [(1, (type, list)]` will dispatch the function if the first argument
-    is a list or tuple.
-    """
-
-    def wrapped(f):
-        @wraps(f)
-        def _wrapped(*args, **kwargs):
-            new_args = []
-            is_iterable = False
-            for pi, arg in enumerate(args):
-                s = False
-                for i, types in params:
-                    if pi == i and type(arg) in types:
-                        new_args.append(arg)
-                        s = True
-                        is_iterable = True
-                if not s:
-                    new_args.append([arg])
-            if is_iterable:
-                iterable_args = itertools.product(*new_args)
-                res = []
-                for _args in iterable_args:
-                    if 0 < max_results < len(res):
-                        break
-                    res.append(f(*_args, **kwargs))
-                return combine_results(res)
-            else:
-                return f(*args, **kwargs)
-
-        return _wrapped
-
-    return wrapped
-
-
 class DesignPresets:
     """
     Interface for setting design parameters. This is typically accessed from
@@ -102,7 +64,7 @@ class DesignPresets:
     .. code-block::
 
         design = Design()
-        design.set.left_sequence("AGGGAGATAGATA")
+        design.presets.left_sequence("AGGGAGATAGATA")
         design.run()
     """
 
@@ -506,10 +468,7 @@ class DesignBase:
         return self.copy()
 
 
-class Design(DesignBase):
-
-    P = ParameterAccessor()
-
+class Design(DesignBase, AllParameters):
     def __init__(self):
         """Initialize a new design. Set parameters using
         :meth:`Design.set`, which
@@ -518,22 +477,27 @@ class Design(DesignBase):
         .. code-block::
 
             design = Design()
-            design.set.template("AGGCTGTAGTGCTTGTAGCTGGTTGCGTTACTGTG")
-            design.set.left_sequence("GTAGTGCTTGTA")
+            design.presets.template("AGGCTGTAGTGCTTGTAGCTGGTTGCGTTACTGTG")
+            design.presets.left_sequence("GTAGTGCTTGTA")
             design.run()
         """
         super().__init__()
         self._set = DesignPresets(self)
 
-    # @property
-    # def P(self) -> ParameterAccessor:
-    #     return self._P
+    def set(self, key, value):
+        self.params.defs[key].value = value
+
+    def get(self, key):
+        return self.params.defs[key]
 
     @property
-    def set(self) -> DesignPresets:
+    def presets(self) -> DesignPresets:
         """Return the :class:`DesignPresets <primer3plus.design.DesignPresets>`
         instance for this design."""
         return self._set
+
+    def update(self, data: Dict[str, Any]):
+        return self.params.update(data)
 
 
 def new(params=None):

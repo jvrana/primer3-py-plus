@@ -41,27 +41,27 @@ class TestIter:
         print(x)
 
 
-class TestSettersAndGetters:
-    def test_set_value_raises_type_error(self, params):
-        with pytest.raises(TypeError):
-            params["SEQUENCE_TARGET"] = 7
-        params["SEQUENCE_TARGET"] = []
-
-    def test_set_value(self, params):
-        params["SEQUENCE_TARGET"] = [1, 2, 3, 4]
-        assert params["SEQUENCE_TARGET"] == [1, 2, 3, 4]
-
-    def test_del_value(self, params):
-        params["SEQUENCE_TARGET"] = [1, 2, 3, 4]
-        assert params["SEQUENCE_TARGET"] == [1, 2, 3, 4]
-        del params["SEQUENCE_TARGET"]
-        assert params["SEQUENCE_TARGET"] == []
-
-    def test_set_default(self, params):
-        params["SEQUENCE_TARGET"] = [1, 2, 3, 4]
-        assert params["SEQUENCE_TARGET"] == [1, 2, 3, 4]
-        params.set_defaults()
-        assert params["SEQUENCE_TARGET"] == []
+# class TestSettersAndGetters:
+#     def test_set_value_raises_type_error(self, params):
+#         with pytest.raises(TypeError):
+#             params["SEQUENCE_TARGET"] = 7
+#         params["SEQUENCE_TARGET"] = []
+#
+#     def test_set_value(self, params):
+#         params["SEQUENCE_TARGET"] = [1, 2, 3, 4]
+#         assert params["SEQUENCE_TARGET"] == [1, 2, 3, 4]
+#
+#     def test_del_value(self, params):
+#         params["SEQUENCE_TARGET"] = [1, 2, 3, 4]
+#         assert params["SEQUENCE_TARGET"] == [1, 2, 3, 4]
+#         del params["SEQUENCE_TARGET"]
+#         assert params["SEQUENCE_TARGET"] == []
+#
+#     def test_set_default(self, params):
+#         params["SEQUENCE_TARGET"] = [1, 2, 3, 4]
+#         assert params["SEQUENCE_TARGET"] == [1, 2, 3, 4]
+#         params.set_defaults()
+#         assert params["SEQUENCE_TARGET"] == []
 
 
 class TestCopy:

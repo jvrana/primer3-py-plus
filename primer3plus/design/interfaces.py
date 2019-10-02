@@ -5,13 +5,14 @@ class ParameterDescriptor:
         self.name = name
 
     def __get__(self, obj, objtype):
-        return obj.params[self.name]
+        return obj.params.defs[self.name]
 
     def __set__(self, obj, val):
-        obj.params[self.name] = val
+        obj.params.defs[self.name].value = val
 
 
 class AllParameters:
+    """Mixin with all available parameter descriptors"""
 
     PRIMER_DNA_CONC = ParameterDescriptor("PRIMER_DNA_CONC")
     PRIMER_MASK_KMERLIST_PATH = ParameterDescriptor("PRIMER_MASK_KMERLIST_PATH")
