@@ -318,7 +318,7 @@ class DesignBase:
         PRIMER_MAX_TM=(1, DEFAULT_PARAMS["PRIMER_MAX_SIZE"], 80),
         PRIMER_MIN_TM=(-1, 48, DEFAULT_PARAMS["PRIMER_MIN_TM"]),
         PRIMER_MAX_HAIRPIN_TH=(1, DEFAULT_PARAMS["PRIMER_MAX_HAIRPIN_TH"], 60),
-    )
+    )  # the default gradient to use for the :meth:`run_and_optimize` method.
     CHECK_PRIMERS = "check_primers"
     GENERIC = "generic"
     PICK_PRIMER_LIST = "pick_primer_list"
@@ -331,13 +331,31 @@ class DesignBase:
         self.logger = logger(self)
 
     def run(self, params=None) -> Tuple[List[Dict], List[Dict]]:
+        """Design primers. Optionally provide additional parameters.
+
+        :param params:
+        :return:
+        """
         if params is None:
             params = self.params
         results = primer3.bindings.designPrimers(params.sequence(), params.globals())
         pairs, explain = parse_primer3_results(results)
         return pairs, explain
 
-    def run_and_optimize(self, max_iterations, params=None, gradient=DEFAULT_GRADIENT):
+    def run_and_optimize(
+        self, max_iterations, params=None, gradient=DEFAULT_GRADIENT
+    ) -> Tuple[dict, dict]:
+        """Design primers. If primer design is unsuccessful, relax parameters
+        as defined in Design.DEFAULT_GRADIENT. Repeat for the specified number
+        of max_iterations.
+
+        :param max_iterations: the max number of iterations to perform relaxation
+        :param params: optional parameters to provide
+        :param gradient: optional gradient to provide. If not provided,
+                            Design.DEFAULT_GRADIENT will be used. The gradient is a
+                            dictionary off 3 tuples, the step the min and the max.
+        :return:
+        """
         if params is None:
             params = self.params
         # n_return = params["PRIMER_NUM_RETURN"]
@@ -370,9 +388,11 @@ class DesignBase:
 
     @staticmethod
     def open_help():
+        """Open the documentation help in a new browser tab."""
         webbrowser.open(DOCURL)
 
     def copy(self):
+        """Copy this design and its parameters."""
         designer = self.__class__()
         designer.params = self.params.copy()
 
@@ -381,8 +401,18 @@ class DesignBase:
 
 
 class Design(DesignBase):
+    """Primer design module."""
+
     P = ParameterAccessor()
 
     def __init__(self, **kwargs):
+        """Initialize a new design. Set parameters using :meth:`set` as in:
+
+        .. code-block::
+
+            design = Design()
+            design.set.template("AGGCTGTAGTGCTTGTAGCTGGTTGCGTTACTGTG")
+            # and so one
+        """
         super().__init__(**kwargs)
         self.set = DesignPresets(self)
