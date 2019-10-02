@@ -61,3 +61,11 @@ def test_gfp(gfp, iter_random_primer):
     pairs, explain = design.run()
     print(explain)
     print(pairs)
+
+
+def test_product_size_list(gfp):
+
+    design = Design()
+    design.set.template(gfp)
+    design.set.product_size([(50, 100), (200, 300)])
+    design.run()

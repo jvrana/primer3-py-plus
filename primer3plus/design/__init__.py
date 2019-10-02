@@ -15,6 +15,7 @@ from functools import wraps
 from typing import Dict
 from typing import List
 from typing import Tuple
+from typing import Union
 
 import primer3
 
@@ -37,14 +38,14 @@ def _summarize_reasons(reasons):
     return {k: dict(v) for k, v in reason_dict.items()}
 
 
-def combine_results(results):
+def combine_results(res):
     """Combine and sort results. Combine all explainations.
 
     :param results: :type results: :return: :rtype:
     """
     all_pairs = []
     all_reasons = []
-    for r in results:
+    for r in res:
         all_pairs += list(r[0].values())
         all_reasons.append(r[1])
     sorted_pairs = sorted(all_pairs, key=lambda x: x["PAIR"]["PENALTY"])
@@ -76,12 +77,12 @@ def dispatch_iterable(params, max_results=10):
                     new_args.append([arg])
             if is_iterable:
                 iterable_args = itertools.product(*new_args)
-                results = []
+                res = []
                 for _args in iterable_args:
-                    if max_results > 0 and len(results) > max_results:
+                    if 0 < max_results < len(res):
                         break
-                    results.append(f(*_args, **kwargs))
-                return combine_results(results)
+                    res.append(f(*_args, **kwargs))
+                return combine_results(res)
             else:
                 return f(*args, **kwargs)
 
@@ -93,7 +94,8 @@ def dispatch_iterable(params, max_results=10):
 class DesignPresets:
     """
     Interface for setting design parameters. This is typically accessed from
-    a :class:`Design` instance's :meth:`Design.set` method. As in:
+    a :class:`Design <primer3plus.Design>` instance's
+    :meth:`Design <primer3plus.Design.set>` method. As in:
 
     .. code-block::
 
@@ -110,7 +112,9 @@ class DesignPresets:
         """
         self._design = design
 
-    def _interval_from_sequences(self, template: str, target: str) -> Tuple[int, int]:
+    def _interval_from_sequences(
+        self, template: str, target: str
+    ) -> Union[None, Tuple[int, int]]:
         if isinstance(target, str):
             matches = self._get_index_of_match(template, target)
             if not matches:
@@ -121,7 +125,8 @@ class DesignPresets:
                 return None
             return matches[0]
 
-    def _get_index_of_match(self, template: str, sequence: str) -> Tuple[int, int]:
+    @staticmethod
+    def _get_index_of_match(template: str, sequence: str) -> List[Tuple[int, int]]:
         matches = []
         for m in re.finditer(sequence, template, re.IGNORECASE):
             matches.append((m.start(0), m.end(0)))
@@ -187,26 +192,30 @@ class DesignPresets:
         """
         return self._set({"PRIMER_NUM_RETURN": n})
 
-    def product_size(self, interval: Tuple[int, int], opt=None) -> DesignPresets:
+    def product_size(
+        self, interval: Union[Tuple[int, int], List[Tuple[int, int]]], opt=None
+    ) -> DesignPresets:
         """
-        Set the product size. Optionally include the optimal size. If optimal size is
-        not provided, the size is assemed to be average of the provided
-        interval.
+        Set the product size. Optionally include the optimal size.
 
         http://primer3.ut.ee/primer3web_help.htm#PRIMER_PRODUCT_SIZE_RANGE
         http://primer3.ut.ee/primer3web_help.htm#PRIMER_PRODUCT_OPT_SIZE
 
-        :param interval: a tuple of <min>,<max>
+        :param interval: a tuple of <min>,<max> or a list of such tuples
         :param opt: optional product size as an int.
         :return: self
         """
-        if opt is None:
-            opt = int(sum(interval) / 2.0)
-        return self._set(
-            {"PRIMER_PRODUCT_SIZE_RANGE": interval, "PRIMER_PRODUCT_OPT_SIZE": opt}
-        )
+        if isinstance(interval, tuple):
+            interval = [interval]
+        if opt is not None:
+            return self._set(
+                {"PRIMER_PRODUCT_SIZE_RANGE": interval, "PRIMER_PRODUCT_OPT_SIZE": opt}
+            )
+        return self._set({"PRIMER_PRODUCT_SIZE_RANGE": interval})
 
-    def pair_region_list(self, region_list: List[Tuple[int, int, int, int]]):
+    def pair_region_list(
+        self, region_list: List[Tuple[int, int, int, int]]
+    ) -> DesignPresets:
         """
         The list of regions from which to design primers.
 
@@ -217,7 +226,7 @@ class DesignPresets:
         """
         return self._set({"SEQUENCE_PRIMER_PAIR_OK_REGION_LIST": region_list})
 
-    def left_sequence(self, primer: str):
+    def left_sequence(self, primer: str) -> DesignPresets:
         """The sequence of a left primer to check and around which to design
         right primers and optional internal oligos. Must be a substring of
         SEQUENCE_TEMPLATE.
@@ -229,7 +238,7 @@ class DesignPresets:
         """
         return self._set({"SEQUENCE_PRIMER": primer, "PRIMER_PICK_RIGHT_PRIMER": 1})
 
-    def right_sequence(self, primer: str):
+    def right_sequence(self, primer: str) -> DesignPresets:
         """The sequence of a right primer to check and around which to design
         left primers and optional internal oligos. Must be a substring of the
         reverse strand of SEQUENCE_TEMPLATE.
@@ -244,7 +253,7 @@ class DesignPresets:
             {"SEQUENCE_PRIMER_REVCOMP": primer, "PRIMER_PICK_LEFT_PRIMER": 1}
         )
 
-    def pick_left_only(self):
+    def pick_left_only(self) -> DesignPresets:
         """
         Design only the left primer.
 
@@ -255,7 +264,7 @@ class DesignPresets:
         """
         return self._set({"PRIMER_PICK_LEFT_PRIMER": 1, "PRIMER_PICK_RIGHT_PRIMER": 0})
 
-    def pick_right_only(self):
+    def pick_right_only(self) -> DesignPresets:
         """
         Design only the right primer.
 
@@ -266,7 +275,7 @@ class DesignPresets:
         """
         return self._set({"PRIMER_PICK_LEFT_PRIMER": 0, "PRIMER_PICK_RIGHT_PRIMER": 1})
 
-    def internal_sequence(self, primer: str):
+    def internal_sequence(self, primer: str) -> DesignPresets:
         """The sequence of an internal oligo to check and around which to
         design left and right primers. Must be a substring of
         SEQUENCE_TEMPLATE.
@@ -277,9 +286,11 @@ class DesignPresets:
 
         :param primer: :type primer: :return: :rtype:
         """
-        self._set({"SEQUENCE_INTERNAL_OLIGO": primer, "PRIMER_PICK_INTERNAL_OLIGO": 1})
+        return self._set(
+            {"SEQUENCE_INTERNAL_OLIGO": primer, "PRIMER_PICK_INTERNAL_OLIGO": 1}
+        )
 
-    def primers(self, p1: str, p2: str):
+    def primers(self, p1: str, p2: str) -> DesignPresets:
         """
         Set the left and right primer sequences.
 
@@ -298,8 +309,22 @@ class DesignPresets:
             self.right_sequence(p2)
         return self
 
-    def included(self, interval: tuple):
-        """Specify interval from which primers must be selected.
+    def _parse_interval(
+        self, interval: Union[str, Tuple[int, int], List[Tuple[int, int]]]
+    ) -> List[Tuple[int, int]]:
+        if isinstance(interval, str):
+            interval = self._interval_from_sequences(
+                self._design.params["SEQUENCE_TEMPLATE"], interval
+            )
+        if isinstance(interval, tuple):
+            interval = [interval]
+        return interval
+
+    def included(
+        self, interval: Union[str, Tuple[int, int], List[Tuple[int, int]]]
+    ) -> DesignPresets:
+        """
+        Specify interval from which primers must be selected.
         A sub-region of the given sequence in which to pick primers. For
         example, often the first dozen or so bases of a sequence are vector,
         and should be excluded from consideration. The value for this parameter
@@ -310,13 +335,18 @@ class DesignPresets:
         <start>,<length> where <start> is the index of the first base to consider, and
         <length> is the number of subsequent bases in the primer-picking region.
 
-        :param interval: interval of <start>,<length>
+        :param interval: One of the following: the sequence of the target region,
+                         a tuple of the interval of <start>,<length>, or a list of
+                         tuples of <start>,<length>
         :return: self
         """
-        return self._set({"SEQUENCE_INCLUDED_REGION": interval})
+        return self._set({"SEQUENCE_INCLUDED_REGION": self._parse_interval(interval)})
 
-    def target(self, interval: tuple):
-        """Specify the interval that designed primers must flank.
+    def target(
+        self, interval: Union[str, Tuple[int, int], List[Tuple[int, int]]]
+    ) -> DesignPresets:
+        """
+        Specify the interval that designed primers must flank.
         If one or more targets is specified then a legal primer pair must
         flank at least one of them. A target might be a simple sequence repeat
         site (for example a CA repeat) or a single-base-pair polymorphism, or
@@ -330,17 +360,18 @@ class DesignPresets:
         http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_TARGET
 
 
-        :param interval: interval of <start>,<length>
+        :param interval: One of the following: the sequence of the target region,
+                         a tuple of the interval of <start>,<length>, or a list of
+                         tuples of <start>,<length>
         :return self
         """
-        if isinstance(interval, str):
-            interval = self._interval_from_sequences(
-                self._design.params["SEQUENCE_TEMPLATE"], interval
-            )
-        return self._set({"SEQUENCE_TARGET": interval})
+        return self._set({"SEQUENCE_TARGET": self._parse_interval(interval)})
 
-    def excluded(self, interval):
-        """Primers and oligos may not overlap any region specified in this tag.
+    def excluded(
+        self, interval: Union[str, Tuple[int, int], List[Tuple[int, int]]]
+    ) -> DesignPresets:
+        """
+        Primers and oligos may not overlap any region specified in this tag.
         The associated value must be a space-separated list of <start>,<length> pairs
         where <start> is the index of the first base of the
         excluded region, and <length> is its length. This tag is useful for tasks such
@@ -350,17 +381,16 @@ class DesignPresets:
         http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_TEMPLATE
         http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_EXCLUDED_REGION
 
-        :param interval: :type interval:
-        :return: :rtype:
+        :param interval: One of the following: the sequence of the target region,
+                         a tuple of the interval of <start>,<length>, or a list of
+                         tuples of <start>,<length>
+        :return: self
         """
-        if isinstance(interval, str):
-            interval = self._interval_from_sequences(
-                self._design.params["SEQUENCE_TEMPLATE"], interval
-            )
-        return self._set({"SEQUENCE_EXCLUDED_REGION": interval})
+        return self._set({"SEQUENCE_EXCLUDED_REGION": self._parse_interval(interval)})
 
-    def pick_anyway(self, b=1):
-        """If true use primer provided in SEQUENCE_PRIMER,
+    def pick_anyway(self, b=1) -> DesignPresets:
+        """
+        If true use primer provided in SEQUENCE_PRIMER,
         SEQUENCE_PRIMER_REVCOMP, or SEQUENCE_INTERNAL_OLIGO even if it violates
         specific constraints.
 
@@ -378,14 +408,14 @@ def clip(x, mn, mx):
 
 class DesignBase:
 
-    DEFAULT_PARAMS = default_boulderio()
+    DEFAULT_PARAMS = default_boulderio()  #: default parameters
     DEFAULT_GRADIENT = dict(
         PRIMER_MAX_SIZE=(1, DEFAULT_PARAMS["PRIMER_MAX_SIZE"], 36),
         PRIMER_MIN_SIZE=(-1, 16, DEFAULT_PARAMS["PRIMER_MAX_SIZE"]),
         PRIMER_MAX_TM=(1, DEFAULT_PARAMS["PRIMER_MAX_SIZE"], 80),
         PRIMER_MIN_TM=(-1, 48, DEFAULT_PARAMS["PRIMER_MIN_TM"]),
         PRIMER_MAX_HAIRPIN_TH=(1, DEFAULT_PARAMS["PRIMER_MAX_HAIRPIN_TH"], 60),
-    )  # the default gradient to use for the :meth:`run_and_optimize` method.
+    )  #: the default gradient to use for the :meth:`Design.run_and_optimize` method.
     CHECK_PRIMERS = "check_primers"
     GENERIC = "generic"
     PICK_PRIMER_LIST = "pick_primer_list"
@@ -401,28 +431,30 @@ class DesignBase:
         """Design primers. Optionally provide additional parameters.
 
         :param params:
-        :return:
+        :return: results
         """
         if params is None:
             params = self.params
-        results = primer3.bindings.designPrimers(params.sequence(), params.globals())
-        pairs, explain = parse_primer3_results(results)
+        res = primer3.bindings.designPrimers(params.sequence(), params.globals())
+        pairs, explain = parse_primer3_results(res)
         return pairs, explain
 
     def run_and_optimize(
-        self, max_iterations, params=None, gradient=DEFAULT_GRADIENT
-    ) -> Tuple[dict, dict]:
+        self, max_iterations, params=None, gradient=None
+    ) -> Tuple[List[dict], List[dict]]:
         """Design primers. If primer design is unsuccessful, relax parameters
-        as defined in Design.DEFAULT_GRADIENT. Repeat for the specified number
-        of max_iterations.
+        as defined in primer3plust.Design.DEFAULT_GRADIENT. Repeat for the specified
+        number of max_iterations.
 
         :param max_iterations: the max number of iterations to perform relaxation
         :param params: optional parameters to provide
         :param gradient: optional gradient to provide. If not provided,
                             Design.DEFAULT_GRADIENT will be used. The gradient is a
                             dictionary off 3 tuples, the step the min and the max.
-        :return:
+        :return: results
         """
+        if gradient is None:
+            gradient = self.DEFAULT_GRADIENT
         if params is None:
             params = self.params
         # n_return = params["PRIMER_NUM_RETURN"]
@@ -468,14 +500,12 @@ class DesignBase:
 
 
 class Design(DesignBase):
-    """Primer design module."""
-
     P = ParameterAccessor()
 
-    def __init__(self, **kwargs):
-        """Initialize a new design. Set parameters using :meth:`Design.set` as in:
-
-        :class:`primer3plus.DesignPresets`
+    def __init__(self):
+        """Initialize a new design. Set parameters using
+        :meth:`Design.set`, which
+        returns an instance of :class:`DesignPresets <primer3plus.design.DesignPresets>`
 
         .. code-block::
 
@@ -484,9 +514,11 @@ class Design(DesignBase):
             design.set.left_sequence("GTAGTGCTTGTA")
             design.run()
         """
-        super().__init__(**kwargs)
+        super().__init__()
         self._set = DesignPresets(self)
 
     @property
     def set(self) -> DesignPresets:
+        """Return the :class:`DesignPresets <primer3plus.design.DesignPresets>`
+        instance for this design."""
         return self._set

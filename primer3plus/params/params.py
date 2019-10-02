@@ -41,7 +41,7 @@ class ParameterType:
         )
 
 
-class Parameter(ParameterType):
+class Parameter:
     def __init__(self, ptype, value=None):
         self.ptype = ptype
         self._value = None
@@ -58,8 +58,8 @@ class Parameter(ParameterType):
     def value(self, v):
         if not issubclass(self.ptype.type, type(v)):
             raise TypeError(
-                "Paramater {ptype} must be of type {type}".format(
-                    ptype=self.ptype, type=self.ptype.type
+                "Paramater {ptype} must be of type {type} not {nottype}".format(
+                    ptype=self.ptype, type=self.ptype.type, nottype=type(v)
                 )
             )
         self._value = self.ptype.type(v)
@@ -99,7 +99,7 @@ class BoulderIO(MutableMapping):
         for k, v in data_dict.items():
             self[k] = v
 
-    def _post_load(self) -> dict:
+    def _post_load(self):
         self.update(self.POST_LOAD_DEFAULTS)
 
     def load(self, param_dict):
@@ -127,7 +127,8 @@ class BoulderIO(MutableMapping):
                 missing.append(key)
         return missing
 
-    def _raise_no_key(self, key):
+    @staticmethod
+    def _raise_no_key(key):
         return KeyError(
             "{key} not in params. See docs for help: {url}".format(key=key, url=DOCURL)
         )
@@ -160,9 +161,10 @@ class BoulderIO(MutableMapping):
         for k, v in self.params.items():
             yield k
 
-    def online_help(self, open=False, key=None):
+    @staticmethod
+    def online_help(open=False, key=None):
         if key:
-            url = "{url}#{key}".format(DOCURL, key)
+            url = "{url}#{key}".format(url=DOCURL, key=key)
         else:
             url = DOCURL
         if open:

@@ -47,7 +47,8 @@ napoleon_use_rtype = False  # More legible
 
 extensions = [
     "sphinx.ext.autodoc",
-    "sphinx.ext.autosummary",
+    "sphinx.ext.intersphinx",
+    "sphinx_autodoc_typehints",
     "sphinx.ext.mathjax",
     "sphinx.ext.doctest",
     "sphinx.ext.coverage",
@@ -124,36 +125,7 @@ html_context = {
 # html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()
 
 # Guzzle theme options (see theme.conf for more information)
-html_theme_options = {
-    # Set the name of the project to appear in the sidebar
-    "navbar_title": "primer3plus",
-    "navbar_site_name": "primer3plus",
-    # Render the next and previous page links in navbar. (Default: true)
-    "navbar_sidebarrel": True,
-    # Render the current pages TOC in the navbar. (Default: true)
-    "navbar_pagenav": False,
-    # Tab name for the current pages TOC. (Default: "Page")
-    "navbar_pagenav_name": "Page",
-    "globaltoc_depth": 2,
-    # Location of link to source.
-    # Options are "nav" (default), "footer" or anything else to exclude.
-    "source_link_position": "nav",
-    # Bootswatch (http://bootswatch.com/) theme.
-    #
-    # Options are nothing (default) or the name of a valid theme
-    # such as "cosmo" or "sandstone".
-    #
-    # The set of valid themes depend on the version of Bootstrap
-    # that's used (the next config option).
-    #
-    # Currently, the supported themes are:
-    # - Bootstrap 2: https://bootswatch.com/2
-    # - Bootstrap 3: https://bootswatch.com/3
-    "bootswatch_theme": "cosmo",
-    # Choose Bootstrap version.
-    # Values: "3" (default) or "2" (in quotes)
-    "bootstrap_version": "3",
-}
+html_theme_options = {}
 
 
 # Add any paths that contain custom static files (such as style sheets) here,

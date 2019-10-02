@@ -15,7 +15,7 @@
     <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="API Reference" href="developer/api_reference.html" />
+    <link rel="next" title="Examples" href="examples.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -34,16 +34,56 @@
             
   <div class="section" id="primer3plus">
 <h1>Primer3Plus<a class="headerlink" href="#primer3plus" title="Permalink to this headline">¶</a></h1>
-<p>Primer3Plus is a Python DNA primer design tool based off of primer3 <a class="footnote-reference brackets" href="#id3" id="id1">1</a> <a href="#id4"><span class="problematic" id="id2">[2]_</span></a> and the
-Python primer3 wrapper (<a class="reference external" href="https://pypi.org/project/primer3-py/">https://pypi.org/project/primer3-py/</a>)</p>
+<p>Release v0.1.2. (<a class="reference internal" href="developer/changelog.html"><span class="doc">Changelog</span></a>)</p>
+<p>Github <a href="#id5"><span class="problematic" id="id6">|gitpage|</span></a></p>
+<p>Primer3Plus is a Python DNA primer design tool based off of primer3 <a class="footnote-reference brackets" href="#id3" id="id1">1</a> <a class="footnote-reference brackets" href="#id4" id="id2">2</a> and the
+Python primer3 wrapper <a class="reference external" href="https://pypi.org/project/primer3-py/">https://pypi.org/project/primer3-py/</a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">design</span> <span class="o">=</span> <span class="n">Design</span><span class="p">()</span>
+<span class="n">design</span><span class="o">.</span><span class="n">set</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;AGCGTCGTGTATGGTAGTGTATTTGCGTTGACGTTGCTGACGTCGTTGAGTCGT&quot;</span><span class="p">)</span>
+<span class="n">design</span><span class="o">.</span><span class="n">set</span><span class="o">.</span><span class="n">as_cloning_task</span><span class="p">()</span>
+<span class="n">design</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">design</span> <span class="o">=</span> <span class="n">Design</span><span class="p">()</span>
+<span class="n">design</span><span class="o">.</span><span class="n">set</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;AGCGTCGTGTATGGTAGTGTATTTGCGTTGACGTTGCTGACGTCGTTGAGTCGT&quot;</span><span class="p">)</span>
+<span class="n">design</span><span class="o">.</span><span class="n">set</span><span class="o">.</span><span class="n">as_cloning_task</span><span class="p">()</span>
+<span class="n">design</span><span class="o">.</span><span class="n">set</span><span class="o">.</span><span class="n">left_sequence</span><span class="p">(</span><span class="s2">&quot;AGCGTCGTGTATGGTAGTG&quot;</span><span class="p">)</span>
+<span class="n">design</span><span class="o">.</span><span class="n">run_and_optimize</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pip install primer3plus -U
+</pre></div>
+</div>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
 <dl class="footnote brackets">
 <dt class="label" id="id3"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
 <dd><p>Untergasser A, Cutcutache I, Koressaar T, et al. Primer3–new capabilities and</p>
 </dd>
 </dl>
-<p>interfaces. Nucleic Acids Res. 2012;40(15):e115. doi:10.1093/nar/gks596
-.. [2] http://primer3.ut.ee/primer3web_help.htm</p>
+<p>interfaces. Nucleic Acids Res. 2012;40(15):e115. doi:10.1093/nar/gks596</p>
+<dl class="footnote brackets">
+<dt class="label" id="id4"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd><p><a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm">http://primer3.ut.ee/primer3web_help.htm</a></p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="table-of-contents">
+<h1>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer/api_reference.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="developer/api_reference.html#design">Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer/api_reference.html#parameters">Parameters</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developer/changelog.html">primer3plus change log</a></li>
+</ul>
 </div>
 </div>
 
@@ -65,14 +105,16 @@ Python primer3 wrapper (<a class="reference external" href="https://pypi.org/pro
 
 <h3>Navigation</h3>
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="developer/api_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer/changelog.html">primer3plus change log</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="#">Documentation overview</a><ul>
-      <li>Next: <a href="developer/api_reference.html" title="next chapter">API Reference</a></li>
+      <li>Next: <a href="examples.html" title="next chapter">Examples</a></li>
   </ul></li>
 </ul>
 </div>

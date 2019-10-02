@@ -15,8 +15,8 @@
     <script type="text/javascript" src="../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="primer3plus.Design" href="_autosummary/primer3plus.Design.html" />
-    <link rel="prev" title="Primer3Plus" href="../index.html" />
+    <link rel="next" title="primer3plus change log" href="changelog.html" />
+    <link rel="prev" title="Examples" href="../examples.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -33,27 +33,545 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="api-reference">
-<h1>API Reference<a class="headerlink" href="#api-reference" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
+  <div class="section" id="module-primer3plus">
+<span id="api-reference"></span><span id="api"></span><h1>API Reference<a class="headerlink" href="#module-primer3plus" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="design">
+<span id="api-design"></span><h2>Design<a class="headerlink" href="#design" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="primer3plus.Design">
+<em class="property">class </em><code class="sig-prename descclassname">primer3plus.</code><code class="sig-name descname">Design</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#Design"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.Design" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">primer3plus.design.DesignBase</span></code></p>
+<p>Initialize a new design. Set parameters using
+<a class="reference internal" href="#primer3plus.Design.set" title="primer3plus.Design.set"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Design.set()</span></code></a>, which
+returns an instance of <a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>design = Design()
+design.set.template(&quot;AGGCTGTAGTGCTTGTAGCTGGTTGCGTTACTGTG&quot;)
+design.set.left_sequence(&quot;GTAGTGCTTGTA&quot;)
+design.run()
+</pre></div>
 </div>
-<p>Primer3Plus</p>
-<span class="target" id="module-primer3plus"></span><div class="section" id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="_autosummary/primer3plus.Design.html#primer3plus.Design" title="primer3plus.Design"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Design</span></code></a>(**kwargs)</p></td>
-<td><p>Primer design module.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="_autosummary/primer3plus.design.DesignPresets.html#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">design.DesignPresets</span></code></a>(design)</p></td>
-<td><p>Interface for setting design parameters.</p></td>
-</tr>
-</tbody>
-</table>
+<dl class="method">
+<dt id="primer3plus.Design.copy">
+<code class="sig-name descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#primer3plus.Design.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy this design and its parameters.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.Design.open_help">
+<em class="property">static </em><code class="sig-name descname">open_help</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#primer3plus.Design.open_help" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open the documentation help in a new browser tab.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.Design.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">params=None</em><span class="sig-paren">)</span><a class="headerlink" href="#primer3plus.Design.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Design primers. Optionally provide additional parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>params</strong> – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[~KT, ~VT]], <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[~KT, ~VT]]]</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>results</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.Design.run_and_optimize">
+<code class="sig-name descname">run_and_optimize</code><span class="sig-paren">(</span><em class="sig-param">max_iterations</em>, <em class="sig-param">params=None</em>, <em class="sig-param">gradient=None</em><span class="sig-paren">)</span><a class="headerlink" href="#primer3plus.Design.run_and_optimize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Design primers. If primer design is unsuccessful, relax parameters
+as defined in primer3plust.Design.DEFAULT_GRADIENT. Repeat for the specified number
+of max_iterations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>max_iterations</strong> – the max number of iterations to perform relaxation</p></li>
+<li><p><strong>params</strong> – optional parameters to provide</p></li>
+<li><p><strong>gradient</strong> – optional gradient to provide. If not provided,
+Design.DEFAULT_GRADIENT will be used. The gradient is a
+dictionary off 3 tuples, the step the min and the max.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code>]]</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>results</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.Design.set">
+<em class="property">property </em><code class="sig-name descname">set</code><a class="headerlink" href="#primer3plus.Design.set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the <a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a> instance for this design.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="primer3plus.design.DesignPresets">
+<em class="property">class </em><code class="sig-prename descclassname">primer3plus.design.</code><code class="sig-name descname">DesignPresets</code><span class="sig-paren">(</span><em class="sig-param">design</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignPresets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignPresets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Interface for setting design parameters. This is typically accessed from
+a <a class="reference internal" href="#primer3plus.Design" title="primer3plus.Design"><code class="xref py py-class docutils literal notranslate"><span class="pre">Design</span></code></a> instance’s <a class="reference internal" href="#primer3plus.Design.set" title="primer3plus.Design.set"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Design</span></code></a> method. As in:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>design = Design()
+design.set.left_sequence(&quot;AGGGAGATAGATA&quot;)
+design.run()
+</pre></div>
+</div>
+<p>Initializes a new interface from a <code class="xref py py-class docutils literal notranslate"><span class="pre">Design</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>design</strong> – The design</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="primer3plus.design.DesignPresets.as_cloning_task">
+<code class="sig-name descname">as_cloning_task</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignPresets.as_cloning_task"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignPresets.as_cloning_task" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the design as a cloning task.</p>
+<p><a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#PRIMER_TASK">http://primer3.ut.ee/primer3web_help.htm#PRIMER_TASK</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>self</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.design.DesignPresets.as_generic_task">
+<code class="sig-name descname">as_generic_task</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignPresets.as_generic_task"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignPresets.as_generic_task" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the design as a generic task.</p>
+<p><a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#PRIMER_TASK">http://primer3.ut.ee/primer3web_help.htm#PRIMER_TASK</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>self</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.design.DesignPresets.excluded">
+<code class="sig-name descname">excluded</code><span class="sig-paren">(</span><em class="sig-param">interval</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignPresets.excluded"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignPresets.excluded" title="Permalink to this definition">¶</a></dt>
+<dd><p>Primers and oligos may not overlap any region specified in this tag.
+The associated value must be a space-separated list of &lt;start&gt;,&lt;length&gt; pairs
+where &lt;start&gt; is the index of the first base of the
+excluded region, and &lt;length&gt; is its length. This tag is useful for tasks such
+as excluding regions of low sequence quality or for excluding regions containing
+repetitive elements such as ALUs or LINEs.</p>
+<p><a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_TEMPLATE">http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_TEMPLATE</a>
+<a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_EXCLUDED_REGION">http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_EXCLUDED_REGION</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>interval</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – interval of &lt;start&gt;,&lt;length&gt;</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>self</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.design.DesignPresets.included">
+<code class="sig-name descname">included</code><span class="sig-paren">(</span><em class="sig-param">interval</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignPresets.included"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignPresets.included" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify interval from which primers must be selected.
+A sub-region of the given sequence in which to pick primers. For
+example, often the first dozen or so bases of a sequence are vector,
+and should be excluded from consideration. The value for this parameter
+has the form.</p>
+<p><a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_INCLUDED_REGION">http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_INCLUDED_REGION</a></p>
+<p>&lt;start&gt;,&lt;length&gt; where &lt;start&gt; is the index of the first base to consider, and
+&lt;length&gt; is the number of subsequent bases in the primer-picking region.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>interval</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – interval of &lt;start&gt;,&lt;length&gt;</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>self</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.design.DesignPresets.internal_sequence">
+<code class="sig-name descname">internal_sequence</code><span class="sig-paren">(</span><em class="sig-param">primer</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignPresets.internal_sequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignPresets.internal_sequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sequence of an internal oligo to check and around which to
+design left and right primers. Must be a substring of
+SEQUENCE_TEMPLATE.</p>
+<p><a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_INTERNAL_OLIGO">http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_INTERNAL_OLIGO</a>
+<a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_INTERNAL_OLIGO">http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_INTERNAL_OLIGO</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>primer</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – <dl class="field-list simple">
+<dt class="field-odd">type primer</dt>
+<dd class="field-odd"><dl class="field-list simple">
+<dt class="field-odd">return</dt>
+<dd class="field-odd"><dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.design.DesignPresets.left_sequence">
+<code class="sig-name descname">left_sequence</code><span class="sig-paren">(</span><em class="sig-param">primer</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignPresets.left_sequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignPresets.left_sequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sequence of a left primer to check and around which to design
+right primers and optional internal oligos. Must be a substring of
+SEQUENCE_TEMPLATE.</p>
+<p><a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_PRIMER">http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_PRIMER</a>
+<a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_RIGHT_PRIMER">http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_RIGHT_PRIMER</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>primer</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – <dl class="field-list simple">
+<dt class="field-odd">type primer</dt>
+<dd class="field-odd"><dl class="field-list simple">
+<dt class="field-odd">return</dt>
+<dd class="field-odd"><dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.design.DesignPresets.pair_region_list">
+<code class="sig-name descname">pair_region_list</code><span class="sig-paren">(</span><em class="sig-param">region_list</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignPresets.pair_region_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignPresets.pair_region_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>The list of regions from which to design primers.</p>
+<p><a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_PRIMER_PAIR_OK_REGION_LIST">http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_PRIMER_PAIR_OK_REGION_LIST</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>region_list</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]]) – list of regions</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>self</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.design.DesignPresets.pick_anyway">
+<code class="sig-name descname">pick_anyway</code><span class="sig-paren">(</span><em class="sig-param">b=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignPresets.pick_anyway"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignPresets.pick_anyway" title="Permalink to this definition">¶</a></dt>
+<dd><p>If true use primer provided in SEQUENCE_PRIMER,
+SEQUENCE_PRIMER_REVCOMP, or SEQUENCE_INTERNAL_OLIGO even if it violates
+specific constraints.</p>
+<p><a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_ANYWAY">http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_ANYWAY</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>b</strong> – default True</p>
+</dd>
+</dl>
+<p>:return self</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.design.DesignPresets.pick_left_only">
+<code class="sig-name descname">pick_left_only</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignPresets.pick_left_only"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignPresets.pick_left_only" title="Permalink to this definition">¶</a></dt>
+<dd><p>Design only the left primer.</p>
+<p><a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_LEFT_PRIMER">http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_LEFT_PRIMER</a>
+<a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_RIGHT_PRIMER">http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_RIGHT_PRIMER</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>self</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.design.DesignPresets.pick_right_only">
+<code class="sig-name descname">pick_right_only</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignPresets.pick_right_only"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignPresets.pick_right_only" title="Permalink to this definition">¶</a></dt>
+<dd><p>Design only the right primer.</p>
+<p><a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_LEFT_PRIMER">http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_LEFT_PRIMER</a>
+<a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_RIGHT_PRIMER">http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_RIGHT_PRIMER</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>self</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.design.DesignPresets.primer_num_return">
+<code class="sig-name descname">primer_num_return</code><span class="sig-paren">(</span><em class="sig-param">n</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignPresets.primer_num_return"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignPresets.primer_num_return" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the number of primers to return for the design task.</p>
+<p><a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#PRIMER_NUM_RETURN">http://primer3.ut.ee/primer3web_help.htm#PRIMER_NUM_RETURN</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>n</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – number of primers to return</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>self</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.design.DesignPresets.primers">
+<code class="sig-name descname">primers</code><span class="sig-paren">(</span><em class="sig-param">p1</em>, <em class="sig-param">p2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignPresets.primers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignPresets.primers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the left and right primer sequences.</p>
+<p><a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_PRIMER">http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_PRIMER</a>
+<a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_RIGHT_PRIMER">http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_RIGHT_PRIMER</a>
+<a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_PRIMER_REVCOMP">http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_PRIMER_REVCOMP</a>
+<a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_LEFT_PRIMER">http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_LEFT_PRIMER</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p1</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p></li>
+<li><p><strong>p2</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.design.DesignPresets.product_size">
+<code class="sig-name descname">product_size</code><span class="sig-paren">(</span><em class="sig-param">interval</em>, <em class="sig-param">opt=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignPresets.product_size"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignPresets.product_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the product size. Optionally include the optimal size. If optimal size is
+not provided, the size is assemed to be average of the provided
+interval.</p>
+<p><a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#PRIMER_PRODUCT_SIZE_RANGE">http://primer3.ut.ee/primer3web_help.htm#PRIMER_PRODUCT_SIZE_RANGE</a>
+<a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#PRIMER_PRODUCT_OPT_SIZE">http://primer3.ut.ee/primer3web_help.htm#PRIMER_PRODUCT_OPT_SIZE</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>interval</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – a tuple of &lt;min&gt;,&lt;max&gt;</p></li>
+<li><p><strong>opt</strong> – optional product size as an int.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>self</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.design.DesignPresets.right_sequence">
+<code class="sig-name descname">right_sequence</code><span class="sig-paren">(</span><em class="sig-param">primer</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignPresets.right_sequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignPresets.right_sequence" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sequence of a right primer to check and around which to design
+left primers and optional internal oligos. Must be a substring of the
+reverse strand of SEQUENCE_TEMPLATE.</p>
+<p><a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_PRIMER_REVCOMP">http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_PRIMER_REVCOMP</a>
+<a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_LEFT_PRIMER">http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_LEFT_PRIMER</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>primer</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – primer sequence</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>self</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.design.DesignPresets.target">
+<code class="sig-name descname">target</code><span class="sig-paren">(</span><em class="sig-param">interval</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignPresets.target"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignPresets.target" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify the interval that designed primers must flank.
+If one or more targets is specified then a legal primer pair must
+flank at least one of them. A target might be a simple sequence repeat
+site (for example a CA repeat) or a single-base-pair polymorphism, or
+an exon for resequencing. The value should be a space-separated list
+of &lt;start&gt;,&lt;length&gt; pairs where &lt;start&gt; is the index of the first base of a
+target,and &lt;length&gt; is its length.  See also PRIMER_INSIDE_PENALTY,
+PRIMER_OUTSIDE_PENALTY.
+PRIMER_TASK=pick_sequencing_primers. See PRIMER_TASK for more information.</p>
+<p><a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_TEMPLATE">http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_TEMPLATE</a>
+<a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_TARGET">http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_TARGET</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>interval</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – interval of &lt;start&gt;,&lt;length&gt;</p>
+</dd>
+</dl>
+<p>:return self</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.design.DesignPresets.task">
+<code class="sig-name descname">task</code><span class="sig-paren">(</span><em class="sig-param">task</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignPresets.task"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignPresets.task" title="Permalink to this definition">¶</a></dt>
+<dd><p>This tag tells primer3 what task to perform.</p>
+<p><a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#PRIMER_TASK">http://primer3.ut.ee/primer3web_help.htm#PRIMER_TASK</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>task</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – the task name</p>
+</dd>
+</dl>
+<p>:return self</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.design.DesignPresets.template">
+<code class="sig-name descname">template</code><span class="sig-paren">(</span><em class="sig-param">template</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignPresets.template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignPresets.template" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the template sequence for the design. This sets the ‘SEQUENCE_TEMPLATE’
+parameter.</p>
+<p><a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_TEMPLATE">http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_TEMPLATE</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>template</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – the template sequence</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>self</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="parameters">
+<span id="api-parameters"></span><h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="primer3plus.params.BoulderIO">
+<em class="property">class </em><code class="sig-prename descclassname">primer3plus.params.</code><code class="sig-name descname">BoulderIO</code><a class="reference internal" href="../_modules/primer3plus/params/params.html#BoulderIO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">collections.abc.MutableMapping</span></code></p>
+<dl class="method">
+<dt id="primer3plus.params.BoulderIO._clean_dictionary">
+<em class="property">static </em><code class="sig-name descname">_clean_dictionary</code><span class="sig-paren">(</span><em class="sig-param">params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params/params.html#BoulderIO._clean_dictionary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO._clean_dictionary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes empty lists and empty strings from params.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="field-list simple">
+<dt class="field-odd">rtype</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.params.BoulderIO.clear">
+<code class="sig-name descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None.  Remove all items from D.<a class="headerlink" href="#primer3plus.params.BoulderIO.clear" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.params.BoulderIO.get">
+<code class="sig-name descname">get</code><span class="sig-paren">(</span><em class="sig-param">k</em><span class="optional">[</span>, <em class="sig-param">d</em><span class="optional">]</span><span class="sig-paren">)</span> &#x2192; D[k] if k in D, else d.  d defaults to None.<a class="headerlink" href="#primer3plus.params.BoulderIO.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.params.BoulderIO.items">
+<code class="sig-name descname">items</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; a set-like object providing a view on D's items<a class="reference internal" href="../_modules/primer3plus/params/params.html#BoulderIO.items"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO.items" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.params.BoulderIO.keys">
+<code class="sig-name descname">keys</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; a set-like object providing a view on D's keys<a class="headerlink" href="#primer3plus.params.BoulderIO.keys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.params.BoulderIO.pop">
+<code class="sig-name descname">pop</code><span class="sig-paren">(</span><em class="sig-param">k</em><span class="optional">[</span>, <em class="sig-param">d</em><span class="optional">]</span><span class="sig-paren">)</span> &#x2192; v, remove specified key and return the corresponding value.<a class="headerlink" href="#primer3plus.params.BoulderIO.pop" title="Permalink to this definition">¶</a></dt>
+<dd><p>If key is not found, d is returned if given, otherwise KeyError is raised.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.params.BoulderIO.popitem">
+<code class="sig-name descname">popitem</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; (k, v), remove and return some (key, value) pair<a class="headerlink" href="#primer3plus.params.BoulderIO.popitem" title="Permalink to this definition">¶</a></dt>
+<dd><p>as a 2-tuple; but raise KeyError if D is empty.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.params.BoulderIO.setdefault">
+<code class="sig-name descname">setdefault</code><span class="sig-paren">(</span><em class="sig-param">k</em><span class="optional">[</span>, <em class="sig-param">d</em><span class="optional">]</span><span class="sig-paren">)</span> &#x2192; D.get(k,d), also set D[k]=d if k not in D<a class="headerlink" href="#primer3plus.params.BoulderIO.setdefault" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.params.BoulderIO.update">
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param">E</em>, <span class="optional">]</span><em class="sig-param">**F</em><span class="sig-paren">)</span> &#x2192; None.  Update D from mapping/iterable E and F.<a class="reference internal" href="../_modules/primer3plus/params/params.html#BoulderIO.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>If E present and has a .keys() method, does:     for k in E: D[k] = E[k]
+If E present and lacks .keys() method, does:     for (k, v) in E: D[k] = v
+In either case, this is followed by: for k, v in F.items(): D[k] = v</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.params.BoulderIO.values">
+<code class="sig-name descname">values</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; an object providing a view on D's values<a class="reference internal" href="../_modules/primer3plus/params/params.html#BoulderIO.values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO.values" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
 </div>
 
@@ -75,22 +593,21 @@
 
 <h3>Navigation</h3>
 <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="_autosummary/primer3plus.Design.html">primer3plus.Design</a></li>
-<li class="toctree-l3"><a class="reference internal" href="_autosummary/primer3plus.design.DesignPresets.html">primer3plus.design.DesignPresets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#design">Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#parameters">Parameters</a></li>
 </ul>
 </li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">primer3plus change log</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="../index.html" title="previous chapter">Primer3Plus</a></li>
-      <li>Next: <a href="_autosummary/primer3plus.Design.html" title="next chapter">primer3plus.Design</a></li>
+      <li>Previous: <a href="../examples.html" title="previous chapter">Examples</a></li>
+      <li>Next: <a href="changelog.html" title="next chapter">primer3plus change log</a></li>
   </ul></li>
 </ul>
 </div>

@@ -1,0 +1,451 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>primer3plus.params.params &#8212; primer3plus 0.1.2 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for primer3plus.params.params</h1><div class="highlight"><pre>
+<span></span>import os
+import re
+import webbrowser
+from collections import MutableMapping
+from copy import deepcopy
+
+from .expected_opts import _expected_opts
+from primer3plus.constants import DOCURL
+
+
+class ParamTypes:
+    GLOBAL = &quot;GLOBAL&quot;
+    PROGRAM = &quot;PROGRAM&quot;
+    OTHER = &quot;OTHER&quot;
+    SEQUENCE = &quot;SEQUENCE&quot;
+    CATEGORY = &quot;category&quot;
+
+
+REL_PARAM_PATH = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), &quot;..&quot;, &quot;primer3_params_raw.txt&quot;
+)
+
+
+class ParameterType:
+    def __init__(self, name, description, type, default, category):
+        self.name = name
+        self.description = description
+        self.type = type
+        self.default = default
+        self.category = category
+
+    def __repr__(self):
+        return str(self)
+
+    def __str__(self):
+        return &quot;&lt;{cls} {name} {type} default={default}&gt;&quot;.format(
+            cls=self.__class__.__name__,
+            name=self.name,
+            type=self.type,
+            default=self.default,
+        )
+
+
+class Parameter(ParameterType):
+    def __init__(self, ptype, value=None):
+        self.ptype = ptype
+        self._value = None
+        if value is None:
+            self.value = self.ptype.default
+        else:
+            self.value = value
+
+    @property
+    def value(self):
+        return self._value
+
+    @value.setter
+    def value(self, v):
+        if not issubclass(self.ptype.type, type(v)):
+            raise TypeError(
+                &quot;Paramater {ptype} must be of type {type}&quot;.format(
+                    ptype=self.ptype, type=self.ptype.type
+                )
+            )
+        self._value = self.ptype.type(v)
+
+    @property
+    def name(self):
+        return self.ptype.name
+
+    def set_default(self):
+        self.value = self.ptype.default
+
+    def copy(self):
+        p = self.__class__(self.ptype, deepcopy(self.value))
+        return p
+
+    def __str__(self):
+        return &quot;&lt;{cls} {name} {type} value={value} default={default}&gt;&quot;.format(
+            cls=self.__class__.__name__,
+            name=self.name,
+            type=self.ptype.type,
+            value=self.value,
+            default=self.ptype.default,
+        )
+
+    def __repr__(self):
+        return str(self)
+
+
+<div class="viewcode-block" id="BoulderIO"><a class="viewcode-back" href="../../../developer/api_reference.html#primer3plus.params.BoulderIO">[docs]</a>class BoulderIO(MutableMapping):
+    POST_LOAD_DEFAULTS = {&quot;PRIMER_EXPLAIN_FLAG&quot;: 1}
+    EXPECTED = _expected_opts[:]
+
+    def __init__(self):
+        self.params = {}
+
+<div class="viewcode-block" id="BoulderIO.update"><a class="viewcode-back" href="../../../developer/api_reference.html#primer3plus.params.BoulderIO.update">[docs]</a>    def update(self, data_dict):
+        for k, v in data_dict.items():
+            self[k] = v</div>
+
+    def _post_load(self) -&gt; dict:
+        self.update(self.POST_LOAD_DEFAULTS)
+
+    def load(self, param_dict):
+        for k, v in param_dict.items():
+            ptype = ParameterType(
+                name=v[&quot;name&quot;],
+                type=v[&quot;type&quot;],
+                default=v[&quot;default&quot;],
+                description=v[&quot;description&quot;],
+                category=v[ParamTypes.CATEGORY],
+            )
+            p = Parameter(ptype, ptype.default)
+            self.params[p.name] = p
+        self._post_load()
+        missing = self._check_missing()
+        if missing:
+            raise ValueError(
+                &quot;The following keys are missing: {}&quot;.format(&quot; &quot;.join(missing))
+            )
+
+    def _check_missing(self):
+        missing = []
+        for key in self.EXPECTED:
+            if key not in self:
+                missing.append(key)
+        return missing
+
+    def _raise_no_key(self, key):
+        return KeyError(
+            &quot;{key} not in params. See docs for help: {url}&quot;.format(key=key, url=DOCURL)
+        )
+
+    def __contains__(self, key):
+        return key in self.params
+
+    def __setitem__(self, key, value):
+        try:
+            self.params[key].value = value
+        except KeyError:
+            raise self._raise_no_key(key)
+
+    def __getitem__(self, key):
+        try:
+            return self.params[key].value
+        except KeyError:
+            raise self._raise_no_key(key)
+
+    def __delitem__(self, key):
+        try:
+            self.params[key].set_default()
+        except KeyError:
+            raise self._raise_no_key(key)
+
+    def __len__(self):
+        return len(self.params)
+
+    def __iter__(self):
+        for k, v in self.params.items():
+            yield k
+
+    def online_help(self, open=False, key=None):
+        if key:
+            url = &quot;{url}#{key}&quot;.format(DOCURL, key)
+        else:
+            url = DOCURL
+        if open:
+            webbrowser.open(url)
+        return url
+
+    def _by_category(self, category):
+        return {
+            k: v.value for k, v in self.params.items() if v.ptype.category == category
+        }
+
+    def globals(self, clean=True):
+        data = self._by_category(ParamTypes.GLOBAL)
+        if clean:
+            data = self._clean_dictionary(data)
+        return data
+
+    def program(self, clean=True):
+        data = self._by_category(ParamTypes.PROGRAM)
+        if clean:
+            data = self._clean_dictionary(data)
+        return data
+
+    def sequence(self, clean=True):
+        data = self._by_category(ParamTypes.SEQUENCE)
+        if clean:
+            data = self._clean_dictionary(data)
+        return data
+
+    def other(self, clean=True):
+        data = self._by_category(ParamTypes.OTHER)
+        if clean:
+            data = self._clean_dictionary(data)
+        return data
+
+    def set_defaults(self):
+        for v in self.params.values():
+            v.set_default()
+
+<div class="viewcode-block" id="BoulderIO.values"><a class="viewcode-back" href="../../../developer/api_reference.html#primer3plus.params.BoulderIO.values">[docs]</a>    def values(self):
+        for v in self.params.values():
+            yield v.value</div>
+
+<div class="viewcode-block" id="BoulderIO.items"><a class="viewcode-back" href="../../../developer/api_reference.html#primer3plus.params.BoulderIO.items">[docs]</a>    def items(self):
+        for k, v in self.params.items():
+            yield k, v.value</div>
+
+    def copy(self):
+        copied = BoulderIO()
+        for k, v in self.params.items():
+            copied.params[k] = v.copy()
+        return copied
+
+<div class="viewcode-block" id="BoulderIO._clean_dictionary"><a class="viewcode-back" href="../../../developer/api_reference.html#primer3plus.params.BoulderIO._clean_dictionary">[docs]</a>    @staticmethod
+    def _clean_dictionary(params: dict) -&gt; dict:
+        &quot;&quot;&quot;Removes empty lists and empty strings from params.
+
+        :return: :rtype:
+        &quot;&quot;&quot;
+        cleaned = dict(params)
+        ignore = [&quot;SEQUENCE_ID&quot;]
+        for k in params:
+            if k not in ignore:
+                v = params[k]
+                if hasattr(v, &quot;__len__&quot;) and len(v) == 0:
+                    cleaned.pop(k)
+        return cleaned</div></div>
+
+
+class ParamParser:
+    &quot;&quot;&quot;Reads the Primer3 documentation and creates the appropriate
+    parameters.&quot;&quot;&quot;
+
+    @staticmethod
+    def _parse_primer3_docs(docstr):
+        &quot;&quot;&quot;Parse the docs of the primer3 website
+        (https://htmlpreview.github.io.
+
+        /?https://github.com/libnano/primer3-py/master/primer3/src.
+        /libprimer3/primer3_manual.htm#globalTags)  :param docstr: doc string :type
+        docstr: basestring :return: params :rtype: dict
+        &quot;&quot;&quot;
+
+        params = {}
+
+        expected_names = &quot;(?P&lt;name&gt;{})&quot;.format(&quot;|&quot;.join(_expected_opts))
+
+        catch_all = &quot;^{name_pattern}(?P&lt;rest&gt;\\s+\\(.+)\n&quot;.format(
+            name_pattern=expected_names
+        )
+
+        type_dict = {
+            &quot;size range list&quot;: list,
+            &quot;string&quot;: str,
+            &quot;interval list&quot;: list,
+            &quot;nucleotide sequence&quot;: str,
+            &quot;int&quot;: int,
+            &quot;space separated integers&quot;: list,
+            &quot;float&quot;: float,
+            &quot;decimal&quot;: float,
+            &quot;ambiguous nucleotide sequence&quot;: str,
+            &quot;boolean&quot;: bool,
+            &#39;semicolon separated list of integer &quot;quadruples&quot;&#39;: list,
+            &quot;semicolon separated list of integer quadruples&quot;: list,
+        }
+
+        for caught in re.finditer(catch_all, docstr, flags=re.MULTILINE):
+            caught_dict = caught.groupdict()
+            name = caught_dict[&quot;name&quot;]
+            rest = caught_dict[&quot;rest&quot;]
+
+            pattern = r&quot;\s+\((?P&lt;type&gt;.+?);\s+default\s+(?P&lt;default&gt;.+)\)&quot;
+            m = re.match(pattern, rest)
+            if not m:
+                raise Exception(&quot;Did not catch:\n{}&quot;.format(caught.group(0)))
+
+            type_str = m.groupdict()[&quot;type&quot;]
+            type_str = re.match(r&quot;([a-zA-z\s]+)&quot;, type_str).group(1).strip()
+            default = m.groupdict()[&quot;default&quot;]
+            ptype = type_dict[type_str]
+
+            if ptype is str:
+                if default == &quot;empty&quot;:
+                    default = &quot;&quot;
+                default = str(default)
+            elif ptype is list:
+                if default == &quot;empty&quot;:
+                    default = []
+                elif re.match(r&quot;(\d+)-(\d+)&quot;, default):
+                    list_match = re.match(r&quot;(\d+)-(\d+)&quot;, default)
+                    default = [int(list_match.group(1)), int(list_match.group(2))]
+                default = list(default)
+            elif ptype is bool:
+                default = bool(int(default))
+            elif ptype is int:
+                default = int(default)
+            elif ptype is float:
+                default = float(default)
+            else:
+                raise ValueError(str(caught.group(0)))
+
+            params[name] = {
+                &quot;name&quot;: name,
+                &quot;type&quot;: ptype,
+                &quot;type_raw&quot;: type_str,
+                &quot;default&quot;: default,
+                &quot;description&quot;: &quot;&quot;,
+            }
+        if not params:
+            raise Exception(&quot;Could not load parameters&quot;)
+        return params
+
+    @classmethod
+    def _open_primer3_params(cls, filepath=None):
+        if filepath is None:
+            filepath = REL_PARAM_PATH
+        with open(filepath, &quot;r&quot;) as f:
+            params_txt = f.read()
+            params = cls._parse_primer3_docs(params_txt)
+
+        for k, v in params.items():
+            if k.startswith(&quot;SEQUENCE&quot;):
+                param_type = ParamTypes.SEQUENCE
+            elif k.startswith(&quot;PRIMER&quot;):
+                param_type = ParamTypes.GLOBAL
+            elif k.startswith(&quot;P3&quot;):
+                param_type = ParamTypes.PROGRAM
+            else:
+                raise Exception(&quot;Parameter {} not recognized&quot;.format(k))
+            v[ParamTypes.CATEGORY] = param_type
+
+        return params
+
+    @classmethod
+    def open(cls, filepath=None):
+        return cls._open_primer3_params(filepath)
+
+
+def default_boulderio():
+    param_dict = ParamParser.open()
+    boulderio = BoulderIO()
+    boulderio.load(param_dict)
+    return boulderio
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">primer3plus</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/api_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/changelog.html">primer3plus change log</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017-2019, University of Washington.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

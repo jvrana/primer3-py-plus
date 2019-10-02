@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Examples &#8212; primer3plus 0.1.2 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API Reference" href="developer/api_reference.html" />
+    <link rel="prev" title="Primer3Plus" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="examples">
+<h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
+<p>Designing primers for cloning</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">design</span> <span class="o">=</span> <span class="n">Design</span><span class="p">()</span>
+<span class="n">design</span><span class="o">.</span><span class="n">set</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;ACGGGGAGTTGTCTGTAGGTTGATTATGTGTGTCGTGTGTGTATATGGGTCTGA&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">design</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;SEQUENCE_TEMPLATE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ACGGGGAGTTGTCTGTAGGTTGATTATGTGTGTCGTGTGTGTATATGGGTCTGA
+</pre></div>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+
+<span class="n">design</span> <span class="o">=</span> <span class="n">Design</span><span class="p">()</span>
+<span class="n">design</span><span class="o">.</span><span class="n">set</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s1">&#39;TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC&#39;</span><span class="p">)</span>
+<span class="n">design</span><span class="o">.</span><span class="n">set</span><span class="o">.</span><span class="n">as_cloning_task</span><span class="p">()</span>
+<span class="n">design</span><span class="o">.</span><span class="n">set</span><span class="o">.</span><span class="n">primer_num_return</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">results</span><span class="p">,</span> <span class="n">explain</span> <span class="o">=</span> <span class="n">design</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">explain</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+ &quot;0&quot;: {
+  &quot;PAIR&quot;: {
+   &quot;PENALTY&quot;: 11.204301707622733,
+   &quot;COMPL_ANY_TH&quot;: 0.0,
+   &quot;COMPL_END_TH&quot;: 0.0,
+   &quot;PRODUCT_SIZE&quot;: 248
+  },
+  &quot;LEFT&quot;: {
+   &quot;PENALTY&quot;: 9.027129166714644,
+   &quot;SEQUENCE&quot;: &quot;TCATGTAATTAGTTATGTCACGCTTAC&quot;,
+   &quot;location&quot;: [
+    0,
+    27
+   ],
+   &quot;TM&quot;: 57.972870833285356,
+   &quot;GC_PERCENT&quot;: 33.333333333333336,
+   &quot;SELF_ANY_TH&quot;: 0.0,
+   &quot;SELF_END_TH&quot;: 0.0,
+   &quot;HAIRPIN_TH&quot;: 0.0,
+   &quot;END_STABILITY&quot;: 2.34
+  },
+  &quot;RIGHT&quot;: {
+   &quot;PENALTY&quot;: 2.1771725409080886,
+   &quot;SEQUENCE&quot;: &quot;GCAAATTAAAGCCTTCGAGCG&quot;,
+   &quot;location&quot;: [
+    247,
+    21
+   ],
+   &quot;TM&quot;: 58.82282745909191,
+   &quot;GC_PERCENT&quot;: 47.61904761904762,
+   &quot;SELF_ANY_TH&quot;: 0.0,
+   &quot;SELF_END_TH&quot;: 0.0,
+   &quot;HAIRPIN_TH&quot;: 38.006257959698985,
+   &quot;END_STABILITY&quot;: 5.03
+  }
+ }
+}
+{
+ &quot;PRIMER_LEFT_EXPLAIN&quot;: &quot;considered 10, low tm 9, ok 1&quot;,
+ &quot;PRIMER_RIGHT_EXPLAIN&quot;: &quot;considered 10, low tm 3, high tm 4, ok 3&quot;,
+ &quot;PRIMER_PAIR_EXPLAIN&quot;: &quot;considered 1, ok 1&quot;,
+ &quot;PRIMER_LEFT_NUM_RETURNED&quot;: 1,
+ &quot;PRIMER_RIGHT_NUM_RETURNED&quot;: 1,
+ &quot;PRIMER_INTERNAL_NUM_RETURNED&quot;: 0,
+ &quot;PRIMER_PAIR_NUM_RETURNED&quot;: 1
+}
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">primer3plus</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer/api_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer/changelog.html">primer3plus change log</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Primer3Plus</a></li>
+      <li>Next: <a href="developer/api_reference.html" title="next chapter">API Reference</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017-2019, University of Washington.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/examples.rst"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -274,9 +274,3 @@ class HasParameters:
 
     def __get__(self, obj, objtype):
         return ParameterInterface(obj.params)
-
-
-# def print_and_check_parameters():
-#
-#     for p in _expected_opts:
-#         print("{name} = {cls}(\"{name}\")".format(name=p, cls=ParameterDescriptor.__name__))
