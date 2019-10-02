@@ -11,7 +11,7 @@ Release v\ |version|. (:doc:`Changelog <developer/changelog>`)
 Github |gitpage|
 
 Primer3Plus is a Python DNA primer design tool based off of primer3 [1]_ [2]_ and the
-Python primer3 wrapper https://pypi.org/project/primer3-py/
+Python primer3 wrapper https://pypi.org/project/primer3-py/.
 
 .. code-block:: python
 

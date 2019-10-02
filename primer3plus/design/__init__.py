@@ -12,6 +12,7 @@ import re
 import webbrowser
 from collections import Counter
 from functools import wraps
+from typing import Any
 from typing import Dict
 from typing import List
 from typing import Tuple
@@ -132,7 +133,8 @@ class DesignPresets:
             matches.append((m.start(0), m.end(0)))
         return matches
 
-    def _set(self, update: dict):
+    def set(self, update: Dict[str, Any]):
+        """Update an arbitrary parameter"""
         self._design.params.update(update)
         return self
 
@@ -144,7 +146,7 @@ class DesignPresets:
         :param task: the task name
         :return self
         """
-        self._set({"PRIMER_TASK": task})
+        self.set({"PRIMER_TASK": task})
         return self
 
     def as_cloning_task(self) -> DesignPresets:
@@ -177,7 +179,7 @@ class DesignPresets:
         :param template: the template sequence
         :return: self
         """
-        self._set({"SEQUENCE_TEMPLATE": template})
+        self.set({"SEQUENCE_TEMPLATE": template})
         return self
 
     # TODO: set_iterations, set_num_return, set_force_return, set_gradient
@@ -190,7 +192,7 @@ class DesignPresets:
         :param n: number of primers to return
         :return: self
         """
-        return self._set({"PRIMER_NUM_RETURN": n})
+        return self.set({"PRIMER_NUM_RETURN": n})
 
     def product_size(
         self, interval: Union[Tuple[int, int], List[Tuple[int, int]]], opt=None
@@ -208,10 +210,10 @@ class DesignPresets:
         if isinstance(interval, tuple):
             interval = [interval]
         if opt is not None:
-            return self._set(
+            return self.set(
                 {"PRIMER_PRODUCT_SIZE_RANGE": interval, "PRIMER_PRODUCT_OPT_SIZE": opt}
             )
-        return self._set({"PRIMER_PRODUCT_SIZE_RANGE": interval})
+        return self.set({"PRIMER_PRODUCT_SIZE_RANGE": interval})
 
     def pair_region_list(
         self, region_list: List[Tuple[int, int, int, int]]
@@ -224,7 +226,7 @@ class DesignPresets:
         :param region_list: list of regions
         :return: self
         """
-        return self._set({"SEQUENCE_PRIMER_PAIR_OK_REGION_LIST": region_list})
+        return self.set({"SEQUENCE_PRIMER_PAIR_OK_REGION_LIST": region_list})
 
     def left_sequence(self, primer: str) -> DesignPresets:
         """The sequence of a left primer to check and around which to design
@@ -236,7 +238,7 @@ class DesignPresets:
 
         :param primer: :type primer: :return: :rtype:
         """
-        return self._set({"SEQUENCE_PRIMER": primer, "PRIMER_PICK_RIGHT_PRIMER": 1})
+        return self.set({"SEQUENCE_PRIMER": primer, "PRIMER_PICK_RIGHT_PRIMER": 1})
 
     def right_sequence(self, primer: str) -> DesignPresets:
         """The sequence of a right primer to check and around which to design
@@ -249,7 +251,7 @@ class DesignPresets:
         :param primer: primer sequence
         :return: self
         """
-        return self._set(
+        return self.set(
             {"SEQUENCE_PRIMER_REVCOMP": primer, "PRIMER_PICK_LEFT_PRIMER": 1}
         )
 
@@ -262,7 +264,7 @@ class DesignPresets:
 
         :return: self
         """
-        return self._set({"PRIMER_PICK_LEFT_PRIMER": 1, "PRIMER_PICK_RIGHT_PRIMER": 0})
+        return self.set({"PRIMER_PICK_LEFT_PRIMER": 1, "PRIMER_PICK_RIGHT_PRIMER": 0})
 
     def pick_right_only(self) -> DesignPresets:
         """
@@ -273,7 +275,7 @@ class DesignPresets:
 
         :return: self
         """
-        return self._set({"PRIMER_PICK_LEFT_PRIMER": 0, "PRIMER_PICK_RIGHT_PRIMER": 1})
+        return self.set({"PRIMER_PICK_LEFT_PRIMER": 0, "PRIMER_PICK_RIGHT_PRIMER": 1})
 
     def internal_sequence(self, primer: str) -> DesignPresets:
         """The sequence of an internal oligo to check and around which to
@@ -286,7 +288,7 @@ class DesignPresets:
 
         :param primer: :type primer: :return: :rtype:
         """
-        return self._set(
+        return self.set(
             {"SEQUENCE_INTERNAL_OLIGO": primer, "PRIMER_PICK_INTERNAL_OLIGO": 1}
         )
 
@@ -340,7 +342,7 @@ class DesignPresets:
                          tuples of <start>,<length>
         :return: self
         """
-        return self._set({"SEQUENCE_INCLUDED_REGION": self._parse_interval(interval)})
+        return self.set({"SEQUENCE_INCLUDED_REGION": self._parse_interval(interval)})
 
     def target(
         self, interval: Union[str, Tuple[int, int], List[Tuple[int, int]]]
@@ -365,7 +367,7 @@ class DesignPresets:
                          tuples of <start>,<length>
         :return self
         """
-        return self._set({"SEQUENCE_TARGET": self._parse_interval(interval)})
+        return self.set({"SEQUENCE_TARGET": self._parse_interval(interval)})
 
     def excluded(
         self, interval: Union[str, Tuple[int, int], List[Tuple[int, int]]]
@@ -386,7 +388,7 @@ class DesignPresets:
                          tuples of <start>,<length>
         :return: self
         """
-        return self._set({"SEQUENCE_EXCLUDED_REGION": self._parse_interval(interval)})
+        return self.set({"SEQUENCE_EXCLUDED_REGION": self._parse_interval(interval)})
 
     def pick_anyway(self, b=1) -> DesignPresets:
         """
@@ -399,7 +401,7 @@ class DesignPresets:
         :param b: default True
         :return self
         """
-        return self._set({"PRIMER_PICK_ANYWAY": b})
+        return self.set({"PRIMER_PICK_ANYWAY": b})
 
 
 def clip(x, mn, mx):
