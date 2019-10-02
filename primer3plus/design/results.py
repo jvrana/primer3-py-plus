@@ -2,13 +2,9 @@ import re
 
 
 def parse_primer3_results(results_dict):
-    """
-    Parse the primer3 results.
+    """Parse the primer3 results.
 
-    :param results_dict:
-    :type results_dict:
-    :return:
-    :rtype:
+    :param results_dict: :type results_dict: :return: :rtype:
     """
     num_pairs = results_dict["PRIMER_PAIR_NUM_RETURNED"]
     num_left = results_dict["PRIMER_LEFT_NUM_RETURNED"]
@@ -18,8 +14,8 @@ def parse_primer3_results(results_dict):
     other = {}
     for i in range(max([num_pairs, num_left, num_right])):
         pairs.setdefault(i, {})
-    key_pattern = "PRIMER_(?P<label>[a-zA-Z]+)_(?P<pair_id>\d+)_(?P<key>.+)"
-    location_pattern = "PRIMER_(?P<label>[a-zA-Z]+)_(?P<pair_id>\d+)\s*$"
+    key_pattern = r"PRIMER_(?P<label>[a-zA-Z]+)_(?P<pair_id>\d+)_(?P<key>.+)"
+    location_pattern = r"PRIMER_(?P<label>[a-zA-Z]+)_(?P<pair_id>\d+)\s*$"
     for k in results_dict:
         m = re.match(key_pattern, k)
         loc_m = re.match(location_pattern, k)

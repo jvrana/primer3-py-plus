@@ -1,12 +1,14 @@
 import os
 import re
+import webbrowser
 from collections import MutableMapping
 from copy import deepcopy
-import webbrowser
+
 from .expected_opts import _expected_opts
+from primer3plus.constants import DOCURL
 
 
-class ParamTypes(object):
+class ParamTypes:
     GLOBAL = "GLOBAL"
     PROGRAM = "PROGRAM"
     OTHER = "OTHER"
@@ -19,7 +21,7 @@ REL_PARAM_PATH = os.path.join(
 )
 
 
-class ParameterType(object):
+class ParameterType:
     def __init__(self, name, description, type, default, category):
         self.name = name
         self.description = description
@@ -127,9 +129,7 @@ class BoulderIO(MutableMapping):
 
     def _raise_no_key(self, key):
         return KeyError(
-            "{key} not in params. See docs for help: {url}".format(
-                key=key, url=Constants.DOCURL
-            )
+            "{key} not in params. See docs for help: {url}".format(key=key, url=DOCURL)
         )
 
     def __contains__(self, key):
@@ -162,9 +162,9 @@ class BoulderIO(MutableMapping):
 
     def online_help(self, open=False, key=None):
         if key:
-            url = "{url}#{key}".format(Constants.DOCURL, key)
+            url = "{url}#{key}".format(DOCURL, key)
         else:
-            url = Constants.DOCURL
+            url = DOCURL
         if open:
             webbrowser.open(url)
         return url
@@ -218,10 +218,9 @@ class BoulderIO(MutableMapping):
 
     @staticmethod
     def _clean_dictionary(params: dict) -> dict:
-        """
-        Removes empty lists and empty strings from params
-        :return:
-        :rtype:
+        """Removes empty lists and empty strings from params.
+
+        :return: :rtype:
         """
         cleaned = dict(params)
         ignore = ["SEQUENCE_ID"]
@@ -233,29 +232,25 @@ class BoulderIO(MutableMapping):
         return cleaned
 
 
-class ParamParser(object):
-    """
-    Reads the Primer3 documentation and creates the appropriate parameters.
-    """
+class ParamParser:
+    """Reads the Primer3 documentation and creates the appropriate
+    parameters."""
 
     @staticmethod
     def _parse_primer3_docs(docstr):
-        """
-        Parse the docs of the primer3 website
-        (https://htmlpreview.github.io/?https://github.com/libnano/primer3-py/master/primer3/src
-        /libprimer3/primer3_manual.htm#globalTags)
+        """Parse the docs of the primer3 website
+        (https://htmlpreview.github.io.
 
-        :param docstr: doc string
-        :type docstr: basestring
-        :return: params
-        :rtype: dict
+        /?https://github.com/libnano/primer3-py/master/primer3/src.
+        /libprimer3/primer3_manual.htm#globalTags)  :param docstr: doc string :type
+        docstr: basestring :return: params :rtype: dict
         """
 
         params = {}
 
         expected_names = "(?P<name>{})".format("|".join(_expected_opts))
 
-        catch_all = "^{name_pattern}(?P<rest>\s+\(.+)\n".format(
+        catch_all = "^{name_pattern}(?P<rest>\\s+\\(.+)\n".format(
             name_pattern=expected_names
         )
 
@@ -279,13 +274,13 @@ class ParamParser(object):
             name = caught_dict["name"]
             rest = caught_dict["rest"]
 
-            pattern = "\s+\((?P<type>.+?);\s+default\s+(?P<default>.+)\)"
+            pattern = r"\s+\((?P<type>.+?);\s+default\s+(?P<default>.+)\)"
             m = re.match(pattern, rest)
             if not m:
                 raise Exception("Did not catch:\n{}".format(caught.group(0)))
 
             type_str = m.groupdict()["type"]
-            type_str = re.match("([a-zA-z\s]+)", type_str).group(1).strip()
+            type_str = re.match(r"([a-zA-z\s]+)", type_str).group(1).strip()
             default = m.groupdict()["default"]
             ptype = type_dict[type_str]
 
@@ -296,8 +291,8 @@ class ParamParser(object):
             elif ptype is list:
                 if default == "empty":
                     default = []
-                elif re.match("(\d+)-(\d+)", default):
-                    list_match = re.match("(\d+)-(\d+)", default)
+                elif re.match(r"(\d+)-(\d+)", default):
+                    list_match = re.match(r"(\d+)-(\d+)", default)
                     default = [int(list_match.group(1)), int(list_match.group(2))]
                 default = list(default)
             elif ptype is bool:

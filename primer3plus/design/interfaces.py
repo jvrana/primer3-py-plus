@@ -1,5 +1,5 @@
-class ParameterDescriptor(object):
-    """A data descriptor that sets params key"""
+class ParameterDescriptor:
+    """A data descriptor that sets params key."""
 
     def __init__(self, name):
         self.name = name
@@ -11,7 +11,7 @@ class ParameterDescriptor(object):
         obj.params[self.name] = val
 
 
-class AllParameters(object):
+class AllParameters:
 
     PRIMER_DNA_CONC = ParameterDescriptor("PRIMER_DNA_CONC")
     PRIMER_MASK_KMERLIST_PATH = ParameterDescriptor("PRIMER_MASK_KMERLIST_PATH")
@@ -267,14 +267,10 @@ class AllParameters(object):
         self.params = params
 
 
-class ParameterAccessor(object):
-    """A data accessor that exposes parameters to attribute level
+class ParameterAccessor:
+    """A data accessor that exposes parameters to attribute level.
 
-    e.g.
-
-    ::
-
-        P = HasParameters(); P.SEQUENCE_ID = "MY SEQ"
+    e.g.  ::      P = HasParameters(); P.SEQUENCE_ID = "MY SEQ"
     """
 
     def __get__(self, obj, objtype):

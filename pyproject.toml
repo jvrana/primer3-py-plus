@@ -16,7 +16,33 @@ black = {version = "^18.3-alpha.0", allows-prereleases = true}
 pre-commit = "^1.18"
 keats = "^0.2.26"
 pytest-benchmark = "^3.2"
+flake8 = "^3.7"
+docformatter = "^1.3"
+
+[tool.black]
+line-length = 88
+target-version = ['py36', 'py37', 'py38']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  # The following are specific to Black, you probably don't want those.
+  | blib2to3
+  | tests/data
+  | profiling
+)/
+'''
 
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
+

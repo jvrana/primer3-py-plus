@@ -1,10 +1,11 @@
-import warnings
-import typing
 import re
+import typing
+import warnings
 from itertools import product
 
-warnings.simplefilter("ignore", PendingDeprecationWarning)
 from Bio.Seq import Seq
+
+warnings.simplefilter("ignore", PendingDeprecationWarning)
 
 
 def reverse_complement(seq):

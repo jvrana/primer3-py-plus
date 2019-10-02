@@ -1,0 +1,12 @@
+Metadata-Version: 2.1
+Name: primer3plus
+Version: 0.1.2
+Summary:
+Author: Justin Vrana
+Author-email: justin.vrana@gmail.com
+Requires-Python: >=3.7,<4.0
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Requires-Dist: biopython (>=1.74,<2.0)
+Requires-Dist: loggable-jdv (>=0.1.2,<0.2.0)
+Requires-Dist: primer3-py (>=0.6.0,<0.7.0)
