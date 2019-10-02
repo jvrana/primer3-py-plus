@@ -5,28 +5,28 @@ primer3plus.Design
 
 .. autoclass:: Design
 
-
+   
    .. automethod:: __init__
 
-
+   
    .. rubric:: Methods
 
    .. autosummary::
-
+   
       ~Design.__init__
       ~Design.copy
       ~Design.open_help
       ~Design.run
       ~Design.run_and_optimize
+   
+   
 
-
-
-
-
+   
+   
    .. rubric:: Attributes
 
    .. autosummary::
-
+   
       ~Design.CHECK_PRIMERS
       ~Design.DEFAULT_GRADIENT
       ~Design.DEFAULT_PARAMS
@@ -36,4 +36,6 @@ primer3plus.Design
       ~Design.PICK_DISCRIMINATIVE_PRIMERS
       ~Design.PICK_PRIMER_LIST
       ~Design.PICK_SEQUENCING_PRIMERS
-
+      ~Design.set
+   
+   

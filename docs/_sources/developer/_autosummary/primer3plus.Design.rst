@@ -36,5 +36,6 @@ primer3plus.Design
       ~Design.PICK_DISCRIMINATIVE_PRIMERS
       ~Design.PICK_PRIMER_LIST
       ~Design.PICK_SEQUENCING_PRIMERS
+      ~Design.set
    
    

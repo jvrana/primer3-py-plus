@@ -6,11 +6,12 @@
 Primer3Plus
 ===========
 
-Primer3Plus is a Python DNA primer design tool based off of primer3 [1]_ and the
+Primer3Plus is a Python DNA primer design tool based off of primer3 [1]_ [2]_ and the
 Python primer3 wrapper (https://pypi.org/project/primer3-py/)
 
 .. [1] Untergasser A, Cutcutache I, Koressaar T, et al. Primer3--new capabilities and
 interfaces. Nucleic Acids Res. 2012;40(15):e115. doi:10.1093/nar/gks596
+.. [2] http://primer3.ut.ee/primer3web_help.htm
 
 .. toctree::
    :maxdepth: 3

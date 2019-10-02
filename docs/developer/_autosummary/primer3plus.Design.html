@@ -15,6 +15,7 @@
     <script type="text/javascript" src="../../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="primer3plus.design.DesignPresets" href="primer3plus.design.DesignPresets.html" />
     <link rel="prev" title="API Reference" href="../api_reference.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -39,19 +40,23 @@
 <em class="property">class </em><code class="sig-prename descclassname">primer3plus.</code><code class="sig-name descname">Design</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/primer3plus/design.html#Design"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.Design" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">primer3plus.design.DesignBase</span></code></p>
 <p>Primer design module.</p>
-<p>Initialize a new design. Set parameters using <code class="xref py py-meth docutils literal notranslate"><span class="pre">set()</span></code> as in:</p>
+<p>Initialize a new design. Set parameters using <code class="xref py py-meth docutils literal notranslate"><span class="pre">Design.set()</span></code> as in:</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">primer3plus.DesignPresets</span></code></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>design = Design()
 design.set.template(&quot;AGGCTGTAGTGCTTGTAGCTGGTTGCGTTACTGTG&quot;)
-# and so one
+design.set.left_sequence(&quot;GTAGTGCTTGTA&quot;)
+design.run()
 </pre></div>
 </div>
 <dl class="method">
 <dt id="primer3plus.Design.__init__">
 <code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/primer3plus/design.html#Design.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.Design.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize a new design. Set parameters using <code class="xref py py-meth docutils literal notranslate"><span class="pre">set()</span></code> as in:</p>
+<dd><p>Initialize a new design. Set parameters using <code class="xref py py-meth docutils literal notranslate"><span class="pre">Design.set()</span></code> as in:</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">primer3plus.DesignPresets</span></code></p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>design = Design()
 design.set.template(&quot;AGGCTGTAGTGCTTGTAGCTGGTTGCGTTACTGTG&quot;)
-# and so one
+design.set.left_sequence(&quot;GTAGTGCTTGTA&quot;)
+design.run()
 </pre></div>
 </div>
 </dd></dl>
@@ -114,6 +119,9 @@ design.set.template(&quot;AGGCTGTAGTGCTTGTAGCTGGTTGCGTTACTGTG&quot;)
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">PICK_SEQUENCING_PRIMERS</span></code></p></td>
 <td><p></p></td>
 </tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">set</span></code></p></td>
+<td><p></p></td>
+</tr>
 </tbody>
 </table>
 <dl class="method">
@@ -145,14 +153,17 @@ design.set.template(&quot;AGGCTGTAGTGCTTGTAGCTGGTTGCGTTACTGTG&quot;)
 <dl class="method">
 <dt id="primer3plus.Design.run_and_optimize">
 <code class="sig-name descname">run_and_optimize</code><span class="sig-paren">(</span><em class="sig-param">max_iterations</em>, <em class="sig-param">params=None</em>, <em class="sig-param">gradient={'PRIMER_MAX_HAIRPIN_TH': (1</em>, <em class="sig-param">47.0</em>, <em class="sig-param">60)</em>, <em class="sig-param">'PRIMER_MAX_SIZE': (1</em>, <em class="sig-param">27</em>, <em class="sig-param">36)</em>, <em class="sig-param">'PRIMER_MAX_TM': (1</em>, <em class="sig-param">27</em>, <em class="sig-param">80)</em>, <em class="sig-param">'PRIMER_MIN_SIZE': (-1</em>, <em class="sig-param">16</em>, <em class="sig-param">27)</em>, <em class="sig-param">'PRIMER_MIN_TM': (-1</em>, <em class="sig-param">48</em>, <em class="sig-param">57.0)}</em><span class="sig-paren">)</span> &#x2192; Tuple[dict, dict]<a class="headerlink" href="#primer3plus.Design.run_and_optimize" title="Permalink to this definition">¶</a></dt>
-<dd><p>Design primers. If primer design is unsuccessful, relax parameters as defined
-in Design.DEFAULT_GRADIENT. Repeat for the specified number of max_iterations.</p>
+<dd><p>Design primers. If primer design is unsuccessful, relax parameters
+as defined in Design.DEFAULT_GRADIENT. Repeat for the specified number
+of max_iterations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>max_iterations</strong> – the max number of iterations to perform relaxation</p></li>
 <li><p><strong>params</strong> – optional parameters to provide</p></li>
-<li><p><strong>gradient</strong> – optional gradient to provide. If not provided, Design.DEFAULT_GRADIENT will be used.</p></li>
+<li><p><strong>gradient</strong> – optional gradient to provide. If not provided,
+Design.DEFAULT_GRADIENT will be used. The gradient is a
+dictionary off 3 tuples, the step the min and the max.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -186,6 +197,7 @@ in Design.DEFAULT_GRADIENT. Repeat for the specified number of max_iterations.</
 <li class="toctree-l1 current"><a class="reference internal" href="../api_reference.html">API Reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../api_reference.html#submodules">Submodules</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">primer3plus.Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="primer3plus.design.DesignPresets.html">primer3plus.design.DesignPresets</a></li>
 </ul>
 </li>
 </ul>
@@ -198,6 +210,7 @@ in Design.DEFAULT_GRADIENT. Repeat for the specified number of max_iterations.</
   <li><a href="../../index.html">Documentation overview</a><ul>
   <li><a href="../api_reference.html">API Reference</a><ul>
       <li>Previous: <a href="../api_reference.html" title="previous chapter">API Reference</a></li>
+      <li>Next: <a href="primer3plus.design.DesignPresets.html" title="next chapter">primer3plus.design.DesignPresets</a></li>
   </ul></li>
   </ul></li>
 </ul>

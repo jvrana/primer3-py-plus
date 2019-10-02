@@ -5,6 +5,8 @@ There should be a number of presets available to run certain design
 tasks  There should also be a relaxation parameter (a subclass of
 Design?)  Async option  Design with overhangs
 """
+from __future__ import annotations
+
 import itertools
 import re
 import webbrowser
@@ -89,10 +91,26 @@ def dispatch_iterable(params, max_results=10):
 
 
 class DesignPresets:
+    """
+    Interface for setting design parameters. This is typically accessed from
+    a :class:`Design` instance's :meth:`Design.set` method. As in:
+
+    .. code-block::
+
+        design = Design()
+        design.set.left_sequence("AGGGAGATAGATA")
+        design.run()
+    """
+
     def __init__(self, design):
+        """
+        Initializes a new interface from a :class:`~primer3plus.design.Design`.
+
+        :param design: The design
+        """
         self._design = design
 
-    def _sequence_from_template(self, template, target):
+    def _interval_from_sequences(self, template: str, target: str) -> Tuple[int, int]:
         if isinstance(target, str):
             matches = self._get_index_of_match(template, target)
             if not matches:
@@ -103,7 +121,7 @@ class DesignPresets:
                 return None
             return matches[0]
 
-    def _get_index_of_match(self, template, sequence):
+    def _get_index_of_match(self, template: str, sequence: str) -> Tuple[int, int]:
         matches = []
         for m in re.finditer(sequence, template, re.IGNORECASE):
             matches.append((m.start(0), m.end(0)))
@@ -113,89 +131,74 @@ class DesignPresets:
         self._design.params.update(update)
         return self
 
-    def task(self, task: str):
-        """This tag tells primer3 what task to perform. Legal values are:
+    def task(self, task: str) -> DesignPresets:
+        """This tag tells primer3 what task to perform.
 
-        generic  Design a primer pair (the classic primer3 task) if the
-        PRIMER_PICK_LEFT_PRIMER=1, and PRIMER_PICK_RIGHT_PRIMER=1. In addition, pick an
-        internal hybridization oligo if PRIMER_PICK_INTERNAL_OLIGO=1.  NOTE: If
-        PRIMER_PICK_LEFT_PRIMER=1, PRIMER_PICK_RIGHT_PRIMER=0 and
-        PRIMER_PICK_INTERNAL_OLIGO=1, then behaves similarly to
-        PRIMER_TASK=pick_primer_list.  pick_detection_primers  Deprecated alias for
-        PRIMER_TASK=generic  check_primers  Primer3 only checks the primers provided in
-        SEQUENCE_PRIMER, SEQUENCE_INTERNAL_OLIGO and SEQUENCE_PRIMER_REVCOMP. It is the
-        only task that does not require a sequence. However, if SEQUENCE_TEMPLATE is
-        provided, it is used. pick_primer_list  Pick all primers in SEQUENCE_TEMPLATE
-        (possibly limited by SEQUENCE_INCLUDED_REGION, SEQUENCE_EXCLUDED_REGION,
-        SEQUENCE_PRIMER_PAIR_OK_REGION_LIST, etc.). Returns the primers sorted by
-        quality starting with the best primers. If PRIMER_PICK_LEFT_PRIMER and
-        PRIMER_PICK_RIGHT_PRIMER is selected primer3 does not to pick primer pairs but
-        generates independent lists of left primers, right primers, and, if requested,
-        internal oligos.  pick_sequencing_primers  Pick primers suited to sequence a
-        region. SEQUENCE_TARGET can be used to indicate several targets. The position of
-        each primer is calculated for optimal sequencing results.  pick_cloning_primers
-        Pick primers suited to clone a gene were the start nucleotide and the end
-        nucleotide of the PCR fragment must be fixed, for example to clone an ORF.
-        SEQUENCE_INCLUDED_REGION must be used to indicate the first and the last
-        nucleotide. Due to these limitations primer3 can only vary the length of the
-        primers. Set PRIMER_PICK_ANYWAY=1   to obtain primers even if they violate
-        specific constraints.  pick_discriminative_primers  Pick primers suited to
-        select primers which bind with their end at a specific position. This can be
-        used to force the end of a primer to a polymorphic site, with the goal of
-        discriminating between sequence variants. SEQUENCE_INCLUDED_REGION must be used
-        to indicate the last nucleotide of the left (first nucleotide of included
-        region) and the right primer (last nucleotide of included region). Due to these
-        limitations primer3 can only vary the length of the primers. Set
-        PRIMER_PICK_ANYWAY=1 to obtain primers even if they violate specific
-        constraints. pick_pcr_primers  Deprecated shortcut for the following settings:
-        PRIMER_TASK=generic PRIMER_PICK_LEFT_PRIMER=1 PRIMER_PICK_INTERNAL_OLIGO=0
-        PRIMER_PICK_RIGHT_PRIMER=1  WARNING: this task changes the values of
-        PRIMER_PICK_LEFT_PRIMER, PRIMER_PICK_INTERNAL_OLIGO, and
-        PRIMER_PICK_RIGHT_PRIMER in a way that is not obvious by looking at the input.
-        pick_pcr_primers_and_hyb_probe  Deprecated shortcut for the following settings:
-        PRIMER_TASK=generic PRIMER_PICK_LEFT_PRIMER=1 PRIMER_PICK_INTERNAL_OLIGO=1
-        PRIMER_PICK_RIGHT_PRIMER=1  WARNING: this task changes the values of
-        PRIMER_PICK_LEFT_PRIMER, PRIMER_PICK_INTERNAL_OLIGO, and
-        PRIMER_PICK_RIGHT_PRIMER in a way that is not obvious by looking at the input.
-        pick_left_only  Deprecated shortcut for the following settings:
-        PRIMER_TASK=generic PRIMER_PICK_LEFT_PRIMER=1 PRIMER_PICK_INTERNAL_OLIGO=0
-        PRIMER_PICK_RIGHT_PRIMER=0  WARNING: this task changes the values of
-        PRIMER_PICK_LEFT_PRIMER, PRIMER_PICK_INTERNAL_OLIGO, and
-        PRIMER_PICK_RIGHT_PRIMER in a way that is not obvious by looking at the input.
-        pick_right_only  Deprecated shortcut for the following settings:
-        PRIMER_TASK=generic PRIMER_PICK_LEFT_PRIMER=0 PRIMER_PICK_INTERNAL_OLIGO=0
-        PRIMER_PICK_RIGHT_PRIMER=1  WARNING: this task changes the values of
-        PRIMER_PICK_LEFT_PRIMER, PRIMER_PICK_INTERNAL_OLIGO, and
-        PRIMER_PICK_RIGHT_PRIMER in a way that is not obvious by looking at the input.
-        pick_hyb_probe_only  Deprecated shortcut for the following settings:
-        PRIMER_TASK=generic PRIMER_PICK_LEFT_PRIMER=0 PRIMER_PICK_INTERNAL_OLIGO=1
-        PRIMER_PICK_RIGHT_PRIMER=0  WARNING: this task changes the values of
-        PRIMER_PICK_LEFT_PRIMER, PRIMER_PICK_INTERNAL_OLIGO, and
-        PRIMER_PICK_RIGHT_PRIMER in a way that is not obvious by looking at the input.
-        :param task: :type task: :return: :rtype:
+        http://primer3.ut.ee/primer3web_help.htm#PRIMER_TASK
+
+        :param task: the task name
+        :return self
         """
         self._set({"PRIMER_TASK": task})
         return self
 
-    def as_cloning_task(self):
+    def as_cloning_task(self) -> DesignPresets:
+        """
+        Set the design as a cloning task.
+
+        http://primer3.ut.ee/primer3web_help.htm#PRIMER_TASK
+
+        :return: self
+        """
         return self.task("pick_cloning_primers")
 
-    def as_generic_task(self):
+    def as_generic_task(self) -> DesignPresets:
+        """
+        Set the design as a generic task.
+
+        http://primer3.ut.ee/primer3web_help.htm#PRIMER_TASK
+
+        :return: self
+        """
         return self.task("generic")
 
-    def template(self, template):
+    def template(self, template: str) -> DesignPresets:
+        """
+        Set the template sequence for the design. This sets the 'SEQUENCE_TEMPLATE'
+        parameter.
+
+        http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_TEMPLATE
+
+        :param template: the template sequence
+        :return: self
+        """
         self._set({"SEQUENCE_TEMPLATE": template})
         return self
 
     # TODO: set_iterations, set_num_return, set_force_return, set_gradient
-    def primer_num_return(self, n):
+    def primer_num_return(self, n: int) -> DesignPresets:
+        """
+        Set the number of primers to return for the design task.
+
+        http://primer3.ut.ee/primer3web_help.htm#PRIMER_NUM_RETURN
+
+        :param n: number of primers to return
+        :return: self
+        """
         return self._set({"PRIMER_NUM_RETURN": n})
 
-    def product_size(self, interval: tuple, opt=None):
-        """Set the product size. Optionally include the optimal size.
+    def product_size(self, interval: Tuple[int, int], opt=None) -> DesignPresets:
+        """
+        Set the product size. Optionally include the optimal size. If optimal size is
+        not provided, the size is assemed to be average of the provided
+        interval.
 
-        :param interval: a tuple of :type interval: :param opt: :type opt: :return:
-        :rtype:
+        http://primer3.ut.ee/primer3web_help.htm#PRIMER_PRODUCT_SIZE_RANGE
+        http://primer3.ut.ee/primer3web_help.htm#PRIMER_PRODUCT_OPT_SIZE
+
+        :param interval: a tuple of <min>,<max>
+        :param opt: optional product size as an int.
+        :return: self
         """
         if opt is None:
             opt = int(sum(interval) / 2.0)
@@ -204,12 +207,23 @@ class DesignPresets:
         )
 
     def pair_region_list(self, region_list: List[Tuple[int, int, int, int]]):
+        """
+        The list of regions from which to design primers.
+
+        http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_PRIMER_PAIR_OK_REGION_LIST
+
+        :param region_list: list of regions
+        :return: self
+        """
         return self._set({"SEQUENCE_PRIMER_PAIR_OK_REGION_LIST": region_list})
 
     def left_sequence(self, primer: str):
         """The sequence of a left primer to check and around which to design
         right primers and optional internal oligos. Must be a substring of
         SEQUENCE_TEMPLATE.
+
+        http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_PRIMER
+        http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_RIGHT_PRIMER
 
         :param primer: :type primer: :return: :rtype:
         """
@@ -220,16 +234,36 @@ class DesignPresets:
         left primers and optional internal oligos. Must be a substring of the
         reverse strand of SEQUENCE_TEMPLATE.
 
-        :param primer: :type primer: :return: :rtype:
+        http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_PRIMER_REVCOMP
+        http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_LEFT_PRIMER
+
+        :param primer: primer sequence
+        :return: self
         """
         return self._set(
             {"SEQUENCE_PRIMER_REVCOMP": primer, "PRIMER_PICK_LEFT_PRIMER": 1}
         )
 
     def pick_left_only(self):
+        """
+        Design only the left primer.
+
+        http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_LEFT_PRIMER
+        http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_RIGHT_PRIMER
+
+        :return: self
+        """
         return self._set({"PRIMER_PICK_LEFT_PRIMER": 1, "PRIMER_PICK_RIGHT_PRIMER": 0})
 
     def pick_right_only(self):
+        """
+        Design only the right primer.
+
+        http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_LEFT_PRIMER
+        http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_RIGHT_PRIMER
+
+        :return: self
+        """
         return self._set({"PRIMER_PICK_LEFT_PRIMER": 0, "PRIMER_PICK_RIGHT_PRIMER": 1})
 
     def internal_sequence(self, primer: str):
@@ -237,11 +271,27 @@ class DesignPresets:
         design left and right primers. Must be a substring of
         SEQUENCE_TEMPLATE.
 
+        http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_INTERNAL_OLIGO
+        http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_INTERNAL_OLIGO
+
+
         :param primer: :type primer: :return: :rtype:
         """
         self._set({"SEQUENCE_INTERNAL_OLIGO": primer, "PRIMER_PICK_INTERNAL_OLIGO": 1})
 
     def primers(self, p1: str, p2: str):
+        """
+        Set the left and right primer sequences.
+
+        http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_PRIMER
+        http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_RIGHT_PRIMER
+        http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_PRIMER_REVCOMP
+        http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_LEFT_PRIMER
+
+        :param p1:
+        :param p2:
+        :return:
+        """
         if p1:
             self.left_sequence(p1)
         if p2:
@@ -249,48 +299,62 @@ class DesignPresets:
         return self
 
     def included(self, interval: tuple):
-        """A sub-region of the given sequence in which to pick primers. For
+        """Specify interval from which primers must be selected.
+        A sub-region of the given sequence in which to pick primers. For
         example, often the first dozen or so bases of a sequence are vector,
         and should be excluded from consideration. The value for this parameter
         has the form.
 
+        http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_INCLUDED_REGION
+
         <start>,<length> where <start> is the index of the first base to consider, and
-        <length> is the number of subsequent bases in the primer-picking region.  :param
-        interval: :type interval: :return: :rtype:
+        <length> is the number of subsequent bases in the primer-picking region.
+
+        :param interval: interval of <start>,<length>
+        :return: self
         """
         return self._set({"SEQUENCE_INCLUDED_REGION": interval})
 
     def target(self, interval: tuple):
-        """If one or more targets is specified then a legal primer pair must
+        """Specify the interval that designed primers must flank.
+        If one or more targets is specified then a legal primer pair must
         flank at least one of them. A target might be a simple sequence repeat
         site (for example a CA repeat) or a single-base-pair polymorphism, or
         an exon for resequencing. The value should be a space-separated list
-        of.
-
-        <start>,<length> pairs where <start> is the index of the first base of a target,
-        and <length> is its length.  See also PRIMER_INSIDE_PENALTY,
-        PRIMER_OUTSIDE_PENALTY. Has a different meaning when
+        of <start>,<length> pairs where <start> is the index of the first base of a
+        target,and <length> is its length.  See also PRIMER_INSIDE_PENALTY,
+        PRIMER_OUTSIDE_PENALTY.
         PRIMER_TASK=pick_sequencing_primers. See PRIMER_TASK for more information.
-        :param interval: :type interval: :return: :rtype:
+
+        http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_TEMPLATE
+        http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_TARGET
+
+
+        :param interval: interval of <start>,<length>
+        :return self
         """
         if isinstance(interval, str):
-            interval = self._sequence_from_template(
+            interval = self._interval_from_sequences(
                 self._design.params["SEQUENCE_TEMPLATE"], interval
             )
         return self._set({"SEQUENCE_TARGET": interval})
 
     def excluded(self, interval):
         """Primers and oligos may not overlap any region specified in this tag.
-        The associated value must be a space-separated list of.
-
-        <start>,<length> pairs where <start> is the index of the first base of the
+        The associated value must be a space-separated list of <start>,<length> pairs
+        where <start> is the index of the first base of the
         excluded region, and <length> is its length. This tag is useful for tasks such
         as excluding regions of low sequence quality or for excluding regions containing
-        repetitive elements such as ALUs or LINEs.  :param interval: :type interval:
+        repetitive elements such as ALUs or LINEs.
+
+        http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_TEMPLATE
+        http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_EXCLUDED_REGION
+
+        :param interval: :type interval:
         :return: :rtype:
         """
         if isinstance(interval, str):
-            interval = self._sequence_from_template(
+            interval = self._interval_from_sequences(
                 self._design.params["SEQUENCE_TEMPLATE"], interval
             )
         return self._set({"SEQUENCE_EXCLUDED_REGION": interval})
@@ -300,7 +364,10 @@ class DesignPresets:
         SEQUENCE_PRIMER_REVCOMP, or SEQUENCE_INTERNAL_OLIGO even if it violates
         specific constraints.
 
-        :param b: :type b: :return: :rtype:
+        http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_ANYWAY
+
+        :param b: default True
+        :return self
         """
         return self._set({"PRIMER_PICK_ANYWAY": b})
 
@@ -406,13 +473,20 @@ class Design(DesignBase):
     P = ParameterAccessor()
 
     def __init__(self, **kwargs):
-        """Initialize a new design. Set parameters using :meth:`set` as in:
+        """Initialize a new design. Set parameters using :meth:`Design.set` as in:
+
+        :class:`primer3plus.DesignPresets`
 
         .. code-block::
 
             design = Design()
             design.set.template("AGGCTGTAGTGCTTGTAGCTGGTTGCGTTACTGTG")
-            # and so one
+            design.set.left_sequence("GTAGTGCTTGTA")
+            design.run()
         """
         super().__init__(**kwargs)
-        self.set = DesignPresets(self)
+        self._set = DesignPresets(self)
+
+    @property
+    def set(self) -> DesignPresets:
+        return self._set

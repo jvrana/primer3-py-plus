@@ -1,4 +1,6 @@
-""".. module:: primer3plus.
+"""Primer3Plus
+
+.. module:: primer3plus
 
 Submodules
 ==========
@@ -7,6 +9,7 @@ Submodules
     :toctree: _autosummary
 
     Design
+    design.DesignPresets
 """
 from .__version__ import __authors__
 from .__version__ import __homepage__
