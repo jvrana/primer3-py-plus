@@ -6,7 +6,7 @@ authors = ["Justin Vrana <justin.vrana@gmail.com>"]
 homepage = "https://github.com/jvrana/primer3-py-plus"
 documentation = "https://jvrana.github.io/primer3-py-plus/"
 license = "MIT"
-classifieds = [
+classifiers = [
     "Intended Audience :: Science/Research",
     "Topic :: Scientific/Engineering :: Bio-Informatics",
     "Development Status :: 4 - Beta"
