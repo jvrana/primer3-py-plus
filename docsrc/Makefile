@@ -29,3 +29,6 @@ html:
 
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html"
+
+    # integrate with ghpages
+	touch $(BUILDDIR)/.nojekyll
