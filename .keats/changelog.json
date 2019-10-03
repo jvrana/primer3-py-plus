@@ -1,4 +1,9 @@
 {
+  "1.0.0a1": {
+    "description": "py35, py36, py37 support",
+    "date": "2019-10-03T11:48:16.918526",
+    "changes": []
+  },
   "1.0.0a": {
     "description": "initial release",
     "date": "2019-10-03T10:21:58.167755",
