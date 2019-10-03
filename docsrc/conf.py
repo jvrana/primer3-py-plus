@@ -80,7 +80,7 @@ author = ", ".join(primer3plus.__authors__)
 #
 # The short X.Y version.
 version = primer3plus.__version__
-gitpage = primer3plus.__homepage__
+homepage = primer3plus.__homepage__
 # The full version, including alpha/beta/rc tags.
 release = primer3plus.__version__
 
@@ -105,15 +105,19 @@ todo_include_todos = False
 
 html_context = {
     "version": version,
-    "github": primer3plus.__homepage__,
-    "repo": primer3plus.__repo__,
-    "aquarium_page": "https://www.aquarium.bio/",
     "display_github": True,  # Integrate GitHub
     "github_user": "jvrana",  # Username
     "github_repo": "primer3plus-dna-design",  # Repo name
     "github_version": "master",  # Version
     "conf_py_path": "./",  # Path in the checkout to the docs root
 }
+
+# substitutations for the docsrc
+substitutions = {"homepage": primer3plus.__homepage__, "repo": primer3plus.__repo__}
+
+rst_epilog = "\n".join(
+    ".. |{k}| replace:: {v}".format(k=k, v=v) for k, v in substitutions.items()
+)
 
 # -- Options for HTML output ----------------------------------------------
 

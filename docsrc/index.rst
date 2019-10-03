@@ -8,7 +8,7 @@ Primer3Plus
 
 Release v\ |version|. (:doc:`Changelog <developer/changelog>`)
 
-Github |gitpage|
+Github: |homepage|
 
 Primer3Plus is a Python DNA primer design tool based off of primer3 [1]_ [2]_ and the
 Python primer3 wrapper https://pypi.org/project/primer3-py/.
@@ -28,10 +28,20 @@ Python primer3 wrapper https://pypi.org/project/primer3-py/.
    design.presets.left_sequence("AGCGTCGTGTATGGTAGTG")
    design.run_and_optimize(5)
 
-Setting parameters
-******************
+Getting started
+---------------
 
-The preferred way to set parameters is to use the :meth:`primer3plus.Design.presets`
+Installation
+************
+
+.. code-block::
+
+   pip install primer3plus -U
+
+Making a primer design task
+***************************
+
+The preferred way to start a design is to use the :meth:`primer3plus.Design.presets`
 property, which provides many helper methods for setting parameters.
 If you're using an interactive notebook or terminal, hitting `TAB` after typing
 `design.presets` will provide all of the standard design settings
@@ -83,8 +93,8 @@ To view all of the parameters as a dictionary, use:
 
    print(dict(design.params))
 
-Running designs
-***************
+Running design tasks
+********************
 
 To run, simply use the :meth:`run <primer3plus.Design.run>` method:
 
@@ -98,13 +108,6 @@ parameters such as melting temperature and primer size until primer pairs are fo
 .. code-block::
 
    design.run_and_optimize(5)  # run for max of 5 iterations
-
-Installation
-------------
-
-.. code-block::
-
-   pip install primer3plus -U
 
 References
 ----------
@@ -120,6 +123,6 @@ Table of Contents
 .. toctree::
    :maxdepth: 3
 
-   examples
+   usage
    developer/api_reference
    developer/changelog

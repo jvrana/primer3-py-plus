@@ -5,5 +5,5 @@ __name__ = "primer3plus"
 __title__ = "primer3plus"
 __authors__ = ["Justin Vrana <justin.vrana@gmail.com>"]
 __repo__ = None
-__homepage__ = None
-__description__ = ""
+__homepage__ = "https://github.com/jvrana/primer3-py-plus"
+__description__ = "An easy-to-use Python API for Primer3 primer design."

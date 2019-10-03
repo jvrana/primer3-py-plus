@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Examples &#8212; primer3plus 0.1.3 documentation</title>
+    <title>Usage &#8212; primer3plus 0.1.3 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
@@ -33,12 +33,49 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="examples">
-<h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="setting-parameters">
-<h2>setting parameters<a class="headerlink" href="#setting-parameters" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="using-designpresets">
-<h3>using <a class="reference internal" href="developer/api_reference.html#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a><a class="headerlink" href="#using-designpresets" title="Permalink to this headline">¶</a></h3>
+  <div class="section" id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="setting-design-parameters">
+<h2>Setting design parameters<a class="headerlink" href="#setting-design-parameters" title="Permalink to this headline">¶</a></h2>
+<p>Design parameters can be set using built in preset methods:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># a new task</span>
+<span class="n">design</span> <span class="o">=</span> <span class="n">Design</span><span class="p">()</span>
+
+<span class="c1"># set template sequence</span>
+<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;AGGTTGCGTGTGTATGGTCGTGTAGTGTGT&quot;</span><span class="p">)</span>
+
+<span class="c1"># set left primer sequence</span>
+<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">left_sequence</span><span class="p">(</span><span class="s2">&quot;GTTGCGTGTGT)</span>
+
+<span class="c1"># set as a cloning task</span>
+<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">as_cloning_task</span><span class="p">()</span>
+
+<span class="c1"># run the design task</span>
+<span class="n">design</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Parameters can be set more directly, but this requires knowing the names of the
+parameters:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">design</span><span class="o">.</span><span class="n">update</span><span class="p">({</span>
+    <span class="s1">&#39;SEQUENCE_TEMPLATE&#39;</span><span class="p">:</span> <span class="s1">&#39;AGGTTGCGTGTGTATGGTCGTGTAGTGTGT&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;SEQUENCE_PRIMER&#39;</span><span class="p">:</span> <span class="s1">&#39;GTTGCGTGTGT&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;PRIMER_PICK_LEFT_PRIMER&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">&#39;PRIMER_TASK&#39;</span><span class="p">:</span> <span class="s1">&#39;cloning_task&#39;</span>
+<span class="p">})</span>
+<span class="n">design</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If using an interactive terminal, descriptors are provided to the <a class="reference internal" href="developer/api_reference.html#primer3plus.Design" title="primer3plus.Design"><code class="xref py py-class docutils literal notranslate"><span class="pre">Design</span></code></a>,
+which usually can be accessed by typing <cite>design.[TAB]</cite></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">design</span><span class="o">.</span><span class="n">SEQUENCE_TEMPLATE</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">design</span><span class="o">.</span><span class="n">SEQUENCE_TEMPLATE</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="section" id="setting-using-presets">
+<h3>setting using presets<a class="headerlink" href="#setting-using-presets" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="developer/api_reference.html#primer3plus.Design.presets" title="primer3plus.Design.presets"><code class="xref py py-meth docutils literal notranslate"><span class="pre">presets</span></code></a> (returning a
+<a class="reference internal" href="developer/api_reference.html#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a>) provides several
+convenient methods for setting common tasks:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">design</span> <span class="o">=</span> <span class="n">Design</span><span class="p">()</span>
 <span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;ACGGGGAGTTGTCTGTAGGTTGATTATGTGTGTCGTGTGTGTATATGGGTCTGA&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">design</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;SEQUENCE_TEMPLATE&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
@@ -48,24 +85,34 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="from-a-single-key-value-pair">
-<h3>from a single key-value pair<a class="headerlink" href="#from-a-single-key-value-pair" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="setting-from-a-single-key-value-pair">
+<h3>setting from a single key-value pair<a class="headerlink" href="#setting-from-a-single-key-value-pair" title="Permalink to this headline">¶</a></h3>
+<p>Preferred way to set parameters not available in the presets, is to use
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">set</span></code>:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span># preferred
 design.set(&#39;SEQUENCE_TEMPLATE&#39;, &#39;foo&#39;)
-
-# alternative ways of setting parameters using a known parameter name
-design.SEQUENCE_TEMPLATE.value = &#39;foo&#39;
-design.get(&#39;SEQUENCE_TEMPLATE&#39;).value = &#39;foo&#39;
-design.params[&#39;SEQUENCE_TEMPLATE&#39;] = &#39;foo&#39;
 </pre></div>
 </div>
 </div>
-<div class="section" id="from-a-dictionary">
-<h3>from a dictionary<a class="headerlink" href="#from-a-dictionary" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="setting-from-a-dictionary">
+<h3>setting from a dictionary<a class="headerlink" href="#setting-from-a-dictionary" title="Permalink to this headline">¶</a></h3>
+<p>If setting many parameters, use <code class="xref py py-meth docutils literal notranslate"><span class="pre">update</span></code>:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>design.update({
     &#39;SEQUENCE_TEMPLATE&#39;: &quot;AGGGGTAGTAGTATGTGAAGGGGTAGTAGTATGTGAAGGGGTAGTAGTATGTGAAGGGGTAGTAGTATGTGA&quot;,
     &#39;LEFT_SEQUENCE&#39;: &#39;TAGTAGTATGTGAAGG&#39;
 })
+</pre></div>
+</div>
+</div>
+<div class="section" id="getting-help">
+<h3>getting help<a class="headerlink" href="#getting-help" title="Permalink to this headline">¶</a></h3>
+<p>To get help with a parameter, access it using <code class="xref py py-meth docutils literal notranslate"><span class="pre">get</span></code>
+or as a descriptor and call <code class="xref py py-meth docutils literal notranslate"><span class="pre">help</span></code></p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">design</span><span class="o">.</span><span class="n">SEQUENCE_TEMPLATE</span><span class="o">.</span><span class="n">help</span><span class="p">())</span>
+<span class="c1"># print(design.get(&#39;SEQUENCE_TEMPLATE&#39;).help())</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_TEMPLATE
 </pre></div>
 </div>
 </div>
@@ -240,6 +287,43 @@ Explain:  {
 </pre></div>
 </div>
 </div>
+<div class="section" id="indexing-with-the-primer3-results">
+<h2>Indexing with the primer3 results<a class="headerlink" href="#indexing-with-the-primer3-results" title="Permalink to this headline">¶</a></h2>
+<p>Note the adjustments that must be made to retrieve the correct slicing indices
+for the RIGHT primer location:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">primer3plus.utils</span> <span class="k">import</span> <span class="n">reverse_complement</span>
+
+<span class="n">design</span> <span class="o">=</span> <span class="n">Design</span><span class="p">()</span>
+<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s1">&#39;TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC&#39;</span><span class="p">)</span>
+<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">as_cloning_task</span><span class="p">()</span>
+<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">primer_num_return</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">results</span><span class="p">,</span> <span class="n">explain</span> <span class="o">=</span> <span class="n">design</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">lloc</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;LEFT&#39;</span><span class="p">][</span><span class="s1">&#39;location&#39;</span><span class="p">]</span>
+<span class="n">lseq</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;LEFT&#39;</span><span class="p">][</span><span class="s1">&#39;SEQUENCE&#39;</span><span class="p">]</span>
+<span class="n">rloc</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;RIGHT&#39;</span><span class="p">][</span><span class="s1">&#39;location&#39;</span><span class="p">]</span>
+<span class="n">rseq</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;RIGHT&#39;</span><span class="p">][</span><span class="s1">&#39;SEQUENCE&#39;</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;LEFT&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lseq</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">design</span><span class="o">.</span><span class="n">SEQUENCE_TEMPLATE</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="n">lloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">lloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">lloc</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;RIGHT&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rseq</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">reverse_complement</span><span class="p">(</span><span class="n">design</span><span class="o">.</span><span class="n">SEQUENCE_TEMPLATE</span><span class="o">.</span><span class="n">value</span><span class="p">[</span><span class="n">rloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="o">-</span><span class="n">rloc</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span><span class="n">rloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>LEFT
+TCATGTAATTAGTTATGTCACGCTTAC
+TCATGTAATTAGTTATGTCACGCTTAC
+
+RIGHT
+GCAAATTAAAGCCTTCGAGCG
+GCAAATTAAAGCCTTCGAGCG
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -260,17 +344,19 @@ Explain:  {
 
 <h3>Navigation</h3>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#setting-parameters">setting parameters</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#using-designpresets">using <code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#from-a-single-key-value-pair">from a single key-value pair</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#from-a-dictionary">from a dictionary</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#setting-design-parameters">Setting design parameters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#setting-using-presets">setting using presets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-from-a-single-key-value-pair">setting from a single key-value pair</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-from-a-dictionary">setting from a dictionary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getting-help">getting help</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#design-cloning-primers">Design cloning primers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#designing-the-right-primer-only">Designing the right primer only</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#design-primers-targeting-interval">Design primers targeting interval</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#relaxing-parameters">Relaxing parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#indexing-with-the-primer3-results">Indexing with the primer3 results</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="developer/api_reference.html">API Reference</a></li>
@@ -316,7 +402,7 @@ Explain:  {
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="_sources/examples.rst"
+      <a href="_sources/usage.rst"
           rel="nofollow">Page source</a>
     </div>
 

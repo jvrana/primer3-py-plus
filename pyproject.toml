@@ -1,8 +1,9 @@
 [tool.poetry]
 name = "primer3plus"
 version = "0.1.3"
-description = ""
+description = "An easy-to-use Python API for Primer3 primer design."
 authors = ["Justin Vrana <justin.vrana@gmail.com>"]
+homepage = "https://github.com/jvrana/primer3-py-plus"
 
 [tool.poetry.dependencies]
 python = "^3.7"

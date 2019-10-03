@@ -7,6 +7,27 @@ def test_reverse_complement():
     print(reverse_complement(s))
 
 
+def test_anneal_fwd():
+    s = "ACGTGTATGTGATGATGTGCGTGTGTCGTGTAGCTTATTATATGCGGAGTCGTTGATGCTGTGAGT"
+    fwd, rev = list(anneal(s, ["NNNNN" + s[20:40]]))
+    assert fwd[0]["start"] == 20
+    assert fwd[0]["end"] == 40
+    assert fwd[0]["anneal"] == s[20:40]
+    assert fwd[0]["overhang"] == "NNNNN"
+    assert fwd[0]["strand"] == 1
+
+
+def test_anneal_rev():
+    s = "ACGTGTATGTGATGATGTGCGTGTGTCGTGTAGCTTATTATATGCGGAGTCGTTGATGCTGTGAGT"
+    fwd, rev = list(anneal(s, ["ANNNN" + reverse_complement(s[20:40])]))
+    print(rev[0])
+    assert rev[0]["start"] == 20
+    assert rev[0]["end"] == 40
+    assert rev[0]["anneal"] == reverse_complement(s[20:40])
+    assert rev[0]["overhang"] == "ANNNN"
+    assert rev[0]["strand"] == -1
+
+
 def test_anneal():
     s = "ACGTGTATGTGATGATGTGCGTGTGTCGTGTAGCTTATTATATGCGGAGTCGTTGATGCTGTGAGT"
     fwd, rev = anneal(s, ["AAAAAGTGCGTGTGTCGTGTAG"])

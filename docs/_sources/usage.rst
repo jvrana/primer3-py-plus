@@ -1,13 +1,55 @@
-Examples
-========
+Usage
+=====
 
-setting parameters
-------------------
+Setting design parameters
+-------------------------
 
-The preferred way to set parameters is to use the primer3plus.Design.presets() property.
+Design parameters can be set using built in preset methods:
 
-using :class:`DesignPresets <primer3plus.design.DesignPresets>`
-****************************************************************
+.. code-block:: python
+
+    # a new task
+    design = Design()
+
+    # set template sequence
+    design.presets.template("AGGTTGCGTGTGTATGGTCGTGTAGTGTGT")
+
+    # set left primer sequence
+    design.presets.left_sequence("GTTGCGTGTGT)
+
+    # set as a cloning task
+    design.presets.as_cloning_task()
+
+    # run the design task
+    design.run()
+
+Parameters can be set more directly, but this requires knowing the names of the
+parameters:
+
+.. code-block:: python
+
+    design.update({
+        'SEQUENCE_TEMPLATE': 'AGGTTGCGTGTGTATGGTCGTGTAGTGTGT',
+        'SEQUENCE_PRIMER': 'GTTGCGTGTGT',
+        'PRIMER_PICK_LEFT_PRIMER': 0,
+        'PRIMER_TASK': 'cloning_task'
+    })
+    design.run()
+
+If using an interactive terminal, descriptors are provided to the :class:`Design <primer3plus.Design>`,
+which usually can be accessed by typing `design.[TAB]`
+
+.. code-block:: python
+
+    print(design.SEQUENCE_TEMPLATE)
+    print(design.SEQUENCE_TEMPLATE))
+
+setting using presets
+*********************
+
+The :meth:`presets <primer3plus.Design.presets>` (returning a
+:class:`DesignPresets <primer3plus.design.DesignPresets>`) provides several
+convenient methods for setting common tasks:
 
 .. testsetup::
 
@@ -23,22 +65,21 @@ using :class:`DesignPresets <primer3plus.design.DesignPresets>`
 
     ACGGGGAGTTGTCTGTAGGTTGATTATGTGTGTCGTGTGTGTATATGGGTCTGA
 
-from a single key-value pair
-********************************
+setting from a single key-value pair
+************************************
+
+Preferred way to set parameters not available in the presets, is to use
+:meth:`set <primer3plus.Design.set>`:
 
 .. code-block::
 
     # preferred
     design.set('SEQUENCE_TEMPLATE', 'foo')
 
-    # alternative ways of setting parameters using a known parameter name
-    design.SEQUENCE_TEMPLATE.value = 'foo'
-    design.get('SEQUENCE_TEMPLATE').value = 'foo'
-    design.params['SEQUENCE_TEMPLATE'] = 'foo'
+setting from a dictionary
+*************************
 
-
-from a dictionary
-************************
+If setting many parameters, use :meth:`update <primer3plus.Design.update>`:
 
 .. code-block::
 
@@ -46,6 +87,21 @@ from a dictionary
         'SEQUENCE_TEMPLATE': "AGGGGTAGTAGTATGTGAAGGGGTAGTAGTATGTGAAGGGGTAGTAGTATGTGAAGGGGTAGTAGTATGTGA",
         'LEFT_SEQUENCE': 'TAGTAGTATGTGAAGG'
     })
+
+getting help
+************
+
+To get help with a parameter, access it using :meth:`get <primer3plus.Design.get>`
+or as a descriptor and call :meth:`help <primer3plus.params.Parameter.help>`
+
+.. testcode::
+
+    print(design.SEQUENCE_TEMPLATE.help())
+    # print(design.get('SEQUENCE_TEMPLATE').help())
+
+.. testoutput::
+
+    http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_TEMPLATE
 
 Design cloning primers
 ------------------------
@@ -115,8 +171,9 @@ Design cloning primers
 
 Design primers that target the region
 
+
 Designing the right primer only
-------------------------------
+-------------------------------
 
 .. code-block::
 
@@ -125,6 +182,7 @@ Designing the right primer only
     design.presets.left_sequence('GTTATGTCACGCTTACATTCACG')
     design.presets.as_cloning_task()
     design.run()
+
 
 Design primers targeting interval
 ---------------------------------
@@ -135,6 +193,7 @@ Design primers targeting interval
     design.presets.template("TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC")
     design.presets.target((50, 150))
     design.run()
+
 
 Relaxing parameters
 -------------------
@@ -227,3 +286,44 @@ We can run the relaxation procedure using :meth:`run_and_optimize <primer3plus.D
      "PRIMER_INTERNAL_NUM_RETURNED": 0,
      "PRIMER_PAIR_NUM_RETURNED": 1
     }
+
+
+Indexing with the primer3 results
+---------------------------------
+
+Note the adjustments that must be made to retrieve the correct slicing indices
+for the RIGHT primer location:
+
+.. testcode::
+
+    from primer3plus.utils import reverse_complement
+
+    design = Design()
+    design.presets.template('TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC')
+    design.presets.as_cloning_task()
+    design.presets.primer_num_return(1)
+    results, explain = design.run()
+    result = results[0]
+
+    lloc = result['LEFT']['location']
+    lseq = result['LEFT']['SEQUENCE']
+    rloc = result['RIGHT']['location']
+    rseq = result['RIGHT']['SEQUENCE']
+
+    print('LEFT')
+    print(lseq)
+    print(design.SEQUENCE_TEMPLATE.value[lloc[0]:lloc[0]+lloc[1]])
+    print()
+    print('RIGHT')
+    print(rseq)
+    print(reverse_complement(design.SEQUENCE_TEMPLATE.value[rloc[0]+1-rloc[1]:rloc[0]+1]))
+
+.. testoutput::
+
+    LEFT
+    TCATGTAATTAGTTATGTCACGCTTAC
+    TCATGTAATTAGTTATGTCACGCTTAC
+
+    RIGHT
+    GCAAATTAAAGCCTTCGAGCG
+    GCAAATTAAAGCCTTCGAGCG

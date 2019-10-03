@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -14,7 +15,7 @@
     <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Examples" href="examples.html" />
+    <link rel="next" title="Usage" href="usage.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -34,7 +35,7 @@
   <div class="section" id="primer3plus">
 <h1>Primer3Plus<a class="headerlink" href="#primer3plus" title="Permalink to this headline">¶</a></h1>
 <p>Release v0.1.3. (<a class="reference internal" href="developer/changelog.html"><span class="doc">Changelog</span></a>)</p>
-<p>Github <a href="#id5"><span class="problematic" id="id6">|gitpage|</span></a></p>
+<p>Github: <a class="reference external" href="https://github.com/jvrana/primer3-py-plus">https://github.com/jvrana/primer3-py-plus</a></p>
 <p>Primer3Plus is a Python DNA primer design tool based off of primer3 <a class="footnote-reference brackets" href="#id3" id="id1">1</a> <a class="footnote-reference brackets" href="#id4" id="id2">2</a> and the
 Python primer3 wrapper <a class="reference external" href="https://pypi.org/project/primer3-py/">https://pypi.org/project/primer3-py/</a>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">design</span> <span class="o">=</span> <span class="n">Design</span><span class="p">()</span>
@@ -50,9 +51,17 @@ Python primer3 wrapper <a class="reference external" href="https://pypi.org/proj
 <span class="n">design</span><span class="o">.</span><span class="n">run_and_optimize</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="section" id="setting-parameters">
-<h2>Setting parameters<a class="headerlink" href="#setting-parameters" title="Permalink to this headline">¶</a></h2>
-<p>The preferred way to set parameters is to use the <a class="reference internal" href="developer/api_reference.html#primer3plus.Design.presets" title="primer3plus.Design.presets"><code class="xref py py-meth docutils literal notranslate"><span class="pre">primer3plus.Design.presets()</span></code></a>
+<div class="section" id="getting-started">
+<h2>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="installation">
+<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pip install primer3plus -U
+</pre></div>
+</div>
+</div>
+<div class="section" id="making-a-primer-design-task">
+<h3>Making a primer design task<a class="headerlink" href="#making-a-primer-design-task" title="Permalink to this headline">¶</a></h3>
+<p>The preferred way to start a design is to use the <a class="reference internal" href="developer/api_reference.html#primer3plus.Design.presets" title="primer3plus.Design.presets"><code class="xref py py-meth docutils literal notranslate"><span class="pre">primer3plus.Design.presets()</span></code></a>
 property, which provides many helper methods for setting parameters.
 If you’re using an interactive notebook or terminal, hitting <cite>TAB</cite> after typing
 <cite>design.presets</cite> will provide all of the standard design settings</p>
@@ -95,8 +104,8 @@ are many parameters, this is useful in interactive environments:</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="running-designs">
-<h2>Running designs<a class="headerlink" href="#running-designs" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="running-design-tasks">
+<h3>Running design tasks<a class="headerlink" href="#running-design-tasks" title="Permalink to this headline">¶</a></h3>
 <p>To run, simply use the <a class="reference internal" href="developer/api_reference.html#primer3plus.Design.run" title="primer3plus.Design.run"><code class="xref py py-meth docutils literal notranslate"><span class="pre">run</span></code></a> method:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>design.run()
 </pre></div>
@@ -106,14 +115,10 @@ parameters such as melting temperature and primer size until primer pairs are fo
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>design.run_and_optimize(5)  # run for max of 5 iterations
 </pre></div>
 </div>
-<div class="section" id="installation">
-<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pip install primer3plus -U
-</pre></div>
 </div>
 </div>
 <div class="section" id="references">
-<h3>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h3>
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
 <dl class="footnote brackets">
 <dt class="label" id="id3"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
 <dd><p>Untergasser A, Cutcutache I, Koressaar T, et al. Primer3–new capabilities and</p>
@@ -127,22 +132,23 @@ parameters such as melting temperature and primer size until primer pairs are fo
 </dl>
 </div>
 </div>
-</div>
 <div class="section" id="table-of-contents">
 <h1>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#setting-parameters">setting parameters</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="examples.html#using-designpresets">using <code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="examples.html#from-a-single-key-value-pair">from a single key-value pair</a></li>
-<li class="toctree-l3"><a class="reference internal" href="examples.html#from-a-dictionary">from a dictionary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#setting-design-parameters">Setting design parameters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#setting-using-presets">setting using presets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#setting-from-a-single-key-value-pair">setting from a single key-value pair</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#setting-from-a-dictionary">setting from a dictionary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#getting-help">getting help</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#design-cloning-primers">Design cloning primers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#designing-the-right-primer-only">Designing the right primer only</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#design-primers-targeting-interval">Design primers targeting interval</a></li>
-<li class="toctree-l2"><a class="reference internal" href="examples.html#relaxing-parameters">Relaxing parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#design-cloning-primers">Design cloning primers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#designing-the-right-primer-only">Designing the right primer only</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#design-primers-targeting-interval">Design primers targeting interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#relaxing-parameters">Relaxing parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="usage.html#indexing-with-the-primer3-results">Indexing with the primer3 results</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="developer/api_reference.html">API Reference</a><ul>
@@ -174,7 +180,7 @@ parameters such as melting temperature and primer size until primer pairs are fo
 
 <h3>Navigation</h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="developer/api_reference.html">API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="developer/changelog.html">primer3plus change log</a></li>
 </ul>
@@ -183,7 +189,7 @@ parameters such as melting temperature and primer size until primer pairs are fo
 <h3>Related Topics</h3>
 <ul>
   <li><a href="#">Documentation overview</a><ul>
-      <li>Next: <a href="examples.html" title="next chapter">Examples</a></li>
+      <li>Next: <a href="usage.html" title="next chapter">Usage</a></li>
   </ul></li>
 </ul>
 </div>
