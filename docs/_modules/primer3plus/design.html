@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>primer3plus.design &#8212; primer3plus 1.0.0b0 documentation</title>
+    <title>primer3plus.design &#8212; primer3plus 1.0.0b1 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
@@ -68,21 +68,6 @@ def _summarize_reasons(reasons):
                     num = int(m.group(2))
                     reason_dict.setdefault(k, Counter())[reason_token] += num
     return {k: dict(v) for k, v in reason_dict.items()}
-
-
-def combine_results(res):
-    &quot;&quot;&quot;Combine and sort results. Combine all explainations.
-
-    :param results: :type results: :return: :rtype:
-    &quot;&quot;&quot;
-    all_pairs = []
-    all_reasons = []
-    for r in res:
-        all_pairs += list(r[0].values())
-        all_reasons.append(r[1])
-    sorted_pairs = sorted(all_pairs, key=lambda x: x[&quot;PAIR&quot;][&quot;PENALTY&quot;])
-    explain = _summarize_reasons(all_reasons)
-    return sorted_pairs, explain
 
 
 <div class="viewcode-block" id="DesignPresets"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets">[docs]</a>class DesignPresets:
@@ -319,9 +304,7 @@ def combine_results(res):
             interval = [interval]
         return interval
 
-<div class="viewcode-block" id="DesignPresets.included"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.included">[docs]</a>    def included(
-        self, interval: Union[str, Tuple[int, int], List[Tuple[int, int]]]
-    ) -&gt; &quot;DesignPresets&quot;:
+<div class="viewcode-block" id="DesignPresets.included"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.included">[docs]</a>    def included(self, interval: Union[str, Tuple[int, int]]) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;
         Specify interval from which primers must be selected.
         A sub-region of the given sequence in which to pick primers. For
@@ -335,11 +318,21 @@ def combine_results(res):
         &lt;length&gt; is the number of subsequent bases in the primer-picking region.
 
         :param interval: One of the following: the sequence of the target region,
-                         a tuple of the interval of &lt;start&gt;,&lt;length&gt;, or a list of
-                         tuples of &lt;start&gt;,&lt;length&gt;
+                         a tuple of the interval of &lt;start&gt;,&lt;length&gt; or a str
         :return: self
         &quot;&quot;&quot;
-        return self.update({&quot;SEQUENCE_INCLUDED_REGION&quot;: self._parse_interval(interval)})</div>
+        if isinstance(interval, str):
+            interval = self._interval_from_sequences(
+                self._design.params[&quot;SEQUENCE_TEMPLATE&quot;], interval
+            )
+        if not len(interval) == 2 or (
+            not isinstance(interval, tuple) and not isinstance(interval, list)
+        ):
+            raise TypeError(
+                &quot;Expect an tuple or list of length 2 but found {}&quot;.format(interval)
+            )
+        interval = list(interval)
+        return self.update({&quot;SEQUENCE_INCLUDED_REGION&quot;: interval})</div>
 
 <div class="viewcode-block" id="DesignPresets.target"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.target">[docs]</a>    def target(
         self, interval: Union[str, Tuple[int, int], List[Tuple[int, int]]]
