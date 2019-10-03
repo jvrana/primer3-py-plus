@@ -1,4 +1,4 @@
-Results of doctest builder run on 2019-10-03 07:59:06
+Results of doctest builder run on 2019-10-03 12:06:04
 =====================================================
 
 Document: usage

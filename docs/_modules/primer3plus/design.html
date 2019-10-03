@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>primer3plus.design &#8212; primer3plus 0.1.3 documentation</title>
+    <title>primer3plus.design &#8212; primer3plus 1.0.0b0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
@@ -39,13 +39,9 @@ There should be a number of presets available to run certain design
 tasks  There should also be a relaxation parameter (a subclass of
 Design?)  Async option  Design with overhangs
 &quot;&quot;&quot;
-from __future__ import annotations
-
-import itertools
 import re
 import webbrowser
 from collections import Counter
-from functools import wraps
 from typing import Any
 from typing import Dict
 from typing import List
@@ -135,7 +131,7 @@ def combine_results(res):
         self._design.params.update(update)
         return self</div>
 
-<div class="viewcode-block" id="DesignPresets.task"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.task">[docs]</a>    def task(self, task: str) -&gt; DesignPresets:
+<div class="viewcode-block" id="DesignPresets.task"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.task">[docs]</a>    def task(self, task: str) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;This tag tells primer3 what task to perform.
 
         http://primer3.ut.ee/primer3web_help.htm#PRIMER_TASK
@@ -146,7 +142,7 @@ def combine_results(res):
         self.update({&quot;PRIMER_TASK&quot;: task})
         return self</div>
 
-<div class="viewcode-block" id="DesignPresets.as_cloning_task"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.as_cloning_task">[docs]</a>    def as_cloning_task(self) -&gt; DesignPresets:
+<div class="viewcode-block" id="DesignPresets.as_cloning_task"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.as_cloning_task">[docs]</a>    def as_cloning_task(self) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;
         Set the design as a cloning task.
 
@@ -156,7 +152,7 @@ def combine_results(res):
         &quot;&quot;&quot;
         return self.task(&quot;pick_cloning_primers&quot;)</div>
 
-<div class="viewcode-block" id="DesignPresets.as_generic_task"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.as_generic_task">[docs]</a>    def as_generic_task(self) -&gt; DesignPresets:
+<div class="viewcode-block" id="DesignPresets.as_generic_task"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.as_generic_task">[docs]</a>    def as_generic_task(self) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;
         Set the design as a generic task.
 
@@ -166,7 +162,7 @@ def combine_results(res):
         &quot;&quot;&quot;
         return self.task(&quot;generic&quot;)</div>
 
-<div class="viewcode-block" id="DesignPresets.template"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.template">[docs]</a>    def template(self, template: str) -&gt; DesignPresets:
+<div class="viewcode-block" id="DesignPresets.template"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.template">[docs]</a>    def template(self, template: str) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;
         Set the template sequence for the design. This sets the &#39;SEQUENCE_TEMPLATE&#39;
         parameter.
@@ -180,7 +176,7 @@ def combine_results(res):
         return self</div>
 
     # TODO: set_iterations, set_num_return, set_force_return, set_gradient
-<div class="viewcode-block" id="DesignPresets.primer_num_return"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.primer_num_return">[docs]</a>    def primer_num_return(self, n: int) -&gt; DesignPresets:
+<div class="viewcode-block" id="DesignPresets.primer_num_return"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.primer_num_return">[docs]</a>    def primer_num_return(self, n: int) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;
         Set the number of primers to return for the design task.
 
@@ -193,7 +189,7 @@ def combine_results(res):
 
 <div class="viewcode-block" id="DesignPresets.product_size"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.product_size">[docs]</a>    def product_size(
         self, interval: Union[Tuple[int, int], List[Tuple[int, int]]], opt=None
-    ) -&gt; DesignPresets:
+    ) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;
         Set the product size. Optionally include the optimal size.
 
@@ -214,7 +210,7 @@ def combine_results(res):
 
 <div class="viewcode-block" id="DesignPresets.pair_region_list"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.pair_region_list">[docs]</a>    def pair_region_list(
         self, region_list: List[Tuple[int, int, int, int]]
-    ) -&gt; DesignPresets:
+    ) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;
         The list of regions from which to design primers.
 
@@ -225,7 +221,7 @@ def combine_results(res):
         &quot;&quot;&quot;
         return self.update({&quot;SEQUENCE_PRIMER_PAIR_OK_REGION_LIST&quot;: region_list})</div>
 
-<div class="viewcode-block" id="DesignPresets.left_sequence"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.left_sequence">[docs]</a>    def left_sequence(self, primer: str) -&gt; DesignPresets:
+<div class="viewcode-block" id="DesignPresets.left_sequence"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.left_sequence">[docs]</a>    def left_sequence(self, primer: str) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;The sequence of a left primer to check and around which to design
         right primers and optional internal oligos. Must be a substring of
         SEQUENCE_TEMPLATE.
@@ -237,7 +233,7 @@ def combine_results(res):
         &quot;&quot;&quot;
         return self.update({&quot;SEQUENCE_PRIMER&quot;: primer, &quot;PRIMER_PICK_RIGHT_PRIMER&quot;: 1})</div>
 
-<div class="viewcode-block" id="DesignPresets.right_sequence"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.right_sequence">[docs]</a>    def right_sequence(self, primer: str) -&gt; DesignPresets:
+<div class="viewcode-block" id="DesignPresets.right_sequence"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.right_sequence">[docs]</a>    def right_sequence(self, primer: str) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;The sequence of a right primer to check and around which to design
         left primers and optional internal oligos. Must be a substring of the
         reverse strand of SEQUENCE_TEMPLATE.
@@ -252,7 +248,7 @@ def combine_results(res):
             {&quot;SEQUENCE_PRIMER_REVCOMP&quot;: primer, &quot;PRIMER_PICK_LEFT_PRIMER&quot;: 1}
         )</div>
 
-<div class="viewcode-block" id="DesignPresets.pick_left_only"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.pick_left_only">[docs]</a>    def pick_left_only(self) -&gt; DesignPresets:
+<div class="viewcode-block" id="DesignPresets.pick_left_only"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.pick_left_only">[docs]</a>    def pick_left_only(self) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;
         Design only the left primer.
 
@@ -265,7 +261,7 @@ def combine_results(res):
             {&quot;PRIMER_PICK_LEFT_PRIMER&quot;: 1, &quot;PRIMER_PICK_RIGHT_PRIMER&quot;: 0}
         )</div>
 
-<div class="viewcode-block" id="DesignPresets.pick_right_only"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.pick_right_only">[docs]</a>    def pick_right_only(self) -&gt; DesignPresets:
+<div class="viewcode-block" id="DesignPresets.pick_right_only"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.pick_right_only">[docs]</a>    def pick_right_only(self) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;
         Design only the right primer.
 
@@ -278,7 +274,7 @@ def combine_results(res):
             {&quot;PRIMER_PICK_LEFT_PRIMER&quot;: 0, &quot;PRIMER_PICK_RIGHT_PRIMER&quot;: 1}
         )</div>
 
-<div class="viewcode-block" id="DesignPresets.internal_sequence"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.internal_sequence">[docs]</a>    def internal_sequence(self, primer: str) -&gt; DesignPresets:
+<div class="viewcode-block" id="DesignPresets.internal_sequence"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.internal_sequence">[docs]</a>    def internal_sequence(self, primer: str) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;The sequence of an internal oligo to check and around which to
         design left and right primers. Must be a substring of
         SEQUENCE_TEMPLATE.
@@ -293,7 +289,7 @@ def combine_results(res):
             {&quot;SEQUENCE_INTERNAL_OLIGO&quot;: primer, &quot;PRIMER_PICK_INTERNAL_OLIGO&quot;: 1}
         )</div>
 
-<div class="viewcode-block" id="DesignPresets.primers"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.primers">[docs]</a>    def primers(self, p1: str, p2: str) -&gt; DesignPresets:
+<div class="viewcode-block" id="DesignPresets.primers"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.primers">[docs]</a>    def primers(self, p1: str, p2: str) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;
         Set the left and right primer sequences.
 
@@ -325,7 +321,7 @@ def combine_results(res):
 
 <div class="viewcode-block" id="DesignPresets.included"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.included">[docs]</a>    def included(
         self, interval: Union[str, Tuple[int, int], List[Tuple[int, int]]]
-    ) -&gt; DesignPresets:
+    ) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;
         Specify interval from which primers must be selected.
         A sub-region of the given sequence in which to pick primers. For
@@ -347,7 +343,7 @@ def combine_results(res):
 
 <div class="viewcode-block" id="DesignPresets.target"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.target">[docs]</a>    def target(
         self, interval: Union[str, Tuple[int, int], List[Tuple[int, int]]]
-    ) -&gt; DesignPresets:
+    ) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;
         Specify the interval that designed primers must flank.
         If one or more targets is specified then a legal primer pair must
@@ -372,7 +368,7 @@ def combine_results(res):
 
 <div class="viewcode-block" id="DesignPresets.excluded"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.excluded">[docs]</a>    def excluded(
         self, interval: Union[str, Tuple[int, int], List[Tuple[int, int]]]
-    ) -&gt; DesignPresets:
+    ) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;
         Primers and oligos may not overlap any region specified in this tag.
         The associated value must be a space-separated list of &lt;start&gt;,&lt;length&gt; pairs
@@ -391,7 +387,7 @@ def combine_results(res):
         &quot;&quot;&quot;
         return self.update({&quot;SEQUENCE_EXCLUDED_REGION&quot;: self._parse_interval(interval)})</div>
 
-<div class="viewcode-block" id="DesignPresets.pick_anyway"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.pick_anyway">[docs]</a>    def pick_anyway(self, b=1) -&gt; DesignPresets:
+<div class="viewcode-block" id="DesignPresets.pick_anyway"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.pick_anyway">[docs]</a>    def pick_anyway(self, b=1) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;
         If true use primer provided in SEQUENCE_PRIMER,
         SEQUENCE_PRIMER_REVCOMP, or SEQUENCE_INTERNAL_OLIGO even if it violates
@@ -525,7 +521,7 @@ class DesignBase:
         return self.params.defs[key]
 
     @property
-    def presets(self) -&gt; DesignPresets:
+    def presets(self) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;Return the :class:`DesignPresets &lt;primer3plus.design.DesignPresets&gt;`
         instance for this design.&quot;&quot;&quot;
         return self._set
