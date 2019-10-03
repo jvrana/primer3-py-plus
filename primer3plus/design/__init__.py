@@ -36,21 +36,6 @@ def _summarize_reasons(reasons):
     return {k: dict(v) for k, v in reason_dict.items()}
 
 
-def combine_results(res):
-    """Combine and sort results. Combine all explainations.
-
-    :param results: :type results: :return: :rtype:
-    """
-    all_pairs = []
-    all_reasons = []
-    for r in res:
-        all_pairs += list(r[0].values())
-        all_reasons.append(r[1])
-    sorted_pairs = sorted(all_pairs, key=lambda x: x["PAIR"]["PENALTY"])
-    explain = _summarize_reasons(all_reasons)
-    return sorted_pairs, explain
-
-
 class DesignPresets:
     """
     Interface for setting design parameters. This is typically accessed from
@@ -285,9 +270,7 @@ class DesignPresets:
             interval = [interval]
         return interval
 
-    def included(
-        self, interval: Union[str, Tuple[int, int], List[Tuple[int, int]]]
-    ) -> "DesignPresets":
+    def included(self, interval: Union[str, Tuple[int, int]]) -> "DesignPresets":
         """
         Specify interval from which primers must be selected.
         A sub-region of the given sequence in which to pick primers. For
@@ -301,11 +284,21 @@ class DesignPresets:
         <length> is the number of subsequent bases in the primer-picking region.
 
         :param interval: One of the following: the sequence of the target region,
-                         a tuple of the interval of <start>,<length>, or a list of
-                         tuples of <start>,<length>
+                         a tuple of the interval of <start>,<length> or a str
         :return: self
         """
-        return self.update({"SEQUENCE_INCLUDED_REGION": self._parse_interval(interval)})
+        if isinstance(interval, str):
+            interval = self._interval_from_sequences(
+                self._design.params["SEQUENCE_TEMPLATE"], interval
+            )
+        if not len(interval) == 2 or (
+            not isinstance(interval, tuple) and not isinstance(interval, list)
+        ):
+            raise TypeError(
+                "Expect an tuple or list of length 2 but found {}".format(interval)
+            )
+        interval = list(interval)
+        return self.update({"SEQUENCE_INCLUDED_REGION": interval})
 
     def target(
         self, interval: Union[str, Tuple[int, int], List[Tuple[int, int]]]

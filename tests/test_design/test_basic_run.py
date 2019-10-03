@@ -1,5 +1,7 @@
 import random
 
+import pytest
+
 from primer3plus.design import Design
 from primer3plus.utils import anneal
 from primer3plus.utils import reverse_complement
@@ -69,3 +71,65 @@ def test_product_size_list(gfp):
     design.presets.template(gfp)
     design.presets.product_size([(50, 100), (200, 300)])
     design.run()
+
+
+class TestExclude:
+    def test_as_tuple(self, gfp):
+        design = Design()
+        design.presets.template(gfp).excluded((100, 300))
+        pairs, explain = design.run()
+        assert pairs
+
+    def test_as_list(self, gfp):
+        design = Design()
+        design.presets.template(gfp).excluded([100, 300])
+        print(design.SEQUENCE_EXCLUDED_REGION)
+        pairs, explain = design.run()
+        assert pairs
+
+    def test_as_list_of_tuples(self, gfp):
+        design = Design()
+        design.presets.template(gfp).excluded([(100, 300)])
+        pairs, explain = design.run()
+        assert pairs
+
+    def test_as_str(self, gfp):
+        design = Design()
+        design.presets.template(gfp).excluded(gfp[100:300])
+        pairs, explain = design.run()
+        assert pairs
+
+
+class TestIncluded:
+    def test_as_tuple(self, gfp):
+        design = Design()
+        design.presets.template(gfp).included((100, 100))
+        print(design.SEQUENCE_INCLUDED_REGION)
+        pairs, explain = design.run()
+        assert pairs
+
+    def test_as_list(self, gfp):
+        design = Design()
+        design.presets.template(gfp).included([100, 100])
+        print(design.SEQUENCE_INCLUDED_REGION)
+        pairs, explain = design.run()
+        assert pairs
+
+    def test_as_str(self, gfp):
+        design = Design()
+        design.presets.template(gfp).included(gfp[100:300])
+        print(design.SEQUENCE_INCLUDED_REGION)
+        pairs, explain = design.run()
+        assert pairs
+
+    def test_raises_value_error(self, gfp):
+        design = Design()
+        design.presets.template(gfp).included([None, 100])
+        print(design.SEQUENCE_INCLUDED_REGION)
+        with pytest.raises(TypeError):
+            design.run()
+
+    def test_raises_value_error(self, gfp):
+        design = Design()
+        with pytest.raises(TypeError):
+            design.presets.template(gfp).included([100, 100, 100])
