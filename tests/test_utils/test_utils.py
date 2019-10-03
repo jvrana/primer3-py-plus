@@ -4,7 +4,8 @@ from primer3plus.utils import reverse_complement
 
 def test_reverse_complement():
     s = "ACGTGATGTCGTGAGTAGTA"
-    print(reverse_complement(s))
+    s2 = reverse_complement(s)
+    assert s2 == "TGCACTACAGCACTCATCAT"[::-1]
 
 
 def test_anneal_fwd():
@@ -21,8 +22,8 @@ def test_anneal_rev():
     s = "ACGTGTATGTGATGATGTGCGTGTGTCGTGTAGCTTATTATATGCGGAGTCGTTGATGCTGTGAGT"
     fwd, rev = list(anneal(s, ["ANNNN" + reverse_complement(s[20:40])]))
     print(rev[0])
-    assert rev[0]["start"] == 20
-    assert rev[0]["end"] == 40
+    assert rev[0]["start"] == 40
+    assert rev[0]["end"] == 20
     assert rev[0]["anneal"] == reverse_complement(s[20:40])
     assert rev[0]["overhang"] == "ANNNN"
     assert rev[0]["strand"] == -1

@@ -5,13 +5,9 @@ There should be a number of presets available to run certain design
 tasks  There should also be a relaxation parameter (a subclass of
 Design?)  Async option  Design with overhangs
 """
-from __future__ import annotations
-
-import itertools
 import re
 import webbrowser
 from collections import Counter
-from functools import wraps
 from typing import Any
 from typing import Dict
 from typing import List
@@ -101,7 +97,7 @@ class DesignPresets:
         self._design.params.update(update)
         return self
 
-    def task(self, task: str) -> DesignPresets:
+    def task(self, task: str) -> "DesignPresets":
         """This tag tells primer3 what task to perform.
 
         http://primer3.ut.ee/primer3web_help.htm#PRIMER_TASK
@@ -112,7 +108,7 @@ class DesignPresets:
         self.update({"PRIMER_TASK": task})
         return self
 
-    def as_cloning_task(self) -> DesignPresets:
+    def as_cloning_task(self) -> "DesignPresets":
         """
         Set the design as a cloning task.
 
@@ -122,7 +118,7 @@ class DesignPresets:
         """
         return self.task("pick_cloning_primers")
 
-    def as_generic_task(self) -> DesignPresets:
+    def as_generic_task(self) -> "DesignPresets":
         """
         Set the design as a generic task.
 
@@ -132,7 +128,7 @@ class DesignPresets:
         """
         return self.task("generic")
 
-    def template(self, template: str) -> DesignPresets:
+    def template(self, template: str) -> "DesignPresets":
         """
         Set the template sequence for the design. This sets the 'SEQUENCE_TEMPLATE'
         parameter.
@@ -146,7 +142,7 @@ class DesignPresets:
         return self
 
     # TODO: set_iterations, set_num_return, set_force_return, set_gradient
-    def primer_num_return(self, n: int) -> DesignPresets:
+    def primer_num_return(self, n: int) -> "DesignPresets":
         """
         Set the number of primers to return for the design task.
 
@@ -159,7 +155,7 @@ class DesignPresets:
 
     def product_size(
         self, interval: Union[Tuple[int, int], List[Tuple[int, int]]], opt=None
-    ) -> DesignPresets:
+    ) -> "DesignPresets":
         """
         Set the product size. Optionally include the optimal size.
 
@@ -180,7 +176,7 @@ class DesignPresets:
 
     def pair_region_list(
         self, region_list: List[Tuple[int, int, int, int]]
-    ) -> DesignPresets:
+    ) -> "DesignPresets":
         """
         The list of regions from which to design primers.
 
@@ -191,7 +187,7 @@ class DesignPresets:
         """
         return self.update({"SEQUENCE_PRIMER_PAIR_OK_REGION_LIST": region_list})
 
-    def left_sequence(self, primer: str) -> DesignPresets:
+    def left_sequence(self, primer: str) -> "DesignPresets":
         """The sequence of a left primer to check and around which to design
         right primers and optional internal oligos. Must be a substring of
         SEQUENCE_TEMPLATE.
@@ -203,7 +199,7 @@ class DesignPresets:
         """
         return self.update({"SEQUENCE_PRIMER": primer, "PRIMER_PICK_RIGHT_PRIMER": 1})
 
-    def right_sequence(self, primer: str) -> DesignPresets:
+    def right_sequence(self, primer: str) -> "DesignPresets":
         """The sequence of a right primer to check and around which to design
         left primers and optional internal oligos. Must be a substring of the
         reverse strand of SEQUENCE_TEMPLATE.
@@ -218,7 +214,7 @@ class DesignPresets:
             {"SEQUENCE_PRIMER_REVCOMP": primer, "PRIMER_PICK_LEFT_PRIMER": 1}
         )
 
-    def pick_left_only(self) -> DesignPresets:
+    def pick_left_only(self) -> "DesignPresets":
         """
         Design only the left primer.
 
@@ -231,7 +227,7 @@ class DesignPresets:
             {"PRIMER_PICK_LEFT_PRIMER": 1, "PRIMER_PICK_RIGHT_PRIMER": 0}
         )
 
-    def pick_right_only(self) -> DesignPresets:
+    def pick_right_only(self) -> "DesignPresets":
         """
         Design only the right primer.
 
@@ -244,7 +240,7 @@ class DesignPresets:
             {"PRIMER_PICK_LEFT_PRIMER": 0, "PRIMER_PICK_RIGHT_PRIMER": 1}
         )
 
-    def internal_sequence(self, primer: str) -> DesignPresets:
+    def internal_sequence(self, primer: str) -> "DesignPresets":
         """The sequence of an internal oligo to check and around which to
         design left and right primers. Must be a substring of
         SEQUENCE_TEMPLATE.
@@ -259,7 +255,7 @@ class DesignPresets:
             {"SEQUENCE_INTERNAL_OLIGO": primer, "PRIMER_PICK_INTERNAL_OLIGO": 1}
         )
 
-    def primers(self, p1: str, p2: str) -> DesignPresets:
+    def primers(self, p1: str, p2: str) -> "DesignPresets":
         """
         Set the left and right primer sequences.
 
@@ -291,7 +287,7 @@ class DesignPresets:
 
     def included(
         self, interval: Union[str, Tuple[int, int], List[Tuple[int, int]]]
-    ) -> DesignPresets:
+    ) -> "DesignPresets":
         """
         Specify interval from which primers must be selected.
         A sub-region of the given sequence in which to pick primers. For
@@ -313,7 +309,7 @@ class DesignPresets:
 
     def target(
         self, interval: Union[str, Tuple[int, int], List[Tuple[int, int]]]
-    ) -> DesignPresets:
+    ) -> "DesignPresets":
         """
         Specify the interval that designed primers must flank.
         If one or more targets is specified then a legal primer pair must
@@ -338,7 +334,7 @@ class DesignPresets:
 
     def excluded(
         self, interval: Union[str, Tuple[int, int], List[Tuple[int, int]]]
-    ) -> DesignPresets:
+    ) -> "DesignPresets":
         """
         Primers and oligos may not overlap any region specified in this tag.
         The associated value must be a space-separated list of <start>,<length> pairs
@@ -357,7 +353,7 @@ class DesignPresets:
         """
         return self.update({"SEQUENCE_EXCLUDED_REGION": self._parse_interval(interval)})
 
-    def pick_anyway(self, b=1) -> DesignPresets:
+    def pick_anyway(self, b=1) -> "DesignPresets":
         """
         If true use primer provided in SEQUENCE_PRIMER,
         SEQUENCE_PRIMER_REVCOMP, or SEQUENCE_INTERNAL_OLIGO even if it violates
@@ -491,7 +487,7 @@ class Design(DesignBase, AllParameters):
         return self.params.defs[key]
 
     @property
-    def presets(self) -> DesignPresets:
+    def presets(self) -> "DesignPresets":
         """Return the :class:`DesignPresets <primer3plus.design.DesignPresets>`
         instance for this design."""
         return self._set

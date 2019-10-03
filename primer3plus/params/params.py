@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 import os
 import re
 import webbrowser
@@ -114,7 +112,7 @@ class Parameter:
         """
         self.value = self.ptype.default
 
-    def copy(self) -> Parameter:
+    def copy(self) -> "Parameter":
         """
         Make a copy of this parameter.
 

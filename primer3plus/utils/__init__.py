@@ -6,13 +6,13 @@ from typing import List
 from typing import Tuple
 from typing import Union
 
-from Bio.Seq import Seq
-
 warnings.simplefilter("ignore", PendingDeprecationWarning)
+rcdict = dict(zip("agtcn ", "tcagn "))
+rcdict.update({k.upper(): v.upper() for k, v in rcdict.items()})
 
 
 def reverse_complement(seq: str):
-    return str(Seq(seq).reverse_complement())
+    return "".join(rcdict[x] for x in seq[::-1])
 
 
 def _extend_match(seq: str, primer: str, length: int, end: int):
