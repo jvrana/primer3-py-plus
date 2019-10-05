@@ -503,7 +503,7 @@ def clip(x, mn, mx):
 
 class DesignBase:
 
-    DEFAULT_PARAMS = default_boulderio()  #: default parameters
+    DEFAULT_PARAMS = default_boulderio  #: default parameters
     DEFAULT_GRADIENT = dict(
         PRIMER_MAX_SIZE=(1, DEFAULT_PARAMS["PRIMER_MAX_SIZE"], 36),
         PRIMER_MIN_SIZE=(-1, 16, DEFAULT_PARAMS["PRIMER_MAX_SIZE"]),
@@ -523,6 +523,7 @@ class DesignBase:
         gradient: Dict[
             str, Tuple[Union[float, int], Union[float, int], Union[float, int]]
         ] = None,
+        params: BoulderIO = None,
         quiet_runtime: bool = False,
     ):
         """
@@ -531,7 +532,9 @@ class DesignBase:
         :param gradient: the design gradient.
         :param quiet_runtime: if True will siliently ignore any runtime errors.
         """
-        self.params = self.DEFAULT_PARAMS.copy()
+        if params is None:
+            params = self.DEFAULT_PARAMS.copy()
+        self.params = params
         self.logger = logger(self)
         self.gradient = gradient
         self.quiet_runtime = quiet_runtime

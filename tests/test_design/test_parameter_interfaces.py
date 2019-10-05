@@ -1,6 +1,6 @@
 from primer3plus import Design
 from primer3plus.design.interfaces import ParameterDescriptor
-from primer3plus.params import default_boulderio
+from primer3plus.params import _load_default_boulderio
 
 
 def test_descriptor():
@@ -9,7 +9,7 @@ def test_descriptor():
         SEQUENCE_ID = ParameterDescriptor("SEQUENCE_ID")
 
         def __init__(self):
-            self.params = default_boulderio()
+            self.params = _load_default_boulderio()
 
     foo = Foo()
     foo.params["SEQUENCE_ID"] = "bar"

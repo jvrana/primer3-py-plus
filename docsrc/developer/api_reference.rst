@@ -32,6 +32,13 @@ Design Parameters
     :members:
     :exclude-members: ExtraTypes
 
+.. _api_default_parameters:
+
+BoulderIO Default Parameters
+----------------------------
+
+.. autoattribute:: primer3plus.params.default_boulderio._params
+
 Extra/Special Parameters
 ------------------------
 

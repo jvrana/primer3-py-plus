@@ -208,7 +208,7 @@ class BoulderIO(Mapping):
         """
         Initializes a new BoulderIO instance.
         """
-        self._params = {}
+        self._params = {}  #: parameters
 
     def update(self, data_dict: Dict[str, Any]):
         """
@@ -539,7 +539,7 @@ class ParamParser:
         return cls._open_primer3_params(filepath)
 
 
-def default_boulderio() -> BoulderIO:
+def _load_default_boulderio() -> BoulderIO:
     """
     Open the default parameters as a :class:`BoulderIO <primer3plus.params.params>`
 
@@ -549,3 +549,6 @@ def default_boulderio() -> BoulderIO:
     boulderio = BoulderIO()
     boulderio.load(param_dict)
     return boulderio
+
+
+default_boulderio = _load_default_boulderio()  #: default boulder IO parameters

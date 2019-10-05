@@ -236,15 +236,13 @@ _default_param_path = os.path.join(
         ExtraTypes.PRIMER_USE_OVERHANGS,
         ExtraTypes.PRIMER_LONG_OK,
     ]  #: extra parameter types
-    PRIMER_MAX_SIZE_HARD_LIM = (
-        35
-    )  #: hard coded primer length limit for Primer3.
+    PRIMER_MAX_SIZE_HARD_LIM = 35  #: hard coded primer length limit for Primer3.
 
     def __init__(self):
         &quot;&quot;&quot;
         Initializes a new BoulderIO instance.
         &quot;&quot;&quot;
-        self._params = {}
+        self._params = {}  #: parameters
 
 <div class="viewcode-block" id="BoulderIO.update"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.params.BoulderIO.update">[docs]</a>    def update(self, data_dict: Dict[str, Any]):
         &quot;&quot;&quot;
@@ -575,7 +573,7 @@ _default_param_path = os.path.join(
         return cls._open_primer3_params(filepath)</div></div>
 
 
-<div class="viewcode-block" id="default_boulderio"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.params.default_boulderio">[docs]</a>def default_boulderio() -&gt; BoulderIO:
+<div class="viewcode-block" id="_load_default_boulderio"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.params._load_default_boulderio">[docs]</a>def _load_default_boulderio() -&gt; BoulderIO:
     &quot;&quot;&quot;
     Open the default parameters as a :class:`BoulderIO &lt;primer3plus.params.params&gt;`
 
@@ -585,6 +583,8 @@ _default_param_path = os.path.join(
     boulderio = BoulderIO()
     boulderio.load(param_dict)
     return boulderio</div>
+
+default_boulderio = _load_default_boulderio()  #: default boulder IO parameters
 </pre></div>
 
           </div>

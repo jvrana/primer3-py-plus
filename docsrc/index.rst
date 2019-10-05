@@ -41,6 +41,9 @@ Python primer3 wrapper https://pypi.org/project/primer3-py/.
 
 For more info, take a look at the :ref:`API Docs <api>`
 
+For a list of parameters available, take a look at the
+:ref:`BoulderIO Parameters <api_default_parameters>`
+
 Getting started
 ---------------
 

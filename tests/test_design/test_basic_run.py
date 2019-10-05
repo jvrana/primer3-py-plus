@@ -238,3 +238,10 @@ class TestLongPrimers:
         design.PRIMER_PICK_ANYWAY = 1
         with pytest.raises(Primer3PlusRunTimeError):
             design.run_and_optimize(10)
+
+
+class TestOverOrigin:
+    def test_included_over_origin(self, gfp):
+
+        design = Design()
+        design.presets.template
