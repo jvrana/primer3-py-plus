@@ -4,19 +4,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>primer3plus.params.params &#8212; primer3plus 1.0.0b1 documentation</title>
-    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../../_static/language_data.js"></script>
-    <link rel="index" title="Index" href="../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../search.html" />
+    <title>primer3plus.params &#8212; primer3plus 1.0.0b1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
    
-  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
@@ -31,7 +31,7 @@
 
           <div class="body" role="main">
             
-  <h1>Source code for primer3plus.params.params</h1><div class="highlight"><pre>
+  <h1>Source code for primer3plus.params</h1><div class="highlight"><pre>
 <span></span>import os
 import re
 import webbrowser
@@ -43,22 +43,32 @@ from typing import Iterator
 
 from .expected_opts import _expected_opts
 from primer3plus.constants import DOCURL
+from primer3plus.exceptions import Primer3PlusParserError
 
 
-class ParamTypes:
-    GLOBAL = &quot;GLOBAL&quot;
-    PROGRAM = &quot;PROGRAM&quot;
-    OTHER = &quot;OTHER&quot;
-    SEQUENCE = &quot;SEQUENCE&quot;
-    CATEGORY = &quot;category&quot;
+<div class="viewcode-block" id="ParamTypes"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.params.ParamTypes">[docs]</a>class ParamTypes:
+    &quot;&quot;&quot;
+    Parameter types used in BoulderIO. Only the Global and Sequence parameters
+    are actually used in designs.
+    &quot;&quot;&quot;
+
+    GLOBAL = &quot;GLOBAL&quot;  #: global parameter key
+    PROGRAM = &quot;PROGRAM&quot;  #: program parameter key
+    OTHER = &quot;OTHER&quot;  #: other parameter key
+    SEQUENCE = &quot;SEQUENCE&quot;  #: sequence parameter key
+    EXTRA = &quot;extra&quot;  #: extra parameter key. These do not show up in the final
+    #: boulderIO that gets sent to primer3
+    CATEGORY = &quot;category&quot;</div>
 
 
-REL_PARAM_PATH = os.path.join(
+_default_param_path = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), &quot;..&quot;, &quot;primer3_params_raw.txt&quot;
 )
 
 
-class ParameterType:
+<div class="viewcode-block" id="ParameterType"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.params.ParameterType">[docs]</a>class ParameterType:
+    &quot;&quot;&quot;Metatype for a Primer3 parameter.&quot;&quot;&quot;
+
     def __init__(self, name, description, type, default, category):
         &quot;&quot;&quot;
         Initialize a BoulderIO parameter type.
@@ -70,11 +80,13 @@ class ParameterType:
         :param category: parameter category (from &#39;sequence&#39;, &#39;program&#39;, &#39;globals&#39;, or
                 &#39;other&#39;)
         &quot;&quot;&quot;
-        self.name = name
-        self.description = description
-        self.type = type
-        self.default = default
-        self.category = category
+        self.name = name  #: name of the parameter
+        self.description = description  #: parameter description as a str
+        self.type = type  #: expected python type of the parameter value
+        self.default = default  #: default value
+        self.category = (
+            category
+        )  #: category. See :class:`ParamTypes &lt;primer3plus.params.ParamTypes&gt;`
 
     def __repr__(self):
         return str(self)
@@ -85,10 +97,13 @@ class ParameterType:
             name=self.name,
             type=self.type,
             default=self.default,
-        )
+        )</div>
 
 
-class Parameter:
+<div class="viewcode-block" id="Parameter"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.params.Parameter">[docs]</a>class Parameter:
+    &quot;&quot;&quot;An instance of a Primer3 parameter. Internally validate its value using
+    its :class:&lt;ParameterType &lt;primer3plus.params.ParameterType&gt;`&quot;&quot;&quot;
+
     def __init__(self, ptype: ParameterType, value=None):
         &quot;&quot;&quot;
         Initialize a parameter from a
@@ -97,8 +112,10 @@ class Parameter:
         :param ptype: parameter type
         :param value: value to set parameter
         &quot;&quot;&quot;
-        self.ptype = ptype
-        self._value = None
+        self.ptype = (
+            ptype
+        )  #: the :class:`ParameterType &lt;primer3plus.params.ParameterType&gt;`
+        self._value = None  #: the parameter value
         if value is None:
             self.value = self.ptype.default
         else:
@@ -138,24 +155,24 @@ class Parameter:
         &quot;&quot;&quot;
         return self.ptype.name
 
-    def set_default(self):
+<div class="viewcode-block" id="Parameter.set_default"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.params.Parameter.set_default">[docs]</a>    def set_default(self):
         &quot;&quot;&quot;
         Set the parameter to its default.
 
         :return: None
         &quot;&quot;&quot;
-        self.value = self.ptype.default
+        self.value = self.ptype.default</div>
 
-    def copy(self) -&gt; &quot;Parameter&quot;:
+<div class="viewcode-block" id="Parameter.copy"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.params.Parameter.copy">[docs]</a>    def copy(self) -&gt; &quot;Parameter&quot;:
         &quot;&quot;&quot;
         Make a copy of this parameter.
 
         :return: None
         &quot;&quot;&quot;
         p = self.__class__(self.ptype, deepcopy(self.value))
-        return p
+        return p</div>
 
-    def help(self, open=False):
+    def help(self, open: bool = False):
         return &quot;{}#{}&quot;.format(DOCURL, self.name)
 
     def __str__(self) -&gt; str:
@@ -168,17 +185,68 @@ class Parameter:
         )
 
     def __repr__(self) -&gt; str:
-        return str(self)
+        return str(self)</div>
 
 
-<div class="viewcode-block" id="BoulderIO"><a class="viewcode-back" href="../../../developer/api_reference.html#primer3plus.params.BoulderIO">[docs]</a>class BoulderIO(Mapping):
+<div class="viewcode-block" id="ExtraTypes"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.params.ExtraTypes">[docs]</a>class ExtraTypes:
+    &quot;&quot;&quot;Extra Parameter types not included in standard Primer3 behavior.&quot;&quot;&quot;
+
+    SEQUENCE_PRIMER_OVERHANG = ParameterType(
+        name=&quot;SEQUENCE_PRIMER_OVERHANG&quot;,
+        type=str,
+        default=&quot;&quot;,
+        description=&quot;sequence of the overhang for the left primer&quot;,
+        category=ParamTypes.EXTRA,
+    )  #: extra parameter specifies the sequence of the left primer overhang
+    SEQUENCE_PRIMER_REVCOMP_OVERHANG = ParameterType(
+        name=&quot;SEQUENCE_PRIMER_REVCOMP_OVERHANG&quot;,
+        type=str,
+        default=&quot;&quot;,
+        description=&quot;sequence of the overhang for the right primer&quot;,
+        category=ParamTypes.EXTRA,
+    )  #: extra parameter specifies the sequence of the right primer overhang
+    PRIMER_USE_OVERHANGS = ParameterType(
+        name=&quot;PRIMER_USE_OVERHANGS&quot;,
+        type=bool,
+        default=False,
+        description=&quot;if True, will attempt to resolve overhangs for&quot;
+        &quot; provided left and right primers.&quot;,
+        category=ParamTypes.EXTRA,
+    )  #: extra parameter specifies to use primer overhangs in the design
+    PRIMER_LONG_OK = ParameterType(
+        name=&quot;PRIMER_LONG_OK&quot;,
+        type=bool,
+        default=False,
+        description=&quot;if True, primers longer than the primer3 defaults (35)&quot;
+        &quot; will automatically be adjusted&quot;,
+        category=ParamTypes.EXTRA,
+    )  #: specifies BoulderIO use long primers (&gt;35bp).</div>
+
+
+<div class="viewcode-block" id="BoulderIO"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.params.BoulderIO">[docs]</a>class BoulderIO(Mapping):
+    &quot;&quot;&quot;
+    Class that maintains and validates a list of Primer3 parameters.
+    &quot;&quot;&quot;
+
     POST_LOAD_DEFAULTS = {&quot;PRIMER_EXPLAIN_FLAG&quot;: 1}
     EXPECTED = _expected_opts[:]
+    EXTRA_TYPES = [
+        ExtraTypes.SEQUENCE_PRIMER_OVERHANG,
+        ExtraTypes.SEQUENCE_PRIMER_REVCOMP_OVERHANG,
+        ExtraTypes.PRIMER_USE_OVERHANGS,
+        ExtraTypes.PRIMER_LONG_OK,
+    ]  #: extra parameter types
+    PRIMER_MAX_SIZE_HARD_LIM = (
+        35
+    )  #: hard coded primer length limit for Primer3.
 
     def __init__(self):
+        &quot;&quot;&quot;
+        Initializes a new BoulderIO instance.
+        &quot;&quot;&quot;
         self._params = {}
 
-<div class="viewcode-block" id="BoulderIO.update"><a class="viewcode-back" href="../../../developer/api_reference.html#primer3plus.params.BoulderIO.update">[docs]</a>    def update(self, data_dict: Dict[str, Any]):
+<div class="viewcode-block" id="BoulderIO.update"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.params.BoulderIO.update">[docs]</a>    def update(self, data_dict: Dict[str, Any]):
         &quot;&quot;&quot;
         Update the parameters from a dictionary of key:values.
 
@@ -191,7 +259,11 @@ class Parameter:
     def _post_load(self):
         self.update(self.POST_LOAD_DEFAULTS)
 
-<div class="viewcode-block" id="BoulderIO.load"><a class="viewcode-back" href="../../../developer/api_reference.html#primer3plus.params.BoulderIO.load">[docs]</a>    def load(self, param_dict):
+        # load extra
+        for ptype in self.EXTRA_TYPES:
+            self._params[ptype.name] = Parameter(ptype, ptype.default)
+
+<div class="viewcode-block" id="BoulderIO.load"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.params.BoulderIO.load">[docs]</a>    def load(self, param_dict):
         &quot;&quot;&quot;
         Load parameters from a dictionary.
 
@@ -211,7 +283,7 @@ class Parameter:
         self._post_load()
         missing = self._check_missing()
         if missing:
-            raise ValueError(
+            raise Primer3PlusParserError(
                 &quot;The following keys are missing: {}&quot;.format(&quot; &quot;.join(missing))
             )</div>
 
@@ -224,11 +296,11 @@ class Parameter:
 
     @staticmethod
     def _raise_no_key(key):
-        return KeyError(
+        return Primer3PlusParserError(
             &quot;{key} not in params. See docs for help: {url}&quot;.format(key=key, url=DOCURL)
         )
 
-<div class="viewcode-block" id="BoulderIO.online_help"><a class="viewcode-back" href="../../../developer/api_reference.html#primer3plus.params.BoulderIO.online_help">[docs]</a>    @staticmethod
+<div class="viewcode-block" id="BoulderIO.online_help"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.params.BoulderIO.online_help">[docs]</a>    @staticmethod
     def online_help(open=False, key=None) -&gt; str:
         &quot;&quot;&quot;
         Display online help in a browser tab.
@@ -250,7 +322,7 @@ class Parameter:
             k: v.value for k, v in self._params.items() if v.ptype.category == category
         }
 
-<div class="viewcode-block" id="BoulderIO._globals"><a class="viewcode-back" href="../../../developer/api_reference.html#primer3plus.params.BoulderIO._globals">[docs]</a>    def _globals(self, clean=True) -&gt; Dict[str, Any]:
+<div class="viewcode-block" id="BoulderIO._globals"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.params.BoulderIO._globals">[docs]</a>    def _globals(self, clean=True) -&gt; Dict[str, Any]:
         &quot;&quot;&quot;
         Return global parameters.
 
@@ -262,7 +334,7 @@ class Parameter:
             data = self._clean_dictionary(data)
         return data</div>
 
-<div class="viewcode-block" id="BoulderIO._program"><a class="viewcode-back" href="../../../developer/api_reference.html#primer3plus.params.BoulderIO._program">[docs]</a>    def _program(self, clean=True):
+<div class="viewcode-block" id="BoulderIO._program"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.params.BoulderIO._program">[docs]</a>    def _program(self, clean=True):
         &quot;&quot;&quot;
         Return program parameters.
 
@@ -274,7 +346,7 @@ class Parameter:
             data = self._clean_dictionary(data)
         return data</div>
 
-<div class="viewcode-block" id="BoulderIO._sequence"><a class="viewcode-back" href="../../../developer/api_reference.html#primer3plus.params.BoulderIO._sequence">[docs]</a>    def _sequence(self, clean=True):
+<div class="viewcode-block" id="BoulderIO._sequence"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.params.BoulderIO._sequence">[docs]</a>    def _sequence(self, clean=True):
         &quot;&quot;&quot;
         Return sequence parameters.
 
@@ -286,7 +358,7 @@ class Parameter:
             data = self._clean_dictionary(data)
         return data</div>
 
-<div class="viewcode-block" id="BoulderIO._other"><a class="viewcode-back" href="../../../developer/api_reference.html#primer3plus.params.BoulderIO._other">[docs]</a>    def _other(self, clean=True):
+<div class="viewcode-block" id="BoulderIO._other"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.params.BoulderIO._other">[docs]</a>    def _other(self, clean=True):
         &quot;&quot;&quot;
         Return other parameters.
 
@@ -298,10 +370,16 @@ class Parameter:
             data = self._clean_dictionary(data)
         return data</div>
 
+    def _extra(self, clean=True):
+        data = self._by_category(ParamTypes.EXTRA)
+        if clean:
+            data = self._clean_dictionary(data)
+        return data
+
     def all(self):
         return {k: v for k, v in self.items()}
 
-<div class="viewcode-block" id="BoulderIO.set_defaults"><a class="viewcode-back" href="../../../developer/api_reference.html#primer3plus.params.BoulderIO.set_defaults">[docs]</a>    def set_defaults(self):
+<div class="viewcode-block" id="BoulderIO.set_defaults"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.params.BoulderIO.set_defaults">[docs]</a>    def set_defaults(self):
         &quot;&quot;&quot;
         Set all parameters to their defaults.
 
@@ -310,7 +388,7 @@ class Parameter:
         for v in self._params.values():
             v.set_default()</div>
 
-<div class="viewcode-block" id="BoulderIO.values"><a class="viewcode-back" href="../../../developer/api_reference.html#primer3plus.params.BoulderIO.values">[docs]</a>    def values(self) -&gt; Iterator[Any]:
+<div class="viewcode-block" id="BoulderIO.values"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.params.BoulderIO.values">[docs]</a>    def values(self) -&gt; Iterator[Any]:
         &quot;&quot;&quot;
         Iterator for parameter values.
 
@@ -319,7 +397,7 @@ class Parameter:
         for v in self._params.values():
             yield v.value</div>
 
-<div class="viewcode-block" id="BoulderIO.items"><a class="viewcode-back" href="../../../developer/api_reference.html#primer3plus.params.BoulderIO.items">[docs]</a>    def items(self):
+<div class="viewcode-block" id="BoulderIO.items"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.params.BoulderIO.items">[docs]</a>    def items(self):
         for k, v in self._params.items():
             yield k, v.value</div>
 
@@ -329,7 +407,7 @@ class Parameter:
             copied._params[k] = v.copy()
         return copied
 
-<div class="viewcode-block" id="BoulderIO._clean_dictionary"><a class="viewcode-back" href="../../../developer/api_reference.html#primer3plus.params.BoulderIO._clean_dictionary">[docs]</a>    @staticmethod
+<div class="viewcode-block" id="BoulderIO._clean_dictionary"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.params.BoulderIO._clean_dictionary">[docs]</a>    @staticmethod
     def _clean_dictionary(params: dict) -&gt; dict:
         &quot;&quot;&quot;Removes empty lists and empty strings from params.
 
@@ -380,11 +458,11 @@ class Parameter:
         return str(self._params)</div>
 
 
-class ParamParser:
+<div class="viewcode-block" id="ParamParser"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.params.ParamParser">[docs]</a>class ParamParser:
     &quot;&quot;&quot;Reads the Primer3 documentation and creates the appropriate
     parameters.&quot;&quot;&quot;
 
-    @staticmethod
+<div class="viewcode-block" id="ParamParser._parse_primer3_docs"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.params.ParamParser._parse_primer3_docs">[docs]</a>    @staticmethod
     def _parse_primer3_docs(docstr):
         &quot;&quot;&quot;Parse the docs of the primer3 website
         (https://htmlpreview.github.io.
@@ -425,7 +503,9 @@ class ParamParser:
             pattern = r&quot;\s+\((?P&lt;type&gt;.+?);\s+default\s+(?P&lt;default&gt;.+)\)&quot;
             m = re.match(pattern, rest)
             if not m:
-                raise Exception(&quot;Did not catch:\n{}&quot;.format(caught.group(0)))
+                raise Primer3PlusParserError(
+                    &quot;Did not catch:\n{}&quot;.format(caught.group(0))
+                )
 
             type_str = m.groupdict()[&quot;type&quot;]
             type_str = re.match(r&quot;([a-zA-z\s]+)&quot;, type_str).group(1).strip()
@@ -450,7 +530,7 @@ class ParamParser:
             elif ptype is float:
                 default = float(default)
             else:
-                raise ValueError(str(caught.group(0)))
+                raise Primer3PlusParserError(str(caught.group(0)))
 
             params[name] = {
                 &quot;name&quot;: name,
@@ -460,13 +540,13 @@ class ParamParser:
                 &quot;description&quot;: &quot;&quot;,
             }
         if not params:
-            raise Exception(&quot;Could not load parameters&quot;)
-        return params
+            raise Primer3PlusParserError(&quot;Could not load parameters&quot;)
+        return params</div>
 
     @classmethod
     def _open_primer3_params(cls, filepath=None) -&gt; BoulderIO:
         if filepath is None:
-            filepath = REL_PARAM_PATH
+            filepath = _default_param_path
         with open(filepath, &quot;r&quot;) as f:
             params_txt = f.read()
             params = cls._parse_primer3_docs(params_txt)
@@ -479,12 +559,12 @@ class ParamParser:
             elif k.startswith(&quot;P3&quot;):
                 param_type = ParamTypes.PROGRAM
             else:
-                raise Exception(&quot;Parameter {} not recognized&quot;.format(k))
+                raise Primer3PlusParserError(&quot;Parameter {} not recognized&quot;.format(k))
             v[ParamTypes.CATEGORY] = param_type
 
         return params
 
-    @classmethod
+<div class="viewcode-block" id="ParamParser.open"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.params.ParamParser.open">[docs]</a>    @classmethod
     def open(cls, filepath=None) -&gt; BoulderIO:
         &quot;&quot;&quot;
         Open the parameters from the filepath.
@@ -492,10 +572,10 @@ class ParamParser:
         :param filepath: filepath
         :return:
         &quot;&quot;&quot;
-        return cls._open_primer3_params(filepath)
+        return cls._open_primer3_params(filepath)</div></div>
 
 
-def default_boulderio() -&gt; BoulderIO:
+<div class="viewcode-block" id="default_boulderio"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.params.default_boulderio">[docs]</a>def default_boulderio() -&gt; BoulderIO:
     &quot;&quot;&quot;
     Open the default parameters as a :class:`BoulderIO &lt;primer3plus.params.params&gt;`
 
@@ -504,7 +584,7 @@ def default_boulderio() -&gt; BoulderIO:
     param_dict = ParamParser.open()
     boulderio = BoulderIO()
     boulderio.load(param_dict)
-    return boulderio
+    return boulderio</div>
 </pre></div>
 
           </div>
@@ -513,7 +593,7 @@ def default_boulderio() -&gt; BoulderIO:
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="../../../index.html">primer3plus</a></h1>
+<h1 class="logo"><a href="../../index.html">primer3plus</a></h1>
 
 
 
@@ -524,16 +604,16 @@ def default_boulderio() -&gt; BoulderIO:
 
 <h3>Navigation</h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../developer/api_reference.html">API Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../developer/changelog.html">primer3plus change log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer/api_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer/changelog.html">primer3plus change log</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
-  <li><a href="../../../index.html">Documentation overview</a><ul>
-  <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
   </ul></li>
   </ul></li>
 </ul>
@@ -541,7 +621,7 @@ def default_boulderio() -&gt; BoulderIO:
 <div id="searchbox" style="display: none" role="search">
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
-    <form class="search" action="../../../search.html" method="get">
+    <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
     </form>

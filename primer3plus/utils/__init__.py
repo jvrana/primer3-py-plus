@@ -35,7 +35,6 @@ def _iter_anneal(
     li = iter(
         (i, i + n_bases, seq[i : i + n_bases]) for i in range(len(seq) - n_bases + 1)
     )
-
     for (start, end, anneal), p in product(li, primer_list):
         if isinstance(p, str):
             name = None
@@ -49,9 +48,9 @@ def _iter_anneal(
                 "anneal": anneal,
                 "overhang": p[: -len(anneal)],
                 "primer": p,
-                "end": end,
                 "start": end - len(anneal),
                 "length": len(anneal),
+                "top_strand_slice": (end - len(anneal), end),
             }
 
 
@@ -59,23 +58,42 @@ def anneal_iter(
     seq: str, primer_list: List[Union[str, Tuple[str, str]]], n_bases=10
 ) -> Tuple[Iterator[Dict[str, Union[str, int]]], Iterator[Dict[str, Union[str, int]]]]:
     """
-    Anneal a list of primers to the sequence. Note the position conventions
+    Anneal a list of primers to the sequence. Returns two iterables with elements
+    of the forms:
+
+    .. code-block:: JSON
+
+        {
+            "name": "<str> the name of the primer annealed",
+            "anneal": "<str> the 5'->3' sequence of the annealing portion of the
+                        primer"
+            "overhang": "<str> the 5'->3' sequence of the remaining portion of the
+                        primer"
+            "start": "<int> the inclusive starting position of the primer"
+            "length": "<int> the length of the annealing portion of the primer",
+            "top_strand_slice": "tuple[int, int] the location on the top strand of the
+                                 annealing portion of the primer."
+        }
+
+    Note the position conventions
     between fwd and reverse are different in order to match the conventions used
-    by primer3. It is often more intuitive to use the 'slice_index' key.
+    by primer3. It is often more intuitive to use the 'top_strand_slice' key.
 
     ::
         0123456789
         |--------------------------------|
-          [<-----)      start=2  end=9  length=7  strand = 1
-         (----->]       start=8  end=1  length=7  strand = -1
+          [<-----)      start=2  length=7  strand = 1
+         (----->]       start=8  length=7  strand = -1
 
-        However, the slice_index in both cases would be [2,9)
+        However, the top_strand_slice in both cases would be [2,9)
 
     :param seq: the template sequence
     :param primer_list: a list of either Tuples[name, bases] or just bases
     :param n_bases: number of bases for seed matching (default: 10)
     :return: Two iterators of dictionary results.
     """
+    if isinstance(primer_list, str):
+        raise TypeError("Expected a list of primer sequences, not a str")
     fwd = list(_iter_anneal(seq, primer_list, n_bases))
     for f in fwd:
         f["strand"] = 1
@@ -83,9 +101,10 @@ def anneal_iter(
     rev = list(_iter_anneal(reverse_complement(seq), primer_list, n_bases))
     for r in rev:
         r["strand"] = -1
-        s, e = r["start"], r["end"]
-        r["end"] = len(seq) - e
-        r["start"] = len(seq) - s
+        s = r["start"]
+        e = s + r["length"]
+        r["top_strand_slice"] = (len(seq) - e, len(seq) - s)
+        r["start"] = len(seq) - s - 1
 
     return fwd, rev
 
@@ -101,7 +120,7 @@ def anneal(
         0123456789
         |--------------------------------|
           [<-----)      start=2  end=9  strand = 1
-          [----->)      start=2  end=9  strand = -1
+          [----->)      start=9  end=2  strand = -1
 
     :param seq: the template sequence
     :param primer_list: a list of either Tuples[name, bases] or just bases

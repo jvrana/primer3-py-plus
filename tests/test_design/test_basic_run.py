@@ -3,8 +3,9 @@ import random
 import pytest
 
 from primer3plus.design import Design
+from primer3plus.exceptions import Primer3PlusRunTimeError
 from primer3plus.utils import anneal
-from primer3plus.utils import reverse_complement
+from primer3plus.utils import reverse_complement as rc
 
 
 def test_init():
@@ -39,7 +40,7 @@ def check_primers(gfp, primerlist):
 
 def test_gfp(gfp, iter_random_primer):
     fwd_primers = list(iter_random_primer(25, gfp[:250], 16))
-    rev_primers = list(iter_random_primer(25, reverse_complement(gfp)[:250], 16))
+    rev_primers = list(iter_random_primer(25, rc(gfp)[:250], 16))
 
     primers = fwd_primers + rev_primers
 
@@ -133,3 +134,107 @@ class TestIncluded:
         design = Design()
         with pytest.raises(TypeError):
             design.presets.template(gfp).included([100, 100, 100])
+
+
+class TestOverhangs:
+    """Tests for resolving primer overhangs."""
+
+    # TODO: add overhangs to results
+    def test_left_overhang(self, gfp):
+        design = Design()
+        design.presets.template(gfp)
+        design.presets.left_sequence("AGGCGGCTGA" + gfp[0:20])
+        design.presets.use_overhangs()
+        pairs, explain = design.run_and_optimize(5)
+        print(explain)
+        assert pairs
+
+    def test_left_overhang_default_behavior(self, gfp):
+        """Without setting overhangs, should raise run time error"""
+        design = Design()
+        design.presets.template(gfp)
+        design.presets.left_sequence("AGGCGGCTGA" + gfp[20:40])
+        with pytest.raises(Primer3PlusRunTimeError):
+            design.run()
+
+    def test_right_overhang(self, gfp):
+        design = Design()
+        design.presets.template(gfp)
+
+        rseq = "AGGCGGCTGA" + rc(gfp[200:225])
+        design.presets.right_sequence(rseq)
+        design.presets.use_overhangs()
+        pairs, explain = design.run_and_optimize(5)
+        assert pairs
+
+    def test_right_overhang_default_behavior(self, gfp):
+        """Without setting overhangs, should raise run time error"""
+        design = Design()
+        design.presets.template(gfp)
+
+        rseq = "AAAAAA" + rc(gfp[200:220])
+        design.presets.right_sequence(rseq)
+        with pytest.raises(Primer3PlusRunTimeError):
+            design.run()
+
+    def test_both_overhangs(self, gfp):
+        design = Design()
+        design.presets.template(gfp)
+        lseq = "TTTTTT" + gfp[10:30]
+        rseq = rc(gfp[200:220] + "AAAAAAA")
+
+        design.presets.left_sequence(lseq)
+        design.presets.right_sequence(rseq)
+        design.presets.use_overhangs()
+        pairs, explain = design.run_and_optimize(5)
+        assert pairs
+
+
+class TestLongPrimers:
+    def test_long_left_primer(self, gfp):
+
+        design = Design()
+        design.presets.template(gfp)
+        design.presets.left_sequence(gfp[0:50])
+        design.PRIMER_MAX_TM.value = 75.0
+        design.PRIMER_MAX_SIZE = 35
+        design.PRIMER_PICK_ANYWAY = 1
+        design.presets.long_ok()
+        pairs, explain = design.run_and_optimize(10)
+        print(explain)
+        assert pairs
+
+    def test_long_left_primer_default_behavior(self, gfp):
+
+        design = Design()
+        design.presets.template(gfp)
+        design.presets.left_sequence(gfp[0:50])
+        design.PRIMER_MAX_TM.value = 75.0
+        design.PRIMER_MAX_SIZE = 35
+        design.PRIMER_PICK_ANYWAY = 1
+        with pytest.raises(Primer3PlusRunTimeError):
+            design.run_and_optimize(10)
+
+    def test_long_right_primer(self, gfp):
+
+        design = Design()
+        design.presets.template(gfp)
+        design.presets.right_sequence(rc(gfp[-50:]))
+        design.PRIMER_MAX_TM.value = 75.0
+        design.PRIMER_MAX_SIZE = 35
+        design.PRIMER_PICK_ANYWAY = 1
+        design.presets.long_ok()
+        pairs, explain = design.run_and_optimize(10)
+        print(explain)
+        assert pairs
+
+    def test_long_right_primer_default_behavior(self, gfp):
+
+        design = Design()
+        design.presets.template(gfp)
+        design.presets.right_sequence(rc(gfp[-50:]))
+        design.PRIMER_MAX_TM.value = 75.0
+        design.PRIMER_MAX_SIZE = 35
+        design.PRIMER_PICK_ANYWAY = 1
+        with pytest.raises(Primer3PlusRunTimeError):
+            design.run_and_optimize(10)

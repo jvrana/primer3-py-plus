@@ -77,6 +77,14 @@ print(json.dumps(explain, indent=1))
 }
 ```
 
+# Extra options
+
+- PRIMER_USE_OVERHANGS
+- SEQUENCE_PRIMER_OVERHANG
+- SEQUENCE_PRIMER_REVCOMP_OVERHANG
+- PRIMER_ALLOW_ORIGIN_SPAN
+
+
 ## Requirements
 
 python >= 3.5

@@ -103,6 +103,8 @@ or as a descriptor and call :meth:`help <primer3plus.params.Parameter.help>`
 
     http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_TEMPLATE
 
+.. _cloning_primers:
+
 Design cloning primers
 ------------------------
 
@@ -171,6 +173,7 @@ Design cloning primers
 
 Design primers that target the region
 
+.. _setting_primers:
 
 Designing the right primer only
 -------------------------------
@@ -183,6 +186,50 @@ Designing the right primer only
     design.presets.as_cloning_task()
     design.run()
 
+.. _handle_overhangs:
+
+Handling overhangs
+------------------
+
+.. code-block::
+
+    tempalte = 'TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC'
+    anneal = template[20:40]
+    overhang = 'AAAAA'
+
+    design = Design()
+
+    design.presets.template(template)
+    design.presets.left_sequence(overhang + anneal)
+
+    # necessary to resolve overhangs
+    # automatically find the appropriate annealing sequence for primer3
+    # adds overhang sequence to results
+    design.presets.use_overhangs()
+
+    design.run()
+
+.. _handle_long_sequences:
+
+Handling long primer sequences
+------------------------------
+
+.. code-block::
+
+    tempalte = 'TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC'
+    anneal = template[20:80]
+
+    design = Design()
+
+    design.presets.template(template)
+    design.presets.left_sequence(overhang + anneal)
+
+    # uses the last 35 bases of the annealing sequence
+    # sets the remaining as the overhang sequence
+    design.presets.long_ok()
+    design.presets.use_overhang()
+
+    design.run()
 
 Design primers targeting interval
 ---------------------------------
@@ -194,6 +241,7 @@ Design primers targeting interval
     design.presets.target((50, 150))
     design.run()
 
+.. _autorelax:
 
 Relaxing parameters
 -------------------

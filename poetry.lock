@@ -55,6 +55,17 @@ version = "19.2.0"
 
 [[package]]
 category = "dev"
+description = "Extended sphinx autodoc including automatic autosummaries"
+name = "autodocsumm"
+optional = false
+python-versions = "*"
+version = "0.1.11"
+
+[package.dependencies]
+sphinx = "*"
+
+[[package]]
+category = "dev"
 description = "A tool that automatically formats Python code to conform to the PEP 8 style guide"
 name = "autopep8"
 optional = false
@@ -910,7 +921,7 @@ version = "0.6.0"
 more-itertools = "*"
 
 [metadata]
-content-hash = "a76a6b94298f951b1a4dafc02994135d27b1ac175fbae811322b86500fb93e09"
+content-hash = "baba6195f5519820048c76b6500ae15d0440f2590a86a3b3538cfb9346ea3331"
 python-versions = "^3.5"
 
 [metadata.hashes]
@@ -920,6 +931,7 @@ arrow = ["4bfacea734ead51495dc47df00421ecfd4ca1f2c0fbe58b9a26eaeddedc31caf", "67
 "aspy.yaml" = ["463372c043f70160a9ec950c3f1e4c3a82db5fca01d334b6bc89c7164d744bdc", "e7c742382eff2caed61f87a39d13f99109088e5e93f04d76eb8d4b28aa143f45"]
 atomicwrites = ["03472c30eb2c5d1ba9227e4c2ca66ab8287fbfbbda3888aa93dc2e28fc6811b4", "75a9445bac02d8d058d5e1fe689654ba5a6556a1dfd8ce6ec55a0ed79866cfa6"]
 attrs = ["ec20e7a4825331c1b5ebf261d111e16fa9612c1f7a5e1f884f12bd53a664dfd2", "f913492e1663d3c36f502e5e9ba6cd13cf19d7fab50aa13239e420fef95e1396"]
+autodocsumm = ["d4ba2fe3a07d2e13165509c3e275f0e16b11e84c873adccaa1e31502a59c452a"]
 autopep8 = ["4d8eec30cc81bc5617dbf1218201d770dc35629363547f17577c61683ccfb3ee"]
 babel = ["af92e6106cb7c55286b25b38ad7695f8b4efb36a90ba483d7f7a6628c46158ab", "e86135ae101e31e2c8ec20a4e0c5220f4eed12487d5cf3f78be7e98d3a57fc28"]
 black = ["09a9dcb7c46ed496a9850b76e4e825d6049ecd38b611f1224857a79bd985a8cf", "68950ffd4d9169716bcb8719a56c07a2f4485354fec061cdd5910aa07369731c"]

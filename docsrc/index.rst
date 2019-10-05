@@ -28,6 +28,19 @@ Python primer3 wrapper https://pypi.org/project/primer3-py/.
    design.presets.left_sequence("AGCGTCGTGTATGGTAGTG")
    design.run_and_optimize(5)
 
+**Examples**
+
+:doc:`Usage Docs <usage>`
+
+- :ref:`Cloning primers <cloning_primers>`
+- :ref:`Setting primer sequences <setting_primers>`
+- :ref:`Handling primers with overhangs <handle_overhangs>`
+- :ref:`Handling long sequences <handle_long_sequences>`
+- :ref:`Auto-relaxation of design params <autorelax>`
+
+
+For more info, take a look at the :ref:`API Docs <api>`
+
 Getting started
 ---------------
 

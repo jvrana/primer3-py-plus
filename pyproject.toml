@@ -29,6 +29,7 @@ recommonmark = "^0.6.0"
 tox = "^3.14"
 tox-conda = "^0.2.1"
 sphinx_autodoc_typehints = {version = "^1.8", python = ">=3.6"}
+autodocsumm = "^0.1.11"
 
 [tool.black]
 line-length = 88

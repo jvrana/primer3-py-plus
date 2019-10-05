@@ -264,6 +264,14 @@ class AllParameters:
         "SEQUENCE_PRIMER_PAIR_OK_REGION_LIST"
     )
 
+    # extra types
+    SEQUENCE_PRIMER_OVERHANG = ParameterDescriptor("SEQUENCE_PRIMER_OVERHANG")
+    SEQUENCE_PRIMER_REVCOMP_OVERHANG = ParameterDescriptor(
+        "SEQUENCE_PRIMER_REVCOMP_OVERHANG"
+    )
+    PRIMER_USE_OVERHANGS = ParameterDescriptor("PRIMER_USE_OVERHANGS")
+    PRIMER_LONG_OK = ParameterDescriptor("PRIMER_LONG_OK")
+
     def __init__(self, params):
         self.params = params
 

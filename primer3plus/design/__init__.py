@@ -13,6 +13,7 @@ from typing import Dict
 from typing import List
 from typing import Tuple
 from typing import Union
+from warnings import warn
 
 import primer3
 
@@ -20,20 +21,13 @@ from .interfaces import AllParameters
 from .interfaces import ParameterAccessor
 from .results import parse_primer3_results
 from primer3plus.constants import DOCURL
+from primer3plus.exceptions import Primer3PlusException
+from primer3plus.exceptions import Primer3PlusRunTimeError
+from primer3plus.exceptions import Primer3PlusWarning
 from primer3plus.log import logger
+from primer3plus.params import BoulderIO
 from primer3plus.params import default_boulderio
-
-
-def _summarize_reasons(reasons):
-    reason_dict = {}
-    for reason in reasons:
-        for k, v in reason.items():
-            if "EXPLAIN" in k:
-                for m in re.finditer(r"\s*([\w\s\-]+)\s+(\d+)", v):
-                    reason_token = m.group(1)
-                    num = int(m.group(2))
-                    reason_dict.setdefault(k, Counter())[reason_token] += num
-    return {k: dict(v) for k, v in reason_dict.items()}
+from primer3plus.utils import anneal as anneal_primer
 
 
 class DesignPresets:
@@ -56,6 +50,41 @@ class DesignPresets:
         :param design: The design
         """
         self._design = design
+        self._loverhang = ""
+        self._roverhang = ""
+
+    def _resolve(self):
+        """Process any extra parameters and process BoulderIO so
+        that it is digestable by primer3."""
+        if self._design.PRIMER_USE_OVERHANGS.value:
+            self._resolve_overhangs()
+        if self._design.PRIMER_LONG_OK.value:
+            self._resolve_max_lengths(lim=BoulderIO.PRIMER_MAX_SIZE_HARD_LIM)
+
+        if not self._design.PRIMER_USE_OVERHANGS.value:
+            if self._design.SEQUENCE_PRIMER_OVERHANG.value:
+                warn(
+                    Primer3PlusWarning(
+                        "{} is non-empty (value={}) but {} was False. Overhang was"
+                        " ignored".format(
+                            self._design.SEQUENCE_PRIMER_OVERHANG.name,
+                            self._design.SEQUENCE_PRIMER_OVERHANG.value,
+                            self._design.PRIMER_USE_OVERHANGS.name,
+                        )
+                    )
+                )
+            if self._design.SEQUENCE_PRIMER_REVCOMP_OVERHANG.value:
+                warn(
+                    Primer3PlusWarning(
+                        "{} is non-empty (value={}) but {} was False. Overhang was"
+                        " ignored".format(
+                            self._design.SEQUENCE_PRIMER_REVCOMP_OVERHANG.name,
+                            self._design.SEQUENCE_PRIMER_REVCOMP_OVERHANG.value,
+                            self._design.PRIMER_USE_OVERHANGS.name,
+                        )
+                    )
+                )
+        return self
 
     def _interval_from_sequences(
         self, template: str, target: str
@@ -180,8 +209,10 @@ class DesignPresets:
         http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_PRIMER
         http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_RIGHT_PRIMER
 
-        :param primer: :type primer: :return: :rtype:
+        :param primer: the primer sequence
+        :return: self
         """
+
         return self.update({"SEQUENCE_PRIMER": primer, "PRIMER_PICK_RIGHT_PRIMER": 1})
 
     def right_sequence(self, primer: str) -> "DesignPresets":
@@ -192,12 +223,111 @@ class DesignPresets:
         http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_PRIMER_REVCOMP
         http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_LEFT_PRIMER
 
-        :param primer: primer sequence
+        :param primer: the primer sequence
         :return: self
         """
         return self.update(
             {"SEQUENCE_PRIMER_REVCOMP": primer, "PRIMER_PICK_LEFT_PRIMER": 1}
         )
+
+    @staticmethod
+    def _fix_length(overhang, anneal, lim):
+        """Fix the overhang and anneal from the hardcoded BoulderIO primer lim."""
+        return overhang + anneal[:-lim], anneal[-lim:]
+
+    def _get_left_overhang(self):
+        left = self._design.SEQUENCE_PRIMER.value
+        if left:
+            fwd, _ = anneal_primer(self._design.SEQUENCE_TEMPLATE.value, [left])
+            if len(fwd) == 0:
+                raise Primer3PlusRunTimeError("No annealing found for left sequence.")
+            elif len(fwd) > 1:
+                raise Primer3PlusRunTimeError(
+                    "More than one annealing found for left sequence."
+                )
+            overhang = fwd[0]["overhang"]
+            anneal = fwd[0]["anneal"]
+            return overhang, anneal
+        else:
+            return "", left
+
+    def _get_right_overhang(self):
+        right = self._design.SEQUENCE_PRIMER_REVCOMP.value
+        if right:
+            _, rev = anneal_primer(self._design.SEQUENCE_TEMPLATE.value, [right])
+            if len(rev) == 0:
+                raise Primer3PlusRunTimeError("No annealing found for right sequence.")
+            elif len(rev) > 1:
+                raise Primer3PlusRunTimeError(
+                    "More than one annealing found for right "
+                    "sequence {}.".format(self._design.SEQUENCE_PRIMER_REVCOMP)
+                )
+            overhang = rev[0]["overhang"]
+            anneal = rev[0]["anneal"]
+            return overhang, anneal
+        else:
+            return "", right
+
+    def left_overhang(self, overhang):
+        return self.update({"SEQUENCE_PRIMER_OVERHANG": overhang})
+
+    def right_overhang(self, overhang):
+        return self.update({"SEQUENCE_PRIMER_REVCOMP_OVERHANG": overhang})
+
+    def use_overhangs(self, b: bool = True) -> "DesignPresets":
+        """
+        Set the BoulderIO to process overhangs.
+
+     :param b: boolean to set
+        :return: self
+        """
+        return self.update({"PRIMER_USE_OVERHANGS": b})
+
+    def long_ok(self, b: bool = True) -> "DesignPresets":
+        """
+        Set the BoulderIO to process long primers.
+
+        :param b: boolean to set
+        :return: self
+        """
+        return self.update({"PRIMER_LONG_OK": b})
+
+    def _resolve_max_lengths(self, lim: int):
+        """Fixes the annealing and overhang sequences for annealing sequences
+            for primers over the :attr:`BoulderIO
+            <primer3plus.paramsBoulderIO.PRIMER_MAX_SIZE_HARD_LIM>`.
+            Should always be run *after* :meth:`_resolve_overhangs`."""
+        left_anneal = self._design.SEQUENCE_PRIMER.value
+        right_anneal = self._design.SEQUENCE_PRIMER_REVCOMP.value
+        left_over = self._design.SEQUENCE_PRIMER_OVERHANG.value
+        right_over = self._design.SEQUENCE_PRIMER_REVCOMP_OVERHANG.value
+
+        left_over, left_anneal = self._fix_length(left_over, left_anneal, lim=lim)
+        right_over, right_anneal = self._fix_length(right_over, right_anneal, lim=lim)
+
+        self.left_overhang(left_over)
+        self.right_overhang(right_over)
+        self.left_sequence(left_anneal)
+        self.right_sequence(right_anneal)
+
+    def _resolve_overhangs(self):
+        """Sets the annealing and overhang sequences."""
+        left_over, left_anneal = self._get_left_overhang()
+        if left_anneal and self._design.SEQUENCE_PRIMER_OVERHANG.value:
+            raise ValueError(
+                "Left overhang already set to '{}'.".format(self._loverhang)
+            )
+
+        right_over, right_anneal = self._get_right_overhang()
+        if right_anneal and self._design.SEQUENCE_PRIMER_REVCOMP_OVERHANG.value:
+            raise ValueError(
+                "Right overhang already set to '{}'.".format(self._roverhang)
+            )
+
+        self.left_overhang(left_over)
+        self.right_overhang(right_over)
+        self.left_sequence(left_anneal)
+        self.right_sequence(right_anneal)
 
     def pick_left_only(self) -> "DesignPresets":
         """
@@ -257,6 +387,13 @@ class DesignPresets:
             self.left_sequence(p1)
         if p2:
             self.right_sequence(p2)
+        return self
+
+    def primers_with_overhangs(self, p1: str, p2: str) -> "DesignPresets":
+        if p1:
+            self.left_sequence_with_overhang(p1)
+        if p2:
+            self.right_sequence_with_overhang(p2)
         return self
 
     def _parse_interval(
@@ -381,11 +518,25 @@ class DesignBase:
     _PICK_CLONING_PRIMERS = "pick_cloning_primers"
     _PICK_DISCRIMINATIVE_PRIMERS = "pick_discriminative_primers"
 
-    def __init__(self):
+    def __init__(
+        self,
+        gradient: Dict[
+            str, Tuple[Union[float, int], Union[float, int], Union[float, int]]
+        ] = None,
+        quiet_runtime: bool = False,
+    ):
+        """
+        Initializes a new design.
+
+        :param gradient: the design gradient.
+        :param quiet_runtime: if True will siliently ignore any runtime errors.
+        """
         self.params = self.DEFAULT_PARAMS.copy()
         self.logger = logger(self)
+        self.gradient = gradient
+        self.quiet_runtime = quiet_runtime
 
-    def run(self, params=None) -> Tuple[List[Dict], List[Dict]]:
+    def _run(self, params: BoulderIO = None) -> Tuple[List[Dict], List[Dict]]:
         """Design primers. Optionally provide additional parameters.
 
         :param params:
@@ -393,12 +544,40 @@ class DesignBase:
         """
         if params is None:
             params = self.params
-        res = primer3.bindings.designPrimers(params._sequence(), params._globals())
+        try:
+            res = primer3.bindings.designPrimers(params._sequence(), params._globals())
+        except OSError as e:
+            if not self.quiet_runtime:
+                raise Primer3PlusRunTimeError(str(e)) from e
+            else:
+                return {}, {"PRIMER_ERROR": str(e)}
+        except Primer3PlusRunTimeError as e:
+            if not self.quiet_runtime:
+                raise Primer3PlusRunTimeError(str(e)) from e
+            else:
+                return {}, {"PRIMER_ERROR": str(e)}
+        except Primer3PlusException as e:
+            raise Primer3PlusRunTimeError(str(e)) from e
+
         pairs, explain = parse_primer3_results(res)
         return pairs, explain
 
+    def run(self, params: BoulderIO = None) -> Tuple[List[Dict], List[Dict]]:
+        """Design primers. Optionally provide additional parameters.
+
+        :param params:
+        :return: results
+        """
+        return self._run(params)
+
     def run_and_optimize(
-        self, max_iterations, params=None, gradient=None
+        self,
+        max_iterations,
+        params: BoulderIO = None,
+        gradient: Dict[
+            str, Tuple[Union[float, int], Union[float, int], Union[float, int]]
+        ] = None,
+        run_kwargs: dict = None,
     ) -> Tuple[List[dict], List[dict]]:
         """Design primers. If primer design is unsuccessful, relax parameters
         as defined in primer3plust.Design.DEFAULT_GRADIENT. Repeat for the specified
@@ -412,11 +591,10 @@ class DesignBase:
         :return: results
         """
         if gradient is None:
-            gradient = self.DEFAULT_GRADIENT
+            gradient = self.gradient or self.DEFAULT_GRADIENT
         if params is None:
             params = self.params
-        # n_return = params["PRIMER_NUM_RETURN"]
-        pairs, explain = self.run(params)
+        pairs, explain = self._run(params)
         i = 0
         while i < max_iterations and len(pairs) == 0:
             i += 1
@@ -424,9 +602,10 @@ class DesignBase:
             if update:
                 self.logger.info("Updated: {}".format(update))
             else:
+                self.logger.info("Reached end of gradient.")
                 break
             self.params.update(update)
-            pairs, explain = self.run(params)
+            pairs, explain = self._run(params)
         return pairs, explain
 
     @staticmethod
@@ -471,7 +650,7 @@ class Design(DesignBase, AllParameters):
             design.run()
         """
         super().__init__()
-        self._set = DesignPresets(self)
+        self._presets = DesignPresets(self)
 
     def set(self, key, value):
         self.params.defs[key].value = value
@@ -483,10 +662,25 @@ class Design(DesignBase, AllParameters):
     def presets(self) -> "DesignPresets":
         """Return the :class:`DesignPresets <primer3plus.design.DesignPresets>`
         instance for this design."""
-        return self._set
+        return self._presets
 
     def update(self, data: Dict[str, Any]):
         return self.params.update(data)
+
+    def run(self, params: BoulderIO = None) -> Tuple[List[Dict], List[Dict]]:
+        self.presets._resolve()
+        return super()._run(params)
+
+    def run_and_optimize(
+        self,
+        max_iterations,
+        params: BoulderIO = None,
+        gradient: Dict[
+            str, Tuple[Union[float, int], Union[float, int], Union[float, int]]
+        ] = None,
+    ) -> Tuple[List[dict], List[dict]]:
+        self.presets._resolve()
+        return super().run_and_optimize(max_iterations)
 
 
 def new(params=None):

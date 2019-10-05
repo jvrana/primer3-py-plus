@@ -118,7 +118,7 @@ or as a descriptor and call <code class="xref py py-meth docutils literal notran
 </div>
 </div>
 <div class="section" id="design-cloning-primers">
-<h2>Design cloning primers<a class="headerlink" href="#design-cloning-primers" title="Permalink to this headline">¶</a></h2>
+<span id="cloning-primers"></span><h2>Design cloning primers<a class="headerlink" href="#design-cloning-primers" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
 
 <span class="n">design</span> <span class="o">=</span> <span class="n">Design</span><span class="p">()</span>
@@ -183,11 +183,50 @@ or as a descriptor and call <code class="xref py py-meth docutils literal notran
 <p>Design primers that target the region</p>
 </div>
 <div class="section" id="designing-the-right-primer-only">
-<h2>Designing the right primer only<a class="headerlink" href="#designing-the-right-primer-only" title="Permalink to this headline">¶</a></h2>
+<span id="setting-primers"></span><h2>Designing the right primer only<a class="headerlink" href="#designing-the-right-primer-only" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>design = Design()
 design.presets.template(&quot;TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC&quot;)
 design.presets.left_sequence(&#39;GTTATGTCACGCTTACATTCACG&#39;)
 design.presets.as_cloning_task()
+design.run()
+</pre></div>
+</div>
+</div>
+<div class="section" id="handling-overhangs">
+<span id="handle-overhangs"></span><h2>Handling overhangs<a class="headerlink" href="#handling-overhangs" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>tempalte = &#39;TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC&#39;
+anneal = template[20:40]
+overhang = &#39;AAAAA&#39;
+
+design = Design()
+
+design.presets.template(template)
+design.presets.left_sequence(overhang + anneal)
+
+# necessary to resolve overhangs
+# automatically find the appropriate annealing sequence for primer3
+# adds overhang sequence to results
+design.presets.use_overhangs()
+
+design.run()
+</pre></div>
+</div>
+</div>
+<div class="section" id="handling-long-primer-sequences">
+<span id="handle-long-sequences"></span><h2>Handling long primer sequences<a class="headerlink" href="#handling-long-primer-sequences" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>tempalte = &#39;TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC&#39;
+anneal = template[20:80]
+
+design = Design()
+
+design.presets.template(template)
+design.presets.left_sequence(overhang + anneal)
+
+# uses the last 35 bases of the annealing sequence
+# sets the remaining as the overhang sequence
+design.presets.long_ok()
+design.presets.use_overhang()
+
 design.run()
 </pre></div>
 </div>
@@ -202,7 +241,7 @@ design.run()
 </div>
 </div>
 <div class="section" id="relaxing-parameters">
-<h2>Relaxing parameters<a class="headerlink" href="#relaxing-parameters" title="Permalink to this headline">¶</a></h2>
+<span id="autorelax"></span><h2>Relaxing parameters<a class="headerlink" href="#relaxing-parameters" title="Permalink to this headline">¶</a></h2>
 <p>In this example, the parameter conditions are too strict to find a primer pair
 the first time around:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">design</span> <span class="o">=</span> <span class="n">Design</span><span class="p">()</span>
@@ -354,6 +393,8 @@ GCAAATTAAAGCCTTCGAGCG
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#design-cloning-primers">Design cloning primers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#designing-the-right-primer-only">Designing the right primer only</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#handling-overhangs">Handling overhangs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#handling-long-primer-sequences">Handling long primer sequences</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#design-primers-targeting-interval">Design primers targeting interval</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#relaxing-parameters">Relaxing parameters</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#indexing-with-the-primer3-results">Indexing with the primer3 results</a></li>

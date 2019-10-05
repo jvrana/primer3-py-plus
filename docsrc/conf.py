@@ -48,6 +48,7 @@ napoleon_use_rtype = False  # More legible
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.intersphinx",
+    "autodocsumm",
     "sphinx_autodoc_typehints",
     "sphinx.ext.mathjax",
     "sphinx.ext.doctest",
@@ -56,6 +57,7 @@ extensions = [
     "sphinx.ext.inheritance_diagram",
     "recommonmark",
 ]
+autodoc_default_options = {"autosummary": True}
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]

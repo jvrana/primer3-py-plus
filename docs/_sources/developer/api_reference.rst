@@ -28,5 +28,14 @@ Parameter Interface
 Design Parameters
 =================
 
-.. autoclass:: primer3plus.params.BoulderIO
+.. automodule:: primer3plus.params
+    :members:
+    :exclude-members: ExtraTypes
+
+Extra/Special Parameters
+------------------------
+
+.. _api_extra_parameters:
+
+.. autoclass:: primer3plus.params.ExtraTypes
     :members:

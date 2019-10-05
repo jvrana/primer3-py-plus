@@ -50,6 +50,59 @@ design.presets.left_sequence(&quot;GTAGTGCTTGTA&quot;)
 design.run()
 </pre></div>
 </div>
+<p><strong>Methods</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.Design._run" title="primer3plus.Design._run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_run</span></code></a>([params])</p></td>
+<td><p>Design primers.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.Design.copy" title="primer3plus.Design.copy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">copy</span></code></a>()</p></td>
+<td><p>Copy this design and its parameters.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.Design.open_help" title="primer3plus.Design.open_help"><code class="xref py py-obj docutils literal notranslate"><span class="pre">open_help</span></code></a>()</p></td>
+<td><p>Open the documentation help in a new browser tab.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.Design.run" title="primer3plus.Design.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>([params])</p></td>
+<td><p>Design primers.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.Design.run_and_optimize" title="primer3plus.Design.run_and_optimize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_and_optimize</span></code></a>(max_iterations[, params, …])</p></td>
+<td><p>Design primers.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Attributes</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.Design.presets" title="primer3plus.Design.presets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">presets</span></code></a></p></td>
+<td><p>Return the <a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a> instance for this design.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="primer3plus.Design._run">
+<code class="sig-name descname">_run</code><span class="sig-paren">(</span><em class="sig-param">params=None</em><span class="sig-paren">)</span><a class="headerlink" href="#primer3plus.Design._run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Design primers. Optionally provide additional parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>params</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="#primer3plus.params.BoulderIO" title="primer3plus.params.BoulderIO"><code class="xref py py-class docutils literal notranslate"><span class="pre">BoulderIO</span></code></a>]) – </p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[~KT, ~VT]], <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[~KT, ~VT]]]</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>results</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="method">
 <dt id="primer3plus.Design.copy">
 <code class="sig-name descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#primer3plus.Design.copy" title="Permalink to this definition">¶</a></dt>
@@ -76,11 +129,11 @@ instance for this design.</p>
 
 <dl class="method">
 <dt id="primer3plus.Design.run">
-<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">params=None</em><span class="sig-paren">)</span><a class="headerlink" href="#primer3plus.Design.run" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">params=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#Design.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.Design.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Design primers. Optionally provide additional parameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>params</strong> – </p>
+<dd class="field-odd"><p><strong>params</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="#primer3plus.params.BoulderIO" title="primer3plus.params.BoulderIO"><code class="xref py py-class docutils literal notranslate"><span class="pre">BoulderIO</span></code></a>]) – </p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[~KT, ~VT]], <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[~KT, ~VT]]]</p>
@@ -93,7 +146,7 @@ instance for this design.</p>
 
 <dl class="method">
 <dt id="primer3plus.Design.run_and_optimize">
-<code class="sig-name descname">run_and_optimize</code><span class="sig-paren">(</span><em class="sig-param">max_iterations</em>, <em class="sig-param">params=None</em>, <em class="sig-param">gradient=None</em><span class="sig-paren">)</span><a class="headerlink" href="#primer3plus.Design.run_and_optimize" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">run_and_optimize</code><span class="sig-paren">(</span><em class="sig-param">max_iterations</em>, <em class="sig-param">params=None</em>, <em class="sig-param">gradient=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#Design.run_and_optimize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.Design.run_and_optimize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Design primers. If primer design is unsuccessful, relax parameters
 as defined in primer3plust.Design.DEFAULT_GRADIENT. Repeat for the specified
 number of max_iterations.</p>
@@ -101,8 +154,8 @@ number of max_iterations.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>max_iterations</strong> – the max number of iterations to perform relaxation</p></li>
-<li><p><strong>params</strong> – optional parameters to provide</p></li>
-<li><p><strong>gradient</strong> – optional gradient to provide. If not provided,
+<li><p><strong>params</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="#primer3plus.params.BoulderIO" title="primer3plus.params.BoulderIO"><code class="xref py py-class docutils literal notranslate"><span class="pre">BoulderIO</span></code></a>]) – optional parameters to provide</p></li>
+<li><p><strong>gradient</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>], <code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>], <code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]]]]) – optional gradient to provide. If not provided,
 Design.DEFAULT_GRADIENT will be used. The gradient is a
 dictionary off 3 tuples, the step the min and the max.</p></li>
 </ul>
@@ -133,12 +186,120 @@ design.presets.left_sequence(&quot;AGGGAGATAGATA&quot;)
 design.run()
 </pre></div>
 </div>
+<p><strong>Methods</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.design.DesignPresets._fix_length" title="primer3plus.design.DesignPresets._fix_length"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_fix_length</span></code></a>(overhang, anneal, lim)</p></td>
+<td><p>Fix the overhang and anneal from the hardcoded BoulderIO primer lim.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.design.DesignPresets._resolve" title="primer3plus.design.DesignPresets._resolve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_resolve</span></code></a>()</p></td>
+<td><p>Process any extra parameters and process BoulderIO so that it is digestable by primer3.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.design.DesignPresets._resolve_max_lengths" title="primer3plus.design.DesignPresets._resolve_max_lengths"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_resolve_max_lengths</span></code></a>(lim)</p></td>
+<td><p>Fixes the annealing and overhang sequences for annealing sequences for primers over the <code class="xref py py-attr docutils literal notranslate"><span class="pre">BoulderIO</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.design.DesignPresets._resolve_overhangs" title="primer3plus.design.DesignPresets._resolve_overhangs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_resolve_overhangs</span></code></a>()</p></td>
+<td><p>Sets the annealing and overhang sequences.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.design.DesignPresets.as_cloning_task" title="primer3plus.design.DesignPresets.as_cloning_task"><code class="xref py py-obj docutils literal notranslate"><span class="pre">as_cloning_task</span></code></a>()</p></td>
+<td><p>Set the design as a cloning task.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.design.DesignPresets.as_generic_task" title="primer3plus.design.DesignPresets.as_generic_task"><code class="xref py py-obj docutils literal notranslate"><span class="pre">as_generic_task</span></code></a>()</p></td>
+<td><p>Set the design as a generic task.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.design.DesignPresets.excluded" title="primer3plus.design.DesignPresets.excluded"><code class="xref py py-obj docutils literal notranslate"><span class="pre">excluded</span></code></a>(interval)</p></td>
+<td><p>Primers and oligos may not overlap any region specified in this tag.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.design.DesignPresets.included" title="primer3plus.design.DesignPresets.included"><code class="xref py py-obj docutils literal notranslate"><span class="pre">included</span></code></a>(interval)</p></td>
+<td><p>Specify interval from which primers must be selected.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.design.DesignPresets.internal_sequence" title="primer3plus.design.DesignPresets.internal_sequence"><code class="xref py py-obj docutils literal notranslate"><span class="pre">internal_sequence</span></code></a>(primer)</p></td>
+<td><p>The sequence of an internal oligo to check and around which to design left and right primers.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.design.DesignPresets.left_sequence" title="primer3plus.design.DesignPresets.left_sequence"><code class="xref py py-obj docutils literal notranslate"><span class="pre">left_sequence</span></code></a>(primer)</p></td>
+<td><p>The sequence of a left primer to check and around which to design right primers and optional internal oligos.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.design.DesignPresets.long_ok" title="primer3plus.design.DesignPresets.long_ok"><code class="xref py py-obj docutils literal notranslate"><span class="pre">long_ok</span></code></a>([b])</p></td>
+<td><p>Set the BoulderIO to process long primers.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.design.DesignPresets.pair_region_list" title="primer3plus.design.DesignPresets.pair_region_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pair_region_list</span></code></a>(region_list)</p></td>
+<td><p>The list of regions from which to design primers.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.design.DesignPresets.pick_anyway" title="primer3plus.design.DesignPresets.pick_anyway"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pick_anyway</span></code></a>([b])</p></td>
+<td><p>If true use primer provided in SEQUENCE_PRIMER, SEQUENCE_PRIMER_REVCOMP, or SEQUENCE_INTERNAL_OLIGO even if it violates specific constraints.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.design.DesignPresets.pick_left_only" title="primer3plus.design.DesignPresets.pick_left_only"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pick_left_only</span></code></a>()</p></td>
+<td><p>Design only the left primer.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.design.DesignPresets.pick_right_only" title="primer3plus.design.DesignPresets.pick_right_only"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pick_right_only</span></code></a>()</p></td>
+<td><p>Design only the right primer.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.design.DesignPresets.primer_num_return" title="primer3plus.design.DesignPresets.primer_num_return"><code class="xref py py-obj docutils literal notranslate"><span class="pre">primer_num_return</span></code></a>(n)</p></td>
+<td><p>Set the number of primers to return for the design task.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.design.DesignPresets.primers" title="primer3plus.design.DesignPresets.primers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">primers</span></code></a>(p1, p2)</p></td>
+<td><p>Set the left and right primer sequences.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.design.DesignPresets.product_size" title="primer3plus.design.DesignPresets.product_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">product_size</span></code></a>(interval[, opt])</p></td>
+<td><p>Set the product size.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.design.DesignPresets.right_sequence" title="primer3plus.design.DesignPresets.right_sequence"><code class="xref py py-obj docutils literal notranslate"><span class="pre">right_sequence</span></code></a>(primer)</p></td>
+<td><p>The sequence of a right primer to check and around which to design left primers and optional internal oligos.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.design.DesignPresets.target" title="primer3plus.design.DesignPresets.target"><code class="xref py py-obj docutils literal notranslate"><span class="pre">target</span></code></a>(interval)</p></td>
+<td><p>Specify the interval that designed primers must flank.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.design.DesignPresets.task" title="primer3plus.design.DesignPresets.task"><code class="xref py py-obj docutils literal notranslate"><span class="pre">task</span></code></a>(task)</p></td>
+<td><p>This tag tells primer3 what task to perform.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.design.DesignPresets.template" title="primer3plus.design.DesignPresets.template"><code class="xref py py-obj docutils literal notranslate"><span class="pre">template</span></code></a>(template)</p></td>
+<td><p>Set the template sequence for the design.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.design.DesignPresets.update" title="primer3plus.design.DesignPresets.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a>(update)</p></td>
+<td><p>Update an arbitrary parameter</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.design.DesignPresets.use_overhangs" title="primer3plus.design.DesignPresets.use_overhangs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">use_overhangs</span></code></a>([b])</p></td>
+<td><p>Set the BoulderIO to process overhangs.</p></td>
+</tr>
+</tbody>
+</table>
 <p>Initializes a new interface from a <code class="xref py py-class docutils literal notranslate"><span class="pre">Design</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>design</strong> – The design</p>
 </dd>
 </dl>
+<dl class="method">
+<dt id="primer3plus.design.DesignPresets._fix_length">
+<em class="property">static </em><code class="sig-name descname">_fix_length</code><span class="sig-paren">(</span><em class="sig-param">overhang</em>, <em class="sig-param">anneal</em>, <em class="sig-param">lim</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignPresets._fix_length"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignPresets._fix_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fix the overhang and anneal from the hardcoded BoulderIO primer lim.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.design.DesignPresets._resolve">
+<code class="sig-name descname">_resolve</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignPresets._resolve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignPresets._resolve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Process any extra parameters and process BoulderIO so
+that it is digestable by primer3.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.design.DesignPresets._resolve_max_lengths">
+<code class="sig-name descname">_resolve_max_lengths</code><span class="sig-paren">(</span><em class="sig-param">lim</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignPresets._resolve_max_lengths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignPresets._resolve_max_lengths" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fixes the annealing and overhang sequences for annealing sequences
+for primers over the <code class="xref py py-attr docutils literal notranslate"><span class="pre">BoulderIO</span></code>.
+Should always be run <em>after</em> <a class="reference internal" href="#primer3plus.design.DesignPresets._resolve_overhangs" title="primer3plus.design.DesignPresets._resolve_overhangs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">_resolve_overhangs()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.design.DesignPresets._resolve_overhangs">
+<code class="sig-name descname">_resolve_overhangs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignPresets._resolve_overhangs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignPresets._resolve_overhangs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the annealing and overhang sequences.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="primer3plus.design.DesignPresets.as_cloning_task">
 <code class="sig-name descname">as_cloning_task</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignPresets.as_cloning_task"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignPresets.as_cloning_task" title="Permalink to this definition">¶</a></dt>
@@ -260,22 +421,30 @@ SEQUENCE_TEMPLATE.</p>
 <a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_RIGHT_PRIMER">http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_RIGHT_PRIMER</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>primer</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – <dl class="field-list simple">
-<dt class="field-odd">type primer</dt>
-<dd class="field-odd"><dl class="field-list simple">
-<dt class="field-odd">return</dt>
-<dd class="field-odd"><dl class="field-list simple">
-<dt class="field-odd">rtype</dt>
-<dd class="field-odd"><p></p></dd>
-</dl>
-</dd>
-</dl>
-</dd>
-</dl>
-</p>
+<dd class="field-odd"><p><strong>primer</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – the primer sequence</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>self</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.design.DesignPresets.long_ok">
+<code class="sig-name descname">long_ok</code><span class="sig-paren">(</span><em class="sig-param">b=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignPresets.long_ok"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignPresets.long_ok" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the BoulderIO to process long primers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>b</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – boolean to set</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>self</p>
 </dd>
 </dl>
 </dd></dl>
@@ -424,7 +593,7 @@ reverse strand of SEQUENCE_TEMPLATE.</p>
 <a class="reference external" href="http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_LEFT_PRIMER">http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_LEFT_PRIMER</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>primer</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – primer sequence</p>
+<dd class="field-odd"><p><strong>primer</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – the primer sequence</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a></p>
@@ -507,18 +676,148 @@ parameter.</p>
 <dd><p>Update an arbitrary parameter</p>
 </dd></dl>
 
+<dl class="method">
+<dt id="primer3plus.design.DesignPresets.use_overhangs">
+<code class="sig-name descname">use_overhangs</code><span class="sig-paren">(</span><em class="sig-param">b=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignPresets.use_overhangs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignPresets.use_overhangs" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Set the BoulderIO to process overhangs.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>b</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – boolean to set
+:return: self</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </div>
-<div class="section" id="design-parameters">
-<span id="api-parameters"></span><h2>Design Parameters<a class="headerlink" href="#design-parameters" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-primer3plus.params">
+<span id="design-parameters"></span><span id="api-parameters"></span><h2>Design Parameters<a class="headerlink" href="#module-primer3plus.params" title="Permalink to this headline">¶</a></h2>
+<p><strong>Classes</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.params.BoulderIO" title="primer3plus.params.BoulderIO"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BoulderIO</span></code></a>()</p></td>
+<td><p>Class that maintains and validates a list of Primer3 parameters.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.params.ParamParser" title="primer3plus.params.ParamParser"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ParamParser</span></code></a></p></td>
+<td><p>Reads the Primer3 documentation and creates the appropriate parameters.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.params.ParamTypes" title="primer3plus.params.ParamTypes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ParamTypes</span></code></a></p></td>
+<td><p>Parameter types used in BoulderIO.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.params.Parameter" title="primer3plus.params.Parameter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Parameter</span></code></a>(ptype[, value])</p></td>
+<td><p>An instance of a Primer3 parameter.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.params.ParameterType" title="primer3plus.params.ParameterType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ParameterType</span></code></a>(name, description, type, …)</p></td>
+<td><p>Metatype for a Primer3 parameter.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Functions</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.params.default_boulderio" title="primer3plus.params.default_boulderio"><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_boulderio</span></code></a>()</p></td>
+<td><p>Open the default parameters as a <code class="xref py py-class docutils literal notranslate"><span class="pre">BoulderIO</span></code></p></td>
+</tr>
+</tbody>
+</table>
 <dl class="class">
 <dt id="primer3plus.params.BoulderIO">
-<em class="property">class </em><code class="sig-prename descclassname">primer3plus.params.</code><code class="sig-name descname">BoulderIO</code><a class="reference internal" href="../_modules/primer3plus/params/params.html#BoulderIO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">primer3plus.params.</code><code class="sig-name descname">BoulderIO</code><a class="reference internal" href="../_modules/primer3plus/params.html#BoulderIO"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">collections.abc.Mapping</span></code></p>
+<p>Class that maintains and validates a list of Primer3 parameters.</p>
+<p>Initializes a new BoulderIO instance.</p>
+<p><strong>Attributes</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.params.BoulderIO.EXTRA_TYPES" title="primer3plus.params.BoulderIO.EXTRA_TYPES"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EXTRA_TYPES</span></code></a></p></td>
+<td><p>extra parameter types</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.params.BoulderIO.PRIMER_MAX_SIZE_HARD_LIM" title="primer3plus.params.BoulderIO.PRIMER_MAX_SIZE_HARD_LIM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PRIMER_MAX_SIZE_HARD_LIM</span></code></a></p></td>
+<td><p>hard coded primer length limit for Primer3.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Methods</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.params.BoulderIO._clean_dictionary" title="primer3plus.params.BoulderIO._clean_dictionary"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_clean_dictionary</span></code></a>(params)</p></td>
+<td><p>Removes empty lists and empty strings from params.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.params.BoulderIO._globals" title="primer3plus.params.BoulderIO._globals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_globals</span></code></a>([clean])</p></td>
+<td><p>Return global parameters.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.params.BoulderIO._other" title="primer3plus.params.BoulderIO._other"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_other</span></code></a>([clean])</p></td>
+<td><p>Return other parameters.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.params.BoulderIO._program" title="primer3plus.params.BoulderIO._program"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_program</span></code></a>([clean])</p></td>
+<td><p>Return program parameters.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.params.BoulderIO._sequence" title="primer3plus.params.BoulderIO._sequence"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_sequence</span></code></a>([clean])</p></td>
+<td><p>Return sequence parameters.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.params.BoulderIO.get" title="primer3plus.params.BoulderIO.get"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get</span></code></a>(k[,d])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.params.BoulderIO.items" title="primer3plus.params.BoulderIO.items"><code class="xref py py-obj docutils literal notranslate"><span class="pre">items</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.params.BoulderIO.keys" title="primer3plus.params.BoulderIO.keys"><code class="xref py py-obj docutils literal notranslate"><span class="pre">keys</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.params.BoulderIO.load" title="primer3plus.params.BoulderIO.load"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load</span></code></a>(param_dict)</p></td>
+<td><p>Load parameters from a dictionary.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.params.BoulderIO.online_help" title="primer3plus.params.BoulderIO.online_help"><code class="xref py py-obj docutils literal notranslate"><span class="pre">online_help</span></code></a>([open, key])</p></td>
+<td><p>Display online help in a browser tab.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.params.BoulderIO.set_defaults" title="primer3plus.params.BoulderIO.set_defaults"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_defaults</span></code></a>()</p></td>
+<td><p>Set all parameters to their defaults.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.params.BoulderIO.update" title="primer3plus.params.BoulderIO.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a>(data_dict)</p></td>
+<td><p>Update the parameters from a dictionary of key:values.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.params.BoulderIO.values" title="primer3plus.params.BoulderIO.values"><code class="xref py py-obj docutils literal notranslate"><span class="pre">values</span></code></a>()</p></td>
+<td><p>Iterator for parameter values.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="primer3plus.params.BoulderIO.EXTRA_TYPES">
+<code class="sig-name descname">EXTRA_TYPES</code><em class="property"> = [&lt;ParameterType SEQUENCE_PRIMER_OVERHANG &lt;class 'str'&gt; default=&gt;, &lt;ParameterType SEQUENCE_PRIMER_REVCOMP_OVERHANG &lt;class 'str'&gt; default=&gt;, &lt;ParameterType PRIMER_USE_OVERHANGS &lt;class 'bool'&gt; default=False&gt;, &lt;ParameterType PRIMER_LONG_OK &lt;class 'bool'&gt; default=False&gt;]</em><a class="headerlink" href="#primer3plus.params.BoulderIO.EXTRA_TYPES" title="Permalink to this definition">¶</a></dt>
+<dd><p>extra parameter types</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="primer3plus.params.BoulderIO.PRIMER_MAX_SIZE_HARD_LIM">
+<code class="sig-name descname">PRIMER_MAX_SIZE_HARD_LIM</code><em class="property"> = 35</em><a class="headerlink" href="#primer3plus.params.BoulderIO.PRIMER_MAX_SIZE_HARD_LIM" title="Permalink to this definition">¶</a></dt>
+<dd><p>hard coded primer length limit for Primer3.</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="primer3plus.params.BoulderIO._clean_dictionary">
-<em class="property">static </em><code class="sig-name descname">_clean_dictionary</code><span class="sig-paren">(</span><em class="sig-param">params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params/params.html#BoulderIO._clean_dictionary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO._clean_dictionary" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">_clean_dictionary</code><span class="sig-paren">(</span><em class="sig-param">params</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params.html#BoulderIO._clean_dictionary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO._clean_dictionary" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes empty lists and empty strings from params.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -536,7 +835,7 @@ parameter.</p>
 
 <dl class="method">
 <dt id="primer3plus.params.BoulderIO._globals">
-<code class="sig-name descname">_globals</code><span class="sig-paren">(</span><em class="sig-param">clean=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params/params.html#BoulderIO._globals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO._globals" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">_globals</code><span class="sig-paren">(</span><em class="sig-param">clean=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params.html#BoulderIO._globals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO._globals" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return global parameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -553,7 +852,7 @@ parameter.</p>
 
 <dl class="method">
 <dt id="primer3plus.params.BoulderIO._other">
-<code class="sig-name descname">_other</code><span class="sig-paren">(</span><em class="sig-param">clean=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params/params.html#BoulderIO._other"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO._other" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">_other</code><span class="sig-paren">(</span><em class="sig-param">clean=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params.html#BoulderIO._other"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO._other" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return other parameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -567,7 +866,7 @@ parameter.</p>
 
 <dl class="method">
 <dt id="primer3plus.params.BoulderIO._program">
-<code class="sig-name descname">_program</code><span class="sig-paren">(</span><em class="sig-param">clean=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params/params.html#BoulderIO._program"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO._program" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">_program</code><span class="sig-paren">(</span><em class="sig-param">clean=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params.html#BoulderIO._program"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO._program" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return program parameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -581,7 +880,7 @@ parameter.</p>
 
 <dl class="method">
 <dt id="primer3plus.params.BoulderIO._sequence">
-<code class="sig-name descname">_sequence</code><span class="sig-paren">(</span><em class="sig-param">clean=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params/params.html#BoulderIO._sequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO._sequence" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">_sequence</code><span class="sig-paren">(</span><em class="sig-param">clean=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params.html#BoulderIO._sequence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO._sequence" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return sequence parameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -600,7 +899,7 @@ parameter.</p>
 
 <dl class="method">
 <dt id="primer3plus.params.BoulderIO.items">
-<code class="sig-name descname">items</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; a set-like object providing a view on D's items<a class="reference internal" href="../_modules/primer3plus/params/params.html#BoulderIO.items"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO.items" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">items</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; a set-like object providing a view on D's items<a class="reference internal" href="../_modules/primer3plus/params.html#BoulderIO.items"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO.items" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
@@ -610,7 +909,7 @@ parameter.</p>
 
 <dl class="method">
 <dt id="primer3plus.params.BoulderIO.load">
-<code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="sig-param">param_dict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params/params.html#BoulderIO.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO.load" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">load</code><span class="sig-paren">(</span><em class="sig-param">param_dict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params.html#BoulderIO.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO.load" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load parameters from a dictionary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -624,7 +923,7 @@ parameter.</p>
 
 <dl class="method">
 <dt id="primer3plus.params.BoulderIO.online_help">
-<em class="property">static </em><code class="sig-name descname">online_help</code><span class="sig-paren">(</span><em class="sig-param">open=False</em>, <em class="sig-param">key=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params/params.html#BoulderIO.online_help"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO.online_help" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="sig-name descname">online_help</code><span class="sig-paren">(</span><em class="sig-param">open=False</em>, <em class="sig-param">key=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params.html#BoulderIO.online_help"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO.online_help" title="Permalink to this definition">¶</a></dt>
 <dd><p>Display online help in a browser tab.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -644,7 +943,7 @@ parameter.</p>
 
 <dl class="method">
 <dt id="primer3plus.params.BoulderIO.set_defaults">
-<code class="sig-name descname">set_defaults</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params/params.html#BoulderIO.set_defaults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO.set_defaults" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_defaults</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params.html#BoulderIO.set_defaults"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO.set_defaults" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set all parameters to their defaults.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -655,7 +954,7 @@ parameter.</p>
 
 <dl class="method">
 <dt id="primer3plus.params.BoulderIO.update">
-<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param">data_dict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params/params.html#BoulderIO.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO.update" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param">data_dict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params.html#BoulderIO.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update the parameters from a dictionary of key:values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -669,7 +968,7 @@ parameter.</p>
 
 <dl class="method">
 <dt id="primer3plus.params.BoulderIO.values">
-<code class="sig-name descname">values</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params/params.html#BoulderIO.values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO.values" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">values</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params.html#BoulderIO.values"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.BoulderIO.values" title="Permalink to this definition">¶</a></dt>
 <dd><p>Iterator for parameter values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
@@ -683,6 +982,386 @@ parameter.</p>
 
 </dd></dl>
 
+<dl class="class">
+<dt id="primer3plus.params.ParamParser">
+<em class="property">class </em><code class="sig-prename descclassname">primer3plus.params.</code><code class="sig-name descname">ParamParser</code><a class="reference internal" href="../_modules/primer3plus/params.html#ParamParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.ParamParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Reads the Primer3 documentation and creates the appropriate
+parameters.</p>
+<p><strong>Methods</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.params.ParamParser._parse_primer3_docs" title="primer3plus.params.ParamParser._parse_primer3_docs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_parse_primer3_docs</span></code></a>(docstr)</p></td>
+<td><p>Parse the docs of the primer3 website (<a class="reference external" href="https://htmlpreview.github.io">https://htmlpreview.github.io</a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.params.ParamParser.open" title="primer3plus.params.ParamParser.open"><code class="xref py py-obj docutils literal notranslate"><span class="pre">open</span></code></a>([filepath])</p></td>
+<td><p>Open the parameters from the filepath.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="primer3plus.params.ParamParser._parse_primer3_docs">
+<em class="property">static </em><code class="sig-name descname">_parse_primer3_docs</code><span class="sig-paren">(</span><em class="sig-param">docstr</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params.html#ParamParser._parse_primer3_docs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.ParamParser._parse_primer3_docs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse the docs of the primer3 website
+(<a class="reference external" href="https://htmlpreview.github.io">https://htmlpreview.github.io</a>.</p>
+<p>/?https://github.com/libnano/primer3-py/master/primer3/src.
+/libprimer3/primer3_manual.htm#globalTags)  :param docstr: doc string :type
+docstr: basestring :return: params :rtype: dict</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.params.ParamParser.open">
+<em class="property">classmethod </em><code class="sig-name descname">open</code><span class="sig-paren">(</span><em class="sig-param">filepath=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params.html#ParamParser.open"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.ParamParser.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open the parameters from the filepath.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filepath</strong> – filepath</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#primer3plus.params.BoulderIO" title="primer3plus.params.BoulderIO"><code class="xref py py-class docutils literal notranslate"><span class="pre">BoulderIO</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="primer3plus.params.ParamTypes">
+<em class="property">class </em><code class="sig-prename descclassname">primer3plus.params.</code><code class="sig-name descname">ParamTypes</code><a class="reference internal" href="../_modules/primer3plus/params.html#ParamTypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.ParamTypes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Parameter types used in BoulderIO. Only the Global and Sequence parameters
+are actually used in designs.</p>
+<p><strong>Attributes</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.params.ParamTypes.CATEGORY" title="primer3plus.params.ParamTypes.CATEGORY"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CATEGORY</span></code></a></p></td>
+<td><p>boulderIO that gets sent to primer3</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.params.ParamTypes.EXTRA" title="primer3plus.params.ParamTypes.EXTRA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EXTRA</span></code></a></p></td>
+<td><p>extra parameter key. These do not show up in the final</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.params.ParamTypes.GLOBAL" title="primer3plus.params.ParamTypes.GLOBAL"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GLOBAL</span></code></a></p></td>
+<td><p>global parameter key</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.params.ParamTypes.OTHER" title="primer3plus.params.ParamTypes.OTHER"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OTHER</span></code></a></p></td>
+<td><p>other parameter key</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.params.ParamTypes.PROGRAM" title="primer3plus.params.ParamTypes.PROGRAM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PROGRAM</span></code></a></p></td>
+<td><p>program parameter key</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.params.ParamTypes.SEQUENCE" title="primer3plus.params.ParamTypes.SEQUENCE"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SEQUENCE</span></code></a></p></td>
+<td><p>sequence parameter key</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="primer3plus.params.ParamTypes.CATEGORY">
+<code class="sig-name descname">CATEGORY</code><em class="property"> = 'category'</em><a class="headerlink" href="#primer3plus.params.ParamTypes.CATEGORY" title="Permalink to this definition">¶</a></dt>
+<dd><p>boulderIO that gets sent to primer3</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="primer3plus.params.ParamTypes.EXTRA">
+<code class="sig-name descname">EXTRA</code><em class="property"> = 'extra'</em><a class="headerlink" href="#primer3plus.params.ParamTypes.EXTRA" title="Permalink to this definition">¶</a></dt>
+<dd><p>extra parameter key. These do not show up in the final</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="primer3plus.params.ParamTypes.GLOBAL">
+<code class="sig-name descname">GLOBAL</code><em class="property"> = 'GLOBAL'</em><a class="headerlink" href="#primer3plus.params.ParamTypes.GLOBAL" title="Permalink to this definition">¶</a></dt>
+<dd><p>global parameter key</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="primer3plus.params.ParamTypes.OTHER">
+<code class="sig-name descname">OTHER</code><em class="property"> = 'OTHER'</em><a class="headerlink" href="#primer3plus.params.ParamTypes.OTHER" title="Permalink to this definition">¶</a></dt>
+<dd><p>other parameter key</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="primer3plus.params.ParamTypes.PROGRAM">
+<code class="sig-name descname">PROGRAM</code><em class="property"> = 'PROGRAM'</em><a class="headerlink" href="#primer3plus.params.ParamTypes.PROGRAM" title="Permalink to this definition">¶</a></dt>
+<dd><p>program parameter key</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="primer3plus.params.ParamTypes.SEQUENCE">
+<code class="sig-name descname">SEQUENCE</code><em class="property"> = 'SEQUENCE'</em><a class="headerlink" href="#primer3plus.params.ParamTypes.SEQUENCE" title="Permalink to this definition">¶</a></dt>
+<dd><p>sequence parameter key</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="primer3plus.params.Parameter">
+<em class="property">class </em><code class="sig-prename descclassname">primer3plus.params.</code><code class="sig-name descname">Parameter</code><span class="sig-paren">(</span><em class="sig-param">ptype</em>, <em class="sig-param">value=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params.html#Parameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.Parameter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>An instance of a Primer3 parameter. Internally validate its value using
+its :class:&lt;ParameterType &lt;primer3plus.params.ParameterType&gt;`</p>
+<p>Initialize a parameter from a
+<a class="reference internal" href="#primer3plus.params.ParameterType" title="primer3plus.params.ParameterType"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parameter</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ptype</strong> (<a class="reference internal" href="#primer3plus.params.ParameterType" title="primer3plus.params.ParameterType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ParameterType</span></code></a>) – parameter type</p></li>
+<li><p><strong>value</strong> – value to set parameter</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Attributes</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.params.Parameter._value" title="primer3plus.params.Parameter._value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_value</span></code></a></p></td>
+<td><p>the parameter value</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.params.Parameter.name" title="primer3plus.params.Parameter.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
+<td><p>Return the name of the parameter</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.params.Parameter.ptype" title="primer3plus.params.Parameter.ptype"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ptype</span></code></a></p></td>
+<td><p>the <a class="reference internal" href="#primer3plus.params.ParameterType" title="primer3plus.params.ParameterType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ParameterType</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.params.Parameter.value" title="primer3plus.params.Parameter.value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">value</span></code></a></p></td>
+<td><p>Return the value of the parameter.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Methods</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.params.Parameter.copy" title="primer3plus.params.Parameter.copy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">copy</span></code></a>()</p></td>
+<td><p>Make a copy of this parameter.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.params.Parameter.set_default" title="primer3plus.params.Parameter.set_default"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_default</span></code></a>()</p></td>
+<td><p>Set the parameter to its default.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="primer3plus.params.Parameter._value">
+<code class="sig-name descname">_value</code><em class="property"> = None</em><a class="headerlink" href="#primer3plus.params.Parameter._value" title="Permalink to this definition">¶</a></dt>
+<dd><p>the parameter value</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.params.Parameter.copy">
+<code class="sig-name descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params.html#Parameter.copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.Parameter.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a copy of this parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#primer3plus.params.Parameter" title="primer3plus.params.Parameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parameter</span></code></a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.params.Parameter.name">
+<em class="property">property </em><code class="sig-name descname">name</code><a class="headerlink" href="#primer3plus.params.Parameter.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the name of the parameter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>parameter name</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="primer3plus.params.Parameter.ptype">
+<code class="sig-name descname">ptype</code><em class="property"> = None</em><a class="headerlink" href="#primer3plus.params.Parameter.ptype" title="Permalink to this definition">¶</a></dt>
+<dd><p>the <a class="reference internal" href="#primer3plus.params.ParameterType" title="primer3plus.params.ParameterType"><code class="xref py py-class docutils literal notranslate"><span class="pre">ParameterType</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.params.Parameter.set_default">
+<code class="sig-name descname">set_default</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params.html#Parameter.set_default"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.Parameter.set_default" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the parameter to its default.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.params.Parameter.value">
+<em class="property">property </em><code class="sig-name descname">value</code><a class="headerlink" href="#primer3plus.params.Parameter.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value of the parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="primer3plus.params.ParameterType">
+<em class="property">class </em><code class="sig-prename descclassname">primer3plus.params.</code><code class="sig-name descname">ParameterType</code><span class="sig-paren">(</span><em class="sig-param">name</em>, <em class="sig-param">description</em>, <em class="sig-param">type</em>, <em class="sig-param">default</em>, <em class="sig-param">category</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params.html#ParameterType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.ParameterType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Metatype for a Primer3 parameter.</p>
+<p>Initialize a BoulderIO parameter type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – name of the parameter</p></li>
+<li><p><strong>description</strong> – description of the parameter</p></li>
+<li><p><strong>type</strong> – expected type of the parameter</p></li>
+<li><p><strong>default</strong> – default value of the parameter</p></li>
+<li><p><strong>category</strong> – parameter category (from ‘sequence’, ‘program’, ‘globals’, or
+‘other’)</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Attributes</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.params.ParameterType.category" title="primer3plus.params.ParameterType.category"><code class="xref py py-obj docutils literal notranslate"><span class="pre">category</span></code></a></p></td>
+<td><p>category. See <a class="reference internal" href="#primer3plus.params.ParamTypes" title="primer3plus.params.ParamTypes"><code class="xref py py-class docutils literal notranslate"><span class="pre">ParamTypes</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.params.ParameterType.default" title="primer3plus.params.ParameterType.default"><code class="xref py py-obj docutils literal notranslate"><span class="pre">default</span></code></a></p></td>
+<td><p>default value</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.params.ParameterType.description" title="primer3plus.params.ParameterType.description"><code class="xref py py-obj docutils literal notranslate"><span class="pre">description</span></code></a></p></td>
+<td><p>parameter description as a str</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.params.ParameterType.name" title="primer3plus.params.ParameterType.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
+<td><p>name of the parameter</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.params.ParameterType.type" title="primer3plus.params.ParameterType.type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">type</span></code></a></p></td>
+<td><p>expected python type of the parameter value</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="primer3plus.params.ParameterType.category">
+<code class="sig-name descname">category</code><em class="property"> = None</em><a class="headerlink" href="#primer3plus.params.ParameterType.category" title="Permalink to this definition">¶</a></dt>
+<dd><p>category. See <a class="reference internal" href="#primer3plus.params.ParamTypes" title="primer3plus.params.ParamTypes"><code class="xref py py-class docutils literal notranslate"><span class="pre">ParamTypes</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="primer3plus.params.ParameterType.default">
+<code class="sig-name descname">default</code><em class="property"> = None</em><a class="headerlink" href="#primer3plus.params.ParameterType.default" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="primer3plus.params.ParameterType.description">
+<code class="sig-name descname">description</code><em class="property"> = None</em><a class="headerlink" href="#primer3plus.params.ParameterType.description" title="Permalink to this definition">¶</a></dt>
+<dd><p>parameter description as a str</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="primer3plus.params.ParameterType.name">
+<code class="sig-name descname">name</code><em class="property"> = None</em><a class="headerlink" href="#primer3plus.params.ParameterType.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>name of the parameter</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="primer3plus.params.ParameterType.type">
+<code class="sig-name descname">type</code><em class="property"> = None</em><a class="headerlink" href="#primer3plus.params.ParameterType.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>expected python type of the parameter value</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="primer3plus.params.default_boulderio">
+<code class="sig-prename descclassname">primer3plus.params.</code><code class="sig-name descname">default_boulderio</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params.html#default_boulderio"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.default_boulderio" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open the default parameters as a <code class="xref py py-class docutils literal notranslate"><span class="pre">BoulderIO</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#primer3plus.params.BoulderIO" title="primer3plus.params.BoulderIO"><code class="xref py py-class docutils literal notranslate"><span class="pre">BoulderIO</span></code></a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the BoulderIO instance.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="section" id="extra-special-parameters">
+<h3>Extra/Special Parameters<a class="headerlink" href="#extra-special-parameters" title="Permalink to this headline">¶</a></h3>
+<span class="target" id="api-extra-parameters"></span><dl class="class">
+<dt id="primer3plus.params.ExtraTypes">
+<em class="property">class </em><code class="sig-prename descclassname">primer3plus.params.</code><code class="sig-name descname">ExtraTypes</code><a class="reference internal" href="../_modules/primer3plus/params.html#ExtraTypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.ExtraTypes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Extra Parameter types not included in standard Primer3 behavior.</p>
+<p><strong>Attributes</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.params.ExtraTypes.PRIMER_LONG_OK" title="primer3plus.params.ExtraTypes.PRIMER_LONG_OK"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PRIMER_LONG_OK</span></code></a></p></td>
+<td><p>specifies BoulderIO use long primers (&gt;35bp).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.params.ExtraTypes.PRIMER_USE_OVERHANGS" title="primer3plus.params.ExtraTypes.PRIMER_USE_OVERHANGS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PRIMER_USE_OVERHANGS</span></code></a></p></td>
+<td><p>extra parameter specifies to use primer overhangs in the design</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.params.ExtraTypes.SEQUENCE_PRIMER_OVERHANG" title="primer3plus.params.ExtraTypes.SEQUENCE_PRIMER_OVERHANG"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SEQUENCE_PRIMER_OVERHANG</span></code></a></p></td>
+<td><p>extra parameter specifies the sequence of the left primer overhang</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.params.ExtraTypes.SEQUENCE_PRIMER_REVCOMP_OVERHANG" title="primer3plus.params.ExtraTypes.SEQUENCE_PRIMER_REVCOMP_OVERHANG"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SEQUENCE_PRIMER_REVCOMP_OVERHANG</span></code></a></p></td>
+<td><p>extra parameter specifies the sequence of the right primer overhang</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="primer3plus.params.ExtraTypes.PRIMER_LONG_OK">
+<code class="sig-name descname">PRIMER_LONG_OK</code><em class="property"> = &lt;ParameterType PRIMER_LONG_OK &lt;class 'bool'&gt; default=False&gt;</em><a class="headerlink" href="#primer3plus.params.ExtraTypes.PRIMER_LONG_OK" title="Permalink to this definition">¶</a></dt>
+<dd><p>specifies BoulderIO use long primers (&gt;35bp).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="primer3plus.params.ExtraTypes.PRIMER_USE_OVERHANGS">
+<code class="sig-name descname">PRIMER_USE_OVERHANGS</code><em class="property"> = &lt;ParameterType PRIMER_USE_OVERHANGS &lt;class 'bool'&gt; default=False&gt;</em><a class="headerlink" href="#primer3plus.params.ExtraTypes.PRIMER_USE_OVERHANGS" title="Permalink to this definition">¶</a></dt>
+<dd><p>extra parameter specifies to use primer overhangs in the design</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="primer3plus.params.ExtraTypes.SEQUENCE_PRIMER_OVERHANG">
+<code class="sig-name descname">SEQUENCE_PRIMER_OVERHANG</code><em class="property"> = &lt;ParameterType SEQUENCE_PRIMER_OVERHANG &lt;class 'str'&gt; default=&gt;</em><a class="headerlink" href="#primer3plus.params.ExtraTypes.SEQUENCE_PRIMER_OVERHANG" title="Permalink to this definition">¶</a></dt>
+<dd><p>extra parameter specifies the sequence of the left primer overhang</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="primer3plus.params.ExtraTypes.SEQUENCE_PRIMER_REVCOMP_OVERHANG">
+<code class="sig-name descname">SEQUENCE_PRIMER_REVCOMP_OVERHANG</code><em class="property"> = &lt;ParameterType SEQUENCE_PRIMER_REVCOMP_OVERHANG &lt;class 'str'&gt; default=&gt;</em><a class="headerlink" href="#primer3plus.params.ExtraTypes.SEQUENCE_PRIMER_REVCOMP_OVERHANG" title="Permalink to this definition">¶</a></dt>
+<dd><p>extra parameter specifies the sequence of the right primer overhang</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 </div>
 </div>
 
@@ -708,7 +1387,10 @@ parameter.</p>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#design">Design</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#parameter-interface">Parameter Interface</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#design-parameters">Design Parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-primer3plus.params">Design Parameters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#extra-special-parameters">Extra/Special Parameters</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">primer3plus change log</a></li>
