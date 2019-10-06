@@ -1,35 +1,153 @@
 
+
 <!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>primer3plus.params &mdash; primer3plus 1.0.0b1 documentation</title>
+  
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta charset="utf-8" />
-    <title>primer3plus.params &#8212; primer3plus 1.0.0b1 documentation</title>
-    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../_static/language_data.js"></script>
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
    
-  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
-  </head><body>
-  
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
           
 
-          <div class="body" role="main">
+          
+            <a href="../../index.html" class="icon icon-home"> primer3plus
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0b1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer/api_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer/changelog.html">primer3plus change log</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">primer3plus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>primer3plus.params</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <h1>Source code for primer3plus.params</h1><div class="highlight"><pre>
 <span></span>import os
@@ -46,7 +164,7 @@ from primer3plus.constants import DOCURL
 from primer3plus.exceptions import Primer3PlusParserError
 
 
-<div class="viewcode-block" id="ParamTypes"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.ParamTypes">[docs]</a>class ParamTypes:
+<div class="viewcode-block" id="ParamTypes"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.ParamTypes">[docs]</a>class ParamTypes:
     &quot;&quot;&quot;
     Parameter types used in BoulderIO. Only the Global and Sequence parameters
     are actually used in designs.
@@ -66,7 +184,7 @@ _default_param_path = os.path.join(
 )
 
 
-<div class="viewcode-block" id="ParameterType"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.ParameterType">[docs]</a>class ParameterType:
+<div class="viewcode-block" id="ParameterType"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.ParameterType">[docs]</a>class ParameterType:
     &quot;&quot;&quot;Metatype for a Primer3 parameter.&quot;&quot;&quot;
 
     def __init__(self, name, description, type, default, category):
@@ -100,7 +218,7 @@ _default_param_path = os.path.join(
         )</div>
 
 
-<div class="viewcode-block" id="Parameter"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.Parameter">[docs]</a>class Parameter:
+<div class="viewcode-block" id="Parameter"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.Parameter">[docs]</a>class Parameter:
     &quot;&quot;&quot;An instance of a Primer3 parameter. Internally validate its value using
     its :class:&lt;ParameterType &lt;primer3plus.params.ParameterType&gt;`&quot;&quot;&quot;
 
@@ -155,7 +273,7 @@ _default_param_path = os.path.join(
         &quot;&quot;&quot;
         return self.ptype.name
 
-<div class="viewcode-block" id="Parameter.set_default"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.Parameter.set_default">[docs]</a>    def set_default(self):
+<div class="viewcode-block" id="Parameter.set_default"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.Parameter.set_default">[docs]</a>    def set_default(self):
         &quot;&quot;&quot;
         Set the parameter to its default.
 
@@ -163,7 +281,7 @@ _default_param_path = os.path.join(
         &quot;&quot;&quot;
         self.value = self.ptype.default</div>
 
-<div class="viewcode-block" id="Parameter.copy"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.Parameter.copy">[docs]</a>    def copy(self) -&gt; &quot;Parameter&quot;:
+<div class="viewcode-block" id="Parameter.copy"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.Parameter.copy">[docs]</a>    def copy(self) -&gt; &quot;Parameter&quot;:
         &quot;&quot;&quot;
         Make a copy of this parameter.
 
@@ -188,7 +306,7 @@ _default_param_path = os.path.join(
         return str(self)</div>
 
 
-<div class="viewcode-block" id="ExtraTypes"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.ExtraTypes">[docs]</a>class ExtraTypes:
+<div class="viewcode-block" id="ExtraTypes"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.ExtraTypes">[docs]</a>class ExtraTypes:
     &quot;&quot;&quot;Extra Parameter types not included in standard Primer3 behavior.&quot;&quot;&quot;
 
     SEQUENCE_PRIMER_OVERHANG = ParameterType(
@@ -223,7 +341,7 @@ _default_param_path = os.path.join(
     )  #: specifies BoulderIO use long primers (&gt;35bp).</div>
 
 
-<div class="viewcode-block" id="BoulderIO"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.BoulderIO">[docs]</a>class BoulderIO(Mapping):
+<div class="viewcode-block" id="BoulderIO"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.BoulderIO">[docs]</a>class BoulderIO(Mapping):
     &quot;&quot;&quot;
     Class that maintains and validates a list of Primer3 parameters.
     &quot;&quot;&quot;
@@ -244,7 +362,7 @@ _default_param_path = os.path.join(
         &quot;&quot;&quot;
         self._params = {}  #: parameters
 
-<div class="viewcode-block" id="BoulderIO.update"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.BoulderIO.update">[docs]</a>    def update(self, data_dict: Dict[str, Any]):
+<div class="viewcode-block" id="BoulderIO.update"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.BoulderIO.update">[docs]</a>    def update(self, data_dict: Dict[str, Any]):
         &quot;&quot;&quot;
         Update the parameters from a dictionary of key:values.
 
@@ -261,7 +379,7 @@ _default_param_path = os.path.join(
         for ptype in self.EXTRA_TYPES:
             self._params[ptype.name] = Parameter(ptype, ptype.default)
 
-<div class="viewcode-block" id="BoulderIO.load"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.BoulderIO.load">[docs]</a>    def load(self, param_dict):
+<div class="viewcode-block" id="BoulderIO.load"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.BoulderIO.load">[docs]</a>    def load(self, param_dict):
         &quot;&quot;&quot;
         Load parameters from a dictionary.
 
@@ -298,7 +416,7 @@ _default_param_path = os.path.join(
             &quot;{key} not in params. See docs for help: {url}&quot;.format(key=key, url=DOCURL)
         )
 
-<div class="viewcode-block" id="BoulderIO.online_help"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.BoulderIO.online_help">[docs]</a>    @staticmethod
+<div class="viewcode-block" id="BoulderIO.online_help"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.BoulderIO.online_help">[docs]</a>    @staticmethod
     def online_help(open=False, key=None) -&gt; str:
         &quot;&quot;&quot;
         Display online help in a browser tab.
@@ -320,7 +438,7 @@ _default_param_path = os.path.join(
             k: v.value for k, v in self._params.items() if v.ptype.category == category
         }
 
-<div class="viewcode-block" id="BoulderIO._globals"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.BoulderIO._globals">[docs]</a>    def _globals(self, clean=True) -&gt; Dict[str, Any]:
+<div class="viewcode-block" id="BoulderIO._globals"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.BoulderIO._globals">[docs]</a>    def _globals(self, clean=True) -&gt; Dict[str, Any]:
         &quot;&quot;&quot;
         Return global parameters.
 
@@ -332,7 +450,7 @@ _default_param_path = os.path.join(
             data = self._clean_dictionary(data)
         return data</div>
 
-<div class="viewcode-block" id="BoulderIO._program"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.BoulderIO._program">[docs]</a>    def _program(self, clean=True):
+<div class="viewcode-block" id="BoulderIO._program"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.BoulderIO._program">[docs]</a>    def _program(self, clean=True):
         &quot;&quot;&quot;
         Return program parameters.
 
@@ -344,7 +462,7 @@ _default_param_path = os.path.join(
             data = self._clean_dictionary(data)
         return data</div>
 
-<div class="viewcode-block" id="BoulderIO._sequence"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.BoulderIO._sequence">[docs]</a>    def _sequence(self, clean=True):
+<div class="viewcode-block" id="BoulderIO._sequence"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.BoulderIO._sequence">[docs]</a>    def _sequence(self, clean=True):
         &quot;&quot;&quot;
         Return sequence parameters.
 
@@ -356,7 +474,7 @@ _default_param_path = os.path.join(
             data = self._clean_dictionary(data)
         return data</div>
 
-<div class="viewcode-block" id="BoulderIO._other"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.BoulderIO._other">[docs]</a>    def _other(self, clean=True):
+<div class="viewcode-block" id="BoulderIO._other"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.BoulderIO._other">[docs]</a>    def _other(self, clean=True):
         &quot;&quot;&quot;
         Return other parameters.
 
@@ -377,7 +495,7 @@ _default_param_path = os.path.join(
     def all(self):
         return {k: v for k, v in self.items()}
 
-<div class="viewcode-block" id="BoulderIO.set_defaults"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.BoulderIO.set_defaults">[docs]</a>    def set_defaults(self):
+<div class="viewcode-block" id="BoulderIO.set_defaults"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.BoulderIO.set_defaults">[docs]</a>    def set_defaults(self):
         &quot;&quot;&quot;
         Set all parameters to their defaults.
 
@@ -386,7 +504,7 @@ _default_param_path = os.path.join(
         for v in self._params.values():
             v.set_default()</div>
 
-<div class="viewcode-block" id="BoulderIO.values"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.BoulderIO.values">[docs]</a>    def values(self) -&gt; Iterator[Any]:
+<div class="viewcode-block" id="BoulderIO.values"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.BoulderIO.values">[docs]</a>    def values(self) -&gt; Iterator[Any]:
         &quot;&quot;&quot;
         Iterator for parameter values.
 
@@ -395,7 +513,7 @@ _default_param_path = os.path.join(
         for v in self._params.values():
             yield v.value</div>
 
-<div class="viewcode-block" id="BoulderIO.items"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.BoulderIO.items">[docs]</a>    def items(self):
+<div class="viewcode-block" id="BoulderIO.items"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.BoulderIO.items">[docs]</a>    def items(self):
         for k, v in self._params.items():
             yield k, v.value</div>
 
@@ -405,7 +523,7 @@ _default_param_path = os.path.join(
             copied._params[k] = v.copy()
         return copied
 
-<div class="viewcode-block" id="BoulderIO._clean_dictionary"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.BoulderIO._clean_dictionary">[docs]</a>    @staticmethod
+<div class="viewcode-block" id="BoulderIO._clean_dictionary"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.BoulderIO._clean_dictionary">[docs]</a>    @staticmethod
     def _clean_dictionary(params: dict) -&gt; dict:
         &quot;&quot;&quot;Removes empty lists and empty strings from params.
 
@@ -456,11 +574,11 @@ _default_param_path = os.path.join(
         return str(self._params)</div>
 
 
-<div class="viewcode-block" id="ParamParser"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.ParamParser">[docs]</a>class ParamParser:
+<div class="viewcode-block" id="ParamParser"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.ParamParser">[docs]</a>class ParamParser:
     &quot;&quot;&quot;Reads the Primer3 documentation and creates the appropriate
     parameters.&quot;&quot;&quot;
 
-<div class="viewcode-block" id="ParamParser._parse_primer3_docs"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.ParamParser._parse_primer3_docs">[docs]</a>    @staticmethod
+<div class="viewcode-block" id="ParamParser._parse_primer3_docs"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.ParamParser._parse_primer3_docs">[docs]</a>    @staticmethod
     def _parse_primer3_docs(docstr):
         &quot;&quot;&quot;Parse the docs of the primer3 website
         (https://htmlpreview.github.io.
@@ -562,7 +680,7 @@ _default_param_path = os.path.join(
 
         return params
 
-<div class="viewcode-block" id="ParamParser.open"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.ParamParser.open">[docs]</a>    @classmethod
+<div class="viewcode-block" id="ParamParser.open"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.ParamParser.open">[docs]</a>    @classmethod
     def open(cls, filepath=None) -&gt; BoulderIO:
         &quot;&quot;&quot;
         Open the parameters from the filepath.
@@ -573,7 +691,7 @@ _default_param_path = os.path.join(
         return cls._open_primer3_params(filepath)</div></div>
 
 
-<div class="viewcode-block" id="_load_default_boulderio"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus._load_default_boulderio">[docs]</a>def _load_default_boulderio() -&gt; BoulderIO:
+<div class="viewcode-block" id="_load_default_boulderio"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design._load_default_boulderio">[docs]</a>def _load_default_boulderio() -&gt; BoulderIO:
     &quot;&quot;&quot;
     Open the default parameters as a :class:`BoulderIO &lt;primer3plus.params.params&gt;`
 
@@ -588,70 +706,43 @@ _default_param_path = os.path.join(
 default_boulderio = _load_default_boulderio()  #: default boulder IO parameters
 </pre></div>
 
+           </div>
+           
           </div>
-          
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="../../index.html">primer3plus</a></h1>
+          <footer>
+  
 
+  <hr/>
 
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017-2019, University of Washington
 
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-
-
-
-
-<h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developer/api_reference.html">API Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developer/changelog.html">primer3plus change log</a></li>
-</ul>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="../../index.html">Documentation overview</a><ul>
-  <li><a href="../index.html">Module code</a><ul>
-  </ul></li>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-
-
-
-
-
-
-
+</footer>
 
         </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2017-2019, University of Washington.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-    </div>
 
-    
+    </section>
 
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
     
-  </body>
+   
+
+</body>
 </html>

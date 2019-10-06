@@ -244,4 +244,6 @@ class TestOverOrigin:
     def test_included_over_origin(self, gfp):
 
         design = Design()
-        design.presets.template
+        design.presets.template(gfp)
+        design.presets.included((len(gfp) - 100, 110))
+        design.run()

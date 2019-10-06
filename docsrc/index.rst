@@ -1,12 +1,9 @@
-.. DASi documentation master file, created by
-   sphinx-quickstart on Sun Nov 19 22:18:51 2017.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+:github_url: |homepage|
+
 
 Primer3Plus
 ===========
-
-Release v\ |version|. (:doc:`Changelog <developer/changelog>`)
+v\ |version|. (:doc:`Changelog <developer/changelog>`)
 
 Github: |homepage|
 
@@ -28,21 +25,18 @@ Python primer3 wrapper https://pypi.org/project/primer3-py/.
    design.presets.left_sequence("AGCGTCGTGTATGGTAGTG")
    design.run_and_optimize(5)
 
-**Examples**
+For more info, take a look at the :ref:`API Docs <api>`
 
-:doc:`Usage Docs <usage>`
+For a list of design parameters available, take a look at the
+:ref:`BoulderIO Parameters <api_default_parameters>`
+
+For more examples, see the :doc:`Usage Docs <usage>` and some of the following:
 
 - :ref:`Cloning primers <cloning_primers>`
 - :ref:`Setting primer sequences <setting_primers>`
 - :ref:`Handling primers with overhangs <handle_overhangs>`
 - :ref:`Handling long sequences <handle_long_sequences>`
 - :ref:`Auto-relaxation of design params <autorelax>`
-
-
-For more info, take a look at the :ref:`API Docs <api>`
-
-For a list of parameters available, take a look at the
-:ref:`BoulderIO Parameters <api_default_parameters>`
 
 Getting started
 ---------------

@@ -1,176 +1,176 @@
-,name,type,value,default
-0,SEQUENCE_ID,<class 'str'>,,
-1,SEQUENCE_TEMPLATE,<class 'str'>,,
-2,SEQUENCE_INCLUDED_REGION,<class 'list'>,[],[]
-3,SEQUENCE_TARGET,<class 'list'>,[],[]
-4,SEQUENCE_EXCLUDED_REGION,<class 'list'>,[],[]
-5,SEQUENCE_PRIMER_PAIR_OK_REGION_LIST,<class 'list'>,[],[]
-6,SEQUENCE_OVERLAP_JUNCTION_LIST,<class 'list'>,[],[]
-7,SEQUENCE_INTERNAL_EXCLUDED_REGION,<class 'list'>,[],[]
-8,SEQUENCE_PRIMER,<class 'str'>,,
-9,SEQUENCE_INTERNAL_OLIGO,<class 'str'>,,
-10,SEQUENCE_PRIMER_REVCOMP,<class 'str'>,,
-11,SEQUENCE_START_CODON_POSITION,<class 'int'>,-2000000,-2000000
-12,SEQUENCE_QUALITY,<class 'list'>,[],[]
-13,SEQUENCE_FORCE_LEFT_START,<class 'int'>,-1000000,-1000000
-14,SEQUENCE_FORCE_LEFT_END,<class 'int'>,-1000000,-1000000
-15,SEQUENCE_FORCE_RIGHT_START,<class 'int'>,-1000000,-1000000
-16,SEQUENCE_FORCE_RIGHT_END,<class 'int'>,-1000000,-1000000
-17,PRIMER_TASK,<class 'str'>,generic,generic
-18,PRIMER_PICK_LEFT_PRIMER,<class 'bool'>,True,True
-19,PRIMER_PICK_INTERNAL_OLIGO,<class 'bool'>,False,False
-20,PRIMER_PICK_RIGHT_PRIMER,<class 'bool'>,True,True
-21,PRIMER_NUM_RETURN,<class 'int'>,5,5
-22,PRIMER_MIN_3_PRIME_OVERLAP_OF_JUNCTION,<class 'int'>,4,4
-23,PRIMER_MIN_5_PRIME_OVERLAP_OF_JUNCTION,<class 'int'>,7,7
-24,PRIMER_MUST_MATCH_FIVE_PRIME,<class 'str'>,,
-25,PRIMER_INTERNAL_MUST_MATCH_FIVE_PRIME,<class 'str'>,,
-26,PRIMER_MUST_MATCH_THREE_PRIME,<class 'str'>,,
-27,PRIMER_INTERNAL_MUST_MATCH_THREE_PRIME,<class 'str'>,,
-28,PRIMER_PRODUCT_SIZE_RANGE,<class 'list'>,"[100, 300]","[100, 300]"
-29,PRIMER_PRODUCT_OPT_SIZE,<class 'int'>,0,0
-30,PRIMER_PAIR_WT_PRODUCT_SIZE_LT,<class 'float'>,0.0,0.0
-31,PRIMER_PAIR_WT_PRODUCT_SIZE_GT,<class 'float'>,0.0,0.0
-32,PRIMER_MIN_SIZE,<class 'int'>,18,18
-33,PRIMER_INTERNAL_MIN_SIZE,<class 'int'>,18,18
-34,PRIMER_OPT_SIZE,<class 'int'>,20,20
-35,PRIMER_INTERNAL_OPT_SIZE,<class 'int'>,20,20
-36,PRIMER_MAX_SIZE,<class 'int'>,27,27
-37,PRIMER_INTERNAL_MAX_SIZE,<class 'int'>,27,27
-38,PRIMER_WT_SIZE_LT,<class 'float'>,1.0,1.0
-39,PRIMER_INTERNAL_WT_SIZE_LT,<class 'float'>,1.0,1.0
-40,PRIMER_WT_SIZE_GT,<class 'float'>,1.0,1.0
-41,PRIMER_INTERNAL_WT_SIZE_GT,<class 'float'>,1.0,1.0
-42,PRIMER_MIN_GC,<class 'float'>,20.0,20.0
-43,PRIMER_INTERNAL_MIN_GC,<class 'float'>,20.0,20.0
-44,PRIMER_OPT_GC_PERCENT,<class 'float'>,50.0,50.0
-45,PRIMER_INTERNAL_OPT_GC_PERCENT,<class 'float'>,50.0,50.0
-46,PRIMER_MAX_GC,<class 'float'>,80.0,80.0
-47,PRIMER_INTERNAL_MAX_GC,<class 'float'>,80.0,80.0
-48,PRIMER_WT_GC_PERCENT_LT,<class 'float'>,0.0,0.0
-49,PRIMER_INTERNAL_WT_GC_PERCENT_LT,<class 'float'>,0.0,0.0
-50,PRIMER_WT_GC_PERCENT_GT,<class 'float'>,0.0,0.0
-51,PRIMER_INTERNAL_WT_GC_PERCENT_GT,<class 'float'>,0.0,0.0
-52,PRIMER_GC_CLAMP,<class 'int'>,0,0
-53,PRIMER_MAX_END_GC,<class 'int'>,5,5
-54,PRIMER_MIN_TM,<class 'float'>,57.0,57.0
-55,PRIMER_INTERNAL_MIN_TM,<class 'float'>,57.0,57.0
-56,PRIMER_OPT_TM,<class 'float'>,60.0,60.0
-57,PRIMER_INTERNAL_OPT_TM,<class 'float'>,60.0,60.0
-58,PRIMER_MAX_TM,<class 'float'>,63.0,63.0
-59,PRIMER_INTERNAL_MAX_TM,<class 'float'>,63.0,63.0
-60,PRIMER_PAIR_MAX_DIFF_TM,<class 'float'>,100.0,100.0
-61,PRIMER_WT_TM_LT,<class 'float'>,1.0,1.0
-62,PRIMER_INTERNAL_WT_TM_LT,<class 'float'>,1.0,1.0
-63,PRIMER_WT_TM_GT,<class 'float'>,1.0,1.0
-64,PRIMER_INTERNAL_WT_TM_GT,<class 'float'>,1.0,1.0
-65,PRIMER_PAIR_WT_DIFF_TM,<class 'float'>,0.0,0.0
-66,PRIMER_PRODUCT_MIN_TM,<class 'float'>,-1000000.0,-1000000.0
-67,PRIMER_PRODUCT_OPT_TM,<class 'float'>,0.0,0.0
-68,PRIMER_PRODUCT_MAX_TM,<class 'float'>,1000000.0,1000000.0
-69,PRIMER_PAIR_WT_PRODUCT_TM_LT,<class 'float'>,0.0,0.0
-70,PRIMER_PAIR_WT_PRODUCT_TM_GT,<class 'float'>,0.0,0.0
-71,PRIMER_TM_FORMULA,<class 'int'>,1,1
-72,PRIMER_SALT_MONOVALENT,<class 'float'>,50.0,50.0
-73,PRIMER_INTERNAL_SALT_MONOVALENT,<class 'float'>,50.0,50.0
-74,PRIMER_SALT_DIVALENT,<class 'float'>,1.5,1.5
-75,PRIMER_INTERNAL_SALT_DIVALENT,<class 'float'>,0.0,0.0
-76,PRIMER_DNTP_CONC,<class 'float'>,0.6,0.6
-77,PRIMER_INTERNAL_DNTP_CONC,<class 'float'>,0.0,0.0
-78,PRIMER_SALT_CORRECTIONS,<class 'int'>,1,1
-79,PRIMER_DNA_CONC,<class 'float'>,50.0,50.0
-80,PRIMER_INTERNAL_DNA_CONC,<class 'float'>,50.0,50.0
-81,PRIMER_THERMODYNAMIC_OLIGO_ALIGNMENT,<class 'bool'>,True,True
-82,PRIMER_THERMODYNAMIC_TEMPLATE_ALIGNMENT,<class 'bool'>,False,False
-83,PRIMER_SECONDARY_STRUCTURE_ALIGNMENT,<class 'bool'>,False,False
-84,PRIMER_THERMODYNAMIC_PARAMETERS_PATH,<class 'str'>,./primer3_config,./primer3_config
-85,PRIMER_MAX_SELF_ANY,<class 'float'>,8.0,8.0
-86,PRIMER_MAX_SELF_ANY_TH,<class 'float'>,47.0,47.0
-87,PRIMER_INTERNAL_MAX_SELF_ANY,<class 'float'>,12.0,12.0
-88,PRIMER_INTERNAL_MAX_SELF_ANY_TH,<class 'float'>,47.0,47.0
-89,PRIMER_PAIR_MAX_COMPL_ANY,<class 'float'>,8.0,8.0
-90,PRIMER_PAIR_MAX_COMPL_ANY_TH,<class 'float'>,47.0,47.0
-91,PRIMER_WT_SELF_ANY,<class 'float'>,0.0,0.0
-92,PRIMER_WT_SELF_ANY_TH,<class 'float'>,0.0,0.0
-93,PRIMER_INTERNAL_WT_SELF_ANY,<class 'float'>,0.0,0.0
-94,PRIMER_INTERNAL_WT_SELF_ANY_TH,<class 'float'>,0.0,0.0
-95,PRIMER_PAIR_WT_COMPL_ANY,<class 'float'>,0.0,0.0
-96,PRIMER_PAIR_WT_COMPL_ANY_TH,<class 'float'>,0.0,0.0
-97,PRIMER_MAX_SELF_END,<class 'float'>,3.0,3.0
-98,PRIMER_MAX_SELF_END_TH,<class 'float'>,47.0,47.0
-99,PRIMER_INTERNAL_MAX_SELF_END,<class 'float'>,12.0,12.0
-100,PRIMER_INTERNAL_MAX_SELF_END_TH,<class 'float'>,47.0,47.0
-101,PRIMER_PAIR_MAX_COMPL_END,<class 'float'>,3.0,3.0
-102,PRIMER_PAIR_MAX_COMPL_END_TH,<class 'float'>,47.0,47.0
-103,PRIMER_WT_SELF_END,<class 'float'>,0.0,0.0
-104,PRIMER_WT_SELF_END_TH,<class 'float'>,0.0,0.0
-105,PRIMER_INTERNAL_WT_SELF_END,<class 'float'>,0.0,0.0
-106,PRIMER_INTERNAL_WT_SELF_END_TH,<class 'float'>,0.0,0.0
-107,PRIMER_PAIR_WT_COMPL_END,<class 'float'>,0.0,0.0
-108,PRIMER_PAIR_WT_COMPL_END_TH,<class 'float'>,0.0,0.0
-109,PRIMER_MAX_HAIRPIN_TH,<class 'float'>,47.0,47.0
-110,PRIMER_INTERNAL_MAX_HAIRPIN_TH,<class 'float'>,47.0,47.0
-111,PRIMER_WT_HAIRPIN_TH,<class 'float'>,0.0,0.0
-112,PRIMER_INTERNAL_WT_HAIRPIN_TH,<class 'float'>,0.0,0.0
-113,PRIMER_MAX_END_STABILITY,<class 'float'>,100.0,100.0
-114,PRIMER_WT_END_STABILITY,<class 'float'>,0.0,0.0
-115,PRIMER_MAX_NS_ACCEPTED,<class 'int'>,0,0
-116,PRIMER_INTERNAL_MAX_NS_ACCEPTED,<class 'int'>,0,0
-117,PRIMER_WT_NUM_NS,<class 'float'>,0.0,0.0
-118,PRIMER_INTERNAL_WT_NUM_NS,<class 'float'>,0.0,0.0
-119,PRIMER_MAX_POLY_X,<class 'int'>,5,5
-120,PRIMER_INTERNAL_MAX_POLY_X,<class 'int'>,5,5
-121,PRIMER_MIN_LEFT_THREE_PRIME_DISTANCE,<class 'int'>,-1,-1
-122,PRIMER_MIN_RIGHT_THREE_PRIME_DISTANCE,<class 'int'>,-1,-1
-123,PRIMER_MIN_THREE_PRIME_DISTANCE,<class 'int'>,-1,-1
-124,PRIMER_PICK_ANYWAY,<class 'bool'>,False,False
-125,PRIMER_LOWERCASE_MASKING,<class 'int'>,0,0
-126,PRIMER_EXPLAIN_FLAG,<class 'bool'>,True,False
-127,PRIMER_LIBERAL_BASE,<class 'bool'>,False,False
-128,PRIMER_FIRST_BASE_INDEX,<class 'int'>,0,0
-129,PRIMER_MAX_TEMPLATE_MISPRIMING,<class 'float'>,-1.0,-1.0
-130,PRIMER_MAX_TEMPLATE_MISPRIMING_TH,<class 'float'>,-1.0,-1.0
-131,PRIMER_PAIR_MAX_TEMPLATE_MISPRIMING,<class 'float'>,-1.0,-1.0
-132,PRIMER_PAIR_MAX_TEMPLATE_MISPRIMING_TH,<class 'float'>,-1.0,-1.0
-133,PRIMER_WT_TEMPLATE_MISPRIMING,<class 'float'>,0.0,0.0
-134,PRIMER_WT_TEMPLATE_MISPRIMING_TH,<class 'float'>,0.0,0.0
-135,PRIMER_PAIR_WT_TEMPLATE_MISPRIMING,<class 'float'>,0.0,0.0
-136,PRIMER_PAIR_WT_TEMPLATE_MISPRIMING_TH,<class 'float'>,0.0,0.0
-137,PRIMER_MISPRIMING_LIBRARY,<class 'str'>,,
-138,PRIMER_INTERNAL_MISHYB_LIBRARY,<class 'str'>,,
-139,PRIMER_LIB_AMBIGUITY_CODES_CONSENSUS,<class 'bool'>,False,False
-140,PRIMER_MAX_LIBRARY_MISPRIMING,<class 'float'>,12.0,12.0
-141,PRIMER_INTERNAL_MAX_LIBRARY_MISHYB,<class 'float'>,12.0,12.0
-142,PRIMER_PAIR_MAX_LIBRARY_MISPRIMING,<class 'float'>,24.0,24.0
-143,PRIMER_WT_LIBRARY_MISPRIMING,<class 'float'>,0.0,0.0
-144,PRIMER_INTERNAL_WT_LIBRARY_MISHYB,<class 'float'>,0.0,0.0
-145,PRIMER_PAIR_WT_LIBRARY_MISPRIMING,<class 'float'>,0.0,0.0
-146,PRIMER_MASK_TEMPLATE,<class 'bool'>,False,False
-147,PRIMER_MASK_FAILURE_RATE,<class 'float'>,0.1,0.1
-148,PRIMER_WT_MASK_FAILURE_RATE,<class 'float'>,0.0,0.0
-149,PRIMER_MASK_5P_DIRECTION,<class 'int'>,1,1
-150,PRIMER_MASK_3P_DIRECTION,<class 'int'>,0,0
-151,PRIMER_MASK_KMERLIST_PATH,<class 'str'>,../kmer_lists/,../kmer_lists/
-152,PRIMER_MASK_KMERLIST_PREFIX,<class 'str'>,homo_sapiens,homo_sapiens
-153,PRIMER_MIN_QUALITY,<class 'int'>,0,0
-154,PRIMER_INTERNAL_MIN_QUALITY,<class 'int'>,0,0
-155,PRIMER_MIN_END_QUALITY,<class 'int'>,0,0
-156,PRIMER_QUALITY_RANGE_MIN,<class 'int'>,0,0
-157,PRIMER_QUALITY_RANGE_MAX,<class 'int'>,100,100
-158,PRIMER_WT_SEQ_QUAL,<class 'float'>,0.0,0.0
-159,PRIMER_INTERNAL_WT_SEQ_QUAL,<class 'float'>,0.0,0.0
-160,PRIMER_PAIR_WT_PR_PENALTY,<class 'float'>,1.0,1.0
-161,PRIMER_PAIR_WT_IO_PENALTY,<class 'float'>,0.0,0.0
-162,PRIMER_INSIDE_PENALTY,<class 'float'>,-1.0,-1.0
-163,PRIMER_OUTSIDE_PENALTY,<class 'float'>,0.0,0.0
-164,PRIMER_WT_POS_PENALTY,<class 'float'>,1.0,1.0
-165,PRIMER_SEQUENCING_LEAD,<class 'int'>,50,50
-166,PRIMER_SEQUENCING_SPACING,<class 'int'>,500,500
-167,PRIMER_SEQUENCING_INTERVAL,<class 'int'>,250,250
-168,PRIMER_SEQUENCING_ACCURACY,<class 'int'>,20,20
-169,PRIMER_WT_END_QUAL,<class 'float'>,0.0,0.0
-170,PRIMER_INTERNAL_WT_END_QUAL,<class 'float'>,0.0,0.0
-171,SEQUENCE_PRIMER_OVERHANG,<class 'str'>,,
-172,SEQUENCE_PRIMER_REVCOMP_OVERHANG,<class 'str'>,,
-173,PRIMER_USE_OVERHANGS,<class 'bool'>,False,False
-174,PRIMER_LONG_OK,<class 'bool'>,False,False
+name,type,value
+`SEQUENCE_ID <http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_ID>`_,<class 'str'>,
+`SEQUENCE_TEMPLATE <http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_TEMPLATE>`_,<class 'str'>,
+`SEQUENCE_INCLUDED_REGION <http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_INCLUDED_REGION>`_,<class 'list'>,[]
+`SEQUENCE_TARGET <http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_TARGET>`_,<class 'list'>,[]
+`SEQUENCE_EXCLUDED_REGION <http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_EXCLUDED_REGION>`_,<class 'list'>,[]
+`SEQUENCE_PRIMER_PAIR_OK_REGION_LIST <http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_PRIMER_PAIR_OK_REGION_LIST>`_,<class 'list'>,[]
+`SEQUENCE_OVERLAP_JUNCTION_LIST <http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_OVERLAP_JUNCTION_LIST>`_,<class 'list'>,[]
+`SEQUENCE_INTERNAL_EXCLUDED_REGION <http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_INTERNAL_EXCLUDED_REGION>`_,<class 'list'>,[]
+`SEQUENCE_PRIMER <http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_PRIMER>`_,<class 'str'>,
+`SEQUENCE_INTERNAL_OLIGO <http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_INTERNAL_OLIGO>`_,<class 'str'>,
+`SEQUENCE_PRIMER_REVCOMP <http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_PRIMER_REVCOMP>`_,<class 'str'>,
+`SEQUENCE_START_CODON_POSITION <http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_START_CODON_POSITION>`_,<class 'int'>,-2000000
+`SEQUENCE_QUALITY <http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_QUALITY>`_,<class 'list'>,[]
+`SEQUENCE_FORCE_LEFT_START <http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_FORCE_LEFT_START>`_,<class 'int'>,-1000000
+`SEQUENCE_FORCE_LEFT_END <http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_FORCE_LEFT_END>`_,<class 'int'>,-1000000
+`SEQUENCE_FORCE_RIGHT_START <http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_FORCE_RIGHT_START>`_,<class 'int'>,-1000000
+`SEQUENCE_FORCE_RIGHT_END <http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_FORCE_RIGHT_END>`_,<class 'int'>,-1000000
+`PRIMER_TASK <http://primer3.ut.ee/primer3web_help.htm#PRIMER_TASK>`_,<class 'str'>,generic
+`PRIMER_PICK_LEFT_PRIMER <http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_LEFT_PRIMER>`_,<class 'bool'>,True
+`PRIMER_PICK_INTERNAL_OLIGO <http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_INTERNAL_OLIGO>`_,<class 'bool'>,False
+`PRIMER_PICK_RIGHT_PRIMER <http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_RIGHT_PRIMER>`_,<class 'bool'>,True
+`PRIMER_NUM_RETURN <http://primer3.ut.ee/primer3web_help.htm#PRIMER_NUM_RETURN>`_,<class 'int'>,5
+`PRIMER_MIN_3_PRIME_OVERLAP_OF_JUNCTION <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MIN_3_PRIME_OVERLAP_OF_JUNCTION>`_,<class 'int'>,4
+`PRIMER_MIN_5_PRIME_OVERLAP_OF_JUNCTION <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MIN_5_PRIME_OVERLAP_OF_JUNCTION>`_,<class 'int'>,7
+`PRIMER_MUST_MATCH_FIVE_PRIME <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MUST_MATCH_FIVE_PRIME>`_,<class 'str'>,
+`PRIMER_INTERNAL_MUST_MATCH_FIVE_PRIME <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_MUST_MATCH_FIVE_PRIME>`_,<class 'str'>,
+`PRIMER_MUST_MATCH_THREE_PRIME <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MUST_MATCH_THREE_PRIME>`_,<class 'str'>,
+`PRIMER_INTERNAL_MUST_MATCH_THREE_PRIME <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_MUST_MATCH_THREE_PRIME>`_,<class 'str'>,
+`PRIMER_PRODUCT_SIZE_RANGE <http://primer3.ut.ee/primer3web_help.htm#PRIMER_PRODUCT_SIZE_RANGE>`_,<class 'list'>,"[100, 300]"
+`PRIMER_PRODUCT_OPT_SIZE <http://primer3.ut.ee/primer3web_help.htm#PRIMER_PRODUCT_OPT_SIZE>`_,<class 'int'>,0
+`PRIMER_PAIR_WT_PRODUCT_SIZE_LT <http://primer3.ut.ee/primer3web_help.htm#PRIMER_PAIR_WT_PRODUCT_SIZE_LT>`_,<class 'float'>,0.0
+`PRIMER_PAIR_WT_PRODUCT_SIZE_GT <http://primer3.ut.ee/primer3web_help.htm#PRIMER_PAIR_WT_PRODUCT_SIZE_GT>`_,<class 'float'>,0.0
+`PRIMER_MIN_SIZE <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MIN_SIZE>`_,<class 'int'>,18
+`PRIMER_INTERNAL_MIN_SIZE <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_MIN_SIZE>`_,<class 'int'>,18
+`PRIMER_OPT_SIZE <http://primer3.ut.ee/primer3web_help.htm#PRIMER_OPT_SIZE>`_,<class 'int'>,20
+`PRIMER_INTERNAL_OPT_SIZE <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_OPT_SIZE>`_,<class 'int'>,20
+`PRIMER_MAX_SIZE <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MAX_SIZE>`_,<class 'int'>,27
+`PRIMER_INTERNAL_MAX_SIZE <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_MAX_SIZE>`_,<class 'int'>,27
+`PRIMER_WT_SIZE_LT <http://primer3.ut.ee/primer3web_help.htm#PRIMER_WT_SIZE_LT>`_,<class 'float'>,1.0
+`PRIMER_INTERNAL_WT_SIZE_LT <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_WT_SIZE_LT>`_,<class 'float'>,1.0
+`PRIMER_WT_SIZE_GT <http://primer3.ut.ee/primer3web_help.htm#PRIMER_WT_SIZE_GT>`_,<class 'float'>,1.0
+`PRIMER_INTERNAL_WT_SIZE_GT <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_WT_SIZE_GT>`_,<class 'float'>,1.0
+`PRIMER_MIN_GC <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MIN_GC>`_,<class 'float'>,20.0
+`PRIMER_INTERNAL_MIN_GC <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_MIN_GC>`_,<class 'float'>,20.0
+`PRIMER_OPT_GC_PERCENT <http://primer3.ut.ee/primer3web_help.htm#PRIMER_OPT_GC_PERCENT>`_,<class 'float'>,50.0
+`PRIMER_INTERNAL_OPT_GC_PERCENT <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_OPT_GC_PERCENT>`_,<class 'float'>,50.0
+`PRIMER_MAX_GC <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MAX_GC>`_,<class 'float'>,80.0
+`PRIMER_INTERNAL_MAX_GC <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_MAX_GC>`_,<class 'float'>,80.0
+`PRIMER_WT_GC_PERCENT_LT <http://primer3.ut.ee/primer3web_help.htm#PRIMER_WT_GC_PERCENT_LT>`_,<class 'float'>,0.0
+`PRIMER_INTERNAL_WT_GC_PERCENT_LT <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_WT_GC_PERCENT_LT>`_,<class 'float'>,0.0
+`PRIMER_WT_GC_PERCENT_GT <http://primer3.ut.ee/primer3web_help.htm#PRIMER_WT_GC_PERCENT_GT>`_,<class 'float'>,0.0
+`PRIMER_INTERNAL_WT_GC_PERCENT_GT <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_WT_GC_PERCENT_GT>`_,<class 'float'>,0.0
+`PRIMER_GC_CLAMP <http://primer3.ut.ee/primer3web_help.htm#PRIMER_GC_CLAMP>`_,<class 'int'>,0
+`PRIMER_MAX_END_GC <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MAX_END_GC>`_,<class 'int'>,5
+`PRIMER_MIN_TM <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MIN_TM>`_,<class 'float'>,57.0
+`PRIMER_INTERNAL_MIN_TM <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_MIN_TM>`_,<class 'float'>,57.0
+`PRIMER_OPT_TM <http://primer3.ut.ee/primer3web_help.htm#PRIMER_OPT_TM>`_,<class 'float'>,60.0
+`PRIMER_INTERNAL_OPT_TM <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_OPT_TM>`_,<class 'float'>,60.0
+`PRIMER_MAX_TM <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MAX_TM>`_,<class 'float'>,63.0
+`PRIMER_INTERNAL_MAX_TM <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_MAX_TM>`_,<class 'float'>,63.0
+`PRIMER_PAIR_MAX_DIFF_TM <http://primer3.ut.ee/primer3web_help.htm#PRIMER_PAIR_MAX_DIFF_TM>`_,<class 'float'>,100.0
+`PRIMER_WT_TM_LT <http://primer3.ut.ee/primer3web_help.htm#PRIMER_WT_TM_LT>`_,<class 'float'>,1.0
+`PRIMER_INTERNAL_WT_TM_LT <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_WT_TM_LT>`_,<class 'float'>,1.0
+`PRIMER_WT_TM_GT <http://primer3.ut.ee/primer3web_help.htm#PRIMER_WT_TM_GT>`_,<class 'float'>,1.0
+`PRIMER_INTERNAL_WT_TM_GT <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_WT_TM_GT>`_,<class 'float'>,1.0
+`PRIMER_PAIR_WT_DIFF_TM <http://primer3.ut.ee/primer3web_help.htm#PRIMER_PAIR_WT_DIFF_TM>`_,<class 'float'>,0.0
+`PRIMER_PRODUCT_MIN_TM <http://primer3.ut.ee/primer3web_help.htm#PRIMER_PRODUCT_MIN_TM>`_,<class 'float'>,-1000000.0
+`PRIMER_PRODUCT_OPT_TM <http://primer3.ut.ee/primer3web_help.htm#PRIMER_PRODUCT_OPT_TM>`_,<class 'float'>,0.0
+`PRIMER_PRODUCT_MAX_TM <http://primer3.ut.ee/primer3web_help.htm#PRIMER_PRODUCT_MAX_TM>`_,<class 'float'>,1000000.0
+`PRIMER_PAIR_WT_PRODUCT_TM_LT <http://primer3.ut.ee/primer3web_help.htm#PRIMER_PAIR_WT_PRODUCT_TM_LT>`_,<class 'float'>,0.0
+`PRIMER_PAIR_WT_PRODUCT_TM_GT <http://primer3.ut.ee/primer3web_help.htm#PRIMER_PAIR_WT_PRODUCT_TM_GT>`_,<class 'float'>,0.0
+`PRIMER_TM_FORMULA <http://primer3.ut.ee/primer3web_help.htm#PRIMER_TM_FORMULA>`_,<class 'int'>,1
+`PRIMER_SALT_MONOVALENT <http://primer3.ut.ee/primer3web_help.htm#PRIMER_SALT_MONOVALENT>`_,<class 'float'>,50.0
+`PRIMER_INTERNAL_SALT_MONOVALENT <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_SALT_MONOVALENT>`_,<class 'float'>,50.0
+`PRIMER_SALT_DIVALENT <http://primer3.ut.ee/primer3web_help.htm#PRIMER_SALT_DIVALENT>`_,<class 'float'>,1.5
+`PRIMER_INTERNAL_SALT_DIVALENT <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_SALT_DIVALENT>`_,<class 'float'>,0.0
+`PRIMER_DNTP_CONC <http://primer3.ut.ee/primer3web_help.htm#PRIMER_DNTP_CONC>`_,<class 'float'>,0.6
+`PRIMER_INTERNAL_DNTP_CONC <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_DNTP_CONC>`_,<class 'float'>,0.0
+`PRIMER_SALT_CORRECTIONS <http://primer3.ut.ee/primer3web_help.htm#PRIMER_SALT_CORRECTIONS>`_,<class 'int'>,1
+`PRIMER_DNA_CONC <http://primer3.ut.ee/primer3web_help.htm#PRIMER_DNA_CONC>`_,<class 'float'>,50.0
+`PRIMER_INTERNAL_DNA_CONC <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_DNA_CONC>`_,<class 'float'>,50.0
+`PRIMER_THERMODYNAMIC_OLIGO_ALIGNMENT <http://primer3.ut.ee/primer3web_help.htm#PRIMER_THERMODYNAMIC_OLIGO_ALIGNMENT>`_,<class 'bool'>,True
+`PRIMER_THERMODYNAMIC_TEMPLATE_ALIGNMENT <http://primer3.ut.ee/primer3web_help.htm#PRIMER_THERMODYNAMIC_TEMPLATE_ALIGNMENT>`_,<class 'bool'>,False
+`PRIMER_SECONDARY_STRUCTURE_ALIGNMENT <http://primer3.ut.ee/primer3web_help.htm#PRIMER_SECONDARY_STRUCTURE_ALIGNMENT>`_,<class 'bool'>,False
+`PRIMER_THERMODYNAMIC_PARAMETERS_PATH <http://primer3.ut.ee/primer3web_help.htm#PRIMER_THERMODYNAMIC_PARAMETERS_PATH>`_,<class 'str'>,./primer3_config
+`PRIMER_MAX_SELF_ANY <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MAX_SELF_ANY>`_,<class 'float'>,8.0
+`PRIMER_MAX_SELF_ANY_TH <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MAX_SELF_ANY_TH>`_,<class 'float'>,47.0
+`PRIMER_INTERNAL_MAX_SELF_ANY <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_MAX_SELF_ANY>`_,<class 'float'>,12.0
+`PRIMER_INTERNAL_MAX_SELF_ANY_TH <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_MAX_SELF_ANY_TH>`_,<class 'float'>,47.0
+`PRIMER_PAIR_MAX_COMPL_ANY <http://primer3.ut.ee/primer3web_help.htm#PRIMER_PAIR_MAX_COMPL_ANY>`_,<class 'float'>,8.0
+`PRIMER_PAIR_MAX_COMPL_ANY_TH <http://primer3.ut.ee/primer3web_help.htm#PRIMER_PAIR_MAX_COMPL_ANY_TH>`_,<class 'float'>,47.0
+`PRIMER_WT_SELF_ANY <http://primer3.ut.ee/primer3web_help.htm#PRIMER_WT_SELF_ANY>`_,<class 'float'>,0.0
+`PRIMER_WT_SELF_ANY_TH <http://primer3.ut.ee/primer3web_help.htm#PRIMER_WT_SELF_ANY_TH>`_,<class 'float'>,0.0
+`PRIMER_INTERNAL_WT_SELF_ANY <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_WT_SELF_ANY>`_,<class 'float'>,0.0
+`PRIMER_INTERNAL_WT_SELF_ANY_TH <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_WT_SELF_ANY_TH>`_,<class 'float'>,0.0
+`PRIMER_PAIR_WT_COMPL_ANY <http://primer3.ut.ee/primer3web_help.htm#PRIMER_PAIR_WT_COMPL_ANY>`_,<class 'float'>,0.0
+`PRIMER_PAIR_WT_COMPL_ANY_TH <http://primer3.ut.ee/primer3web_help.htm#PRIMER_PAIR_WT_COMPL_ANY_TH>`_,<class 'float'>,0.0
+`PRIMER_MAX_SELF_END <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MAX_SELF_END>`_,<class 'float'>,3.0
+`PRIMER_MAX_SELF_END_TH <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MAX_SELF_END_TH>`_,<class 'float'>,47.0
+`PRIMER_INTERNAL_MAX_SELF_END <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_MAX_SELF_END>`_,<class 'float'>,12.0
+`PRIMER_INTERNAL_MAX_SELF_END_TH <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_MAX_SELF_END_TH>`_,<class 'float'>,47.0
+`PRIMER_PAIR_MAX_COMPL_END <http://primer3.ut.ee/primer3web_help.htm#PRIMER_PAIR_MAX_COMPL_END>`_,<class 'float'>,3.0
+`PRIMER_PAIR_MAX_COMPL_END_TH <http://primer3.ut.ee/primer3web_help.htm#PRIMER_PAIR_MAX_COMPL_END_TH>`_,<class 'float'>,47.0
+`PRIMER_WT_SELF_END <http://primer3.ut.ee/primer3web_help.htm#PRIMER_WT_SELF_END>`_,<class 'float'>,0.0
+`PRIMER_WT_SELF_END_TH <http://primer3.ut.ee/primer3web_help.htm#PRIMER_WT_SELF_END_TH>`_,<class 'float'>,0.0
+`PRIMER_INTERNAL_WT_SELF_END <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_WT_SELF_END>`_,<class 'float'>,0.0
+`PRIMER_INTERNAL_WT_SELF_END_TH <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_WT_SELF_END_TH>`_,<class 'float'>,0.0
+`PRIMER_PAIR_WT_COMPL_END <http://primer3.ut.ee/primer3web_help.htm#PRIMER_PAIR_WT_COMPL_END>`_,<class 'float'>,0.0
+`PRIMER_PAIR_WT_COMPL_END_TH <http://primer3.ut.ee/primer3web_help.htm#PRIMER_PAIR_WT_COMPL_END_TH>`_,<class 'float'>,0.0
+`PRIMER_MAX_HAIRPIN_TH <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MAX_HAIRPIN_TH>`_,<class 'float'>,47.0
+`PRIMER_INTERNAL_MAX_HAIRPIN_TH <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_MAX_HAIRPIN_TH>`_,<class 'float'>,47.0
+`PRIMER_WT_HAIRPIN_TH <http://primer3.ut.ee/primer3web_help.htm#PRIMER_WT_HAIRPIN_TH>`_,<class 'float'>,0.0
+`PRIMER_INTERNAL_WT_HAIRPIN_TH <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_WT_HAIRPIN_TH>`_,<class 'float'>,0.0
+`PRIMER_MAX_END_STABILITY <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MAX_END_STABILITY>`_,<class 'float'>,100.0
+`PRIMER_WT_END_STABILITY <http://primer3.ut.ee/primer3web_help.htm#PRIMER_WT_END_STABILITY>`_,<class 'float'>,0.0
+`PRIMER_MAX_NS_ACCEPTED <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MAX_NS_ACCEPTED>`_,<class 'int'>,0
+`PRIMER_INTERNAL_MAX_NS_ACCEPTED <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_MAX_NS_ACCEPTED>`_,<class 'int'>,0
+`PRIMER_WT_NUM_NS <http://primer3.ut.ee/primer3web_help.htm#PRIMER_WT_NUM_NS>`_,<class 'float'>,0.0
+`PRIMER_INTERNAL_WT_NUM_NS <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_WT_NUM_NS>`_,<class 'float'>,0.0
+`PRIMER_MAX_POLY_X <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MAX_POLY_X>`_,<class 'int'>,5
+`PRIMER_INTERNAL_MAX_POLY_X <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_MAX_POLY_X>`_,<class 'int'>,5
+`PRIMER_MIN_LEFT_THREE_PRIME_DISTANCE <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MIN_LEFT_THREE_PRIME_DISTANCE>`_,<class 'int'>,-1
+`PRIMER_MIN_RIGHT_THREE_PRIME_DISTANCE <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MIN_RIGHT_THREE_PRIME_DISTANCE>`_,<class 'int'>,-1
+`PRIMER_MIN_THREE_PRIME_DISTANCE <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MIN_THREE_PRIME_DISTANCE>`_,<class 'int'>,-1
+`PRIMER_PICK_ANYWAY <http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_ANYWAY>`_,<class 'bool'>,False
+`PRIMER_LOWERCASE_MASKING <http://primer3.ut.ee/primer3web_help.htm#PRIMER_LOWERCASE_MASKING>`_,<class 'int'>,0
+`PRIMER_EXPLAIN_FLAG <http://primer3.ut.ee/primer3web_help.htm#PRIMER_EXPLAIN_FLAG>`_,<class 'bool'>,True
+`PRIMER_LIBERAL_BASE <http://primer3.ut.ee/primer3web_help.htm#PRIMER_LIBERAL_BASE>`_,<class 'bool'>,False
+`PRIMER_FIRST_BASE_INDEX <http://primer3.ut.ee/primer3web_help.htm#PRIMER_FIRST_BASE_INDEX>`_,<class 'int'>,0
+`PRIMER_MAX_TEMPLATE_MISPRIMING <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MAX_TEMPLATE_MISPRIMING>`_,<class 'float'>,-1.0
+`PRIMER_MAX_TEMPLATE_MISPRIMING_TH <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MAX_TEMPLATE_MISPRIMING_TH>`_,<class 'float'>,-1.0
+`PRIMER_PAIR_MAX_TEMPLATE_MISPRIMING <http://primer3.ut.ee/primer3web_help.htm#PRIMER_PAIR_MAX_TEMPLATE_MISPRIMING>`_,<class 'float'>,-1.0
+`PRIMER_PAIR_MAX_TEMPLATE_MISPRIMING_TH <http://primer3.ut.ee/primer3web_help.htm#PRIMER_PAIR_MAX_TEMPLATE_MISPRIMING_TH>`_,<class 'float'>,-1.0
+`PRIMER_WT_TEMPLATE_MISPRIMING <http://primer3.ut.ee/primer3web_help.htm#PRIMER_WT_TEMPLATE_MISPRIMING>`_,<class 'float'>,0.0
+`PRIMER_WT_TEMPLATE_MISPRIMING_TH <http://primer3.ut.ee/primer3web_help.htm#PRIMER_WT_TEMPLATE_MISPRIMING_TH>`_,<class 'float'>,0.0
+`PRIMER_PAIR_WT_TEMPLATE_MISPRIMING <http://primer3.ut.ee/primer3web_help.htm#PRIMER_PAIR_WT_TEMPLATE_MISPRIMING>`_,<class 'float'>,0.0
+`PRIMER_PAIR_WT_TEMPLATE_MISPRIMING_TH <http://primer3.ut.ee/primer3web_help.htm#PRIMER_PAIR_WT_TEMPLATE_MISPRIMING_TH>`_,<class 'float'>,0.0
+`PRIMER_MISPRIMING_LIBRARY <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MISPRIMING_LIBRARY>`_,<class 'str'>,
+`PRIMER_INTERNAL_MISHYB_LIBRARY <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_MISHYB_LIBRARY>`_,<class 'str'>,
+`PRIMER_LIB_AMBIGUITY_CODES_CONSENSUS <http://primer3.ut.ee/primer3web_help.htm#PRIMER_LIB_AMBIGUITY_CODES_CONSENSUS>`_,<class 'bool'>,False
+`PRIMER_MAX_LIBRARY_MISPRIMING <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MAX_LIBRARY_MISPRIMING>`_,<class 'float'>,12.0
+`PRIMER_INTERNAL_MAX_LIBRARY_MISHYB <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_MAX_LIBRARY_MISHYB>`_,<class 'float'>,12.0
+`PRIMER_PAIR_MAX_LIBRARY_MISPRIMING <http://primer3.ut.ee/primer3web_help.htm#PRIMER_PAIR_MAX_LIBRARY_MISPRIMING>`_,<class 'float'>,24.0
+`PRIMER_WT_LIBRARY_MISPRIMING <http://primer3.ut.ee/primer3web_help.htm#PRIMER_WT_LIBRARY_MISPRIMING>`_,<class 'float'>,0.0
+`PRIMER_INTERNAL_WT_LIBRARY_MISHYB <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_WT_LIBRARY_MISHYB>`_,<class 'float'>,0.0
+`PRIMER_PAIR_WT_LIBRARY_MISPRIMING <http://primer3.ut.ee/primer3web_help.htm#PRIMER_PAIR_WT_LIBRARY_MISPRIMING>`_,<class 'float'>,0.0
+`PRIMER_MASK_TEMPLATE <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MASK_TEMPLATE>`_,<class 'bool'>,False
+`PRIMER_MASK_FAILURE_RATE <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MASK_FAILURE_RATE>`_,<class 'float'>,0.1
+`PRIMER_WT_MASK_FAILURE_RATE <http://primer3.ut.ee/primer3web_help.htm#PRIMER_WT_MASK_FAILURE_RATE>`_,<class 'float'>,0.0
+`PRIMER_MASK_5P_DIRECTION <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MASK_5P_DIRECTION>`_,<class 'int'>,1
+`PRIMER_MASK_3P_DIRECTION <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MASK_3P_DIRECTION>`_,<class 'int'>,0
+`PRIMER_MASK_KMERLIST_PATH <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MASK_KMERLIST_PATH>`_,<class 'str'>,../kmer_lists/
+`PRIMER_MASK_KMERLIST_PREFIX <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MASK_KMERLIST_PREFIX>`_,<class 'str'>,homo_sapiens
+`PRIMER_MIN_QUALITY <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MIN_QUALITY>`_,<class 'int'>,0
+`PRIMER_INTERNAL_MIN_QUALITY <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_MIN_QUALITY>`_,<class 'int'>,0
+`PRIMER_MIN_END_QUALITY <http://primer3.ut.ee/primer3web_help.htm#PRIMER_MIN_END_QUALITY>`_,<class 'int'>,0
+`PRIMER_QUALITY_RANGE_MIN <http://primer3.ut.ee/primer3web_help.htm#PRIMER_QUALITY_RANGE_MIN>`_,<class 'int'>,0
+`PRIMER_QUALITY_RANGE_MAX <http://primer3.ut.ee/primer3web_help.htm#PRIMER_QUALITY_RANGE_MAX>`_,<class 'int'>,100
+`PRIMER_WT_SEQ_QUAL <http://primer3.ut.ee/primer3web_help.htm#PRIMER_WT_SEQ_QUAL>`_,<class 'float'>,0.0
+`PRIMER_INTERNAL_WT_SEQ_QUAL <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_WT_SEQ_QUAL>`_,<class 'float'>,0.0
+`PRIMER_PAIR_WT_PR_PENALTY <http://primer3.ut.ee/primer3web_help.htm#PRIMER_PAIR_WT_PR_PENALTY>`_,<class 'float'>,1.0
+`PRIMER_PAIR_WT_IO_PENALTY <http://primer3.ut.ee/primer3web_help.htm#PRIMER_PAIR_WT_IO_PENALTY>`_,<class 'float'>,0.0
+`PRIMER_INSIDE_PENALTY <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INSIDE_PENALTY>`_,<class 'float'>,-1.0
+`PRIMER_OUTSIDE_PENALTY <http://primer3.ut.ee/primer3web_help.htm#PRIMER_OUTSIDE_PENALTY>`_,<class 'float'>,0.0
+`PRIMER_WT_POS_PENALTY <http://primer3.ut.ee/primer3web_help.htm#PRIMER_WT_POS_PENALTY>`_,<class 'float'>,1.0
+`PRIMER_SEQUENCING_LEAD <http://primer3.ut.ee/primer3web_help.htm#PRIMER_SEQUENCING_LEAD>`_,<class 'int'>,50
+`PRIMER_SEQUENCING_SPACING <http://primer3.ut.ee/primer3web_help.htm#PRIMER_SEQUENCING_SPACING>`_,<class 'int'>,500
+`PRIMER_SEQUENCING_INTERVAL <http://primer3.ut.ee/primer3web_help.htm#PRIMER_SEQUENCING_INTERVAL>`_,<class 'int'>,250
+`PRIMER_SEQUENCING_ACCURACY <http://primer3.ut.ee/primer3web_help.htm#PRIMER_SEQUENCING_ACCURACY>`_,<class 'int'>,20
+`PRIMER_WT_END_QUAL <http://primer3.ut.ee/primer3web_help.htm#PRIMER_WT_END_QUAL>`_,<class 'float'>,0.0
+`PRIMER_INTERNAL_WT_END_QUAL <http://primer3.ut.ee/primer3web_help.htm#PRIMER_INTERNAL_WT_END_QUAL>`_,<class 'float'>,0.0
+:attr:`SEQUENCE_PRIMER_OVERHANG <primer3plus.params.ExtraTypes.SEQUENCE_PRIMER_OVERHANG>`,<class 'str'>,
+:attr:`SEQUENCE_PRIMER_REVCOMP_OVERHANG <primer3plus.params.ExtraTypes.SEQUENCE_PRIMER_REVCOMP_OVERHANG>`,<class 'str'>,
+:attr:`PRIMER_USE_OVERHANGS <primer3plus.params.ExtraTypes.PRIMER_USE_OVERHANGS>`,<class 'bool'>,False
+:attr:`PRIMER_LONG_OK <primer3plus.params.ExtraTypes.PRIMER_LONG_OK>`,<class 'bool'>,False

@@ -153,7 +153,7 @@ def to_pair_result(data):
         name="",
         start=left_data["location"][0],
         anneal=left_data["SEQUENCE"],
-        overhang="",
+        overhang=left_data["OVERHANG"],
         strand=1,
         meta=left_data,
     )
@@ -161,7 +161,7 @@ def to_pair_result(data):
         name="",
         start=right_data["location"][0],
         anneal=right_data["SEQUENCE"],
-        overhang="",
+        overhang=left_data["OVERHANG"],
         strand=-1,
         meta=right_data,
     )

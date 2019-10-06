@@ -1,37 +1,175 @@
 
-<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta charset="utf-8" />
-    <title>Usage &#8212; primer3plus 1.0.0b1 documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Usage &mdash; primer3plus 1.0.0b1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="API Reference" href="developer/api_reference.html" />
-    <link rel="prev" title="Primer3Plus" href="index.html" />
+    <link rel="prev" title="Primer3Plus" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
    
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
-  </head><body>
-  
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
           
 
-          <div class="body" role="main">
+          
+            <a href="index.html" class="icon icon-home"> primer3plus
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0b1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#setting-design-parameters">Setting design parameters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#setting-using-presets">setting using presets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-from-a-single-key-value-pair">setting from a single key-value pair</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-from-a-dictionary">setting from a dictionary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getting-help">getting help</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#design-cloning-primers">Design cloning primers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#designing-the-right-primer-only">Designing the right primer only</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#handling-overhangs">Handling overhangs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#handling-long-primer-sequences">Handling long primer sequences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#design-primers-targeting-interval">Design primers targeting interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#relaxing-parameters">Relaxing parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#indexing-with-the-primer3-results">Indexing with the primer3 results</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developer/api_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer/changelog.html">primer3plus change log</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">primer3plus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Usage</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/jvrana/primer3plus-dna-design/blob/master./usage.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <div class="section" id="usage">
 <h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
@@ -65,7 +203,7 @@ parameters:</p>
 <span class="n">design</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>If using an interactive terminal, descriptors are provided to the <a class="reference internal" href="developer/api_reference.html#primer3plus.Design" title="primer3plus.Design"><code class="xref py py-class docutils literal notranslate"><span class="pre">Design</span></code></a>,
+<p>If using an interactive terminal, descriptors are provided to the <code class="xref py py-class docutils literal notranslate"><span class="pre">Design</span></code>,
 which usually can be accessed by typing <cite>design.[TAB]</cite></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">design</span><span class="o">.</span><span class="n">SEQUENCE_TEMPLATE</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">design</span><span class="o">.</span><span class="n">SEQUENCE_TEMPLATE</span><span class="p">))</span>
@@ -73,7 +211,7 @@ which usually can be accessed by typing <cite>design.[TAB]</cite></p>
 </div>
 <div class="section" id="setting-using-presets">
 <h3>setting using presets<a class="headerlink" href="#setting-using-presets" title="Permalink to this headline">¶</a></h3>
-<p>The <a class="reference internal" href="developer/api_reference.html#primer3plus.Design.presets" title="primer3plus.Design.presets"><code class="xref py py-meth docutils literal notranslate"><span class="pre">presets</span></code></a> (returning a
+<p>The <code class="xref py py-meth docutils literal notranslate"><span class="pre">presets</span></code> (returning a
 <a class="reference internal" href="developer/api_reference.html#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a>) provides several
 convenient methods for setting common tasks:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">design</span> <span class="o">=</span> <span class="n">Design</span><span class="p">()</span>
@@ -88,7 +226,7 @@ convenient methods for setting common tasks:</p>
 <div class="section" id="setting-from-a-single-key-value-pair">
 <h3>setting from a single key-value pair<a class="headerlink" href="#setting-from-a-single-key-value-pair" title="Permalink to this headline">¶</a></h3>
 <p>Preferred way to set parameters not available in the presets, is to use
-<a class="reference internal" href="developer/api_reference.html#primer3plus.Design.set" title="primer3plus.Design.set"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set</span></code></a>:</p>
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">set</span></code>:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span># preferred
 design.set(&#39;SEQUENCE_TEMPLATE&#39;, &#39;foo&#39;)
 </pre></div>
@@ -96,7 +234,7 @@ design.set(&#39;SEQUENCE_TEMPLATE&#39;, &#39;foo&#39;)
 </div>
 <div class="section" id="setting-from-a-dictionary">
 <h3>setting from a dictionary<a class="headerlink" href="#setting-from-a-dictionary" title="Permalink to this headline">¶</a></h3>
-<p>If setting many parameters, use <a class="reference internal" href="developer/api_reference.html#primer3plus.Design.update" title="primer3plus.Design.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update</span></code></a>:</p>
+<p>If setting many parameters, use <code class="xref py py-meth docutils literal notranslate"><span class="pre">update</span></code>:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>design.update({
     &#39;SEQUENCE_TEMPLATE&#39;: &quot;AGGGGTAGTAGTATGTGAAGGGGTAGTAGTATGTGAAGGGGTAGTAGTATGTGAAGGGGTAGTAGTATGTGA&quot;,
     &#39;LEFT_SEQUENCE&#39;: &#39;TAGTAGTATGTGAAGG&#39;
@@ -106,7 +244,7 @@ design.set(&#39;SEQUENCE_TEMPLATE&#39;, &#39;foo&#39;)
 </div>
 <div class="section" id="getting-help">
 <h3>getting help<a class="headerlink" href="#getting-help" title="Permalink to this headline">¶</a></h3>
-<p>To get help with a parameter, access it using <a class="reference internal" href="developer/api_reference.html#primer3plus.Design.get" title="primer3plus.Design.get"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get</span></code></a>
+<p>To get help with a parameter, access it using <code class="xref py py-meth docutils literal notranslate"><span class="pre">get</span></code>
 or as a descriptor and call <code class="xref py py-meth docutils literal notranslate"><span class="pre">help</span></code></p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">design</span><span class="o">.</span><span class="n">SEQUENCE_TEMPLATE</span><span class="o">.</span><span class="n">help</span><span class="p">())</span>
 <span class="c1"># print(design.get(&#39;SEQUENCE_TEMPLATE&#39;).help())</span>
@@ -151,7 +289,8 @@ or as a descriptor and call <code class="xref py py-meth docutils literal notran
    &quot;SELF_ANY_TH&quot;: 0.0,
    &quot;SELF_END_TH&quot;: 0.0,
    &quot;HAIRPIN_TH&quot;: 0.0,
-   &quot;END_STABILITY&quot;: 2.34
+   &quot;END_STABILITY&quot;: 2.34,
+   &quot;OVERHANG&quot;: &quot;&quot;
   },
   &quot;RIGHT&quot;: {
    &quot;PENALTY&quot;: 2.1771725409080886,
@@ -165,7 +304,8 @@ or as a descriptor and call <code class="xref py py-meth docutils literal notran
    &quot;SELF_ANY_TH&quot;: 0.0,
    &quot;SELF_END_TH&quot;: 0.0,
    &quot;HAIRPIN_TH&quot;: 38.006257959698985,
-   &quot;END_STABILITY&quot;: 5.03
+   &quot;END_STABILITY&quot;: 5.03,
+   &quot;OVERHANG&quot;: &quot;&quot;
   }
  }
 }
@@ -264,7 +404,7 @@ Explain:  {
 }
 </pre></div>
 </div>
-<p>We can run the relaxation procedure using <a class="reference internal" href="developer/api_reference.html#primer3plus.Design.run_and_optimize" title="primer3plus.Design.run_and_optimize"><code class="xref py py-meth docutils literal notranslate"><span class="pre">run_and_optimize</span></code></a>:</p>
+<p>We can run the relaxation procedure using <code class="xref py py-meth docutils literal notranslate"><span class="pre">run_and_optimize</span></code>:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">design</span> <span class="o">=</span> <span class="n">Design</span><span class="p">()</span>
 <span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC&quot;</span><span class="p">)</span>
 <span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">target</span><span class="p">((</span><span class="mi">25</span><span class="p">,</span> <span class="mi">150</span><span class="p">))</span>
@@ -296,7 +436,8 @@ Results:  {
    &quot;SELF_ANY_TH&quot;: 0.0,
    &quot;SELF_END_TH&quot;: 0.0,
    &quot;HAIRPIN_TH&quot;: 0.0,
-   &quot;END_STABILITY&quot;: 5.07
+   &quot;END_STABILITY&quot;: 5.07,
+   &quot;OVERHANG&quot;: &quot;&quot;
   },
   &quot;RIGHT&quot;: {
    &quot;PENALTY&quot;: 0.17903990097937594,
@@ -310,7 +451,8 @@ Results:  {
    &quot;SELF_ANY_TH&quot;: 0.0,
    &quot;SELF_END_TH&quot;: 0.0,
    &quot;HAIRPIN_TH&quot;: 0.0,
-   &quot;END_STABILITY&quot;: 3.5
+   &quot;END_STABILITY&quot;: 3.5,
+   &quot;OVERHANG&quot;: &quot;&quot;
   }
  }
 }
@@ -366,89 +508,52 @@ GCAAATTAAAGCCTTCGAGCG
 </div>
 
 
+           </div>
+           
           </div>
-          
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="index.html">primer3plus</a></h1>
-
-
-
-
-
-
-
-
-<h3>Navigation</h3>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#setting-design-parameters">Setting design parameters</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#setting-using-presets">setting using presets</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#setting-from-a-single-key-value-pair">setting from a single key-value pair</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#setting-from-a-dictionary">setting from a dictionary</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#getting-help">getting help</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#design-cloning-primers">Design cloning primers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#designing-the-right-primer-only">Designing the right primer only</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#handling-overhangs">Handling overhangs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#handling-long-primer-sequences">Handling long primer sequences</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#design-primers-targeting-interval">Design primers targeting interval</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#relaxing-parameters">Relaxing parameters</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#indexing-with-the-primer3-results">Indexing with the primer3 results</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="developer/api_reference.html">API Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer/changelog.html">primer3plus change log</a></li>
-</ul>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="index.html" title="previous chapter">Primer3Plus</a></li>
-      <li>Next: <a href="developer/api_reference.html" title="next chapter">API Reference</a></li>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="Go" />
-    </form>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="developer/api_reference.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Primer3Plus" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
     </div>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+  
 
+  <hr/>
 
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017-2019, University of Washington
 
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-
-
-
+</footer>
 
         </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2017-2019, University of Washington.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-      |
-      <a href="_sources/usage.rst"
-          rel="nofollow">Page source</a>
-    </div>
 
-    
+    </section>
 
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
     
-  </body>
+   
+
+</body>
 </html>

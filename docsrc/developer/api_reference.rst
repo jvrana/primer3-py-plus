@@ -11,17 +11,11 @@ API Reference
 Design
 ======
 
-.. autoclass:: primer3plus.Design
-    :members:
-    :undoc-members:
 
-.. autoclass:: primer3plus.design.DesignBase
-    :members:
-    :inherited-members:
 
-.. autoclass:: primer3plus.design.interfaces.AllParameters
+.. automodule:: primer3plus.design
     :members:
-    :undoc-members:
+    :exclude-members: DesignPresets
 
 .. _api_parameter_interface:
 

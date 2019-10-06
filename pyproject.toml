@@ -31,6 +31,7 @@ tox-conda = "^0.2.1"
 sphinx_autodoc_typehints = {version = "^1.8", python = ">=3.6"}
 autodocsumm = "^0.1.11"
 pandas = {version = "^0.25.1", python = ">=3.6"}
+sphinx_rtd_theme = "^0.4.3"
 [tool.black]
 line-length = 88
 target-version = ['py36', 'py37', 'py38']

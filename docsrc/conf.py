@@ -28,20 +28,16 @@ def boulderio_to_pandas(boulderio):
 
     rows = []
     for k, v in boulderio._params.items():
-        rows.append(
-            {
-                "name": v.name,
-                "type": str(v.ptype.type),
-                "value": v.value,
-                "default": v.ptype.default,
-            }
-        )
+        name = "`{} <{}>`_".format(v.name, v.help())
+        if v.ptype.category == "extra":
+            name = ":attr:`{x} <primer3plus.params.ExtraTypes.{x}>`".format(x=v.name)
+        rows.append({"name": name, "type": str(v.ptype.type), "value": v.value})
     return pd.DataFrame(rows)
 
 
 def boulderio_to_csv(boulderio):
     df = boulderio_to_pandas(boulderio)
-    df.to_csv("./_static/boulderio.csv")
+    df.to_csv("./_static/boulderio.csv", index=False)
 
 
 boulderio_to_csv(primer3plus.Design.DEFAULT_PARAMS)
@@ -152,12 +148,15 @@ rst_epilog = "\n".join(
 # a list of builtin themes.
 #
 
-# html_theme = "bootstrap"
-# html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()
+html_theme = "sphinx_rtd_theme"
+html_theme_path = ["_themes"]
 
 # Guzzle theme options (see theme.conf for more information)
-html_theme_options = {}
-
+html_theme_options = {
+    "sticky_navigation": True,
+    "display_version": True,
+    "navigation_depth": 4,
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

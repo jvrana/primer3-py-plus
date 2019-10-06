@@ -10,4 +10,5 @@ def test_as_str(gfp):
     assert pairs
     for v in pairs.values():
         pair = to_pair_result(v)
+        print(pair)
         print(pair.thermo_tm())

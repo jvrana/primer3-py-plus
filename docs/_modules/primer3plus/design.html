@@ -1,47 +1,180 @@
 
+
 <!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>primer3plus.design &mdash; primer3plus 1.0.0b1 documentation</title>
+  
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta charset="utf-8" />
-    <title>primer3plus.design &#8212; primer3plus 1.0.0b1 documentation</title>
-    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../_static/language_data.js"></script>
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
    
-  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
-  </head><body>
-  
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
           
 
-          <div class="body" role="main">
+          
+            <a href="../../index.html" class="icon icon-home"> primer3plus
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0b1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer/api_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer/changelog.html">primer3plus change log</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">primer3plus</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>primer3plus.design</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <h1>Source code for primer3plus.design</h1><div class="highlight"><pre>
-<span></span>&quot;&quot;&quot;To run designs, you copy the underlying parameters and change certain
-values.
+<span></span>&quot;&quot;&quot;Core design modules
 
-There should be a number of presets available to run certain design
-tasks  There should also be a relaxation parameter (a subclass of
-Design?)  Async option  Design with overhangs
+For examples for how to use the design module, see the :doc:`Usage Docs &lt;../usage&gt;`
+For a list of design parameters available, take a look at the
+:ref:`BoulderIO Parameters &lt;api_default_parameters&gt;`
+
+.. code-block:: python
+
+    # a new task
+    design = Design()
+
+    # set template sequence
+    design.presets.template(&quot;AGGTTGCGTGTGTATGGTCGTGTAGTGTGT&quot;)
+
+    # set left primer sequence
+    design.presets.left_sequence(&quot;GTTGCGTGTGT)
+
+    # set as a cloning task
+    design.presets.as_cloning_task()
+
+    # run the design task
+    design.run()
 &quot;&quot;&quot;
 import re
 import webbrowser
-from collections import Counter
 from typing import Any
 from typing import Dict
 from typing import List
@@ -64,7 +197,7 @@ from primer3plus.params import default_boulderio
 from primer3plus.utils import anneal as anneal_primer
 
 
-<div class="viewcode-block" id="DesignPresets"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets">[docs]</a>class DesignPresets:
+<div class="viewcode-block" id="DesignPresets"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets">[docs]</a>class DesignPresets:
     &quot;&quot;&quot;
     Interface for setting design parameters. This is typically accessed from
     a :class:`Design &lt;primer3plus.Design&gt;` instance&#39;s
@@ -87,7 +220,7 @@ from primer3plus.utils import anneal as anneal_primer
         self._loverhang = &quot;&quot;
         self._roverhang = &quot;&quot;
 
-<div class="viewcode-block" id="DesignPresets._resolve"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets._resolve">[docs]</a>    def _resolve(self):
+<div class="viewcode-block" id="DesignPresets._resolve"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets._resolve">[docs]</a>    def _resolve(self):
         &quot;&quot;&quot;Process any extra parameters and process BoulderIO so
         that it is digestable by primer3.&quot;&quot;&quot;
         if self._design.PRIMER_USE_OVERHANGS.value:
@@ -120,6 +253,17 @@ from primer3plus.utils import anneal as anneal_primer
                 )
         return self</div>
 
+<div class="viewcode-block" id="DesignPresets._post_parse"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets._post_parse">[docs]</a>    def _post_parse(self, pairs, explain) -&gt; None:
+        &quot;&quot;&quot;Modify results from design parameters (e.g. overhangs)&quot;&quot;&quot;
+        for pair in pairs.values():
+            for x in [&quot;LEFT&quot;, &quot;RIGHT&quot;]:
+                pair[x].setdefault(&quot;OVERHANG&quot;, &quot;&quot;)
+            if self._design.PRIMER_USE_OVERHANGS:
+                pair[&quot;LEFT&quot;][&quot;OVERHANG&quot;] = self._design.SEQUENCE_PRIMER_OVERHANG.value
+                pair[&quot;RIGHT&quot;][
+                    &quot;OVERHANG&quot;
+                ] = self._design.SEQUENCE_PRIMER_REVCOMP_OVERHANG.value</div>
+
     def _interval_from_sequences(
         self, template: str, target: str
     ) -&gt; Union[None, Tuple[int, int]]:
@@ -140,12 +284,12 @@ from primer3plus.utils import anneal as anneal_primer
             matches.append((m.start(0), m.end(0)))
         return matches
 
-<div class="viewcode-block" id="DesignPresets.update"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.update">[docs]</a>    def update(self, update: Dict[str, Any]):
+<div class="viewcode-block" id="DesignPresets.update"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.update">[docs]</a>    def update(self, update: Dict[str, Any]):
         &quot;&quot;&quot;Update an arbitrary parameter&quot;&quot;&quot;
         self._design.params.update(update)
         return self</div>
 
-<div class="viewcode-block" id="DesignPresets.task"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.task">[docs]</a>    def task(self, task: str) -&gt; &quot;DesignPresets&quot;:
+<div class="viewcode-block" id="DesignPresets.task"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.task">[docs]</a>    def task(self, task: str) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;This tag tells primer3 what task to perform.
 
         http://primer3.ut.ee/primer3web_help.htm#PRIMER_TASK
@@ -156,7 +300,7 @@ from primer3plus.utils import anneal as anneal_primer
         self.update({&quot;PRIMER_TASK&quot;: task})
         return self</div>
 
-<div class="viewcode-block" id="DesignPresets.as_cloning_task"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.as_cloning_task">[docs]</a>    def as_cloning_task(self) -&gt; &quot;DesignPresets&quot;:
+<div class="viewcode-block" id="DesignPresets.as_cloning_task"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.as_cloning_task">[docs]</a>    def as_cloning_task(self) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;
         Set the design as a cloning task.
 
@@ -166,7 +310,7 @@ from primer3plus.utils import anneal as anneal_primer
         &quot;&quot;&quot;
         return self.task(&quot;pick_cloning_primers&quot;)</div>
 
-<div class="viewcode-block" id="DesignPresets.as_generic_task"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.as_generic_task">[docs]</a>    def as_generic_task(self) -&gt; &quot;DesignPresets&quot;:
+<div class="viewcode-block" id="DesignPresets.as_generic_task"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.as_generic_task">[docs]</a>    def as_generic_task(self) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;
         Set the design as a generic task.
 
@@ -176,7 +320,7 @@ from primer3plus.utils import anneal as anneal_primer
         &quot;&quot;&quot;
         return self.task(&quot;generic&quot;)</div>
 
-<div class="viewcode-block" id="DesignPresets.template"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.template">[docs]</a>    def template(self, template: str) -&gt; &quot;DesignPresets&quot;:
+<div class="viewcode-block" id="DesignPresets.template"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.template">[docs]</a>    def template(self, template: str) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;
         Set the template sequence for the design. This sets the &#39;SEQUENCE_TEMPLATE&#39;
         parameter.
@@ -190,7 +334,7 @@ from primer3plus.utils import anneal as anneal_primer
         return self</div>
 
     # TODO: set_iterations, set_num_return, set_force_return, set_gradient
-<div class="viewcode-block" id="DesignPresets.primer_num_return"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.primer_num_return">[docs]</a>    def primer_num_return(self, n: int) -&gt; &quot;DesignPresets&quot;:
+<div class="viewcode-block" id="DesignPresets.primer_num_return"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.primer_num_return">[docs]</a>    def primer_num_return(self, n: int) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;
         Set the number of primers to return for the design task.
 
@@ -201,7 +345,7 @@ from primer3plus.utils import anneal as anneal_primer
         &quot;&quot;&quot;
         return self.update({&quot;PRIMER_NUM_RETURN&quot;: n})</div>
 
-<div class="viewcode-block" id="DesignPresets.product_size"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.product_size">[docs]</a>    def product_size(
+<div class="viewcode-block" id="DesignPresets.product_size"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.product_size">[docs]</a>    def product_size(
         self, interval: Union[Tuple[int, int], List[Tuple[int, int]]], opt=None
     ) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;
@@ -222,7 +366,7 @@ from primer3plus.utils import anneal as anneal_primer
             )
         return self.update({&quot;PRIMER_PRODUCT_SIZE_RANGE&quot;: interval})</div>
 
-<div class="viewcode-block" id="DesignPresets.pair_region_list"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.pair_region_list">[docs]</a>    def pair_region_list(
+<div class="viewcode-block" id="DesignPresets.pair_region_list"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.pair_region_list">[docs]</a>    def pair_region_list(
         self, region_list: List[Tuple[int, int, int, int]]
     ) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;
@@ -235,7 +379,7 @@ from primer3plus.utils import anneal as anneal_primer
         &quot;&quot;&quot;
         return self.update({&quot;SEQUENCE_PRIMER_PAIR_OK_REGION_LIST&quot;: region_list})</div>
 
-<div class="viewcode-block" id="DesignPresets.left_sequence"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.left_sequence">[docs]</a>    def left_sequence(self, primer: str) -&gt; &quot;DesignPresets&quot;:
+<div class="viewcode-block" id="DesignPresets.left_sequence"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.left_sequence">[docs]</a>    def left_sequence(self, primer: str) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;The sequence of a left primer to check and around which to design
         right primers and optional internal oligos. Must be a substring of
         SEQUENCE_TEMPLATE.
@@ -249,7 +393,7 @@ from primer3plus.utils import anneal as anneal_primer
 
         return self.update({&quot;SEQUENCE_PRIMER&quot;: primer, &quot;PRIMER_PICK_RIGHT_PRIMER&quot;: 1})</div>
 
-<div class="viewcode-block" id="DesignPresets.right_sequence"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.right_sequence">[docs]</a>    def right_sequence(self, primer: str) -&gt; &quot;DesignPresets&quot;:
+<div class="viewcode-block" id="DesignPresets.right_sequence"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.right_sequence">[docs]</a>    def right_sequence(self, primer: str) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;The sequence of a right primer to check and around which to design
         left primers and optional internal oligos. Must be a substring of the
         reverse strand of SEQUENCE_TEMPLATE.
@@ -264,7 +408,7 @@ from primer3plus.utils import anneal as anneal_primer
             {&quot;SEQUENCE_PRIMER_REVCOMP&quot;: primer, &quot;PRIMER_PICK_LEFT_PRIMER&quot;: 1}
         )</div>
 
-<div class="viewcode-block" id="DesignPresets._fix_length"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets._fix_length">[docs]</a>    @staticmethod
+<div class="viewcode-block" id="DesignPresets._fix_length"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets._fix_length">[docs]</a>    @staticmethod
     def _fix_length(overhang, anneal, lim):
         &quot;&quot;&quot;Fix the overhang and anneal from the hardcoded BoulderIO primer lim.&quot;&quot;&quot;
         return overhang + anneal[:-lim], anneal[-lim:]</div>
@@ -308,7 +452,7 @@ from primer3plus.utils import anneal as anneal_primer
     def right_overhang(self, overhang):
         return self.update({&quot;SEQUENCE_PRIMER_REVCOMP_OVERHANG&quot;: overhang})
 
-<div class="viewcode-block" id="DesignPresets.use_overhangs"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.use_overhangs">[docs]</a>    def use_overhangs(self, b: bool = True) -&gt; &quot;DesignPresets&quot;:
+<div class="viewcode-block" id="DesignPresets.use_overhangs"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.use_overhangs">[docs]</a>    def use_overhangs(self, b: bool = True) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;
         Set the BoulderIO to process overhangs.
 
@@ -317,7 +461,7 @@ from primer3plus.utils import anneal as anneal_primer
         &quot;&quot;&quot;
         return self.update({&quot;PRIMER_USE_OVERHANGS&quot;: b})</div>
 
-<div class="viewcode-block" id="DesignPresets.long_ok"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.long_ok">[docs]</a>    def long_ok(self, b: bool = True) -&gt; &quot;DesignPresets&quot;:
+<div class="viewcode-block" id="DesignPresets.long_ok"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.long_ok">[docs]</a>    def long_ok(self, b: bool = True) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;
         Set the BoulderIO to process long primers.
 
@@ -326,7 +470,7 @@ from primer3plus.utils import anneal as anneal_primer
         &quot;&quot;&quot;
         return self.update({&quot;PRIMER_LONG_OK&quot;: b})</div>
 
-<div class="viewcode-block" id="DesignPresets._resolve_max_lengths"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets._resolve_max_lengths">[docs]</a>    def _resolve_max_lengths(self, lim: int):
+<div class="viewcode-block" id="DesignPresets._resolve_max_lengths"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets._resolve_max_lengths">[docs]</a>    def _resolve_max_lengths(self, lim: int):
         &quot;&quot;&quot;Fixes the annealing and overhang sequences for annealing sequences
             for primers over the :attr:`BoulderIO
             &lt;primer3plus.paramsBoulderIO.PRIMER_MAX_SIZE_HARD_LIM&gt;`.
@@ -344,7 +488,7 @@ from primer3plus.utils import anneal as anneal_primer
         self.left_sequence(left_anneal)
         self.right_sequence(right_anneal)</div>
 
-<div class="viewcode-block" id="DesignPresets._resolve_overhangs"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets._resolve_overhangs">[docs]</a>    def _resolve_overhangs(self):
+<div class="viewcode-block" id="DesignPresets._resolve_overhangs"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets._resolve_overhangs">[docs]</a>    def _resolve_overhangs(self):
         &quot;&quot;&quot;Sets the annealing and overhang sequences.&quot;&quot;&quot;
         left_over, left_anneal = self._get_left_overhang()
         if left_anneal and self._design.SEQUENCE_PRIMER_OVERHANG.value:
@@ -363,7 +507,7 @@ from primer3plus.utils import anneal as anneal_primer
         self.left_sequence(left_anneal)
         self.right_sequence(right_anneal)</div>
 
-<div class="viewcode-block" id="DesignPresets.pick_left_only"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.pick_left_only">[docs]</a>    def pick_left_only(self) -&gt; &quot;DesignPresets&quot;:
+<div class="viewcode-block" id="DesignPresets.pick_left_only"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.pick_left_only">[docs]</a>    def pick_left_only(self) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;
         Design only the left primer.
 
@@ -376,7 +520,7 @@ from primer3plus.utils import anneal as anneal_primer
             {&quot;PRIMER_PICK_LEFT_PRIMER&quot;: 1, &quot;PRIMER_PICK_RIGHT_PRIMER&quot;: 0}
         )</div>
 
-<div class="viewcode-block" id="DesignPresets.pick_right_only"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.pick_right_only">[docs]</a>    def pick_right_only(self) -&gt; &quot;DesignPresets&quot;:
+<div class="viewcode-block" id="DesignPresets.pick_right_only"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.pick_right_only">[docs]</a>    def pick_right_only(self) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;
         Design only the right primer.
 
@@ -389,7 +533,7 @@ from primer3plus.utils import anneal as anneal_primer
             {&quot;PRIMER_PICK_LEFT_PRIMER&quot;: 0, &quot;PRIMER_PICK_RIGHT_PRIMER&quot;: 1}
         )</div>
 
-<div class="viewcode-block" id="DesignPresets.internal_sequence"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.internal_sequence">[docs]</a>    def internal_sequence(self, primer: str) -&gt; &quot;DesignPresets&quot;:
+<div class="viewcode-block" id="DesignPresets.internal_sequence"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.internal_sequence">[docs]</a>    def internal_sequence(self, primer: str) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;The sequence of an internal oligo to check and around which to
         design left and right primers. Must be a substring of
         SEQUENCE_TEMPLATE.
@@ -404,7 +548,7 @@ from primer3plus.utils import anneal as anneal_primer
             {&quot;SEQUENCE_INTERNAL_OLIGO&quot;: primer, &quot;PRIMER_PICK_INTERNAL_OLIGO&quot;: 1}
         )</div>
 
-<div class="viewcode-block" id="DesignPresets.primers"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.primers">[docs]</a>    def primers(self, p1: str, p2: str) -&gt; &quot;DesignPresets&quot;:
+<div class="viewcode-block" id="DesignPresets.primers"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.primers">[docs]</a>    def primers(self, p1: str, p2: str) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;
         Set the left and right primer sequences.
 
@@ -441,7 +585,7 @@ from primer3plus.utils import anneal as anneal_primer
             interval = [interval]
         return interval
 
-<div class="viewcode-block" id="DesignPresets.included"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.included">[docs]</a>    def included(self, interval: Union[str, Tuple[int, int]]) -&gt; &quot;DesignPresets&quot;:
+<div class="viewcode-block" id="DesignPresets.included"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.included">[docs]</a>    def included(self, interval: Union[str, Tuple[int, int]]) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;
         Specify interval from which primers must be selected.
         A sub-region of the given sequence in which to pick primers. For
@@ -471,7 +615,7 @@ from primer3plus.utils import anneal as anneal_primer
         interval = list(interval)
         return self.update({&quot;SEQUENCE_INCLUDED_REGION&quot;: interval})</div>
 
-<div class="viewcode-block" id="DesignPresets.target"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.target">[docs]</a>    def target(
+<div class="viewcode-block" id="DesignPresets.target"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.target">[docs]</a>    def target(
         self, interval: Union[str, Tuple[int, int], List[Tuple[int, int]]]
     ) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;
@@ -496,7 +640,7 @@ from primer3plus.utils import anneal as anneal_primer
         &quot;&quot;&quot;
         return self.update({&quot;SEQUENCE_TARGET&quot;: self._parse_interval(interval)})</div>
 
-<div class="viewcode-block" id="DesignPresets.excluded"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.excluded">[docs]</a>    def excluded(
+<div class="viewcode-block" id="DesignPresets.excluded"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.excluded">[docs]</a>    def excluded(
         self, interval: Union[str, Tuple[int, int], List[Tuple[int, int]]]
     ) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;
@@ -517,7 +661,7 @@ from primer3plus.utils import anneal as anneal_primer
         &quot;&quot;&quot;
         return self.update({&quot;SEQUENCE_EXCLUDED_REGION&quot;: self._parse_interval(interval)})</div>
 
-<div class="viewcode-block" id="DesignPresets.pick_anyway"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignPresets.pick_anyway">[docs]</a>    def pick_anyway(self, b=1) -&gt; &quot;DesignPresets&quot;:
+<div class="viewcode-block" id="DesignPresets.pick_anyway"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.pick_anyway">[docs]</a>    def pick_anyway(self, b=1) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;
         If true use primer provided in SEQUENCE_PRIMER,
         SEQUENCE_PRIMER_REVCOMP, or SEQUENCE_INTERNAL_OLIGO even if it violates
@@ -535,7 +679,8 @@ def clip(x, mn, mx):
     return max(min(x, mx), mn)
 
 
-<div class="viewcode-block" id="DesignBase"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignBase">[docs]</a>class DesignBase:
+<div class="viewcode-block" id="DesignBase"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignBase">[docs]</a>class DesignBase:
+    &quot;&quot;&quot;Base design&quot;&quot;&quot;
 
     DEFAULT_PARAMS = default_boulderio  #: default parameters
     DEFAULT_GRADIENT = dict(
@@ -573,7 +718,7 @@ def clip(x, mn, mx):
         self.gradient = gradient
         self.quiet_runtime = quiet_runtime
 
-<div class="viewcode-block" id="DesignBase._run"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignBase._run">[docs]</a>    def _run(self, params: BoulderIO = None) -&gt; Tuple[List[Dict], List[Dict]]:
+<div class="viewcode-block" id="DesignBase._run"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignBase._run">[docs]</a>    def _run(self, params: BoulderIO = None) -&gt; Tuple[List[Dict], List[Dict]]:
         &quot;&quot;&quot;Design primers. Optionally provide additional parameters.
 
         :param params:
@@ -597,9 +742,10 @@ def clip(x, mn, mx):
             raise Primer3PlusRunTimeError(str(e)) from e
 
         pairs, explain = parse_primer3_results(res)
+        self.presets._post_parse(pairs, explain)
         return pairs, explain</div>
 
-<div class="viewcode-block" id="DesignBase.run"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignBase.run">[docs]</a>    def run(self, params: BoulderIO = None) -&gt; Tuple[List[Dict], List[Dict]]:
+<div class="viewcode-block" id="DesignBase.run"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignBase.run">[docs]</a>    def run(self, params: BoulderIO = None) -&gt; Tuple[List[Dict], List[Dict]]:
         &quot;&quot;&quot;Design primers. Optionally provide additional parameters.
 
         :param params:
@@ -607,7 +753,7 @@ def clip(x, mn, mx):
         &quot;&quot;&quot;
         return self._run(params)</div>
 
-<div class="viewcode-block" id="DesignBase.run_and_optimize"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignBase.run_and_optimize">[docs]</a>    def run_and_optimize(
+<div class="viewcode-block" id="DesignBase.run_and_optimize"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignBase.run_and_optimize">[docs]</a>    def run_and_optimize(
         self,
         max_iterations,
         params: BoulderIO = None,
@@ -659,12 +805,12 @@ def clip(x, mn, mx):
                 raise e
         return update
 
-<div class="viewcode-block" id="DesignBase.open_help"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignBase.open_help">[docs]</a>    @staticmethod
+<div class="viewcode-block" id="DesignBase.open_help"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignBase.open_help">[docs]</a>    @staticmethod
     def open_help():
         &quot;&quot;&quot;Open the documentation help in a new browser tab.&quot;&quot;&quot;
         webbrowser.open(DOCURL)</div>
 
-<div class="viewcode-block" id="DesignBase.copy"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignBase.copy">[docs]</a>    def copy(self):
+<div class="viewcode-block" id="DesignBase.copy"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignBase.copy">[docs]</a>    def copy(self):
         &quot;&quot;&quot;Copy this design and its parameters.&quot;&quot;&quot;
         designer = self.__class__()
         designer.params = self.params.copy()</div>
@@ -673,27 +819,33 @@ def clip(x, mn, mx):
         return self.copy()</div>
 
 
-<div class="viewcode-block" id="Design"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.Design">[docs]</a>class Design(DesignBase, AllParameters):
+<div class="viewcode-block" id="Design"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.Design">[docs]</a>class Design(DesignBase, AllParameters):
     def __init__(self):
         &quot;&quot;&quot;Initialize a new design. Set parameters using
-        :meth:`Design.set`, which
-        returns an instance of :class:`DesignPresets &lt;primer3plus.design.DesignPresets&gt;`
+        :attr:`Design.presets`, which
+        returns an instance of
+        :class:`DesignPresets &lt;primer3plus.design.DesignPresets&gt;`.
+
+        Alternatively, parameters can be accessed more directly using
+        the name of the parameter descriptor. For a list of parameters available, see
+        :ref:`BoulderIO Parameters &lt;api_default_parameters&gt;`.
 
         .. code-block::
 
             design = Design()
             design.presets.template(&quot;AGGCTGTAGTGCTTGTAGCTGGTTGCGTTACTGTG&quot;)
             design.presets.left_sequence(&quot;GTAGTGCTTGTA&quot;)
+            design.SEQUENCE_ID.value = &quot;MY ID&quot;
             design.run()
         &quot;&quot;&quot;
         super().__init__()
         self._presets = DesignPresets(self)
 
-<div class="viewcode-block" id="Design.set"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.Design.set">[docs]</a>    def set(self, key, value):
-        self.params.defs[key].value = value</div>
+    def set(self, key, value):
+        self.params.defs[key].value = value
 
-<div class="viewcode-block" id="Design.get"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.Design.get">[docs]</a>    def get(self, key):
-        return self.params.defs[key]</div>
+    def get(self, key):
+        return self.params.defs[key]
 
     @property
     def presets(self) -&gt; &quot;DesignPresets&quot;:
@@ -701,14 +853,14 @@ def clip(x, mn, mx):
         instance for this design.&quot;&quot;&quot;
         return self._presets
 
-<div class="viewcode-block" id="Design.update"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.Design.update">[docs]</a>    def update(self, data: Dict[str, Any]):
-        return self.params.update(data)</div>
+    def update(self, data: Dict[str, Any]):
+        return self.params.update(data)
 
-<div class="viewcode-block" id="Design.run"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.Design.run">[docs]</a>    def run(self, params: BoulderIO = None) -&gt; Tuple[List[Dict], List[Dict]]:
+<div class="viewcode-block" id="Design.run"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.Design.run">[docs]</a>    def run(self, params: BoulderIO = None) -&gt; Tuple[List[Dict], List[Dict]]:
         self.presets._resolve()
         return super()._run(params)</div>
 
-<div class="viewcode-block" id="Design.run_and_optimize"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.Design.run_and_optimize">[docs]</a>    def run_and_optimize(
+<div class="viewcode-block" id="Design.run_and_optimize"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.Design.run_and_optimize">[docs]</a>    def run_and_optimize(
         self,
         max_iterations,
         params: BoulderIO = None,
@@ -720,77 +872,50 @@ def clip(x, mn, mx):
         return super().run_and_optimize(max_iterations)</div></div>
 
 
-def new(params=None):
+<div class="viewcode-block" id="new"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.new">[docs]</a>def new(params=None):
     &quot;&quot;&quot;Start a new design&quot;&quot;&quot;
     design = Design()
     if params:
-        design.params.update(params)
+        design.params.update(params)</div>
 </pre></div>
 
+           </div>
+           
           </div>
-          
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="../../index.html">primer3plus</a></h1>
+          <footer>
+  
 
+  <hr/>
 
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017-2019, University of Washington
 
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-
-
-
-
-<h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developer/api_reference.html">API Reference</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../developer/changelog.html">primer3plus change log</a></li>
-</ul>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="../../index.html">Documentation overview</a><ul>
-  <li><a href="../index.html">Module code</a><ul>
-  </ul></li>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-
-
-
-
-
-
-
+</footer>
 
         </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2017-2019, University of Washington.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-    </div>
 
-    
+    </section>
 
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
     
-  </body>
+   
+
+</body>
 </html>

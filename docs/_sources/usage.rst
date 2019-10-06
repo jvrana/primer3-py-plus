@@ -143,7 +143,8 @@ Design cloning primers
        "SELF_ANY_TH": 0.0,
        "SELF_END_TH": 0.0,
        "HAIRPIN_TH": 0.0,
-       "END_STABILITY": 2.34
+       "END_STABILITY": 2.34,
+       "OVERHANG": ""
       },
       "RIGHT": {
        "PENALTY": 2.1771725409080886,
@@ -157,7 +158,8 @@ Design cloning primers
        "SELF_ANY_TH": 0.0,
        "SELF_END_TH": 0.0,
        "HAIRPIN_TH": 38.006257959698985,
-       "END_STABILITY": 5.03
+       "END_STABILITY": 5.03,
+       "OVERHANG": ""
       }
      }
     }
@@ -307,7 +309,8 @@ We can run the relaxation procedure using :meth:`run_and_optimize <primer3plus.D
        "SELF_ANY_TH": 0.0,
        "SELF_END_TH": 0.0,
        "HAIRPIN_TH": 0.0,
-       "END_STABILITY": 5.07
+       "END_STABILITY": 5.07,
+       "OVERHANG": ""
       },
       "RIGHT": {
        "PENALTY": 0.17903990097937594,
@@ -321,7 +324,8 @@ We can run the relaxation procedure using :meth:`run_and_optimize <primer3plus.D
        "SELF_ANY_TH": 0.0,
        "SELF_END_TH": 0.0,
        "HAIRPIN_TH": 0.0,
-       "END_STABILITY": 3.5
+       "END_STABILITY": 3.5,
+       "OVERHANG": ""
       }
      }
     }

@@ -1,13 +1,28 @@
-"""To run designs, you copy the underlying parameters and change certain
-values.
+"""Core design modules
 
-There should be a number of presets available to run certain design
-tasks  There should also be a relaxation parameter (a subclass of
-Design?)  Async option  Design with overhangs
+For examples for how to use the design module, see the :doc:`Usage Docs <../usage>`
+For a list of design parameters available, take a look at the
+:ref:`BoulderIO Parameters <api_default_parameters>`
+
+.. code-block:: python
+
+    # a new task
+    design = Design()
+
+    # set template sequence
+    design.presets.template("AGGTTGCGTGTGTATGGTCGTGTAGTGTGT")
+
+    # set left primer sequence
+    design.presets.left_sequence("GTTGCGTGTGT)
+
+    # set as a cloning task
+    design.presets.as_cloning_task()
+
+    # run the design task
+    design.run()
 """
 import re
 import webbrowser
-from collections import Counter
 from typing import Any
 from typing import Dict
 from typing import List
@@ -85,6 +100,17 @@ class DesignPresets:
                     )
                 )
         return self
+
+    def _post_parse(self, pairs, explain) -> None:
+        """Modify results from design parameters (e.g. overhangs)"""
+        for pair in pairs.values():
+            for x in ["LEFT", "RIGHT"]:
+                pair[x].setdefault("OVERHANG", "")
+            if self._design.PRIMER_USE_OVERHANGS:
+                pair["LEFT"]["OVERHANG"] = self._design.SEQUENCE_PRIMER_OVERHANG.value
+                pair["RIGHT"][
+                    "OVERHANG"
+                ] = self._design.SEQUENCE_PRIMER_REVCOMP_OVERHANG.value
 
     def _interval_from_sequences(
         self, template: str, target: str
@@ -502,6 +528,7 @@ def clip(x, mn, mx):
 
 
 class DesignBase:
+    """Base design"""
 
     DEFAULT_PARAMS = default_boulderio  #: default parameters
     DEFAULT_GRADIENT = dict(
@@ -563,6 +590,7 @@ class DesignBase:
             raise Primer3PlusRunTimeError(str(e)) from e
 
         pairs, explain = parse_primer3_results(res)
+        self.presets._post_parse(pairs, explain)
         return pairs, explain
 
     def run(self, params: BoulderIO = None) -> Tuple[List[Dict], List[Dict]]:
@@ -642,14 +670,20 @@ class DesignBase:
 class Design(DesignBase, AllParameters):
     def __init__(self):
         """Initialize a new design. Set parameters using
-        :meth:`Design.set`, which
-        returns an instance of :class:`DesignPresets <primer3plus.design.DesignPresets>`
+        :attr:`Design.presets`, which
+        returns an instance of
+        :class:`DesignPresets <primer3plus.design.DesignPresets>`.
+
+        Alternatively, parameters can be accessed more directly using
+        the name of the parameter descriptor. For a list of parameters available, see
+        :ref:`BoulderIO Parameters <api_default_parameters>`.
 
         .. code-block::
 
             design = Design()
             design.presets.template("AGGCTGTAGTGCTTGTAGCTGGTTGCGTTACTGTG")
             design.presets.left_sequence("GTAGTGCTTGTA")
+            design.SEQUENCE_ID.value = "MY ID"
             design.run()
         """
         super().__init__()
