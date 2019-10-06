@@ -119,14 +119,6 @@ parameters such as melting temperature and primer size until primer pairs are fo
 
    design.run_and_optimize(5)  # run for max of 5 iterations
 
-References
-----------
-
-.. [1] Untergasser A, Cutcutache I, Koressaar T, et al. Primer3--new capabilities and
-interfaces. Nucleic Acids Res. 2012;40(15):e115. doi:10.1093/nar/gks596
-
-.. [2] http://primer3.ut.ee/primer3web_help.htm
-
 Table of Contents
 =================
 
@@ -136,3 +128,12 @@ Table of Contents
    usage
    developer/api_reference
    developer/changelog
+
+
+References
+==========
+
+.. [1] Untergasser A, Cutcutache I, Koressaar T, et al. Primer3--new capabilities and
+interfaces. Nucleic Acids Res. 2012;40(15):e115. doi:10.1093/nar/gks596
+
+.. [2] http://primer3.ut.ee/primer3web_help.htm
