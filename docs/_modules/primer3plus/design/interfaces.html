@@ -1,0 +1,397 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>primer3plus.design.interfaces &#8212; primer3plus 1.0.0b1 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for primer3plus.design.interfaces</h1><div class="highlight"><pre>
+<span></span>class ParameterDescriptor:
+    &quot;&quot;&quot;A data descriptor that sets params key.&quot;&quot;&quot;
+
+    def __init__(self, name):
+        self.name = name
+
+    def __get__(self, obj, objtype):
+        return obj.params.defs[self.name]
+
+    def __set__(self, obj, val):
+        obj.params.defs[self.name].value = val
+
+
+<div class="viewcode-block" id="AllParameters"><a class="viewcode-back" href="../../../developer/api_reference.html#primer3plus.design.interfaces.AllParameters">[docs]</a>class AllParameters:
+    &quot;&quot;&quot;Mixin with all available parameter descriptors&quot;&quot;&quot;
+
+    PRIMER_DNA_CONC = ParameterDescriptor(&quot;PRIMER_DNA_CONC&quot;)
+    PRIMER_MASK_KMERLIST_PATH = ParameterDescriptor(&quot;PRIMER_MASK_KMERLIST_PATH&quot;)
+    PRIMER_PAIR_WT_PRODUCT_SIZE_LT = ParameterDescriptor(
+        &quot;PRIMER_PAIR_WT_PRODUCT_SIZE_LT&quot;
+    )
+    PRIMER_DNTP_CONC = ParameterDescriptor(&quot;PRIMER_DNTP_CONC&quot;)
+    PRIMER_MASK_KMERLIST_PREFIX = ParameterDescriptor(&quot;PRIMER_MASK_KMERLIST_PREFIX&quot;)
+    PRIMER_PAIR_WT_PRODUCT_TM_GT = ParameterDescriptor(&quot;PRIMER_PAIR_WT_PRODUCT_TM_GT&quot;)
+    PRIMER_EXPLAIN_FLAG = ParameterDescriptor(&quot;PRIMER_EXPLAIN_FLAG&quot;)
+    PRIMER_MASK_TEMPLATE = ParameterDescriptor(&quot;PRIMER_MASK_TEMPLATE&quot;)
+    PRIMER_PAIR_WT_PRODUCT_TM_LT = ParameterDescriptor(&quot;PRIMER_PAIR_WT_PRODUCT_TM_LT&quot;)
+    PRIMER_FIRST_BASE_INDEX = ParameterDescriptor(&quot;PRIMER_FIRST_BASE_INDEX&quot;)
+    PRIMER_MAX_END_GC = ParameterDescriptor(&quot;PRIMER_MAX_END_GC&quot;)
+    PRIMER_PAIR_WT_PR_PENALTY = ParameterDescriptor(&quot;PRIMER_PAIR_WT_PR_PENALTY&quot;)
+    PRIMER_GC_CLAMP = ParameterDescriptor(&quot;PRIMER_GC_CLAMP&quot;)
+    PRIMER_MAX_END_STABILITY = ParameterDescriptor(&quot;PRIMER_MAX_END_STABILITY&quot;)
+    PRIMER_PAIR_WT_TEMPLATE_MISPRIMING = ParameterDescriptor(
+        &quot;PRIMER_PAIR_WT_TEMPLATE_MISPRIMING&quot;
+    )
+    PRIMER_INSIDE_PENALTY = ParameterDescriptor(&quot;PRIMER_INSIDE_PENALTY&quot;)
+    PRIMER_MAX_GC = ParameterDescriptor(&quot;PRIMER_MAX_GC&quot;)
+    PRIMER_PAIR_WT_TEMPLATE_MISPRIMING_TH = ParameterDescriptor(
+        &quot;PRIMER_PAIR_WT_TEMPLATE_MISPRIMING_TH&quot;
+    )
+    PRIMER_INTERNAL_DNA_CONC = ParameterDescriptor(&quot;PRIMER_INTERNAL_DNA_CONC&quot;)
+    PRIMER_MAX_HAIRPIN_TH = ParameterDescriptor(&quot;PRIMER_MAX_HAIRPIN_TH&quot;)
+    PRIMER_PICK_ANYWAY = ParameterDescriptor(&quot;PRIMER_PICK_ANYWAY&quot;)
+    PRIMER_INTERNAL_DNTP_CONC = ParameterDescriptor(&quot;PRIMER_INTERNAL_DNTP_CONC&quot;)
+    PRIMER_MAX_LIBRARY_MISPRIMING = ParameterDescriptor(&quot;PRIMER_MAX_LIBRARY_MISPRIMING&quot;)
+    PRIMER_PICK_INTERNAL_OLIGO = ParameterDescriptor(&quot;PRIMER_PICK_INTERNAL_OLIGO&quot;)
+    PRIMER_INTERNAL_MAX_GC = ParameterDescriptor(&quot;PRIMER_INTERNAL_MAX_GC&quot;)
+    PRIMER_MAX_NS_ACCEPTED = ParameterDescriptor(&quot;PRIMER_MAX_NS_ACCEPTED&quot;)
+    PRIMER_PICK_LEFT_PRIMER = ParameterDescriptor(&quot;PRIMER_PICK_LEFT_PRIMER&quot;)
+    PRIMER_INTERNAL_MAX_HAIRPIN_TH = ParameterDescriptor(
+        &quot;PRIMER_INTERNAL_MAX_HAIRPIN_TH&quot;
+    )
+    PRIMER_MAX_POLY_X = ParameterDescriptor(&quot;PRIMER_MAX_POLY_X&quot;)
+    PRIMER_PICK_RIGHT_PRIMER = ParameterDescriptor(&quot;PRIMER_PICK_RIGHT_PRIMER&quot;)
+    PRIMER_INTERNAL_MAX_LIBRARY_MISHYB = ParameterDescriptor(
+        &quot;PRIMER_INTERNAL_MAX_LIBRARY_MISHYB&quot;
+    )
+    PRIMER_MAX_SELF_ANY = ParameterDescriptor(&quot;PRIMER_MAX_SELF_ANY&quot;)
+    PRIMER_PRODUCT_MAX_TM = ParameterDescriptor(&quot;PRIMER_PRODUCT_MAX_TM&quot;)
+    PRIMER_INTERNAL_MAX_NS_ACCEPTED = ParameterDescriptor(
+        &quot;PRIMER_INTERNAL_MAX_NS_ACCEPTED&quot;
+    )
+    PRIMER_MAX_SELF_ANY_TH = ParameterDescriptor(&quot;PRIMER_MAX_SELF_ANY_TH&quot;)
+    PRIMER_PRODUCT_MIN_TM = ParameterDescriptor(&quot;PRIMER_PRODUCT_MIN_TM&quot;)
+    PRIMER_INTERNAL_MAX_POLY_X = ParameterDescriptor(&quot;PRIMER_INTERNAL_MAX_POLY_X&quot;)
+    PRIMER_MAX_SELF_END = ParameterDescriptor(&quot;PRIMER_MAX_SELF_END&quot;)
+    PRIMER_PRODUCT_OPT_SIZE = ParameterDescriptor(&quot;PRIMER_PRODUCT_OPT_SIZE&quot;)
+    PRIMER_INTERNAL_MAX_SELF_ANY = ParameterDescriptor(&quot;PRIMER_INTERNAL_MAX_SELF_ANY&quot;)
+    PRIMER_MAX_SELF_END_TH = ParameterDescriptor(&quot;PRIMER_MAX_SELF_END_TH&quot;)
+    PRIMER_PRODUCT_OPT_TM = ParameterDescriptor(&quot;PRIMER_PRODUCT_OPT_TM&quot;)
+    PRIMER_INTERNAL_MAX_SELF_ANY_TH = ParameterDescriptor(
+        &quot;PRIMER_INTERNAL_MAX_SELF_ANY_TH&quot;
+    )
+    PRIMER_MAX_SIZE = ParameterDescriptor(&quot;PRIMER_MAX_SIZE&quot;)
+    PRIMER_PRODUCT_SIZE_RANGE = ParameterDescriptor(&quot;PRIMER_PRODUCT_SIZE_RANGE&quot;)
+    PRIMER_INTERNAL_MAX_SELF_END = ParameterDescriptor(&quot;PRIMER_INTERNAL_MAX_SELF_END&quot;)
+    PRIMER_MAX_TEMPLATE_MISPRIMING = ParameterDescriptor(
+        &quot;PRIMER_MAX_TEMPLATE_MISPRIMING&quot;
+    )
+    PRIMER_QUALITY_RANGE_MAX = ParameterDescriptor(&quot;PRIMER_QUALITY_RANGE_MAX&quot;)
+    PRIMER_INTERNAL_MAX_SELF_END_TH = ParameterDescriptor(
+        &quot;PRIMER_INTERNAL_MAX_SELF_END_TH&quot;
+    )
+    PRIMER_MAX_TEMPLATE_MISPRIMING_TH = ParameterDescriptor(
+        &quot;PRIMER_MAX_TEMPLATE_MISPRIMING_TH&quot;
+    )
+    PRIMER_QUALITY_RANGE_MIN = ParameterDescriptor(&quot;PRIMER_QUALITY_RANGE_MIN&quot;)
+    PRIMER_INTERNAL_MAX_SIZE = ParameterDescriptor(&quot;PRIMER_INTERNAL_MAX_SIZE&quot;)
+    PRIMER_MAX_TM = ParameterDescriptor(&quot;PRIMER_MAX_TM&quot;)
+    PRIMER_SALT_CORRECTIONS = ParameterDescriptor(&quot;PRIMER_SALT_CORRECTIONS&quot;)
+    PRIMER_INTERNAL_MAX_TM = ParameterDescriptor(&quot;PRIMER_INTERNAL_MAX_TM&quot;)
+    PRIMER_MIN_3_PRIME_OVERLAP_OF_JUNCTION = ParameterDescriptor(
+        &quot;PRIMER_MIN_3_PRIME_OVERLAP_OF_JUNCTION&quot;
+    )
+    PRIMER_SALT_DIVALENT = ParameterDescriptor(&quot;PRIMER_SALT_DIVALENT&quot;)
+    PRIMER_INTERNAL_MIN_GC = ParameterDescriptor(&quot;PRIMER_INTERNAL_MIN_GC&quot;)
+    PRIMER_MIN_5_PRIME_OVERLAP_OF_JUNCTION = ParameterDescriptor(
+        &quot;PRIMER_MIN_5_PRIME_OVERLAP_OF_JUNCTION&quot;
+    )
+    PRIMER_SALT_MONOVALENT = ParameterDescriptor(&quot;PRIMER_SALT_MONOVALENT&quot;)
+    PRIMER_INTERNAL_MIN_QUALITY = ParameterDescriptor(&quot;PRIMER_INTERNAL_MIN_QUALITY&quot;)
+    PRIMER_MIN_END_QUALITY = ParameterDescriptor(&quot;PRIMER_MIN_END_QUALITY&quot;)
+    PRIMER_SECONDARY_STRUCTURE_ALIGNMENT = ParameterDescriptor(
+        &quot;PRIMER_SECONDARY_STRUCTURE_ALIGNMENT&quot;
+    )
+    PRIMER_INTERNAL_MIN_SIZE = ParameterDescriptor(&quot;PRIMER_INTERNAL_MIN_SIZE&quot;)
+    PRIMER_MIN_GC = ParameterDescriptor(&quot;PRIMER_MIN_GC&quot;)
+    PRIMER_SEQUENCING_ACCURACY = ParameterDescriptor(&quot;PRIMER_SEQUENCING_ACCURACY&quot;)
+    PRIMER_INTERNAL_MIN_TM = ParameterDescriptor(&quot;PRIMER_INTERNAL_MIN_TM&quot;)
+    PRIMER_MIN_LEFT_THREE_PRIME_DISTANCE = ParameterDescriptor(
+        &quot;PRIMER_MIN_LEFT_THREE_PRIME_DISTANCE&quot;
+    )
+    PRIMER_SEQUENCING_INTERVAL = ParameterDescriptor(&quot;PRIMER_SEQUENCING_INTERVAL&quot;)
+    PRIMER_INTERNAL_MISHYB_LIBRARY = ParameterDescriptor(
+        &quot;PRIMER_INTERNAL_MISHYB_LIBRARY&quot;
+    )
+    PRIMER_MIN_QUALITY = ParameterDescriptor(&quot;PRIMER_MIN_QUALITY&quot;)
+    PRIMER_SEQUENCING_LEAD = ParameterDescriptor(&quot;PRIMER_SEQUENCING_LEAD&quot;)
+    PRIMER_INTERNAL_MUST_MATCH_FIVE_PRIME = ParameterDescriptor(
+        &quot;PRIMER_INTERNAL_MUST_MATCH_FIVE_PRIME&quot;
+    )
+    PRIMER_MIN_RIGHT_THREE_PRIME_DISTANCE = ParameterDescriptor(
+        &quot;PRIMER_MIN_RIGHT_THREE_PRIME_DISTANCE&quot;
+    )
+    PRIMER_SEQUENCING_SPACING = ParameterDescriptor(&quot;PRIMER_SEQUENCING_SPACING&quot;)
+    PRIMER_INTERNAL_MUST_MATCH_THREE_PRIME = ParameterDescriptor(
+        &quot;PRIMER_INTERNAL_MUST_MATCH_THREE_PRIME&quot;
+    )
+    PRIMER_MIN_SIZE = ParameterDescriptor(&quot;PRIMER_MIN_SIZE&quot;)
+    PRIMER_TASK = ParameterDescriptor(&quot;PRIMER_TASK&quot;)
+    PRIMER_INTERNAL_OPT_GC_PERCENT = ParameterDescriptor(
+        &quot;PRIMER_INTERNAL_OPT_GC_PERCENT&quot;
+    )
+    PRIMER_MIN_THREE_PRIME_DISTANCE = ParameterDescriptor(
+        &quot;PRIMER_MIN_THREE_PRIME_DISTANCE&quot;
+    )
+    PRIMER_THERMODYNAMIC_OLIGO_ALIGNMENT = ParameterDescriptor(
+        &quot;PRIMER_THERMODYNAMIC_OLIGO_ALIGNMENT&quot;
+    )
+    PRIMER_INTERNAL_OPT_SIZE = ParameterDescriptor(&quot;PRIMER_INTERNAL_OPT_SIZE&quot;)
+    PRIMER_MIN_TM = ParameterDescriptor(&quot;PRIMER_MIN_TM&quot;)
+    PRIMER_THERMODYNAMIC_PARAMETERS_PATH = ParameterDescriptor(
+        &quot;PRIMER_THERMODYNAMIC_PARAMETERS_PATH&quot;
+    )
+    PRIMER_INTERNAL_OPT_TM = ParameterDescriptor(&quot;PRIMER_INTERNAL_OPT_TM&quot;)
+    PRIMER_MISPRIMING_LIBRARY = ParameterDescriptor(&quot;PRIMER_MISPRIMING_LIBRARY&quot;)
+    PRIMER_THERMODYNAMIC_TEMPLATE_ALIGNMENT = ParameterDescriptor(
+        &quot;PRIMER_THERMODYNAMIC_TEMPLATE_ALIGNMENT&quot;
+    )
+    PRIMER_INTERNAL_SALT_DIVALENT = ParameterDescriptor(&quot;PRIMER_INTERNAL_SALT_DIVALENT&quot;)
+    PRIMER_MUST_MATCH_FIVE_PRIME = ParameterDescriptor(&quot;PRIMER_MUST_MATCH_FIVE_PRIME&quot;)
+    PRIMER_TM_FORMULA = ParameterDescriptor(&quot;PRIMER_TM_FORMULA&quot;)
+    PRIMER_INTERNAL_SALT_MONOVALENT = ParameterDescriptor(
+        &quot;PRIMER_INTERNAL_SALT_MONOVALENT&quot;
+    )
+    PRIMER_MUST_MATCH_THREE_PRIME = ParameterDescriptor(&quot;PRIMER_MUST_MATCH_THREE_PRIME&quot;)
+    PRIMER_WT_END_QUAL = ParameterDescriptor(&quot;PRIMER_WT_END_QUAL&quot;)
+    PRIMER_INTERNAL_WT_END_QUAL = ParameterDescriptor(&quot;PRIMER_INTERNAL_WT_END_QUAL&quot;)
+    PRIMER_NUM_RETURN = ParameterDescriptor(&quot;PRIMER_NUM_RETURN&quot;)
+    PRIMER_WT_END_STABILITY = ParameterDescriptor(&quot;PRIMER_WT_END_STABILITY&quot;)
+    PRIMER_INTERNAL_WT_GC_PERCENT_GT = ParameterDescriptor(
+        &quot;PRIMER_INTERNAL_WT_GC_PERCENT_GT&quot;
+    )
+    PRIMER_OPT_GC_PERCENT = ParameterDescriptor(&quot;PRIMER_OPT_GC_PERCENT&quot;)
+    PRIMER_WT_GC_PERCENT_GT = ParameterDescriptor(&quot;PRIMER_WT_GC_PERCENT_GT&quot;)
+    PRIMER_INTERNAL_WT_GC_PERCENT_LT = ParameterDescriptor(
+        &quot;PRIMER_INTERNAL_WT_GC_PERCENT_LT&quot;
+    )
+    PRIMER_OPT_SIZE = ParameterDescriptor(&quot;PRIMER_OPT_SIZE&quot;)
+    PRIMER_WT_GC_PERCENT_LT = ParameterDescriptor(&quot;PRIMER_WT_GC_PERCENT_LT&quot;)
+    PRIMER_INTERNAL_WT_HAIRPIN_TH = ParameterDescriptor(&quot;PRIMER_INTERNAL_WT_HAIRPIN_TH&quot;)
+    PRIMER_OPT_TM = ParameterDescriptor(&quot;PRIMER_OPT_TM&quot;)
+    PRIMER_WT_HAIRPIN_TH = ParameterDescriptor(&quot;PRIMER_WT_HAIRPIN_TH&quot;)
+    PRIMER_INTERNAL_WT_LIBRARY_MISHYB = ParameterDescriptor(
+        &quot;PRIMER_INTERNAL_WT_LIBRARY_MISHYB&quot;
+    )
+    PRIMER_OUTSIDE_PENALTY = ParameterDescriptor(&quot;PRIMER_OUTSIDE_PENALTY&quot;)
+    PRIMER_WT_LIBRARY_MISPRIMING = ParameterDescriptor(&quot;PRIMER_WT_LIBRARY_MISPRIMING&quot;)
+    PRIMER_INTERNAL_WT_NUM_NS = ParameterDescriptor(&quot;PRIMER_INTERNAL_WT_NUM_NS&quot;)
+    PRIMER_PAIR_MAX_COMPL_ANY = ParameterDescriptor(&quot;PRIMER_PAIR_MAX_COMPL_ANY&quot;)
+    PRIMER_WT_MASK_FAILURE_RATE = ParameterDescriptor(&quot;PRIMER_WT_MASK_FAILURE_RATE&quot;)
+    PRIMER_INTERNAL_WT_SELF_ANY = ParameterDescriptor(&quot;PRIMER_INTERNAL_WT_SELF_ANY&quot;)
+    PRIMER_PAIR_MAX_COMPL_ANY_TH = ParameterDescriptor(&quot;PRIMER_PAIR_MAX_COMPL_ANY_TH&quot;)
+    PRIMER_WT_NUM_NS = ParameterDescriptor(&quot;PRIMER_WT_NUM_NS&quot;)
+    PRIMER_INTERNAL_WT_SELF_ANY_TH = ParameterDescriptor(
+        &quot;PRIMER_INTERNAL_WT_SELF_ANY_TH&quot;
+    )
+    PRIMER_PAIR_MAX_COMPL_END = ParameterDescriptor(&quot;PRIMER_PAIR_MAX_COMPL_END&quot;)
+    PRIMER_WT_POS_PENALTY = ParameterDescriptor(&quot;PRIMER_WT_POS_PENALTY&quot;)
+    PRIMER_INTERNAL_WT_SELF_END = ParameterDescriptor(&quot;PRIMER_INTERNAL_WT_SELF_END&quot;)
+    PRIMER_PAIR_MAX_COMPL_END_TH = ParameterDescriptor(&quot;PRIMER_PAIR_MAX_COMPL_END_TH&quot;)
+    PRIMER_WT_SELF_ANY = ParameterDescriptor(&quot;PRIMER_WT_SELF_ANY&quot;)
+    PRIMER_INTERNAL_WT_SELF_END_TH = ParameterDescriptor(
+        &quot;PRIMER_INTERNAL_WT_SELF_END_TH&quot;
+    )
+    PRIMER_PAIR_MAX_DIFF_TM = ParameterDescriptor(&quot;PRIMER_PAIR_MAX_DIFF_TM&quot;)
+    PRIMER_WT_SELF_ANY_TH = ParameterDescriptor(&quot;PRIMER_WT_SELF_ANY_TH&quot;)
+    PRIMER_INTERNAL_WT_SEQ_QUAL = ParameterDescriptor(&quot;PRIMER_INTERNAL_WT_SEQ_QUAL&quot;)
+    PRIMER_PAIR_MAX_LIBRARY_MISPRIMING = ParameterDescriptor(
+        &quot;PRIMER_PAIR_MAX_LIBRARY_MISPRIMING&quot;
+    )
+    PRIMER_WT_SELF_END = ParameterDescriptor(&quot;PRIMER_WT_SELF_END&quot;)
+    PRIMER_INTERNAL_WT_SIZE_GT = ParameterDescriptor(&quot;PRIMER_INTERNAL_WT_SIZE_GT&quot;)
+    PRIMER_PAIR_MAX_TEMPLATE_MISPRIMING = ParameterDescriptor(
+        &quot;PRIMER_PAIR_MAX_TEMPLATE_MISPRIMING&quot;
+    )
+    PRIMER_WT_SELF_END_TH = ParameterDescriptor(&quot;PRIMER_WT_SELF_END_TH&quot;)
+    PRIMER_INTERNAL_WT_SIZE_LT = ParameterDescriptor(&quot;PRIMER_INTERNAL_WT_SIZE_LT&quot;)
+    PRIMER_PAIR_MAX_TEMPLATE_MISPRIMING_TH = ParameterDescriptor(
+        &quot;PRIMER_PAIR_MAX_TEMPLATE_MISPRIMING_TH&quot;
+    )
+    PRIMER_WT_SEQ_QUAL = ParameterDescriptor(&quot;PRIMER_WT_SEQ_QUAL&quot;)
+    PRIMER_INTERNAL_WT_TM_GT = ParameterDescriptor(&quot;PRIMER_INTERNAL_WT_TM_GT&quot;)
+    PRIMER_PAIR_WT_COMPL_ANY = ParameterDescriptor(&quot;PRIMER_PAIR_WT_COMPL_ANY&quot;)
+    PRIMER_WT_SIZE_GT = ParameterDescriptor(&quot;PRIMER_WT_SIZE_GT&quot;)
+    PRIMER_INTERNAL_WT_TM_LT = ParameterDescriptor(&quot;PRIMER_INTERNAL_WT_TM_LT&quot;)
+    PRIMER_PAIR_WT_COMPL_ANY_TH = ParameterDescriptor(&quot;PRIMER_PAIR_WT_COMPL_ANY_TH&quot;)
+    PRIMER_WT_SIZE_LT = ParameterDescriptor(&quot;PRIMER_WT_SIZE_LT&quot;)
+    PRIMER_LIBERAL_BASE = ParameterDescriptor(&quot;PRIMER_LIBERAL_BASE&quot;)
+    PRIMER_PAIR_WT_COMPL_END = ParameterDescriptor(&quot;PRIMER_PAIR_WT_COMPL_END&quot;)
+    PRIMER_WT_TEMPLATE_MISPRIMING = ParameterDescriptor(&quot;PRIMER_WT_TEMPLATE_MISPRIMING&quot;)
+    PRIMER_LIB_AMBIGUITY_CODES_CONSENSUS = ParameterDescriptor(
+        &quot;PRIMER_LIB_AMBIGUITY_CODES_CONSENSUS&quot;
+    )
+    PRIMER_PAIR_WT_COMPL_END_TH = ParameterDescriptor(&quot;PRIMER_PAIR_WT_COMPL_END_TH&quot;)
+    PRIMER_WT_TEMPLATE_MISPRIMING_TH = ParameterDescriptor(
+        &quot;PRIMER_WT_TEMPLATE_MISPRIMING_TH&quot;
+    )
+    PRIMER_LOWERCASE_MASKING = ParameterDescriptor(&quot;PRIMER_LOWERCASE_MASKING&quot;)
+    PRIMER_PAIR_WT_DIFF_TM = ParameterDescriptor(&quot;PRIMER_PAIR_WT_DIFF_TM&quot;)
+    PRIMER_WT_TM_GT = ParameterDescriptor(&quot;PRIMER_WT_TM_GT&quot;)
+    PRIMER_MASK_3P_DIRECTION = ParameterDescriptor(&quot;PRIMER_MASK_3P_DIRECTION&quot;)
+    PRIMER_PAIR_WT_IO_PENALTY = ParameterDescriptor(&quot;PRIMER_PAIR_WT_IO_PENALTY&quot;)
+    PRIMER_WT_TM_LT = ParameterDescriptor(&quot;PRIMER_WT_TM_LT&quot;)
+    PRIMER_MASK_5P_DIRECTION = ParameterDescriptor(&quot;PRIMER_MASK_5P_DIRECTION&quot;)
+    PRIMER_PAIR_WT_LIBRARY_MISPRIMING = ParameterDescriptor(
+        &quot;PRIMER_PAIR_WT_LIBRARY_MISPRIMING&quot;
+    )
+    PRIMER_MASK_FAILURE_RATE = ParameterDescriptor(&quot;PRIMER_MASK_FAILURE_RATE&quot;)
+    PRIMER_PAIR_WT_PRODUCT_SIZE_GT = ParameterDescriptor(
+        &quot;PRIMER_PAIR_WT_PRODUCT_SIZE_GT&quot;
+    )
+    SEQUENCE_EXCLUDED_REGION = ParameterDescriptor(&quot;SEQUENCE_EXCLUDED_REGION&quot;)
+    SEQUENCE_INCLUDED_REGION = ParameterDescriptor(&quot;SEQUENCE_INCLUDED_REGION&quot;)
+    SEQUENCE_PRIMER_REVCOMP = ParameterDescriptor(&quot;SEQUENCE_PRIMER_REVCOMP&quot;)
+    SEQUENCE_FORCE_LEFT_END = ParameterDescriptor(&quot;SEQUENCE_FORCE_LEFT_END&quot;)
+    SEQUENCE_INTERNAL_EXCLUDED_REGION = ParameterDescriptor(
+        &quot;SEQUENCE_INTERNAL_EXCLUDED_REGION&quot;
+    )
+    SEQUENCE_QUALITY = ParameterDescriptor(&quot;SEQUENCE_QUALITY&quot;)
+    SEQUENCE_FORCE_LEFT_START = ParameterDescriptor(&quot;SEQUENCE_FORCE_LEFT_START&quot;)
+    SEQUENCE_INTERNAL_OLIGO = ParameterDescriptor(&quot;SEQUENCE_INTERNAL_OLIGO&quot;)
+    SEQUENCE_START_CODON_POSITION = ParameterDescriptor(&quot;SEQUENCE_START_CODON_POSITION&quot;)
+    SEQUENCE_FORCE_RIGHT_END = ParameterDescriptor(&quot;SEQUENCE_FORCE_RIGHT_END&quot;)
+    SEQUENCE_OVERLAP_JUNCTION_LIST = ParameterDescriptor(
+        &quot;SEQUENCE_OVERLAP_JUNCTION_LIST&quot;
+    )
+    SEQUENCE_TARGET = ParameterDescriptor(&quot;SEQUENCE_TARGET&quot;)
+    SEQUENCE_FORCE_RIGHT_START = ParameterDescriptor(&quot;SEQUENCE_FORCE_RIGHT_START&quot;)
+    SEQUENCE_PRIMER = ParameterDescriptor(&quot;SEQUENCE_PRIMER&quot;)
+    SEQUENCE_TEMPLATE = ParameterDescriptor(&quot;SEQUENCE_TEMPLATE&quot;)
+    SEQUENCE_ID = ParameterDescriptor(&quot;SEQUENCE_ID&quot;)
+    SEQUENCE_PRIMER_PAIR_OK_REGION_LIST = ParameterDescriptor(
+        &quot;SEQUENCE_PRIMER_PAIR_OK_REGION_LIST&quot;
+    )
+
+    # extra types
+    SEQUENCE_PRIMER_OVERHANG = ParameterDescriptor(&quot;SEQUENCE_PRIMER_OVERHANG&quot;)
+    SEQUENCE_PRIMER_REVCOMP_OVERHANG = ParameterDescriptor(
+        &quot;SEQUENCE_PRIMER_REVCOMP_OVERHANG&quot;
+    )
+    PRIMER_USE_OVERHANGS = ParameterDescriptor(&quot;PRIMER_USE_OVERHANGS&quot;)
+    PRIMER_LONG_OK = ParameterDescriptor(&quot;PRIMER_LONG_OK&quot;)
+
+    def __init__(self, params):
+        self.params = params</div>
+
+
+class ParameterAccessor:
+    &quot;&quot;&quot;A data accessor that exposes parameters to attribute level.
+
+    e.g.  ::      P = HasParameters(); P.SEQUENCE_ID = &quot;MY SEQ&quot;
+    &quot;&quot;&quot;
+
+    def __get__(self, obj, objtype):
+        return AllParameters(obj.params)
+
+
+# def print_and_check_parameters():
+#
+#     for p in _expected_opts:
+#         print(&quot;{name} = {cls}(\&quot;{name}\&quot;)&quot;.format(name=p, cls=ParameterDescriptor.__name__))
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">primer3plus</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/api_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/changelog.html">primer3plus change log</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../design.html">primer3plus.design</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017-2019, University of Washington.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

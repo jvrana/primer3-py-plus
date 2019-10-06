@@ -13,7 +13,15 @@ Design
 
 .. autoclass:: primer3plus.Design
     :members:
+    :undoc-members:
+
+.. autoclass:: primer3plus.design.DesignBase
+    :members:
     :inherited-members:
+
+.. autoclass:: primer3plus.design.interfaces.AllParameters
+    :members:
+    :undoc-members:
 
 .. _api_parameter_interface:
 
@@ -37,7 +45,9 @@ Design Parameters
 BoulderIO Default Parameters
 ----------------------------
 
-.. autoattribute:: primer3plus.params.default_boulderio._params
+.. csv-table:: Default
+   :file: ../_static/boulderio.csv
+   :header-rows: 1
 
 Extra/Special Parameters
 ------------------------

@@ -88,7 +88,7 @@ convenient methods for setting common tasks:</p>
 <div class="section" id="setting-from-a-single-key-value-pair">
 <h3>setting from a single key-value pair<a class="headerlink" href="#setting-from-a-single-key-value-pair" title="Permalink to this headline">¶</a></h3>
 <p>Preferred way to set parameters not available in the presets, is to use
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">set</span></code>:</p>
+<a class="reference internal" href="developer/api_reference.html#primer3plus.Design.set" title="primer3plus.Design.set"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set</span></code></a>:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span># preferred
 design.set(&#39;SEQUENCE_TEMPLATE&#39;, &#39;foo&#39;)
 </pre></div>
@@ -96,7 +96,7 @@ design.set(&#39;SEQUENCE_TEMPLATE&#39;, &#39;foo&#39;)
 </div>
 <div class="section" id="setting-from-a-dictionary">
 <h3>setting from a dictionary<a class="headerlink" href="#setting-from-a-dictionary" title="Permalink to this headline">¶</a></h3>
-<p>If setting many parameters, use <code class="xref py py-meth docutils literal notranslate"><span class="pre">update</span></code>:</p>
+<p>If setting many parameters, use <a class="reference internal" href="developer/api_reference.html#primer3plus.Design.update" title="primer3plus.Design.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update</span></code></a>:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>design.update({
     &#39;SEQUENCE_TEMPLATE&#39;: &quot;AGGGGTAGTAGTATGTGAAGGGGTAGTAGTATGTGAAGGGGTAGTAGTATGTGAAGGGGTAGTAGTATGTGA&quot;,
     &#39;LEFT_SEQUENCE&#39;: &#39;TAGTAGTATGTGAAGG&#39;
@@ -106,7 +106,7 @@ design.set(&#39;SEQUENCE_TEMPLATE&#39;, &#39;foo&#39;)
 </div>
 <div class="section" id="getting-help">
 <h3>getting help<a class="headerlink" href="#getting-help" title="Permalink to this headline">¶</a></h3>
-<p>To get help with a parameter, access it using <code class="xref py py-meth docutils literal notranslate"><span class="pre">get</span></code>
+<p>To get help with a parameter, access it using <a class="reference internal" href="developer/api_reference.html#primer3plus.Design.get" title="primer3plus.Design.get"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get</span></code></a>
 or as a descriptor and call <code class="xref py py-meth docutils literal notranslate"><span class="pre">help</span></code></p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">design</span><span class="o">.</span><span class="n">SEQUENCE_TEMPLATE</span><span class="o">.</span><span class="n">help</span><span class="p">())</span>
 <span class="c1"># print(design.get(&#39;SEQUENCE_TEMPLATE&#39;).help())</span>

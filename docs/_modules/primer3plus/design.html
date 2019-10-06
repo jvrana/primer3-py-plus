@@ -535,7 +535,7 @@ def clip(x, mn, mx):
     return max(min(x, mx), mn)
 
 
-class DesignBase:
+<div class="viewcode-block" id="DesignBase"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignBase">[docs]</a>class DesignBase:
 
     DEFAULT_PARAMS = default_boulderio  #: default parameters
     DEFAULT_GRADIENT = dict(
@@ -556,7 +556,8 @@ class DesignBase:
         self,
         gradient: Dict[
             str, Tuple[Union[float, int], Union[float, int], Union[float, int]]
-        ] = None, params: BoulderIO = None,
+        ] = None,
+        params: BoulderIO = None,
         quiet_runtime: bool = False,
     ):
         &quot;&quot;&quot;
@@ -572,7 +573,7 @@ class DesignBase:
         self.gradient = gradient
         self.quiet_runtime = quiet_runtime
 
-    def _run(self, params: BoulderIO = None) -&gt; Tuple[List[Dict], List[Dict]]:
+<div class="viewcode-block" id="DesignBase._run"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignBase._run">[docs]</a>    def _run(self, params: BoulderIO = None) -&gt; Tuple[List[Dict], List[Dict]]:
         &quot;&quot;&quot;Design primers. Optionally provide additional parameters.
 
         :param params:
@@ -596,17 +597,17 @@ class DesignBase:
             raise Primer3PlusRunTimeError(str(e)) from e
 
         pairs, explain = parse_primer3_results(res)
-        return pairs, explain
+        return pairs, explain</div>
 
-    def run(self, params: BoulderIO = None) -&gt; Tuple[List[Dict], List[Dict]]:
+<div class="viewcode-block" id="DesignBase.run"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignBase.run">[docs]</a>    def run(self, params: BoulderIO = None) -&gt; Tuple[List[Dict], List[Dict]]:
         &quot;&quot;&quot;Design primers. Optionally provide additional parameters.
 
         :param params:
         :return: results
         &quot;&quot;&quot;
-        return self._run(params)
+        return self._run(params)</div>
 
-    def run_and_optimize(
+<div class="viewcode-block" id="DesignBase.run_and_optimize"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignBase.run_and_optimize">[docs]</a>    def run_and_optimize(
         self,
         max_iterations,
         params: BoulderIO = None,
@@ -642,7 +643,7 @@ class DesignBase:
                 break
             self.params.update(update)
             pairs, explain = self._run(params)
-        return pairs, explain
+        return pairs, explain</div>
 
     @staticmethod
     def _update_dict(params, gradient):
@@ -658,18 +659,18 @@ class DesignBase:
                 raise e
         return update
 
-    @staticmethod
+<div class="viewcode-block" id="DesignBase.open_help"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignBase.open_help">[docs]</a>    @staticmethod
     def open_help():
         &quot;&quot;&quot;Open the documentation help in a new browser tab.&quot;&quot;&quot;
-        webbrowser.open(DOCURL)
+        webbrowser.open(DOCURL)</div>
 
-    def copy(self):
+<div class="viewcode-block" id="DesignBase.copy"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.DesignBase.copy">[docs]</a>    def copy(self):
         &quot;&quot;&quot;Copy this design and its parameters.&quot;&quot;&quot;
         designer = self.__class__()
-        designer.params = self.params.copy()
+        designer.params = self.params.copy()</div>
 
     def __copy__(self):
-        return self.copy()
+        return self.copy()</div>
 
 
 <div class="viewcode-block" id="Design"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.Design">[docs]</a>class Design(DesignBase, AllParameters):
@@ -688,11 +689,11 @@ class DesignBase:
         super().__init__()
         self._presets = DesignPresets(self)
 
-    def set(self, key, value):
-        self.params.defs[key].value = value
+<div class="viewcode-block" id="Design.set"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.Design.set">[docs]</a>    def set(self, key, value):
+        self.params.defs[key].value = value</div>
 
-    def get(self, key):
-        return self.params.defs[key]
+<div class="viewcode-block" id="Design.get"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.Design.get">[docs]</a>    def get(self, key):
+        return self.params.defs[key]</div>
 
     @property
     def presets(self) -&gt; &quot;DesignPresets&quot;:
@@ -700,8 +701,8 @@ class DesignBase:
         instance for this design.&quot;&quot;&quot;
         return self._presets
 
-    def update(self, data: Dict[str, Any]):
-        return self.params.update(data)
+<div class="viewcode-block" id="Design.update"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.Design.update">[docs]</a>    def update(self, data: Dict[str, Any]):
+        return self.params.update(data)</div>
 
 <div class="viewcode-block" id="Design.run"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.Design.run">[docs]</a>    def run(self, params: BoulderIO = None) -&gt; Tuple[List[Dict], List[Dict]]:
         self.presets._resolve()

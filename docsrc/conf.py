@@ -19,7 +19,32 @@ import os
 import sys
 
 sys.path.insert(0, os.path.abspath(".."))
+
 import primer3plus
+
+
+def boulderio_to_pandas(boulderio):
+    import pandas as pd
+
+    rows = []
+    for k, v in boulderio._params.items():
+        rows.append(
+            {
+                "name": v.name,
+                "type": str(v.ptype.type),
+                "value": v.value,
+                "default": v.ptype.default,
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def boulderio_to_csv(boulderio):
+    df = boulderio_to_pandas(boulderio)
+    df.to_csv("./_static/boulderio.csv")
+
+
+boulderio_to_csv(primer3plus.Design.DEFAULT_PARAMS)
 
 # -- General configuration ------------------------------------------------
 
