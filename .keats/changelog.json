@@ -1,4 +1,9 @@
 {
+  "1.0.0": {
+    "description": "stable release",
+    "date": "2019-10-06T10:48:12.224597",
+    "changes": []
+  },
   "1.0.0b1": {
     "description": "bug fix",
     "date": "2019-10-03T13:36:40.865734",
