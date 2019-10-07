@@ -1,3 +1,4 @@
+import json
 import random
 
 import pytest
@@ -6,6 +7,10 @@ from primer3plus.design import Design
 from primer3plus.exceptions import Primer3PlusRunTimeError
 from primer3plus.utils import anneal
 from primer3plus.utils import reverse_complement as rc
+
+
+def pprint(pairs):
+    print(json.dumps(pairs, indent=1))
 
 
 def test_init():
@@ -247,6 +252,76 @@ class TestOverOrigin:
         design.presets.template(gfp)
         design.presets.included((len(gfp) - 100, 110))
         design.run()
+
+
+def test_long_right_primer_with_overhangs(gfp):
+
+    design = Design()
+    design.presets.template(gfp)
+    design.presets.right_sequence(rc(gfp[-50:]))
+    design.presets.product_size((len(gfp), len(gfp)))
+
+    loverhang = "TTTTTTT"
+    roverhang = "GGGAGAG"
+
+    design.presets.left_overhang(loverhang)
+    design.presets.right_overhang(roverhang)
+    design.presets.long_ok()
+    design.presets.use_overhangs()
+    design.presets.pick_anyway()
+    pairs, explain = design.run()
+
+    pprint(pairs)
+    assert pairs
+    for pair in pairs.values():
+        assert pair["PAIR"]["PRODUCT_SIZE"] == len(gfp)
+        assert pair["RIGHT"]["OVERHANG"] == roverhang
+        assert pair["LEFT"]["OVERHANG"] == loverhang
+        assert pair["RIGHT"]["SEQUENCE"] == rc(gfp[-50:])
+
+        lloc = pair["LEFT"]["location"]
+        rloc = pair["RIGHT"]["location"]
+
+        assert lloc[0] == 0
+
+        assert rloc[0] == len(gfp) - 1
+        assert rloc[1] == 50
+    assert pairs
+
+
+def test_long_left_primer_with_overhangs(gfp):
+
+    design = Design()
+    design.presets.template(gfp)
+    design.presets.left_sequence(gfp[:50])
+    design.presets.product_size((len(gfp), len(gfp)))
+
+    loverhang = "TTTTTTT"
+    roverhang = "GGGAGAG"
+
+    design.presets.left_overhang(loverhang)
+    design.presets.right_overhang(roverhang)
+    design.presets.long_ok()
+    design.presets.use_overhangs()
+    design.presets.pick_anyway()
+    pairs, explain = design.run()
+
+    pprint(pairs)
+    assert pairs
+    for pair in pairs.values():
+        assert pair["PAIR"]["PRODUCT_SIZE"] == len(gfp)
+        assert pair["RIGHT"]["OVERHANG"] == roverhang
+        assert pair["LEFT"]["OVERHANG"] == loverhang
+        assert pair["LEFT"]["SEQUENCE"] == gfp[:50]
+
+        lloc = pair["LEFT"]["location"]
+        rloc = pair["RIGHT"]["location"]
+
+        assert lloc[0] == 0
+        assert lloc[1] == 50
+
+        assert rloc[0] == len(gfp) - 1
+    assert pairs
 
 
 def test_set_long_overhang(gfp):

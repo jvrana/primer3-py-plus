@@ -271,6 +271,10 @@ class AllParameters:
     )
     PRIMER_USE_OVERHANGS = ParameterDescriptor("PRIMER_USE_OVERHANGS")
     PRIMER_LONG_OK = ParameterDescriptor("PRIMER_LONG_OK")
+    _SEQUENCE_LONG_OVERHANG = ParameterDescriptor("_SEQUENCE_LONG_OVERHANG")
+    _SEQUENCE_REVCOMP_LONG_OVERHANG = ParameterDescriptor(
+        "_SEQUENCE_REVCOMP_LONG_OVERHANG"
+    )
 
     def __init__(self, params):
         self.params = params

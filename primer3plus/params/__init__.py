@@ -70,13 +70,14 @@ class Parameter:
     """An instance of a Primer3 parameter. Internally validate its value using
     its :class:<ParameterType <primer3plus.params.ParameterType>`"""
 
-    def __init__(self, ptype: ParameterType, value=None):
+    def __init__(self, ptype: ParameterType, value=None, restore: Any = None):
         """
         Initialize a parameter from a
         :class:`Parameter <primer3plus.params.ParameterType>`
 
         :param ptype: parameter type
         :param value: value to set parameter
+        :param restore: optional restoration value
         """
         self.ptype = (
             ptype
@@ -86,6 +87,7 @@ class Parameter:
             self.value = self.ptype.default
         else:
             self.value = value
+        self._restore = None
 
     @property
     def value(self) -> Any:
@@ -129,6 +131,22 @@ class Parameter:
         """
         self.value = self.ptype.default
 
+    def hold_restore(self):
+        """
+        Hold current value for later restoration.
+
+        :return:
+        """
+        self._restore = self.value
+
+    def set_restore(self):
+        """
+        Restores the parameter to some original value.
+        :return:
+        """
+        if self._restore is not None:
+            self.value = self._restore
+
     def copy(self) -> "Parameter":
         """
         Make a copy of this parameter.
@@ -138,8 +156,12 @@ class Parameter:
         p = self.__class__(self.ptype, deepcopy(self.value))
         return p
 
-    def help(self, open: bool = False):
+    @property
+    def help_url(self):
         return "{}#{}".format(DOCURL, self.name)
+
+    def help(self, open: bool = False):
+        return self.help_url
 
     def __str__(self) -> str:
         return "<{cls} {name} {type} value={value} default={default}>".format(
@@ -187,6 +209,20 @@ class ExtraTypes:
         " will automatically be adjusted",
         category=ParamTypes.EXTRA,
     )  #: specifies BoulderIO use long primers (>35bp).
+    _SEQUENCE_LONG_OVERHANG = ParameterType(
+        name="_SEQUENCE_LONG_OVERHANG",
+        type=str,
+        default="",
+        description="DO NOT SET DIRECTLY. Seq trimmed for long left primer overhangs.",
+        category=ParamTypes.EXTRA,
+    )
+    _SEQUENCE_REVCOMP_LONG_OVERHANG = ParameterType(
+        name="_SEQUENCE_REVCOMP_LONG_OVERHANG",
+        type=str,
+        default="",
+        description="DO NOT SET DIRECTLY. Seq trimmed for long right primer overhangs.",
+        category=ParamTypes.EXTRA,
+    )
 
 
 class BoulderIO(Mapping):
@@ -201,6 +237,8 @@ class BoulderIO(Mapping):
         ExtraTypes.SEQUENCE_PRIMER_REVCOMP_OVERHANG,
         ExtraTypes.PRIMER_USE_OVERHANGS,
         ExtraTypes.PRIMER_LONG_OK,
+        ExtraTypes._SEQUENCE_LONG_OVERHANG,
+        ExtraTypes._SEQUENCE_REVCOMP_LONG_OVERHANG,
     ]  #: extra parameter types
     PRIMER_MAX_SIZE_HARD_LIM = 35  #: hard coded primer length limit for Primer3.
 

@@ -73,7 +73,7 @@ class DesignPresets:
             self._resolve_overhangs()
         if self._design.PRIMER_LONG_OK.value:
             self._resolve_max_lengths(lim=BoulderIO.PRIMER_MAX_SIZE_HARD_LIM)
-
+            self._resolve_product_sizes()
         if not self._design.PRIMER_USE_OVERHANGS.value:
             if self._design.SEQUENCE_PRIMER_OVERHANG.value:
                 warn(
@@ -101,6 +101,9 @@ class DesignPresets:
 
     def _post_parse(self, pairs, explain) -> None:
         """Modify results from design parameters (e.g. overhangs)"""
+        left_long_overhang = self._design._SEQUENCE_LONG_OVERHANG.value
+        right_long_overhang = self._design._SEQUENCE_REVCOMP_LONG_OVERHANG.value
+
         for pair in pairs.values():
             for x in ["LEFT", "RIGHT"]:
                 pair[x].setdefault("OVERHANG", "")
@@ -109,6 +112,33 @@ class DesignPresets:
                 pair["RIGHT"][
                     "OVERHANG"
                 ] = self._design.SEQUENCE_PRIMER_REVCOMP_OVERHANG.value
+                if left_long_overhang:
+                    pair["LEFT"]["SEQUENCE"] = (
+                        left_long_overhang + pair["LEFT"]["SEQUENCE"]
+                    )
+                    pair["LEFT"]["OVERHANG"] = pair["LEFT"]["OVERHANG"][
+                        : -len(left_long_overhang)
+                    ]
+                    pair["PAIR"]["PRODUCT_SIZE"] += len(left_long_overhang)
+                    loc = pair["LEFT"]["location"]
+                    pair["LEFT"]["location"] = [
+                        loc[0] - len(left_long_overhang),
+                        len(pair["LEFT"]["SEQUENCE"]),
+                    ]
+
+                if right_long_overhang:
+                    pair["RIGHT"]["SEQUENCE"] = (
+                        right_long_overhang + pair["RIGHT"]["SEQUENCE"]
+                    )
+                    pair["RIGHT"]["OVERHANG"] = pair["RIGHT"]["OVERHANG"][
+                        : -len(right_long_overhang)
+                    ]
+                    pair["PAIR"]["PRODUCT_SIZE"] += len(right_long_overhang)
+                    loc = pair["RIGHT"]["location"]
+                    pair["RIGHT"]["location"] = [
+                        loc[0] + len(right_long_overhang),
+                        len(pair["RIGHT"]["SEQUENCE"]),
+                    ]
 
     def _interval_from_sequences(
         self, template: str, target: str
@@ -255,9 +285,9 @@ class DesignPresets:
         )
 
     @staticmethod
-    def _fix_length(overhang, anneal, lim):
+    def _trim_long(overhang: str, anneal: str, lim: int) -> Tuple[str, str, str]:
         """Fix the overhang and anneal from the hardcoded BoulderIO primer lim."""
-        return overhang + anneal[:-lim], anneal[-lim:]
+        return overhang, anneal[:-lim], anneal[-lim:]
 
     def _get_left_overhang(self):
         left = self._design.SEQUENCE_PRIMER.value
@@ -316,6 +346,27 @@ class DesignPresets:
         """
         return self.update({"PRIMER_LONG_OK": b})
 
+    def _resolve_product_sizes(self):
+        """If there are long primers being used, the product_size
+        is no longer valid as the trimmed sequence is no longer represented
+        in the originally provided product size. This re-adjusts the product
+        size to correspond the adjusted parameters."""
+        # adjust product size range
+        left_long_overhang = self._design._SEQUENCE_LONG_OVERHANG.value
+        right_long_overhang = self._design._SEQUENCE_REVCOMP_LONG_OVERHANG.value
+        product_sizes = self._design.PRIMER_PRODUCT_SIZE_RANGE.value
+
+        x = len(left_long_overhang) + len(right_long_overhang)
+
+        if isinstance(product_sizes[0], tuple):
+            new_product_sizes = []
+            for size in product_sizes:
+                new_product_sizes.append((size[0] - x, size[1] - x))
+            self._design.PRIMER_PRODUCT_SIZE_RANGE.value = new_product_sizes
+        else:
+            size = self._design.PRIMER_PRODUCT_SIZE_RANGE.value
+            self._design.PRIMER_PRODUCT_SIZE_RANGE.value = [size[0] - x, size[1] - x]
+
     def _resolve_max_lengths(self, lim: int):
         """Fixes the annealing and overhang sequences for annealing sequences
             for primers over the :attr:`BoulderIO
@@ -326,27 +377,48 @@ class DesignPresets:
         left_over = self._design.SEQUENCE_PRIMER_OVERHANG.value
         right_over = self._design.SEQUENCE_PRIMER_REVCOMP_OVERHANG.value
 
-        left_over, left_anneal = self._fix_length(left_over, left_anneal, lim=lim)
-        right_over, right_anneal = self._fix_length(right_over, right_anneal, lim=lim)
+        left_over, left_long_overhang, left_anneal = self._trim_long(
+            left_over, left_anneal, lim=lim
+        )
+        right_over, right_long_overhang, right_anneal = self._trim_long(
+            right_over, right_anneal, lim=lim
+        )
 
-        self.left_overhang(left_over)
-        self.right_overhang(right_over)
+        self.left_overhang(left_over + left_long_overhang)
+        self.right_overhang(right_over + right_long_overhang)
+
+        # save the sequences that were trimmed
+        # TODO: will need to re-add these in the results in overhang, product size, and anneal
+        # TODO: adjust the product_size
+        # TODO: adjust any other regions
+        # TODO: re-adjust tm and add any warnings
+
+        # save values for long overhangs
+        self._left_long_overhang(left_long_overhang)
+        self._right_long_overhang(right_long_overhang)
+
         self.left_sequence(left_anneal)
         self.right_sequence(right_anneal)
+
+    def _left_long_overhang(self, x):
+        self.update({"_SEQUENCE_LONG_OVERHANG": x})
+
+    def _right_long_overhang(self, x):
+        self.update({"_SEQUENCE_REVCOMP_LONG_OVERHANG": x})
 
     def _resolve_overhangs(self):
         """Sets the annealing and overhang sequences."""
         left_over, left_anneal = self._get_left_overhang()
         _loverhang = self._design.SEQUENCE_PRIMER_OVERHANG.value
-        if left_anneal and self._design.SEQUENCE_PRIMER_OVERHANG.value:
+        if _loverhang:
             left_over = _loverhang + left_over
             # raise ValueError(
             #     "Left overhang already set to '{}'.".format(_loverhang)
             # )
 
         right_over, right_anneal = self._get_right_overhang()
-        _roverhang = self._design.SEQUENCE_PRIMER_OVERHANG.value
-        if right_anneal and _roverhang:
+        _roverhang = self._design.SEQUENCE_PRIMER_REVCOMP_OVERHANG.value
+        if _roverhang:
             right_over = _roverhang + right_over
             # raise ValueError(
             #     "Right overhang already set to '{}'.".format(_roverhang)
