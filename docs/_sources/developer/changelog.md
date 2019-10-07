@@ -1,4 +1,11 @@
 # primer3plus change log
+## 1.0.2
+**2019-10-07T11:15:48.129415**
+bug fix
+
+ - primer3plus.utils.anneal now by default ignores the case of the strings
+
+
 ## 1.0.1
 **2019-10-07T08:02:08.512973**
 fix overhang bug
