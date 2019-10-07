@@ -832,9 +832,15 @@ class Design(DesignBase, AllParameters):
         return self.settings
 
     def update(self, data: Dict[str, Any]):
+        """Update an arbitrary parameter"""
         return self.params.update(data)
 
     def run(self) -> Tuple[List[Dict], List[Dict]]:
+        """Design primers. Optionally provide additional parameters.
+
+        :param params:
+        :return: results
+        """
         with RestoreAfterRun(self.params):
             self.settings._resolve()
             return super()._run(None)
@@ -847,8 +853,20 @@ class Design(DesignBase, AllParameters):
             str, Tuple[Union[float, int], Union[float, int], Union[float, int]]
         ] = None,
     ) -> Tuple[List[dict], List[dict]]:
-        self.settings._resolve()
-        return super().run_and_optimize(max_iterations)
+        """Design primers. If primer design is unsuccessful, relax parameters
+        as defined in primer3plust.Design.DEFAULT_GRADIENT. Repeat for the specified
+        number of max_iterations.
+
+        :param max_iterations: the max number of iterations to perform relaxation
+        :param params: optional parameters to provide
+        :param gradient: optional gradient to provide. If not provided,
+                            Design.DEFAULT_GRADIENT will be used. The gradient is a
+                            dictionary off 3 tuples, the step the min and the max.
+        :return: results
+        """
+        with RestoreAfterRun(self.params):
+            self.settings._resolve()
+            return super().run_and_optimize(max_iterations)
 
 
 def new(params=None):
