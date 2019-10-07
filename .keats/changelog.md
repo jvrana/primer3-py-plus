@@ -1,4 +1,14 @@
 # primer3plus change log
+## 1.0.3
+**2019-10-07T14:50:00.887961**
+bug fixes around long primer use
+
+ - fixes 'SEQUENCE' and 'OVERHANG' keys for long primers
+ - fixes primer locations for long primers
+ - fixes primer pair product size for long primers
+ - fixes bug in which product size did not match expected size for long primers. Will now automatically readjust product size parameter for long primers
+
+
 ## 1.0.2
 **2019-10-07T11:15:48.129415**
 bug fix
