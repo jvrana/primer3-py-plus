@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>primer3plus.design &mdash; primer3plus 1.0.0 documentation</title>
+  <title>primer3plus.design &mdash; primer3plus 1.0.1 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                1.0.0
+                1.0.1
               </div>
             
           
@@ -217,8 +217,6 @@ from primer3plus.utils import anneal as anneal_primer
         :param design: The design
         &quot;&quot;&quot;
         self._design = design
-        self._loverhang = &quot;&quot;
-        self._roverhang = &quot;&quot;
 
 <div class="viewcode-block" id="DesignPresets._resolve"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets._resolve">[docs]</a>    def _resolve(self):
         &quot;&quot;&quot;Process any extra parameters and process BoulderIO so
@@ -491,16 +489,20 @@ from primer3plus.utils import anneal as anneal_primer
 <div class="viewcode-block" id="DesignPresets._resolve_overhangs"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets._resolve_overhangs">[docs]</a>    def _resolve_overhangs(self):
         &quot;&quot;&quot;Sets the annealing and overhang sequences.&quot;&quot;&quot;
         left_over, left_anneal = self._get_left_overhang()
+        _loverhang = self._design.SEQUENCE_PRIMER_OVERHANG.value
         if left_anneal and self._design.SEQUENCE_PRIMER_OVERHANG.value:
-            raise ValueError(
-                &quot;Left overhang already set to &#39;{}&#39;.&quot;.format(self._loverhang)
-            )
+            left_over = _loverhang + left_over
+            # raise ValueError(
+            #     &quot;Left overhang already set to &#39;{}&#39;.&quot;.format(_loverhang)
+            # )
 
         right_over, right_anneal = self._get_right_overhang()
-        if right_anneal and self._design.SEQUENCE_PRIMER_REVCOMP_OVERHANG.value:
-            raise ValueError(
-                &quot;Right overhang already set to &#39;{}&#39;.&quot;.format(self._roverhang)
-            )
+        _roverhang = self._design.SEQUENCE_PRIMER_OVERHANG.value
+        if right_anneal and _roverhang:
+            right_over = _roverhang + right_over
+            # raise ValueError(
+            #     &quot;Right overhang already set to &#39;{}&#39;.&quot;.format(_roverhang)
+            # )
 
         self.left_overhang(left_over)
         self.right_overhang(right_over)
