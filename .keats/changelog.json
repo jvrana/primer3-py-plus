@@ -1,4 +1,11 @@
 {
+  "1.0.1": {
+    "description": "fix overhang bug",
+    "date": "2019-10-07T08:02:08.512973",
+    "changes": [
+      "Now, if overhangs are already explicitly set, the overhangs will be concatented if long_primer and overhangs are being used"
+    ]
+  },
   "1.0.0": {
     "description": "stable release",
     "date": "2019-10-06T10:48:12.224597",
