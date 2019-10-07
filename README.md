@@ -1,6 +1,6 @@
 # Primer3Plus
 
-Primer3Plus is a Python DNA primer design tool based off of Primer3 [1]_ [2]_ and the
+Primer3Plus is a Python DNA primer design tool based off of Primer3 and the
 Python primer3 wrapper (https://pypi.org/project/primer3-py/).
 
 ```python
