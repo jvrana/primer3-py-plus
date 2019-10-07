@@ -10,12 +10,22 @@ Github: |homepage|
 Primer3Plus is a Python DNA primer design tool based off of primer3 [1]_ [2]_ and the
 Python primer3 wrapper https://pypi.org/project/primer3-py/.
 
-.. code-block:: python
+.. testsetup:: intro
+
+    from primer3plus import Design
+    design = Design()
+
+.. testcode:: intro
 
    design = Design()
-   design.presets.template("AGCGTCGTGTATGGTAGTGTATTTGCGTTGACGTTGCTGACGTCGTTGAGTCGT")
+   t = "AGCGTCGTGTATGGTAGTGTATTTGCGTTGACGTTGCTGACGTCGTTGAGTCGT"
+   design.presets.template(t)
+   design.presets.product_size((len(t), len(t)))
    design.presets.as_cloning_task()
    design.run()
+
+.. testoutput:: intro
+    :skipif: True
 
 .. code-block:: python
 

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Primer3Plus &mdash; primer3plus 1.0.0b1 documentation</title>
+  <title>Primer3Plus &mdash; primer3plus 1.0.0 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                1.0.0b1
+                1.0.0
               </div>
             
           
@@ -159,14 +159,19 @@
             
   <div class="section" id="primer3plus">
 <h1>Primer3Plus<a class="headerlink" href="#primer3plus" title="Permalink to this headline">¶</a></h1>
-<p>v1.0.0b1. (<a class="reference internal" href="developer/changelog.html"><span class="doc">Changelog</span></a>)</p>
+<p>v1.0.0. (<a class="reference internal" href="developer/changelog.html"><span class="doc">Changelog</span></a>)</p>
 <p>Github: <a class="reference external" href="https://github.com/jvrana/primer3-py-plus">https://github.com/jvrana/primer3-py-plus</a></p>
 <p>Primer3Plus is a Python DNA primer design tool based off of primer3 <a class="footnote-reference brackets" href="#id3" id="id1">1</a> <a class="footnote-reference brackets" href="#id4" id="id2">2</a> and the
 Python primer3 wrapper <a class="reference external" href="https://pypi.org/project/primer3-py/">https://pypi.org/project/primer3-py/</a>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">design</span> <span class="o">=</span> <span class="n">Design</span><span class="p">()</span>
-<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;AGCGTCGTGTATGGTAGTGTATTTGCGTTGACGTTGCTGACGTCGTTGAGTCGT&quot;</span><span class="p">)</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">design</span> <span class="o">=</span> <span class="n">Design</span><span class="p">()</span>
+<span class="n">t</span> <span class="o">=</span> <span class="s2">&quot;AGCGTCGTGTATGGTAGTGTATTTGCGTTGACGTTGCTGACGTCGTTGAGTCGT&quot;</span>
+<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">product_size</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)))</span>
 <span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">as_cloning_task</span><span class="p">()</span>
 <span class="n">design</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">design</span> <span class="o">=</span> <span class="n">Design</span><span class="p">()</span>
@@ -286,6 +291,7 @@ parameters such as melting temperature and primer size until primer pairs are fo
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="developer/changelog.html">primer3plus change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="developer/changelog.html#id1">1.0.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="developer/changelog.html#b1">1.0.0b1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="developer/changelog.html#b0">1.0.0b0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="developer/changelog.html#a1">1.0.0a1</a></li>
