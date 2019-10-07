@@ -139,7 +139,7 @@ class Parameter:
         """
         self._restore = self.value
 
-    def set_restore(self):
+    def restore(self):
         """
         Restores the parameter to some original value.
         :return:

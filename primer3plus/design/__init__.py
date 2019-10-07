@@ -703,13 +703,13 @@ class DesignBase:
         self.settings._post_parse(pairs, explain)
         return pairs, explain
 
-    def run(self, params: BoulderIO = None) -> Tuple[List[Dict], List[Dict]]:
+    def run(self) -> Tuple[List[Dict], List[Dict]]:
         """Design primers. Optionally provide additional parameters.
 
         :param params:
         :return: results
         """
-        return self._run(params)
+        return self._run()
 
     def run_and_optimize(
         self,
@@ -777,6 +777,21 @@ class DesignBase:
         return self.copy()
 
 
+class RestoreAfterRun:
+    """Class to restore boulderio to its original parameters after a run"""
+
+    def __init__(self, boulderio):
+        self.params = boulderio
+
+    def __enter__(self):
+        for v in self.params._params.values():
+            v.hold_restore()
+
+    def __exit__(self, a, b, c):
+        for v in self.params._params.values():
+            v.restore()
+
+
 class Design(DesignBase, AllParameters):
     def __init__(self):
         """Initialize a new design. Set parameters using
@@ -819,9 +834,10 @@ class Design(DesignBase, AllParameters):
     def update(self, data: Dict[str, Any]):
         return self.params.update(data)
 
-    def run(self, params: BoulderIO = None) -> Tuple[List[Dict], List[Dict]]:
-        self.settings._resolve()
-        return super()._run(params)
+    def run(self) -> Tuple[List[Dict], List[Dict]]:
+        with RestoreAfterRun(self.params):
+            self.settings._resolve()
+            return super()._run(None)
 
     def run_and_optimize(
         self,
