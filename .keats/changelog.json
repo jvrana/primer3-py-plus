@@ -1,4 +1,9 @@
 {
+  "1.0.4": {
+    "description": "improved error messages",
+    "date": "2019-10-07T15:18:25.381341",
+    "changes": []
+  },
   "1.0.3": {
     "description": "bug fixes around long primer use",
     "date": "2019-10-07T14:50:00.887961",
