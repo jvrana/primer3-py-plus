@@ -1,4 +1,11 @@
 # primer3plus change log
+## 1.0.4
+**2019-10-07T15:18:25.381341**
+improved error messages
+
+
+
+
 ## 1.0.3
 **2019-10-07T14:50:00.887961**
 bug fixes around long primer use

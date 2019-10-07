@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>primer3plus.design &mdash; primer3plus 1.0.3 documentation</title>
+  <title>primer3plus.design &mdash; primer3plus 1.0.4 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                1.0.3
+                1.0.4
               </div>
             
           
@@ -813,6 +813,21 @@ def clip(x, mn, mx):
         self.gradient = gradient
         self.quiet_runtime = quiet_runtime
 
+<div class="viewcode-block" id="DesignBase._raise_run_time_error"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignBase._raise_run_time_error">[docs]</a>    def _raise_run_time_error(self, msg: str) -&gt; Primer3PlusRunTimeError:
+        &quot;&quot;&quot;
+        Raise a Primer3PlusRunTime exception. If parameters are named in
+        the msg, print off some debugging information at the end of the message.
+
+        :param msg: the error msg
+        :return: the run time exception
+        &quot;&quot;&quot;
+        parameter_explain = set()
+        for name, value in self.params._params.items():
+            if name in msg:
+                parameter_explain.add(&quot;\t&quot; + str(value))
+        parameter_explain = sorted(parameter_explain)
+        return Primer3PlusRunTimeError(msg + &quot;\n&quot; + &quot;\n&quot;.join(parameter_explain))</div>
+
 <div class="viewcode-block" id="DesignBase._run"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignBase._run">[docs]</a>    def _run(self, params: BoulderIO = None) -&gt; Tuple[List[Dict], List[Dict]]:
         &quot;&quot;&quot;Design primers. Optionally provide additional parameters.
 
@@ -825,16 +840,16 @@ def clip(x, mn, mx):
             res = primer3.bindings.designPrimers(params._sequence(), params._globals())
         except OSError as e:
             if not self.quiet_runtime:
-                raise Primer3PlusRunTimeError(str(e)) from e
+                raise self._raise_run_time_error(str(e)) from e
             else:
                 return {}, {&quot;PRIMER_ERROR&quot;: str(e)}
         except Primer3PlusRunTimeError as e:
             if not self.quiet_runtime:
-                raise Primer3PlusRunTimeError(str(e)) from e
+                raise self._raise_run_time_error(str(e)) from e
             else:
                 return {}, {&quot;PRIMER_ERROR&quot;: str(e)}
         except Primer3PlusException as e:
-            raise Primer3PlusRunTimeError(str(e)) from e
+            raise self._raise_run_time_error(str(e)) from e
 
         pairs, explain = parse_primer3_results(res)
         self.settings._post_parse(pairs, explain)

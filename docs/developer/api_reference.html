@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>API Reference &mdash; primer3plus 1.0.3 documentation</title>
+  <title>API Reference &mdash; primer3plus 1.0.4 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                1.0.3
+                1.0.4
               </div>
             
           
@@ -243,19 +243,22 @@ design.run()
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.design.Design._run" title="primer3plus.design.Design._run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_run</span></code></a>([params])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.design.Design._raise_run_time_error" title="primer3plus.design.Design._raise_run_time_error"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_raise_run_time_error</span></code></a>(msg)</p></td>
+<td><p>Raise a Primer3PlusRunTime exception.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.design.Design._run" title="primer3plus.design.Design._run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_run</span></code></a>([params])</p></td>
 <td><p>Design primers.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.design.Design.copy" title="primer3plus.design.Design.copy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">copy</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.design.Design.copy" title="primer3plus.design.Design.copy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">copy</span></code></a>()</p></td>
 <td><p>Copy this design and its parameters.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.design.Design.open_help" title="primer3plus.design.Design.open_help"><code class="xref py py-obj docutils literal notranslate"><span class="pre">open_help</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.design.Design.open_help" title="primer3plus.design.Design.open_help"><code class="xref py py-obj docutils literal notranslate"><span class="pre">open_help</span></code></a>()</p></td>
 <td><p>Open the documentation help in a new browser tab.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.design.Design.run" title="primer3plus.design.Design.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>([params])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.design.Design.run" title="primer3plus.design.Design.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>([params])</p></td>
 <td><p>Design primers.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.design.Design.run_and_optimize" title="primer3plus.design.Design.run_and_optimize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_and_optimize</span></code></a>(max_iterations[, params, …])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.design.Design.run_and_optimize" title="primer3plus.design.Design.run_and_optimize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_and_optimize</span></code></a>(max_iterations[, params, …])</p></td>
 <td><p>Design primers.</p></td>
 </tr>
 </tbody>
@@ -272,6 +275,24 @@ design.run()
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="primer3plus.design.Design._raise_run_time_error">
+<code class="sig-name descname">_raise_run_time_error</code><span class="sig-paren">(</span><em class="sig-param">msg</em><span class="sig-paren">)</span><a class="headerlink" href="#primer3plus.design.Design._raise_run_time_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raise a Primer3PlusRunTime exception. If parameters are named in
+the msg, print off some debugging information at the end of the message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>msg</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – the error msg</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Primer3PlusRunTimeError</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the run time exception</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="method">
 <dt id="primer3plus.design.Design._run">
 <code class="sig-name descname">_run</code><span class="sig-paren">(</span><em class="sig-param">params=None</em><span class="sig-paren">)</span><a class="headerlink" href="#primer3plus.design.Design._run" title="Permalink to this definition">¶</a></dt>
@@ -393,19 +414,22 @@ instance for this design.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.design.DesignBase._run" title="primer3plus.design.DesignBase._run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_run</span></code></a>([params])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.design.DesignBase._raise_run_time_error" title="primer3plus.design.DesignBase._raise_run_time_error"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_raise_run_time_error</span></code></a>(msg)</p></td>
+<td><p>Raise a Primer3PlusRunTime exception.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.design.DesignBase._run" title="primer3plus.design.DesignBase._run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_run</span></code></a>([params])</p></td>
 <td><p>Design primers.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.design.DesignBase.copy" title="primer3plus.design.DesignBase.copy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">copy</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.design.DesignBase.copy" title="primer3plus.design.DesignBase.copy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">copy</span></code></a>()</p></td>
 <td><p>Copy this design and its parameters.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.design.DesignBase.open_help" title="primer3plus.design.DesignBase.open_help"><code class="xref py py-obj docutils literal notranslate"><span class="pre">open_help</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.design.DesignBase.open_help" title="primer3plus.design.DesignBase.open_help"><code class="xref py py-obj docutils literal notranslate"><span class="pre">open_help</span></code></a>()</p></td>
 <td><p>Open the documentation help in a new browser tab.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.design.DesignBase.run" title="primer3plus.design.DesignBase.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>([params])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.design.DesignBase.run" title="primer3plus.design.DesignBase.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>([params])</p></td>
 <td><p>Design primers.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.design.DesignBase.run_and_optimize" title="primer3plus.design.DesignBase.run_and_optimize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_and_optimize</span></code></a>(max_iterations[, params, …])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.design.DesignBase.run_and_optimize" title="primer3plus.design.DesignBase.run_and_optimize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_and_optimize</span></code></a>(max_iterations[, params, …])</p></td>
 <td><p>Design primers.</p></td>
 </tr>
 </tbody>
@@ -420,6 +444,24 @@ instance for this design.</p>
 <dt id="primer3plus.design.DesignBase.DEFAULT_PARAMS">
 <code class="sig-name descname">DEFAULT_PARAMS</code><em class="property"> = &lt;primer3plus.params.BoulderIO object&gt;</em><a class="headerlink" href="#primer3plus.design.DesignBase.DEFAULT_PARAMS" title="Permalink to this definition">¶</a></dt>
 <dd><p>default parameters</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.design.DesignBase._raise_run_time_error">
+<code class="sig-name descname">_raise_run_time_error</code><span class="sig-paren">(</span><em class="sig-param">msg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignBase._raise_run_time_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignBase._raise_run_time_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raise a Primer3PlusRunTime exception. If parameters are named in
+the msg, print off some debugging information at the end of the message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>msg</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – the error msg</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Primer3PlusRunTimeError</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the run time exception</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
