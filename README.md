@@ -3,8 +3,6 @@
 Primer3Plus is a Python DNA primer design tool based off of Primer3 [1]_ [2]_ and the
 Python primer3 wrapper (https://pypi.org/project/primer3-py/).
 
-Documentation: https://jvrana.github.io/primer3-py-plus/
-
 ```python
 import json
 
@@ -76,14 +74,11 @@ print(json.dumps(explain, indent=1))
  "PRIMER_PAIR_NUM_RETURNED": 1
 }
 ```
+## Installation
 
-# Extra options
-
-- PRIMER_USE_OVERHANGS
-- SEQUENCE_PRIMER_OVERHANG
-- SEQUENCE_PRIMER_REVCOMP_OVERHANG
-- PRIMER_ALLOW_ORIGIN_SPAN
-
+```
+pip install primer3plus -U
+```
 
 ## Requirements
 

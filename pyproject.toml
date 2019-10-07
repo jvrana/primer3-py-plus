@@ -11,6 +11,7 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Bio-Informatics",
     "Development Status :: 4 - Beta"
 ]
+readme = "README.md"
     
 [tool.poetry.dependencies]
 python = "^3.5"
