@@ -165,3 +165,12 @@ def anneal(
     """
     fwd, rev = anneal_iter(seq, primer_list, n_bases, ignore_case)
     return list(fwd), list(rev)
+
+
+_warned_list = []
+
+
+def depreciated_warning(msg, only_once=True):
+    if only_once is False or msg not in _warned_list:
+        warnings.warn(msg, DeprecationWarning)
+        _warned_list.append(msg)

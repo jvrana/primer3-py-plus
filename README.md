@@ -18,9 +18,9 @@ ATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGC
 TCGAAGGCTTTAATTTGC
 """
 template = template.replace('\n', '').replace(' ', '')
-design.presets.template(template)
-design.presets.as_cloning_task()
-design.presets.primer_num_return(1)
+design.settings.template(template)
+design.settings.as_cloning_task()
+design.settings.primer_num_return(1)
 results, explain = design.run()
 
 print(json.dumps(results, indent=1))

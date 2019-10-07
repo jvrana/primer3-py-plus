@@ -10,13 +10,13 @@ For a list of design parameters available, take a look at the
     design = Design()
 
     # set template sequence
-    design.presets.template("AGGTTGCGTGTGTATGGTCGTGTAGTGTGT")
+    design.settings.template("AGGTTGCGTGTGTATGGTCGTGTAGTGTGT")
 
     # set left primer sequence
-    design.presets.left_sequence("GTTGCGTGTGT)
+    design.settings.left_sequence("GTTGCGTGTGT)
 
     # set as a cloning task
-    design.presets.as_cloning_task()
+    design.settings.as_cloning_task()
 
     # run the design task
     design.run()
@@ -43,6 +43,7 @@ from primer3plus.log import logger
 from primer3plus.params import BoulderIO
 from primer3plus.params import default_boulderio
 from primer3plus.utils import anneal as anneal_primer
+from primer3plus.utils import depreciated_warning
 
 
 class DesignPresets:
@@ -54,7 +55,7 @@ class DesignPresets:
     .. code-block::
 
         design = Design()
-        design.presets.left_sequence("AGGGAGATAGATA")
+        design.settings.left_sequence("AGGGAGATAGATA")
         design.run()
     """
 
@@ -322,10 +323,30 @@ class DesignPresets:
         else:
             return "", right
 
-    def left_overhang(self, overhang):
+    def left_overhang(self, overhang: str) -> "DesignPresets":
+        """
+        Sets the left overhang sequence for the primer. This overhang will
+        *always* be in the overhang sequence regardless of other parameters.
+
+        If using a primer that anneals with an overhang, this value will
+        be appended to the 5' end of the overhang.
+
+        :param overhang: overhang sequence
+        :return: self
+        """
         return self.update({"SEQUENCE_PRIMER_OVERHANG": overhang})
 
-    def right_overhang(self, overhang):
+    def right_overhang(self, overhang: str) -> "DesignPresets":
+        """
+        Sets the right overhang sequence for the primer. This overhang will
+        *always* be in the overhang sequence regardless of other parameters.
+
+        If using a primer that anneals with an overhang, this value will
+        be appended to the 5' end of the overhang.
+
+        :param overhang: overhang sequence
+        :return: self
+        """
         return self.update({"SEQUENCE_PRIMER_REVCOMP_OVERHANG": overhang})
 
     def use_overhangs(self, b: bool = True) -> "DesignPresets":
@@ -664,7 +685,7 @@ class DesignBase:
             raise Primer3PlusRunTimeError(str(e)) from e
 
         pairs, explain = parse_primer3_results(res)
-        self.presets._post_parse(pairs, explain)
+        self.settings._post_parse(pairs, explain)
         return pairs, explain
 
     def run(self, params: BoulderIO = None) -> Tuple[List[Dict], List[Dict]]:
@@ -744,7 +765,7 @@ class DesignBase:
 class Design(DesignBase, AllParameters):
     def __init__(self):
         """Initialize a new design. Set parameters using
-        :attr:`Design.presets`, which
+        :attr:`Design.settings`, which
         returns an instance of
         :class:`DesignPresets <primer3plus.design.DesignPresets>`.
 
@@ -755,13 +776,13 @@ class Design(DesignBase, AllParameters):
         .. code-block::
 
             design = Design()
-            design.presets.template("AGGCTGTAGTGCTTGTAGCTGGTTGCGTTACTGTG")
-            design.presets.left_sequence("GTAGTGCTTGTA")
+            design.settings.template("AGGCTGTAGTGCTTGTAGCTGGTTGCGTTACTGTG")
+            design.settings.left_sequence("GTAGTGCTTGTA")
             design.SEQUENCE_ID.value = "MY ID"
             design.run()
         """
         super().__init__()
-        self._presets = DesignPresets(self)
+        self._settings = DesignPresets(self)
 
     def set(self, key, value):
         self.params.defs[key].value = value
@@ -770,16 +791,21 @@ class Design(DesignBase, AllParameters):
         return self.params.defs[key]
 
     @property
-    def presets(self) -> "DesignPresets":
+    def settings(self) -> "DesignPresets":
         """Return the :class:`DesignPresets <primer3plus.design.DesignPresets>`
         instance for this design."""
-        return self._presets
+        return self._settings
+
+    @property
+    def presets(self):
+        depreciated_warning("'presets' has been renamed to 'settings'")
+        return self.settings
 
     def update(self, data: Dict[str, Any]):
         return self.params.update(data)
 
     def run(self, params: BoulderIO = None) -> Tuple[List[Dict], List[Dict]]:
-        self.presets._resolve()
+        self.settings._resolve()
         return super()._run(params)
 
     def run_and_optimize(
@@ -790,7 +816,7 @@ class Design(DesignBase, AllParameters):
             str, Tuple[Union[float, int], Union[float, int], Union[float, int]]
         ] = None,
     ) -> Tuple[List[dict], List[dict]]:
-        self.presets._resolve()
+        self.settings._resolve()
         return super().run_and_optimize(max_iterations)
 
 

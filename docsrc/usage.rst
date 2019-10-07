@@ -12,13 +12,13 @@ Design parameters can be set using built in preset methods:
     design = Design()
 
     # set template sequence
-    design.presets.template("AGGTTGCGTGTGTATGGTCGTGTAGTGTGT")
+    design.settings.template("AGGTTGCGTGTGTATGGTCGTGTAGTGTGT")
 
     # set left primer sequence
-    design.presets.left_sequence("GTTGCGTGTGT)
+    design.settings.left_sequence("GTTGCGTGTGT)
 
     # set as a cloning task
-    design.presets.as_cloning_task()
+    design.settings.as_cloning_task()
 
     # run the design task
     design.run()
@@ -44,11 +44,11 @@ which usually can be accessed by typing `design.[TAB]`
     print(design.SEQUENCE_TEMPLATE)
     print(design.SEQUENCE_TEMPLATE))
 
-setting using presets
+setting using settings
 *********************
 
-The :meth:`presets <primer3plus.Design.presets>` (returning a
-:class:`DesignPresets <primer3plus.design.DesignPresets>`) provides several
+The :meth:`settings <primer3plus.Design.settings>` (returning a
+:class:`DesignSettings <primer3plus.design.DesignSettings>`) provides several
 convenient methods for setting common tasks:
 
 .. testsetup::
@@ -58,7 +58,7 @@ convenient methods for setting common tasks:
 .. testcode::
 
     design = Design()
-    design.presets.template("ACGGGGAGTTGTCTGTAGGTTGATTATGTGTGTCGTGTGTGTATATGGGTCTGA")
+    design.settings.template("ACGGGGAGTTGTCTGTAGGTTGATTATGTGTGTCGTGTGTGTATATGGGTCTGA")
     print(design.get('SEQUENCE_TEMPLATE').value)
 
 .. testoutput::
@@ -68,7 +68,7 @@ convenient methods for setting common tasks:
 setting from a single key-value pair
 ************************************
 
-Preferred way to set parameters not available in the presets, is to use
+Preferred way to set parameters not available in the settings, is to use
 :meth:`set <primer3plus.Design.set>`:
 
 .. code-block::
@@ -113,9 +113,9 @@ Design cloning primers
     import json
 
     design = Design()
-    design.presets.template('TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC')
-    design.presets.as_cloning_task()
-    design.presets.primer_num_return(1)
+    design.settings.template('TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC')
+    design.settings.as_cloning_task()
+    design.settings.primer_num_return(1)
     results, explain = design.run()
 
     print(json.dumps(results, indent=1))
@@ -183,9 +183,9 @@ Designing the right primer only
 .. code-block::
 
     design = Design()
-    design.presets.template("TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC")
-    design.presets.left_sequence('GTTATGTCACGCTTACATTCACG')
-    design.presets.as_cloning_task()
+    design.settings.template("TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC")
+    design.settings.left_sequence('GTTATGTCACGCTTACATTCACG')
+    design.settings.as_cloning_task()
     design.run()
 
 .. _handle_overhangs:
@@ -201,13 +201,13 @@ Handling overhangs
 
     design = Design()
 
-    design.presets.template(template)
-    design.presets.left_sequence(overhang + anneal)
+    design.settings.template(template)
+    design.settings.left_sequence(overhang + anneal)
 
     # necessary to resolve overhangs
     # automatically find the appropriate annealing sequence for primer3
     # adds overhang sequence to results
-    design.presets.use_overhangs()
+    design.settings.use_overhangs()
 
     design.run()
 
@@ -223,13 +223,13 @@ Handling long primer sequences
 
     design = Design()
 
-    design.presets.template(template)
-    design.presets.left_sequence(overhang + anneal)
+    design.settings.template(template)
+    design.settings.left_sequence(overhang + anneal)
 
     # uses the last 35 bases of the annealing sequence
     # sets the remaining as the overhang sequence
-    design.presets.long_ok()
-    design.presets.use_overhang()
+    design.settings.long_ok()
+    design.settings.use_overhang()
 
     design.run()
 
@@ -239,8 +239,8 @@ Design primers targeting interval
 .. code-block::
 
     design = Design()
-    design.presets.template("TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC")
-    design.presets.target((50, 150))
+    design.settings.template("TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC")
+    design.settings.target((50, 150))
     design.run()
 
 .. _autorelax:
@@ -254,8 +254,8 @@ the first time around:
 .. testcode::
 
     design = Design()
-    design.presets.template("TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC")
-    design.presets.target((25, 150))
+    design.settings.template("TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC")
+    design.settings.target((25, 150))
     res, explain = design.run()
     print("Results: ", json.dumps(res, indent=1))
     print("Explain: ", json.dumps(explain, indent=1))
@@ -278,9 +278,9 @@ We can run the relaxation procedure using :meth:`run_and_optimize <primer3plus.D
 .. testcode::
 
     design = Design()
-    design.presets.template("TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC")
-    design.presets.target((25, 150))
-    design.presets.primer_num_return(1)
+    design.settings.template("TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC")
+    design.settings.target((25, 150))
+    design.settings.primer_num_return(1)
     res, explain = design.run_and_optimize(5)
     print("Gradient used: ", design.DEFAULT_GRADIENT)
     print("Results: ", json.dumps(res, indent=1))
@@ -351,9 +351,9 @@ for the RIGHT primer location:
     from primer3plus.utils import reverse_complement
 
     design = Design()
-    design.presets.template('TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC')
-    design.presets.as_cloning_task()
-    design.presets.primer_num_return(1)
+    design.settings.template('TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC')
+    design.settings.as_cloning_task()
+    design.settings.primer_num_return(1)
     results, explain = design.run()
     result = results[0]
 

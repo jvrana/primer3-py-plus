@@ -19,9 +19,9 @@ def test_init():
 
 def test_set(gfp):
     design = Design()
-    design.presets.template(gfp)
-    design.presets.left_sequence(gfp[60:85])
-    design.presets.as_generic_task()
+    design.settings.template(gfp)
+    design.settings.left_sequence(gfp[60:85])
+    design.settings.as_generic_task()
     results = design.run()
     print(results)
     assert results
@@ -53,19 +53,19 @@ def test_gfp(gfp, iter_random_primer):
     #
     # for f, r in product(fwd_primers,  rev_primers):
     #     design = Design()
-    #     design.presets.left_sequence(f)
-    #     design.presets.right_sequence(r)
-    #     design.presets.task('check_primers')
-    #     design.presets.template(gfp)
+    #     design.settings.left_sequence(f)
+    #     design.settings.right_sequence(r)
+    #     design.settings.task('check_primers')
+    #     design.settings.template(gfp)
     #     design.run()
 
     region_ok = check_primers(gfp, primers)
     # print(region_ok[:1])
     design = Design()
-    design.presets.template(gfp)
+    design.settings.template(gfp)
     print(region_ok)
-    design.presets.pair_region_list(region_ok[:10])
-    design.presets.product_size([50, 2000])
+    design.settings.pair_region_list(region_ok[:10])
+    design.settings.product_size([50, 2000])
     pairs, explain = design.run()
     print(explain)
     print(pairs)
@@ -74,34 +74,34 @@ def test_gfp(gfp, iter_random_primer):
 def test_product_size_list(gfp):
 
     design = Design()
-    design.presets.template(gfp)
-    design.presets.product_size([(50, 100), (200, 300)])
+    design.settings.template(gfp)
+    design.settings.product_size([(50, 100), (200, 300)])
     design.run()
 
 
 class TestExclude:
     def test_as_tuple(self, gfp):
         design = Design()
-        design.presets.template(gfp).excluded((100, 300))
+        design.settings.template(gfp).excluded((100, 300))
         pairs, explain = design.run()
         assert pairs
 
     def test_as_list(self, gfp):
         design = Design()
-        design.presets.template(gfp).excluded([100, 300])
+        design.settings.template(gfp).excluded([100, 300])
         print(design.SEQUENCE_EXCLUDED_REGION)
         pairs, explain = design.run()
         assert pairs
 
     def test_as_list_of_tuples(self, gfp):
         design = Design()
-        design.presets.template(gfp).excluded([(100, 300)])
+        design.settings.template(gfp).excluded([(100, 300)])
         pairs, explain = design.run()
         assert pairs
 
     def test_as_str(self, gfp):
         design = Design()
-        design.presets.template(gfp).excluded(gfp[100:300])
+        design.settings.template(gfp).excluded(gfp[100:300])
         pairs, explain = design.run()
         assert pairs
 
@@ -109,28 +109,28 @@ class TestExclude:
 class TestIncluded:
     def test_as_tuple(self, gfp):
         design = Design()
-        design.presets.template(gfp).included((100, 100))
+        design.settings.template(gfp).included((100, 100))
         print(design.SEQUENCE_INCLUDED_REGION)
         pairs, explain = design.run()
         assert pairs
 
     def test_as_list(self, gfp):
         design = Design()
-        design.presets.template(gfp).included([100, 100])
+        design.settings.template(gfp).included([100, 100])
         print(design.SEQUENCE_INCLUDED_REGION)
         pairs, explain = design.run()
         assert pairs
 
     def test_as_str(self, gfp):
         design = Design()
-        design.presets.template(gfp).included(gfp[100:300])
+        design.settings.template(gfp).included(gfp[100:300])
         print(design.SEQUENCE_INCLUDED_REGION)
         pairs, explain = design.run()
         assert pairs
 
     def test_raises_value_error(self, gfp):
         design = Design()
-        design.presets.template(gfp).included([None, 100])
+        design.settings.template(gfp).included([None, 100])
         print(design.SEQUENCE_INCLUDED_REGION)
         with pytest.raises(TypeError):
             design.run()
@@ -138,7 +138,7 @@ class TestIncluded:
     def test_raises_value_error(self, gfp):
         design = Design()
         with pytest.raises(TypeError):
-            design.presets.template(gfp).included([100, 100, 100])
+            design.settings.template(gfp).included([100, 100, 100])
 
 
 class TestOverhangs:
@@ -147,9 +147,9 @@ class TestOverhangs:
     # TODO: add overhangs to results
     def test_left_overhang(self, gfp):
         design = Design()
-        design.presets.template(gfp)
-        design.presets.left_sequence("AGGCGGCTGA" + gfp[0:20])
-        design.presets.use_overhangs()
+        design.settings.template(gfp)
+        design.settings.left_sequence("AGGCGGCTGA" + gfp[0:20])
+        design.settings.use_overhangs()
         pairs, explain = design.run_and_optimize(5)
         print(explain)
         assert pairs
@@ -157,40 +157,40 @@ class TestOverhangs:
     def test_left_overhang_default_behavior(self, gfp):
         """Without setting overhangs, should raise run time error"""
         design = Design()
-        design.presets.template(gfp)
-        design.presets.left_sequence("AGGCGGCTGA" + gfp[20:40])
+        design.settings.template(gfp)
+        design.settings.left_sequence("AGGCGGCTGA" + gfp[20:40])
         with pytest.raises(Primer3PlusRunTimeError):
             design.run()
 
     def test_right_overhang(self, gfp):
         design = Design()
-        design.presets.template(gfp)
+        design.settings.template(gfp)
 
         rseq = "AGGCGGCTGA" + rc(gfp[200:225])
-        design.presets.right_sequence(rseq)
-        design.presets.use_overhangs()
+        design.settings.right_sequence(rseq)
+        design.settings.use_overhangs()
         pairs, explain = design.run_and_optimize(5)
         assert pairs
 
     def test_right_overhang_default_behavior(self, gfp):
         """Without setting overhangs, should raise run time error"""
         design = Design()
-        design.presets.template(gfp)
+        design.settings.template(gfp)
 
         rseq = "AAAAAA" + rc(gfp[200:220])
-        design.presets.right_sequence(rseq)
+        design.settings.right_sequence(rseq)
         with pytest.raises(Primer3PlusRunTimeError):
             design.run()
 
     def test_both_overhangs(self, gfp):
         design = Design()
-        design.presets.template(gfp)
+        design.settings.template(gfp)
         lseq = "TTTTTT" + gfp[10:30]
         rseq = rc(gfp[200:220] + "AAAAAAA")
 
-        design.presets.left_sequence(lseq)
-        design.presets.right_sequence(rseq)
-        design.presets.use_overhangs()
+        design.settings.left_sequence(lseq)
+        design.settings.right_sequence(rseq)
+        design.settings.use_overhangs()
         pairs, explain = design.run_and_optimize(5)
         assert pairs
 
@@ -199,12 +199,12 @@ class TestLongPrimers:
     def test_long_left_primer(self, gfp):
 
         design = Design()
-        design.presets.template(gfp)
-        design.presets.left_sequence(gfp[0:50])
+        design.settings.template(gfp)
+        design.settings.left_sequence(gfp[0:50])
         design.PRIMER_MAX_TM.value = 75.0
         design.PRIMER_MAX_SIZE = 35
         design.PRIMER_PICK_ANYWAY = 1
-        design.presets.long_ok()
+        design.settings.long_ok()
         pairs, explain = design.run_and_optimize(10)
         print(explain)
         assert pairs
@@ -212,8 +212,8 @@ class TestLongPrimers:
     def test_long_left_primer_default_behavior(self, gfp):
 
         design = Design()
-        design.presets.template(gfp)
-        design.presets.left_sequence(gfp[0:50])
+        design.settings.template(gfp)
+        design.settings.left_sequence(gfp[0:50])
         design.PRIMER_MAX_TM.value = 75.0
         design.PRIMER_MAX_SIZE = 35
         design.PRIMER_PICK_ANYWAY = 1
@@ -223,12 +223,12 @@ class TestLongPrimers:
     def test_long_right_primer(self, gfp):
 
         design = Design()
-        design.presets.template(gfp)
-        design.presets.right_sequence(rc(gfp[-50:]))
+        design.settings.template(gfp)
+        design.settings.right_sequence(rc(gfp[-50:]))
         design.PRIMER_MAX_TM.value = 75.0
         design.PRIMER_MAX_SIZE = 35
         design.PRIMER_PICK_ANYWAY = 1
-        design.presets.long_ok()
+        design.settings.long_ok()
         pairs, explain = design.run_and_optimize(10)
         print(explain)
         assert pairs
@@ -236,8 +236,8 @@ class TestLongPrimers:
     def test_long_right_primer_default_behavior(self, gfp):
 
         design = Design()
-        design.presets.template(gfp)
-        design.presets.right_sequence(rc(gfp[-50:]))
+        design.settings.template(gfp)
+        design.settings.right_sequence(rc(gfp[-50:]))
         design.PRIMER_MAX_TM.value = 75.0
         design.PRIMER_MAX_SIZE = 35
         design.PRIMER_PICK_ANYWAY = 1
@@ -249,26 +249,26 @@ class TestOverOrigin:
     def test_included_over_origin(self, gfp):
 
         design = Design()
-        design.presets.template(gfp)
-        design.presets.included((len(gfp) - 100, 110))
+        design.settings.template(gfp)
+        design.settings.included((len(gfp) - 100, 110))
         design.run()
 
 
 def test_long_right_primer_with_overhangs(gfp):
 
     design = Design()
-    design.presets.template(gfp)
-    design.presets.right_sequence(rc(gfp[-50:]))
-    design.presets.product_size((len(gfp), len(gfp)))
+    design.settings.template(gfp)
+    design.settings.right_sequence(rc(gfp[-50:]))
+    design.settings.product_size((len(gfp), len(gfp)))
 
     loverhang = "TTTTTTT"
     roverhang = "GGGAGAG"
 
-    design.presets.left_overhang(loverhang)
-    design.presets.right_overhang(roverhang)
-    design.presets.long_ok()
-    design.presets.use_overhangs()
-    design.presets.pick_anyway()
+    design.settings.left_overhang(loverhang)
+    design.settings.right_overhang(roverhang)
+    design.settings.long_ok()
+    design.settings.use_overhangs()
+    design.settings.pick_anyway()
     pairs, explain = design.run()
 
     pprint(pairs)
@@ -292,18 +292,18 @@ def test_long_right_primer_with_overhangs(gfp):
 def test_long_left_primer_with_overhangs(gfp):
 
     design = Design()
-    design.presets.template(gfp)
-    design.presets.left_sequence(gfp[:50])
-    design.presets.product_size((len(gfp), len(gfp)))
+    design.settings.template(gfp)
+    design.settings.left_sequence(gfp[:50])
+    design.settings.product_size((len(gfp), len(gfp)))
 
     loverhang = "TTTTTTT"
     roverhang = "GGGAGAG"
 
-    design.presets.left_overhang(loverhang)
-    design.presets.right_overhang(roverhang)
-    design.presets.long_ok()
-    design.presets.use_overhangs()
-    design.presets.pick_anyway()
+    design.settings.left_overhang(loverhang)
+    design.settings.right_overhang(roverhang)
+    design.settings.long_ok()
+    design.settings.use_overhangs()
+    design.settings.pick_anyway()
     pairs, explain = design.run()
 
     pprint(pairs)
@@ -326,15 +326,15 @@ def test_long_left_primer_with_overhangs(gfp):
 
 def test_set_long_overhang(gfp):
     design = Design()
-    design.presets.template(gfp)
-    design.presets.left_sequence(gfp[0:50])
+    design.settings.template(gfp)
+    design.settings.left_sequence(gfp[0:50])
     design.PRIMER_MAX_TM.value = 75.0
     design.PRIMER_MAX_SIZE = 35
     design.PRIMER_PICK_ANYWAY = 1
-    design.presets.left_overhang("AAAAAAAAA")
-    design.presets.long_ok()
-    design.presets.use_overhangs()
-    design.presets.pick_anyway()
+    design.settings.left_overhang("AAAAAAAAA")
+    design.settings.long_ok()
+    design.settings.use_overhangs()
+    design.settings.pick_anyway()
     pairs, explain = design.run()
 
     print(explain)
