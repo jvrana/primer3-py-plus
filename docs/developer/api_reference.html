@@ -204,6 +204,9 @@ For a list of design parameters available, take a look at the
 <tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DesignPresets</span></code></a>(design)</p></td>
 <td><p>Interface for setting design parameters.</p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.design.RestoreAfterRun" title="primer3plus.design.RestoreAfterRun"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RestoreAfterRun</span></code></a>(boulderio)</p></td>
+<td><p>Class to restore boulderio to its original parameters after a run</p></td>
+</tr>
 </tbody>
 </table>
 <p><strong>Functions</strong></p>
@@ -255,11 +258,14 @@ design.run()
 <tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.design.Design.open_help" title="primer3plus.design.Design.open_help"><code class="xref py py-obj docutils literal notranslate"><span class="pre">open_help</span></code></a>()</p></td>
 <td><p>Open the documentation help in a new browser tab.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.design.Design.run" title="primer3plus.design.Design.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>([params])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.design.Design.run" title="primer3plus.design.Design.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>()</p></td>
 <td><p>Design primers.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.design.Design.run_and_optimize" title="primer3plus.design.Design.run_and_optimize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_and_optimize</span></code></a>(max_iterations[, params, …])</p></td>
 <td><p>Design primers.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.design.Design.update" title="primer3plus.design.Design.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a>(data)</p></td>
+<td><p>Update an arbitrary parameter</p></td>
 </tr>
 </tbody>
 </table>
@@ -324,11 +330,11 @@ the msg, print off some debugging information at the end of the message.</p>
 
 <dl class="method">
 <dt id="primer3plus.design.Design.run">
-<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">params=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#Design.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.Design.run" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#Design.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.Design.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Design primers. Optionally provide additional parameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>params</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="#primer3plus.params.BoulderIO" title="primer3plus.params.BoulderIO"><code class="xref py py-class docutils literal notranslate"><span class="pre">BoulderIO</span></code></a>]) – </p>
+<dd class="field-odd"><p><strong>params</strong> – </p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[~KT, ~VT]], <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[~KT, ~VT]]]</p>
@@ -374,6 +380,12 @@ instance for this design.</p>
 <dd class="field-odd"><p><a class="reference internal" href="#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="primer3plus.design.Design.update">
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#Design.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.Design.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update an arbitrary parameter</p>
 </dd></dl>
 
 </dd></dl>
@@ -426,7 +438,7 @@ instance for this design.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.design.DesignBase.open_help" title="primer3plus.design.DesignBase.open_help"><code class="xref py py-obj docutils literal notranslate"><span class="pre">open_help</span></code></a>()</p></td>
 <td><p>Open the documentation help in a new browser tab.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.design.DesignBase.run" title="primer3plus.design.DesignBase.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>([params])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.design.DesignBase.run" title="primer3plus.design.DesignBase.run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run</span></code></a>()</p></td>
 <td><p>Design primers.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.design.DesignBase.run_and_optimize" title="primer3plus.design.DesignBase.run_and_optimize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_and_optimize</span></code></a>(max_iterations[, params, …])</p></td>
@@ -495,11 +507,11 @@ the msg, print off some debugging information at the end of the message.</p>
 
 <dl class="method">
 <dt id="primer3plus.design.DesignBase.run">
-<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">params=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignBase.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignBase.run" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignBase.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignBase.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Design primers. Optionally provide additional parameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>params</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<a class="reference internal" href="#primer3plus.params.BoulderIO" title="primer3plus.params.BoulderIO"><code class="xref py py-class docutils literal notranslate"><span class="pre">BoulderIO</span></code></a>]) – </p>
+<dd class="field-odd"><p><strong>params</strong> – </p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[~KT, ~VT]], <code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[~KT, ~VT]]]</p>
@@ -1135,6 +1147,13 @@ parameter.</p>
 
 </dd></dl>
 
+<dl class="class">
+<dt id="primer3plus.design.RestoreAfterRun">
+<em class="property">class </em><code class="sig-prename descclassname">primer3plus.design.</code><code class="sig-name descname">RestoreAfterRun</code><span class="sig-paren">(</span><em class="sig-param">boulderio</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#RestoreAfterRun"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.RestoreAfterRun" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to restore boulderio to its original parameters after a run</p>
+</dd></dl>
+
 <dl class="function">
 <dt id="primer3plus.design.new">
 <code class="sig-prename descclassname">primer3plus.design.</code><code class="sig-name descname">new</code><span class="sig-paren">(</span><em class="sig-param">params=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#new"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.new" title="Permalink to this definition">¶</a></dt>
@@ -1624,11 +1643,11 @@ its :class:&lt;ParameterType &lt;primer3plus.params.ParameterType&gt;`</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.params.Parameter.hold_restore" title="primer3plus.params.Parameter.hold_restore"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hold_restore</span></code></a>()</p></td>
 <td><p>Hold current value for later restoration.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.params.Parameter.set_default" title="primer3plus.params.Parameter.set_default"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_default</span></code></a>()</p></td>
-<td><p>Set the parameter to its default.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.params.Parameter.set_restore" title="primer3plus.params.Parameter.set_restore"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_restore</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#primer3plus.params.Parameter.restore" title="primer3plus.params.Parameter.restore"><code class="xref py py-obj docutils literal notranslate"><span class="pre">restore</span></code></a>()</p></td>
 <td><p>Restores the parameter to some original value.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.params.Parameter.set_default" title="primer3plus.params.Parameter.set_default"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_default</span></code></a>()</p></td>
+<td><p>Set the parameter to its default.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1681,6 +1700,13 @@ its :class:&lt;ParameterType &lt;primer3plus.params.ParameterType&gt;`</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="primer3plus.params.Parameter.restore">
+<code class="sig-name descname">restore</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params.html#Parameter.restore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.Parameter.restore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restores the parameter to some original value.
+:return:</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="primer3plus.params.Parameter.set_default">
 <code class="sig-name descname">set_default</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params.html#Parameter.set_default"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.Parameter.set_default" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the parameter to its default.</p>
@@ -1689,13 +1715,6 @@ its :class:&lt;ParameterType &lt;primer3plus.params.ParameterType&gt;`</p>
 <dd class="field-odd"><p>None</p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="primer3plus.params.Parameter.set_restore">
-<code class="sig-name descname">set_restore</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/params.html#Parameter.set_restore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.params.Parameter.set_restore" title="Permalink to this definition">¶</a></dt>
-<dd><p>Restores the parameter to some original value.
-:return:</p>
 </dd></dl>
 
 <dl class="method">

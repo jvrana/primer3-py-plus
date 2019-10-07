@@ -855,13 +855,13 @@ def clip(x, mn, mx):
         self.settings._post_parse(pairs, explain)
         return pairs, explain</div>
 
-<div class="viewcode-block" id="DesignBase.run"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignBase.run">[docs]</a>    def run(self, params: BoulderIO = None) -&gt; Tuple[List[Dict], List[Dict]]:
+<div class="viewcode-block" id="DesignBase.run"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignBase.run">[docs]</a>    def run(self) -&gt; Tuple[List[Dict], List[Dict]]:
         &quot;&quot;&quot;Design primers. Optionally provide additional parameters.
 
         :param params:
         :return: results
         &quot;&quot;&quot;
-        return self._run(params)</div>
+        return self._run()</div>
 
 <div class="viewcode-block" id="DesignBase.run_and_optimize"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignBase.run_and_optimize">[docs]</a>    def run_and_optimize(
         self,
@@ -929,6 +929,21 @@ def clip(x, mn, mx):
         return self.copy()</div>
 
 
+<div class="viewcode-block" id="RestoreAfterRun"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.RestoreAfterRun">[docs]</a>class RestoreAfterRun:
+    &quot;&quot;&quot;Class to restore boulderio to its original parameters after a run&quot;&quot;&quot;
+
+    def __init__(self, boulderio):
+        self.params = boulderio
+
+    def __enter__(self):
+        for v in self.params._params.values():
+            v.hold_restore()
+
+    def __exit__(self, a, b, c):
+        for v in self.params._params.values():
+            v.restore()</div>
+
+
 <div class="viewcode-block" id="Design"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.Design">[docs]</a>class Design(DesignBase, AllParameters):
     def __init__(self):
         &quot;&quot;&quot;Initialize a new design. Set parameters using
@@ -968,12 +983,19 @@ def clip(x, mn, mx):
         depreciated_warning(&quot;&#39;presets&#39; has been renamed to &#39;settings&#39;&quot;)
         return self.settings
 
-    def update(self, data: Dict[str, Any]):
-        return self.params.update(data)
+<div class="viewcode-block" id="Design.update"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.Design.update">[docs]</a>    def update(self, data: Dict[str, Any]):
+        &quot;&quot;&quot;Update an arbitrary parameter&quot;&quot;&quot;
+        return self.params.update(data)</div>
 
-<div class="viewcode-block" id="Design.run"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.Design.run">[docs]</a>    def run(self, params: BoulderIO = None) -&gt; Tuple[List[Dict], List[Dict]]:
-        self.settings._resolve()
-        return super()._run(params)</div>
+<div class="viewcode-block" id="Design.run"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.Design.run">[docs]</a>    def run(self) -&gt; Tuple[List[Dict], List[Dict]]:
+        &quot;&quot;&quot;Design primers. Optionally provide additional parameters.
+
+        :param params:
+        :return: results
+        &quot;&quot;&quot;
+        with RestoreAfterRun(self.params):
+            self.settings._resolve()
+            return super()._run(None)</div>
 
 <div class="viewcode-block" id="Design.run_and_optimize"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.Design.run_and_optimize">[docs]</a>    def run_and_optimize(
         self,
@@ -983,8 +1005,20 @@ def clip(x, mn, mx):
             str, Tuple[Union[float, int], Union[float, int], Union[float, int]]
         ] = None,
     ) -&gt; Tuple[List[dict], List[dict]]:
-        self.settings._resolve()
-        return super().run_and_optimize(max_iterations)</div></div>
+        &quot;&quot;&quot;Design primers. If primer design is unsuccessful, relax parameters
+        as defined in primer3plust.Design.DEFAULT_GRADIENT. Repeat for the specified
+        number of max_iterations.
+
+        :param max_iterations: the max number of iterations to perform relaxation
+        :param params: optional parameters to provide
+        :param gradient: optional gradient to provide. If not provided,
+                            Design.DEFAULT_GRADIENT will be used. The gradient is a
+                            dictionary off 3 tuples, the step the min and the max.
+        :return: results
+        &quot;&quot;&quot;
+        with RestoreAfterRun(self.params):
+            self.settings._resolve()
+            return super().run_and_optimize(max_iterations)</div></div>
 
 
 <div class="viewcode-block" id="new"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.new">[docs]</a>def new(params=None):
