@@ -244,6 +244,133 @@ class TestLongPrimers:
         with pytest.raises(Primer3PlusRunTimeError):
             design.run_and_optimize(10)
 
+    def test_long_right_primer_with_overhangs(self, gfp):
+        """We expect no errors with setting long right primers. The
+        settings should automatically readjust the product length
+        to match and the 'SEQUENCE', 'OVERHANG', and 'location'
+        and 'PRODUCT_SIZE' results should automatically be adjusted."""
+        design = Design()
+        design.settings.template(gfp)
+        design.settings.right_sequence(rc(gfp[-50:]))
+        design.settings.product_size((len(gfp), len(gfp)))
+
+        loverhang = "TTTTTTT"
+        roverhang = "GGGAGAG"
+
+        design.settings.left_overhang(loverhang)
+        design.settings.right_overhang(roverhang)
+        design.settings.long_ok()
+        design.settings.use_overhangs()
+        design.settings.pick_anyway()
+        pairs, explain = design.run()
+
+        pprint(pairs)
+        assert pairs
+        for pair in pairs.values():
+            assert pair["PAIR"]["PRODUCT_SIZE"] == len(gfp)
+            assert pair["RIGHT"]["OVERHANG"] == roverhang
+            assert pair["LEFT"]["OVERHANG"] == loverhang
+            assert pair["RIGHT"]["SEQUENCE"] == rc(gfp[-50:])
+
+            lloc = pair["LEFT"]["location"]
+            rloc = pair["RIGHT"]["location"]
+
+            assert lloc[0] == 0
+
+            assert rloc[0] == len(gfp) - 1
+            assert rloc[1] == 50
+        assert pairs
+
+    def test_long_left_primer_with_overhangs(self, gfp):
+        """We expect no errors with setting long left primers. The
+        settings should automatically readjust the product length
+        to match and the 'SEQUENCE', 'OVERHANG', and 'location'
+        and 'PRODUCT_SIZE' results should automatically be adjusted."""
+        design = Design()
+        design.settings.template(gfp)
+        design.settings.left_sequence(gfp[:50])
+        design.settings.product_size((len(gfp), len(gfp)))
+
+        loverhang = "TTTTTTT"
+        roverhang = "GGGAGAG"
+
+        design.settings.left_overhang(loverhang)
+        design.settings.right_overhang(roverhang)
+        design.settings.long_ok()
+        design.settings.use_overhangs()
+        design.settings.pick_anyway()
+        pairs, explain = design.run()
+
+        pprint(pairs)
+        assert pairs
+        for pair in pairs.values():
+            assert pair["PAIR"]["PRODUCT_SIZE"] == len(gfp)
+            assert pair["RIGHT"]["OVERHANG"] == roverhang
+            assert pair["LEFT"]["OVERHANG"] == loverhang
+            assert pair["LEFT"]["SEQUENCE"] == gfp[:50]
+
+            lloc = pair["LEFT"]["location"]
+            rloc = pair["RIGHT"]["location"]
+
+            assert lloc[0] == 0
+            assert lloc[1] == 50
+
+            assert rloc[0] == len(gfp) - 1
+        assert pairs
+
+    def test_set_long_overhang(self, gfp):
+        design = Design()
+        design.settings.template(gfp)
+        design.settings.left_sequence(gfp[0:50])
+        design.PRIMER_MAX_TM.value = 75.0
+        design.PRIMER_MAX_SIZE = 35
+        design.PRIMER_PICK_ANYWAY = 1
+        design.settings.left_overhang("AAAAAAAAA")
+        design.settings.long_ok()
+        design.settings.use_overhangs()
+        design.settings.pick_anyway()
+        pairs, explain = design.run()
+
+        print(explain)
+        import json
+
+        print(json.dumps(pairs[0]["LEFT"], indent=1))
+        assert pairs
+
+    def test_set_long_primers_with_included_and_size(self, gfp):
+
+        design = Design()
+        design.settings.template(gfp)
+
+        left = gfp[10:60]
+        design.settings.left_sequence(left)
+        design.settings.included((10, 400))
+        design.settings.product_size((400, 400))
+        design.settings.long_ok()
+        design.settings.use_overhangs()
+        design.settings.pick_anyway()
+
+        pairs, explain = design.run_and_optimize(15)
+        assert pairs
+
+    def test_set_long_right_primers_with_included_and_size(self, gfp):
+
+        design = Design()
+        design.settings.template(gfp)
+
+        right = rc(gfp[-100:-20])
+        design.settings.right_sequence(right)
+        design.settings.included((len(gfp) - 50 - 300, 300))
+
+        design.settings.product_size((250, 250))
+        design.settings.long_ok()
+        design.settings.use_overhangs()
+        design.settings.pick_anyway()
+
+        pairs, explain = design.run_and_optimize(15)
+        print(pairs)
+        assert pairs
+
 
 class TestOverOrigin:
     def test_included_over_origin(self, gfp):
@@ -252,93 +379,3 @@ class TestOverOrigin:
         design.settings.template(gfp)
         design.settings.included((len(gfp) - 100, 110))
         design.run()
-
-
-def test_long_right_primer_with_overhangs(gfp):
-
-    design = Design()
-    design.settings.template(gfp)
-    design.settings.right_sequence(rc(gfp[-50:]))
-    design.settings.product_size((len(gfp), len(gfp)))
-
-    loverhang = "TTTTTTT"
-    roverhang = "GGGAGAG"
-
-    design.settings.left_overhang(loverhang)
-    design.settings.right_overhang(roverhang)
-    design.settings.long_ok()
-    design.settings.use_overhangs()
-    design.settings.pick_anyway()
-    pairs, explain = design.run()
-
-    pprint(pairs)
-    assert pairs
-    for pair in pairs.values():
-        assert pair["PAIR"]["PRODUCT_SIZE"] == len(gfp)
-        assert pair["RIGHT"]["OVERHANG"] == roverhang
-        assert pair["LEFT"]["OVERHANG"] == loverhang
-        assert pair["RIGHT"]["SEQUENCE"] == rc(gfp[-50:])
-
-        lloc = pair["LEFT"]["location"]
-        rloc = pair["RIGHT"]["location"]
-
-        assert lloc[0] == 0
-
-        assert rloc[0] == len(gfp) - 1
-        assert rloc[1] == 50
-    assert pairs
-
-
-def test_long_left_primer_with_overhangs(gfp):
-
-    design = Design()
-    design.settings.template(gfp)
-    design.settings.left_sequence(gfp[:50])
-    design.settings.product_size((len(gfp), len(gfp)))
-
-    loverhang = "TTTTTTT"
-    roverhang = "GGGAGAG"
-
-    design.settings.left_overhang(loverhang)
-    design.settings.right_overhang(roverhang)
-    design.settings.long_ok()
-    design.settings.use_overhangs()
-    design.settings.pick_anyway()
-    pairs, explain = design.run()
-
-    pprint(pairs)
-    assert pairs
-    for pair in pairs.values():
-        assert pair["PAIR"]["PRODUCT_SIZE"] == len(gfp)
-        assert pair["RIGHT"]["OVERHANG"] == roverhang
-        assert pair["LEFT"]["OVERHANG"] == loverhang
-        assert pair["LEFT"]["SEQUENCE"] == gfp[:50]
-
-        lloc = pair["LEFT"]["location"]
-        rloc = pair["RIGHT"]["location"]
-
-        assert lloc[0] == 0
-        assert lloc[1] == 50
-
-        assert rloc[0] == len(gfp) - 1
-    assert pairs
-
-
-def test_set_long_overhang(gfp):
-    design = Design()
-    design.settings.template(gfp)
-    design.settings.left_sequence(gfp[0:50])
-    design.PRIMER_MAX_TM.value = 75.0
-    design.PRIMER_MAX_SIZE = 35
-    design.PRIMER_PICK_ANYWAY = 1
-    design.settings.left_overhang("AAAAAAAAA")
-    design.settings.long_ok()
-    design.settings.use_overhangs()
-    design.settings.pick_anyway()
-    pairs, explain = design.run()
-
-    print(explain)
-    import json
-
-    print(json.dumps(pairs[0]["LEFT"], indent=1))
-    assert pairs
