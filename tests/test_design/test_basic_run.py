@@ -247,3 +247,23 @@ class TestOverOrigin:
         design.presets.template(gfp)
         design.presets.included((len(gfp) - 100, 110))
         design.run()
+
+
+def test_set_long_overhang(gfp):
+    design = Design()
+    design.presets.template(gfp)
+    design.presets.left_sequence(gfp[0:50])
+    design.PRIMER_MAX_TM.value = 75.0
+    design.PRIMER_MAX_SIZE = 35
+    design.PRIMER_PICK_ANYWAY = 1
+    design.presets.left_overhang("AAAAAAAAA")
+    design.presets.long_ok()
+    design.presets.use_overhangs()
+    design.presets.pick_anyway()
+    pairs, explain = design.run()
+
+    print(explain)
+    import json
+
+    print(json.dumps(pairs[0]["LEFT"], indent=1))
+    assert pairs

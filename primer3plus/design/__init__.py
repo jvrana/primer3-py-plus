@@ -65,8 +65,6 @@ class DesignPresets:
         :param design: The design
         """
         self._design = design
-        self._loverhang = ""
-        self._roverhang = ""
 
     def _resolve(self):
         """Process any extra parameters and process BoulderIO so
@@ -339,16 +337,20 @@ class DesignPresets:
     def _resolve_overhangs(self):
         """Sets the annealing and overhang sequences."""
         left_over, left_anneal = self._get_left_overhang()
+        _loverhang = self._design.SEQUENCE_PRIMER_OVERHANG.value
         if left_anneal and self._design.SEQUENCE_PRIMER_OVERHANG.value:
-            raise ValueError(
-                "Left overhang already set to '{}'.".format(self._loverhang)
-            )
+            left_over = _loverhang + left_over
+            # raise ValueError(
+            #     "Left overhang already set to '{}'.".format(_loverhang)
+            # )
 
         right_over, right_anneal = self._get_right_overhang()
-        if right_anneal and self._design.SEQUENCE_PRIMER_REVCOMP_OVERHANG.value:
-            raise ValueError(
-                "Right overhang already set to '{}'.".format(self._roverhang)
-            )
+        _roverhang = self._design.SEQUENCE_PRIMER_OVERHANG.value
+        if right_anneal and _roverhang:
+            right_over = _roverhang + right_over
+            # raise ValueError(
+            #     "Right overhang already set to '{}'.".format(_roverhang)
+            # )
 
         self.left_overhang(left_over)
         self.right_overhang(right_over)
