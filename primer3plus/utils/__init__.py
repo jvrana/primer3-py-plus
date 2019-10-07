@@ -15,13 +15,29 @@ def reverse_complement(seq: str):
     return "".join(rcdict[x] for x in seq[::-1])
 
 
-def _extend_match(seq: str, primer: str, length: int, end: int):
+def _extend_match(
+    seq: str, primer: str, length: int, end: int, ignore_case: bool = True
+):
     anneal = primer[-length:]
-    if anneal not in seq:
+    if ignore_case:
+        if anneal.lower() not in seq.lower():
+            raise ValueError
+    elif anneal not in seq:
         raise ValueError
     try_anneal = anneal
     expected_seq = seq[end - length : end]
-    while try_anneal == expected_seq and length <= len(primer):
+
+    if ignore_case:
+
+        def is_eq(s1, s2):
+            return s1.lower() == s2.lower()
+
+    else:
+
+        def is_eq(s1, s2):
+            return s1 == s2
+
+    while is_eq(try_anneal, expected_seq) and length <= len(primer):
         anneal = try_anneal
         length += 1
         try_anneal = primer[-length:]
@@ -30,19 +46,33 @@ def _extend_match(seq: str, primer: str, length: int, end: int):
 
 
 def _iter_anneal(
-    seq: str, primer_list: List[Union[str, Tuple[str, str]]], n_bases=9
+    seq: str,
+    primer_list: List[Union[str, Tuple[str, str]]],
+    n_bases=9,
+    ignore_case: bool = True,
 ) -> Iterator[Dict[str, Union[str, int]]]:
     li = iter(
         (i, i + n_bases, seq[i : i + n_bases]) for i in range(len(seq) - n_bases + 1)
     )
+
+    if ignore_case:
+
+        def is_eq(s1, s2):
+            return s1.lower() == s2.lower()
+
+    else:
+
+        def is_eq(s1, s2):
+            return s1 == s2
+
     for (start, end, anneal), p in product(li, primer_list):
         if isinstance(p, str):
             name = None
         else:
             p, name = p
         length = end - start
-        if anneal == p[-length:]:
-            anneal = _extend_match(seq, p, length, end)
+        if is_eq(anneal, p[-length:]):
+            anneal = _extend_match(seq, p, length, end, ignore_case)
             yield {
                 "name": name,
                 "anneal": anneal,
@@ -55,7 +85,10 @@ def _iter_anneal(
 
 
 def anneal_iter(
-    seq: str, primer_list: List[Union[str, Tuple[str, str]]], n_bases=10
+    seq: str,
+    primer_list: List[Union[str, Tuple[str, str]]],
+    n_bases=10,
+    ignore_case=True,
 ) -> Tuple[Iterator[Dict[str, Union[str, int]]], Iterator[Dict[str, Union[str, int]]]]:
     """
     Anneal a list of primers to the sequence. Returns two iterables with elements
@@ -94,11 +127,11 @@ def anneal_iter(
     """
     if isinstance(primer_list, str):
         raise TypeError("Expected a list of primer sequences, not a str")
-    fwd = list(_iter_anneal(seq, primer_list, n_bases))
+    fwd = list(_iter_anneal(seq, primer_list, n_bases, ignore_case))
     for f in fwd:
         f["strand"] = 1
 
-    rev = list(_iter_anneal(reverse_complement(seq), primer_list, n_bases))
+    rev = list(_iter_anneal(reverse_complement(seq), primer_list, n_bases, ignore_case))
     for r in rev:
         r["strand"] = -1
         s = r["start"]
@@ -110,7 +143,10 @@ def anneal_iter(
 
 
 def anneal(
-    seq: str, primer_list: List[Union[str, Tuple[str, str]]], n_bases=10
+    seq: str,
+    primer_list: List[Union[str, Tuple[str, str]]],
+    n_bases=10,
+    ignore_case: bool = True,
 ) -> Tuple[List[Dict[str, Union[str, int]]], List[Dict[str, Union[str, int]]]]:
     """
     Anneal a list of primers to the sequence. Note the position conventions
@@ -127,5 +163,5 @@ def anneal(
     :param n_bases: number of bases for seed matching (default: 10)
     :return: Tuple of list of dictionary results.
     """
-    fwd, rev = anneal_iter(seq, primer_list, n_bases)
+    fwd, rev = anneal_iter(seq, primer_list, n_bases, ignore_case)
     return list(fwd), list(rev)

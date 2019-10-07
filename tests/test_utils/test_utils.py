@@ -48,6 +48,17 @@ def test_anneal():
     print(match)
 
 
+def test_anneal():
+    s = "ACGTGTATGTGATGATGTGCGTGTGTCGTGTAGCTTATTATATGCGGAGTCGTTGATGCTGTGAGT"
+    fwd, rev = anneal(s, ["AAAAAGTGCGTGTGTCGTGTAG".lower()])
+    match = list(fwd)[0]
+    assert match["start"] == 16
+    assert match["start"] + match["length"] == 33
+    assert match["anneal"] == "GTGCGTGTGTCGTGTAG".lower()
+    assert match["overhang"] == "AAAAA".lower()
+    print(match)
+
+
 def test_anneal_end():
     s = "ACGTGTATGTGATGATGTGCGTGTGTCGTGTAGCTTATTATATGCGGAGTCGTTGATGCTGTGAGT"
     fwd, rev = anneal(s, [s[-16:]])
