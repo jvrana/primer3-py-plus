@@ -661,6 +661,21 @@ class DesignBase:
         self.gradient = gradient
         self.quiet_runtime = quiet_runtime
 
+    def _raise_run_time_error(self, msg: str) -> Primer3PlusRunTimeError:
+        """
+        Raise a Primer3PlusRunTime exception. If parameters are named in
+        the msg, print off some debugging information at the end of the message.
+
+        :param msg: the error msg
+        :return: the run time exception
+        """
+        parameter_explain = set()
+        for name, value in self.params._params.items():
+            if name in msg:
+                parameter_explain.add("\t" + str(value))
+        parameter_explain = sorted(parameter_explain)
+        return Primer3PlusRunTimeError(msg + "\n" + "\n".join(parameter_explain))
+
     def _run(self, params: BoulderIO = None) -> Tuple[List[Dict], List[Dict]]:
         """Design primers. Optionally provide additional parameters.
 
@@ -673,16 +688,16 @@ class DesignBase:
             res = primer3.bindings.designPrimers(params._sequence(), params._globals())
         except OSError as e:
             if not self.quiet_runtime:
-                raise Primer3PlusRunTimeError(str(e)) from e
+                raise self._raise_run_time_error(str(e)) from e
             else:
                 return {}, {"PRIMER_ERROR": str(e)}
         except Primer3PlusRunTimeError as e:
             if not self.quiet_runtime:
-                raise Primer3PlusRunTimeError(str(e)) from e
+                raise self._raise_run_time_error(str(e)) from e
             else:
                 return {}, {"PRIMER_ERROR": str(e)}
         except Primer3PlusException as e:
-            raise Primer3PlusRunTimeError(str(e)) from e
+            raise self._raise_run_time_error(str(e)) from e
 
         pairs, explain = parse_primer3_results(res)
         self.settings._post_parse(pairs, explain)
