@@ -1,4 +1,11 @@
 {
+  "1.0.5": {
+    "description": "bug fixes",
+    "date": "2019-10-07T15:34:50.778683",
+    "changes": [
+      "design settings now restored with each run"
+    ]
+  },
   "1.0.4": {
     "description": "improved error messages",
     "date": "2019-10-07T15:18:25.381341",
