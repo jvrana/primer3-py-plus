@@ -162,13 +162,13 @@ For a list of design parameters available, take a look at the
     design = Design()
 
     # set template sequence
-    design.presets.template(&quot;AGGTTGCGTGTGTATGGTCGTGTAGTGTGT&quot;)
+    design.settings.template(&quot;AGGTTGCGTGTGTATGGTCGTGTAGTGTGT&quot;)
 
     # set left primer sequence
-    design.presets.left_sequence(&quot;GTTGCGTGTGT)
+    design.settings.left_sequence(&quot;GTTGCGTGTGT)
 
     # set as a cloning task
-    design.presets.as_cloning_task()
+    design.settings.as_cloning_task()
 
     # run the design task
     design.run()
@@ -195,6 +195,7 @@ from primer3plus.log import logger
 from primer3plus.params import BoulderIO
 from primer3plus.params import default_boulderio
 from primer3plus.utils import anneal as anneal_primer
+from primer3plus.utils import depreciated_warning
 
 
 <div class="viewcode-block" id="DesignPresets"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets">[docs]</a>class DesignPresets:
@@ -206,7 +207,7 @@ from primer3plus.utils import anneal as anneal_primer
     .. code-block::
 
         design = Design()
-        design.presets.left_sequence(&quot;AGGGAGATAGATA&quot;)
+        design.settings.left_sequence(&quot;AGGGAGATAGATA&quot;)
         design.run()
     &quot;&quot;&quot;
 
@@ -225,7 +226,7 @@ from primer3plus.utils import anneal as anneal_primer
             self._resolve_overhangs()
         if self._design.PRIMER_LONG_OK.value:
             self._resolve_max_lengths(lim=BoulderIO.PRIMER_MAX_SIZE_HARD_LIM)
-
+            self._resolve_product_sizes()
         if not self._design.PRIMER_USE_OVERHANGS.value:
             if self._design.SEQUENCE_PRIMER_OVERHANG.value:
                 warn(
@@ -253,6 +254,9 @@ from primer3plus.utils import anneal as anneal_primer
 
 <div class="viewcode-block" id="DesignPresets._post_parse"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets._post_parse">[docs]</a>    def _post_parse(self, pairs, explain) -&gt; None:
         &quot;&quot;&quot;Modify results from design parameters (e.g. overhangs)&quot;&quot;&quot;
+        left_long_overhang = self._design._SEQUENCE_LONG_OVERHANG.value
+        right_long_overhang = self._design._SEQUENCE_REVCOMP_LONG_OVERHANG.value
+
         for pair in pairs.values():
             for x in [&quot;LEFT&quot;, &quot;RIGHT&quot;]:
                 pair[x].setdefault(&quot;OVERHANG&quot;, &quot;&quot;)
@@ -260,7 +264,34 @@ from primer3plus.utils import anneal as anneal_primer
                 pair[&quot;LEFT&quot;][&quot;OVERHANG&quot;] = self._design.SEQUENCE_PRIMER_OVERHANG.value
                 pair[&quot;RIGHT&quot;][
                     &quot;OVERHANG&quot;
-                ] = self._design.SEQUENCE_PRIMER_REVCOMP_OVERHANG.value</div>
+                ] = self._design.SEQUENCE_PRIMER_REVCOMP_OVERHANG.value
+                if left_long_overhang:
+                    pair[&quot;LEFT&quot;][&quot;SEQUENCE&quot;] = (
+                        left_long_overhang + pair[&quot;LEFT&quot;][&quot;SEQUENCE&quot;]
+                    )
+                    pair[&quot;LEFT&quot;][&quot;OVERHANG&quot;] = pair[&quot;LEFT&quot;][&quot;OVERHANG&quot;][
+                        : -len(left_long_overhang)
+                    ]
+                    pair[&quot;PAIR&quot;][&quot;PRODUCT_SIZE&quot;] += len(left_long_overhang)
+                    loc = pair[&quot;LEFT&quot;][&quot;location&quot;]
+                    pair[&quot;LEFT&quot;][&quot;location&quot;] = [
+                        loc[0] - len(left_long_overhang),
+                        len(pair[&quot;LEFT&quot;][&quot;SEQUENCE&quot;]),
+                    ]
+
+                if right_long_overhang:
+                    pair[&quot;RIGHT&quot;][&quot;SEQUENCE&quot;] = (
+                        right_long_overhang + pair[&quot;RIGHT&quot;][&quot;SEQUENCE&quot;]
+                    )
+                    pair[&quot;RIGHT&quot;][&quot;OVERHANG&quot;] = pair[&quot;RIGHT&quot;][&quot;OVERHANG&quot;][
+                        : -len(right_long_overhang)
+                    ]
+                    pair[&quot;PAIR&quot;][&quot;PRODUCT_SIZE&quot;] += len(right_long_overhang)
+                    loc = pair[&quot;RIGHT&quot;][&quot;location&quot;]
+                    pair[&quot;RIGHT&quot;][&quot;location&quot;] = [
+                        loc[0] + len(right_long_overhang),
+                        len(pair[&quot;RIGHT&quot;][&quot;SEQUENCE&quot;]),
+                    ]</div>
 
     def _interval_from_sequences(
         self, template: str, target: str
@@ -406,10 +437,10 @@ from primer3plus.utils import anneal as anneal_primer
             {&quot;SEQUENCE_PRIMER_REVCOMP&quot;: primer, &quot;PRIMER_PICK_LEFT_PRIMER&quot;: 1}
         )</div>
 
-<div class="viewcode-block" id="DesignPresets._fix_length"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets._fix_length">[docs]</a>    @staticmethod
-    def _fix_length(overhang, anneal, lim):
+<div class="viewcode-block" id="DesignPresets._trim_long"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets._trim_long">[docs]</a>    @staticmethod
+    def _trim_long(overhang: str, anneal: str, lim: int) -&gt; Tuple[str, str, str]:
         &quot;&quot;&quot;Fix the overhang and anneal from the hardcoded BoulderIO primer lim.&quot;&quot;&quot;
-        return overhang + anneal[:-lim], anneal[-lim:]</div>
+        return overhang, anneal[:-lim], anneal[-lim:]</div>
 
     def _get_left_overhang(self):
         left = self._design.SEQUENCE_PRIMER.value
@@ -444,11 +475,31 @@ from primer3plus.utils import anneal as anneal_primer
         else:
             return &quot;&quot;, right
 
-    def left_overhang(self, overhang):
-        return self.update({&quot;SEQUENCE_PRIMER_OVERHANG&quot;: overhang})
+<div class="viewcode-block" id="DesignPresets.left_overhang"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.left_overhang">[docs]</a>    def left_overhang(self, overhang: str) -&gt; &quot;DesignPresets&quot;:
+        &quot;&quot;&quot;
+        Sets the left overhang sequence for the primer. This overhang will
+        *always* be in the overhang sequence regardless of other parameters.
 
-    def right_overhang(self, overhang):
-        return self.update({&quot;SEQUENCE_PRIMER_REVCOMP_OVERHANG&quot;: overhang})
+        If using a primer that anneals with an overhang, this value will
+        be appended to the 5&#39; end of the overhang.
+
+        :param overhang: overhang sequence
+        :return: self
+        &quot;&quot;&quot;
+        return self.update({&quot;SEQUENCE_PRIMER_OVERHANG&quot;: overhang})</div>
+
+<div class="viewcode-block" id="DesignPresets.right_overhang"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.right_overhang">[docs]</a>    def right_overhang(self, overhang: str) -&gt; &quot;DesignPresets&quot;:
+        &quot;&quot;&quot;
+        Sets the right overhang sequence for the primer. This overhang will
+        *always* be in the overhang sequence regardless of other parameters.
+
+        If using a primer that anneals with an overhang, this value will
+        be appended to the 5&#39; end of the overhang.
+
+        :param overhang: overhang sequence
+        :return: self
+        &quot;&quot;&quot;
+        return self.update({&quot;SEQUENCE_PRIMER_REVCOMP_OVERHANG&quot;: overhang})</div>
 
 <div class="viewcode-block" id="DesignPresets.use_overhangs"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.use_overhangs">[docs]</a>    def use_overhangs(self, b: bool = True) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;
@@ -468,6 +519,27 @@ from primer3plus.utils import anneal as anneal_primer
         &quot;&quot;&quot;
         return self.update({&quot;PRIMER_LONG_OK&quot;: b})</div>
 
+<div class="viewcode-block" id="DesignPresets._resolve_product_sizes"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets._resolve_product_sizes">[docs]</a>    def _resolve_product_sizes(self):
+        &quot;&quot;&quot;If there are long primers being used, the product_size
+        is no longer valid as the trimmed sequence is no longer represented
+        in the originally provided product size. This re-adjusts the product
+        size to correspond the adjusted parameters.&quot;&quot;&quot;
+        # adjust product size range
+        left_long_overhang = self._design._SEQUENCE_LONG_OVERHANG.value
+        right_long_overhang = self._design._SEQUENCE_REVCOMP_LONG_OVERHANG.value
+        product_sizes = self._design.PRIMER_PRODUCT_SIZE_RANGE.value
+
+        x = len(left_long_overhang) + len(right_long_overhang)
+
+        if isinstance(product_sizes[0], tuple):
+            new_product_sizes = []
+            for size in product_sizes:
+                new_product_sizes.append((size[0] - x, size[1] - x))
+            self._design.PRIMER_PRODUCT_SIZE_RANGE.value = new_product_sizes
+        else:
+            size = self._design.PRIMER_PRODUCT_SIZE_RANGE.value
+            self._design.PRIMER_PRODUCT_SIZE_RANGE.value = [size[0] - x, size[1] - x]</div>
+
 <div class="viewcode-block" id="DesignPresets._resolve_max_lengths"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets._resolve_max_lengths">[docs]</a>    def _resolve_max_lengths(self, lim: int):
         &quot;&quot;&quot;Fixes the annealing and overhang sequences for annealing sequences
             for primers over the :attr:`BoulderIO
@@ -478,27 +550,48 @@ from primer3plus.utils import anneal as anneal_primer
         left_over = self._design.SEQUENCE_PRIMER_OVERHANG.value
         right_over = self._design.SEQUENCE_PRIMER_REVCOMP_OVERHANG.value
 
-        left_over, left_anneal = self._fix_length(left_over, left_anneal, lim=lim)
-        right_over, right_anneal = self._fix_length(right_over, right_anneal, lim=lim)
+        left_over, left_long_overhang, left_anneal = self._trim_long(
+            left_over, left_anneal, lim=lim
+        )
+        right_over, right_long_overhang, right_anneal = self._trim_long(
+            right_over, right_anneal, lim=lim
+        )
 
-        self.left_overhang(left_over)
-        self.right_overhang(right_over)
+        self.left_overhang(left_over + left_long_overhang)
+        self.right_overhang(right_over + right_long_overhang)
+
+        # save the sequences that were trimmed
+        # TODO: will need to re-add these in the results in overhang, product size, and anneal
+        # TODO: adjust the product_size
+        # TODO: adjust any other regions
+        # TODO: re-adjust tm and add any warnings
+
+        # save values for long overhangs
+        self._left_long_overhang(left_long_overhang)
+        self._right_long_overhang(right_long_overhang)
+
         self.left_sequence(left_anneal)
         self.right_sequence(right_anneal)</div>
+
+    def _left_long_overhang(self, x):
+        self.update({&quot;_SEQUENCE_LONG_OVERHANG&quot;: x})
+
+    def _right_long_overhang(self, x):
+        self.update({&quot;_SEQUENCE_REVCOMP_LONG_OVERHANG&quot;: x})
 
 <div class="viewcode-block" id="DesignPresets._resolve_overhangs"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets._resolve_overhangs">[docs]</a>    def _resolve_overhangs(self):
         &quot;&quot;&quot;Sets the annealing and overhang sequences.&quot;&quot;&quot;
         left_over, left_anneal = self._get_left_overhang()
         _loverhang = self._design.SEQUENCE_PRIMER_OVERHANG.value
-        if left_anneal and self._design.SEQUENCE_PRIMER_OVERHANG.value:
+        if _loverhang:
             left_over = _loverhang + left_over
             # raise ValueError(
             #     &quot;Left overhang already set to &#39;{}&#39;.&quot;.format(_loverhang)
             # )
 
         right_over, right_anneal = self._get_right_overhang()
-        _roverhang = self._design.SEQUENCE_PRIMER_OVERHANG.value
-        if right_anneal and _roverhang:
+        _roverhang = self._design.SEQUENCE_PRIMER_REVCOMP_OVERHANG.value
+        if _roverhang:
             right_over = _roverhang + right_over
             # raise ValueError(
             #     &quot;Right overhang already set to &#39;{}&#39;.&quot;.format(_roverhang)
@@ -744,7 +837,7 @@ def clip(x, mn, mx):
             raise Primer3PlusRunTimeError(str(e)) from e
 
         pairs, explain = parse_primer3_results(res)
-        self.presets._post_parse(pairs, explain)
+        self.settings._post_parse(pairs, explain)
         return pairs, explain</div>
 
 <div class="viewcode-block" id="DesignBase.run"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignBase.run">[docs]</a>    def run(self, params: BoulderIO = None) -&gt; Tuple[List[Dict], List[Dict]]:
@@ -824,7 +917,7 @@ def clip(x, mn, mx):
 <div class="viewcode-block" id="Design"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.Design">[docs]</a>class Design(DesignBase, AllParameters):
     def __init__(self):
         &quot;&quot;&quot;Initialize a new design. Set parameters using
-        :attr:`Design.presets`, which
+        :attr:`Design.settings`, which
         returns an instance of
         :class:`DesignPresets &lt;primer3plus.design.DesignPresets&gt;`.
 
@@ -835,13 +928,13 @@ def clip(x, mn, mx):
         .. code-block::
 
             design = Design()
-            design.presets.template(&quot;AGGCTGTAGTGCTTGTAGCTGGTTGCGTTACTGTG&quot;)
-            design.presets.left_sequence(&quot;GTAGTGCTTGTA&quot;)
+            design.settings.template(&quot;AGGCTGTAGTGCTTGTAGCTGGTTGCGTTACTGTG&quot;)
+            design.settings.left_sequence(&quot;GTAGTGCTTGTA&quot;)
             design.SEQUENCE_ID.value = &quot;MY ID&quot;
             design.run()
         &quot;&quot;&quot;
         super().__init__()
-        self._presets = DesignPresets(self)
+        self._settings = DesignPresets(self)
 
     def set(self, key, value):
         self.params.defs[key].value = value
@@ -850,16 +943,21 @@ def clip(x, mn, mx):
         return self.params.defs[key]
 
     @property
-    def presets(self) -&gt; &quot;DesignPresets&quot;:
+    def settings(self) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;Return the :class:`DesignPresets &lt;primer3plus.design.DesignPresets&gt;`
         instance for this design.&quot;&quot;&quot;
-        return self._presets
+        return self._settings
+
+    @property
+    def presets(self):
+        depreciated_warning(&quot;&#39;presets&#39; has been renamed to &#39;settings&#39;&quot;)
+        return self.settings
 
     def update(self, data: Dict[str, Any]):
         return self.params.update(data)
 
 <div class="viewcode-block" id="Design.run"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.Design.run">[docs]</a>    def run(self, params: BoulderIO = None) -&gt; Tuple[List[Dict], List[Dict]]:
-        self.presets._resolve()
+        self.settings._resolve()
         return super()._run(params)</div>
 
 <div class="viewcode-block" id="Design.run_and_optimize"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.Design.run_and_optimize">[docs]</a>    def run_and_optimize(
@@ -870,7 +968,7 @@ def clip(x, mn, mx):
             str, Tuple[Union[float, int], Union[float, int], Union[float, int]]
         ] = None,
     ) -&gt; Tuple[List[dict], List[dict]]:
-        self.presets._resolve()
+        self.settings._resolve()
         return super().run_and_optimize(max_iterations)</div></div>
 
 

@@ -174,3 +174,5 @@ name,type,value
 :attr:`SEQUENCE_PRIMER_REVCOMP_OVERHANG <primer3plus.params.ExtraTypes.SEQUENCE_PRIMER_REVCOMP_OVERHANG>`,<class 'str'>,
 :attr:`PRIMER_USE_OVERHANGS <primer3plus.params.ExtraTypes.PRIMER_USE_OVERHANGS>`,<class 'bool'>,False
 :attr:`PRIMER_LONG_OK <primer3plus.params.ExtraTypes.PRIMER_LONG_OK>`,<class 'bool'>,False
+:attr:`_SEQUENCE_LONG_OVERHANG <primer3plus.params.ExtraTypes._SEQUENCE_LONG_OVERHANG>`,<class 'str'>,
+:attr:`_SEQUENCE_REVCOMP_LONG_OVERHANG <primer3plus.params.ExtraTypes._SEQUENCE_REVCOMP_LONG_OVERHANG>`,<class 'str'>,

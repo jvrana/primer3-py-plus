@@ -19,9 +19,9 @@ Python primer3 wrapper https://pypi.org/project/primer3-py/.
 
    design = Design()
    t = "AGCGTCGTGTATGGTAGTGTATTTGCGTTGACGTTGCTGACGTCGTTGAGTCGT"
-   design.presets.template(t)
-   design.presets.product_size((len(t), len(t)))
-   design.presets.as_cloning_task()
+   design.settings.template(t)
+   design.settings.product_size((len(t), len(t)))
+   design.settings.as_cloning_task()
    design.run()
 
 .. testoutput:: intro
@@ -30,9 +30,9 @@ Python primer3 wrapper https://pypi.org/project/primer3-py/.
 .. code-block:: python
 
    design = Design()
-   design.presets.template("AGCGTCGTGTATGGTAGTGTATTTGCGTTGACGTTGCTGACGTCGTTGAGTCGT")
-   design.presets.as_cloning_task()
-   design.presets.left_sequence("AGCGTCGTGTATGGTAGTG")
+   design.settings.template("AGCGTCGTGTATGGTAGTGTATTTGCGTTGACGTTGCTGACGTCGTTGAGTCGT")
+   design.settings.as_cloning_task()
+   design.settings.left_sequence("AGCGTCGTGTATGGTAGTG")
    design.run_and_optimize(5)
 
 For more info, take a look at the :ref:`API Docs <api>`
@@ -61,16 +61,16 @@ Installation
 Making a primer design task
 ***************************
 
-The preferred way to start a design is to use the :meth:`primer3plus.Design.presets`
+The preferred way to start a design is to use the :meth:`primer3plus.Design.settings`
 property, which provides many helper methods for setting parameters.
 If you're using an interactive notebook or terminal, hitting `TAB` after typing
-`design.presets` will provide all of the standard design settings
+`design.settings` will provide all of the standard design settings
 
 .. code-block::
 
    design = Design()
-   design.presets.left_sequence('AGCGTCGTGTATGGTAGTG')
-   design.presets.template('AGGGGCGGAGGTGTAGTCGTCGTTAGCGTTAGTCTA')
+   design.settings.left_sequence('AGCGTCGTGTATGGTAGTG')
+   design.settings.template('AGGGGCGGAGGTGTAGTCGTCGTTAGCGTTAGTCTA')
 
 You can also interact with the parameters more directly. To get the parameters, use
 the :meth:`get <primer3plus.Design.get>` method. From there you can set the value,

@@ -44,10 +44,10 @@ which usually can be accessed by typing `design.[TAB]`
     print(design.SEQUENCE_TEMPLATE)
     print(design.SEQUENCE_TEMPLATE))
 
-setting using settings
-*********************
+settings
+********
 
-The :meth:`settings <primer3plus.Design.settings>` (returning a
+The :attr:`settings <primer3plus.Design.settings>` (returning an instance of
 :class:`DesignSettings <primer3plus.design.DesignSettings>`) provides several
 convenient methods for setting common tasks:
 
@@ -68,13 +68,21 @@ convenient methods for setting common tasks:
 setting from a single key-value pair
 ************************************
 
-Preferred way to set parameters not available in the settings, is to use
-:meth:`set <primer3plus.Design.set>`:
+Preferred way to set parameters not available in the settings, is to use the
+parameter descriptors in the designs as follows:
 
 .. code-block::
 
     # preferred
+    design.SEQUENCE_TEMPLATE.value = 'foo'
+
+Alternatively, use the :meth:`get <primer3plus.Design.get>` or
+:meth:`set <primer3plus.Design.set>` methods:
+
+.. code-block::
+
     design.set('SEQUENCE_TEMPLATE', 'foo')
+    print(design.get('SEQUENCE_TEMPLATE'))
 
 setting from a dictionary
 *************************

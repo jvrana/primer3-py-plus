@@ -88,7 +88,7 @@
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#setting-design-parameters">Setting design parameters</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#setting-using-presets">setting using presets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#settings">settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#setting-from-a-single-key-value-pair">setting from a single key-value pair</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#setting-from-a-dictionary">setting from a dictionary</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#getting-help">getting help</a></li>
@@ -180,13 +180,13 @@
 <span class="n">design</span> <span class="o">=</span> <span class="n">Design</span><span class="p">()</span>
 
 <span class="c1"># set template sequence</span>
-<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;AGGTTGCGTGTGTATGGTCGTGTAGTGTGT&quot;</span><span class="p">)</span>
+<span class="n">design</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;AGGTTGCGTGTGTATGGTCGTGTAGTGTGT&quot;</span><span class="p">)</span>
 
 <span class="c1"># set left primer sequence</span>
-<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">left_sequence</span><span class="p">(</span><span class="s2">&quot;GTTGCGTGTGT)</span>
+<span class="n">design</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">left_sequence</span><span class="p">(</span><span class="s2">&quot;GTTGCGTGTGT)</span>
 
 <span class="c1"># set as a cloning task</span>
-<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">as_cloning_task</span><span class="p">()</span>
+<span class="n">design</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">as_cloning_task</span><span class="p">()</span>
 
 <span class="c1"># run the design task</span>
 <span class="n">design</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
@@ -209,13 +209,13 @@ which usually can be accessed by typing <cite>design.[TAB]</cite></p>
 <span class="k">print</span><span class="p">(</span><span class="n">design</span><span class="o">.</span><span class="n">SEQUENCE_TEMPLATE</span><span class="p">))</span>
 </pre></div>
 </div>
-<div class="section" id="setting-using-presets">
-<h3>setting using presets<a class="headerlink" href="#setting-using-presets" title="Permalink to this headline">¶</a></h3>
-<p>The <code class="xref py py-meth docutils literal notranslate"><span class="pre">presets</span></code> (returning a
-<a class="reference internal" href="developer/api_reference.html#primer3plus.design.DesignPresets" title="primer3plus.design.DesignPresets"><code class="xref py py-class docutils literal notranslate"><span class="pre">DesignPresets</span></code></a>) provides several
+<div class="section" id="settings">
+<h3>settings<a class="headerlink" href="#settings" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="xref py py-attr docutils literal notranslate"><span class="pre">settings</span></code> (returning an instance of
+<code class="xref py py-class docutils literal notranslate"><span class="pre">DesignSettings</span></code>) provides several
 convenient methods for setting common tasks:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">design</span> <span class="o">=</span> <span class="n">Design</span><span class="p">()</span>
-<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;ACGGGGAGTTGTCTGTAGGTTGATTATGTGTGTCGTGTGTGTATATGGGTCTGA&quot;</span><span class="p">)</span>
+<span class="n">design</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;ACGGGGAGTTGTCTGTAGGTTGATTATGTGTGTCGTGTGTGTATATGGGTCTGA&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">design</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;SEQUENCE_TEMPLATE&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -225,10 +225,16 @@ convenient methods for setting common tasks:</p>
 </div>
 <div class="section" id="setting-from-a-single-key-value-pair">
 <h3>setting from a single key-value pair<a class="headerlink" href="#setting-from-a-single-key-value-pair" title="Permalink to this headline">¶</a></h3>
-<p>Preferred way to set parameters not available in the presets, is to use
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">set</span></code>:</p>
+<p>Preferred way to set parameters not available in the settings, is to use the
+parameter descriptors in the designs as follows:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span># preferred
-design.set(&#39;SEQUENCE_TEMPLATE&#39;, &#39;foo&#39;)
+design.SEQUENCE_TEMPLATE.value = &#39;foo&#39;
+</pre></div>
+</div>
+<p>Alternatively, use the <code class="xref py py-meth docutils literal notranslate"><span class="pre">get</span></code> or
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">set</span></code> methods:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>design.set(&#39;SEQUENCE_TEMPLATE&#39;, &#39;foo&#39;)
+print(design.get(&#39;SEQUENCE_TEMPLATE&#39;))
 </pre></div>
 </div>
 </div>
@@ -260,9 +266,9 @@ or as a descriptor and call <code class="xref py py-meth docutils literal notran
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
 
 <span class="n">design</span> <span class="o">=</span> <span class="n">Design</span><span class="p">()</span>
-<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s1">&#39;TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC&#39;</span><span class="p">)</span>
-<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">as_cloning_task</span><span class="p">()</span>
-<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">primer_num_return</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">design</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s1">&#39;TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC&#39;</span><span class="p">)</span>
+<span class="n">design</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">as_cloning_task</span><span class="p">()</span>
+<span class="n">design</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">primer_num_return</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">results</span><span class="p">,</span> <span class="n">explain</span> <span class="o">=</span> <span class="n">design</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
@@ -325,9 +331,9 @@ or as a descriptor and call <code class="xref py py-meth docutils literal notran
 <div class="section" id="designing-the-right-primer-only">
 <span id="setting-primers"></span><h2>Designing the right primer only<a class="headerlink" href="#designing-the-right-primer-only" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>design = Design()
-design.presets.template(&quot;TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC&quot;)
-design.presets.left_sequence(&#39;GTTATGTCACGCTTACATTCACG&#39;)
-design.presets.as_cloning_task()
+design.settings.template(&quot;TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC&quot;)
+design.settings.left_sequence(&#39;GTTATGTCACGCTTACATTCACG&#39;)
+design.settings.as_cloning_task()
 design.run()
 </pre></div>
 </div>
@@ -340,13 +346,13 @@ overhang = &#39;AAAAA&#39;
 
 design = Design()
 
-design.presets.template(template)
-design.presets.left_sequence(overhang + anneal)
+design.settings.template(template)
+design.settings.left_sequence(overhang + anneal)
 
 # necessary to resolve overhangs
 # automatically find the appropriate annealing sequence for primer3
 # adds overhang sequence to results
-design.presets.use_overhangs()
+design.settings.use_overhangs()
 
 design.run()
 </pre></div>
@@ -359,13 +365,13 @@ anneal = template[20:80]
 
 design = Design()
 
-design.presets.template(template)
-design.presets.left_sequence(overhang + anneal)
+design.settings.template(template)
+design.settings.left_sequence(overhang + anneal)
 
 # uses the last 35 bases of the annealing sequence
 # sets the remaining as the overhang sequence
-design.presets.long_ok()
-design.presets.use_overhang()
+design.settings.long_ok()
+design.settings.use_overhang()
 
 design.run()
 </pre></div>
@@ -374,8 +380,8 @@ design.run()
 <div class="section" id="design-primers-targeting-interval">
 <h2>Design primers targeting interval<a class="headerlink" href="#design-primers-targeting-interval" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>design = Design()
-design.presets.template(&quot;TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC&quot;)
-design.presets.target((50, 150))
+design.settings.template(&quot;TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC&quot;)
+design.settings.target((50, 150))
 design.run()
 </pre></div>
 </div>
@@ -385,8 +391,8 @@ design.run()
 <p>In this example, the parameter conditions are too strict to find a primer pair
 the first time around:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">design</span> <span class="o">=</span> <span class="n">Design</span><span class="p">()</span>
-<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC&quot;</span><span class="p">)</span>
-<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">target</span><span class="p">((</span><span class="mi">25</span><span class="p">,</span> <span class="mi">150</span><span class="p">))</span>
+<span class="n">design</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC&quot;</span><span class="p">)</span>
+<span class="n">design</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">target</span><span class="p">((</span><span class="mi">25</span><span class="p">,</span> <span class="mi">150</span><span class="p">))</span>
 <span class="n">res</span><span class="p">,</span> <span class="n">explain</span> <span class="o">=</span> <span class="n">design</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Results: &quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Explain: &quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">explain</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
@@ -406,9 +412,9 @@ Explain:  {
 </div>
 <p>We can run the relaxation procedure using <code class="xref py py-meth docutils literal notranslate"><span class="pre">run_and_optimize</span></code>:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">design</span> <span class="o">=</span> <span class="n">Design</span><span class="p">()</span>
-<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC&quot;</span><span class="p">)</span>
-<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">target</span><span class="p">((</span><span class="mi">25</span><span class="p">,</span> <span class="mi">150</span><span class="p">))</span>
-<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">primer_num_return</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">design</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC&quot;</span><span class="p">)</span>
+<span class="n">design</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">target</span><span class="p">((</span><span class="mi">25</span><span class="p">,</span> <span class="mi">150</span><span class="p">))</span>
+<span class="n">design</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">primer_num_return</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">res</span><span class="p">,</span> <span class="n">explain</span> <span class="o">=</span> <span class="n">design</span><span class="o">.</span><span class="n">run_and_optimize</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Gradient used: &quot;</span><span class="p">,</span> <span class="n">design</span><span class="o">.</span><span class="n">DEFAULT_GRADIENT</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Results: &quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
@@ -475,9 +481,9 @@ for the RIGHT primer location:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">primer3plus.utils</span> <span class="k">import</span> <span class="n">reverse_complement</span>
 
 <span class="n">design</span> <span class="o">=</span> <span class="n">Design</span><span class="p">()</span>
-<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s1">&#39;TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC&#39;</span><span class="p">)</span>
-<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">as_cloning_task</span><span class="p">()</span>
-<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">primer_num_return</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">design</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s1">&#39;TCATGTAATTAGTTATGTCACGCTTACATTCACGCCCTCCCCCCACATCCGCTCTAACCGAAAAGGAAGGAGTTAGACAACCTGAAGTCTAGGTCCCTATTTATTTTTTTATAGTTATGTTAGTATTAAGAACGTTATTTATATTTCAAATTTTTCTTTTTTTTCTGTACAGACGCGTGTACGCATGTAACATTATACTGAAAACCTTGCTTGAGAAGGTTTTGGGACGCTCGAAGGCTTTAATTTGC&#39;</span><span class="p">)</span>
+<span class="n">design</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">as_cloning_task</span><span class="p">()</span>
+<span class="n">design</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">primer_num_return</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">results</span><span class="p">,</span> <span class="n">explain</span> <span class="o">=</span> <span class="n">design</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 

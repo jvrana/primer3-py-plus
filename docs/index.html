@@ -165,9 +165,9 @@
 Python primer3 wrapper <a class="reference external" href="https://pypi.org/project/primer3-py/">https://pypi.org/project/primer3-py/</a>.</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">design</span> <span class="o">=</span> <span class="n">Design</span><span class="p">()</span>
 <span class="n">t</span> <span class="o">=</span> <span class="s2">&quot;AGCGTCGTGTATGGTAGTGTATTTGCGTTGACGTTGCTGACGTCGTTGAGTCGT&quot;</span>
-<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
-<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">product_size</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)))</span>
-<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">as_cloning_task</span><span class="p">()</span>
+<span class="n">design</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="n">design</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">product_size</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)))</span>
+<span class="n">design</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">as_cloning_task</span><span class="p">()</span>
 <span class="n">design</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -175,9 +175,9 @@ Python primer3 wrapper <a class="reference external" href="https://pypi.org/proj
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">design</span> <span class="o">=</span> <span class="n">Design</span><span class="p">()</span>
-<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;AGCGTCGTGTATGGTAGTGTATTTGCGTTGACGTTGCTGACGTCGTTGAGTCGT&quot;</span><span class="p">)</span>
-<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">as_cloning_task</span><span class="p">()</span>
-<span class="n">design</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">left_sequence</span><span class="p">(</span><span class="s2">&quot;AGCGTCGTGTATGGTAGTG&quot;</span><span class="p">)</span>
+<span class="n">design</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">template</span><span class="p">(</span><span class="s2">&quot;AGCGTCGTGTATGGTAGTGTATTTGCGTTGACGTTGCTGACGTCGTTGAGTCGT&quot;</span><span class="p">)</span>
+<span class="n">design</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">as_cloning_task</span><span class="p">()</span>
+<span class="n">design</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">left_sequence</span><span class="p">(</span><span class="s2">&quot;AGCGTCGTGTATGGTAGTG&quot;</span><span class="p">)</span>
 <span class="n">design</span><span class="o">.</span><span class="n">run_and_optimize</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -202,13 +202,13 @@ Python primer3 wrapper <a class="reference external" href="https://pypi.org/proj
 </div>
 <div class="section" id="making-a-primer-design-task">
 <h3>Making a primer design task<a class="headerlink" href="#making-a-primer-design-task" title="Permalink to this headline">¶</a></h3>
-<p>The preferred way to start a design is to use the <code class="xref py py-meth docutils literal notranslate"><span class="pre">primer3plus.Design.presets()</span></code>
+<p>The preferred way to start a design is to use the <code class="xref py py-meth docutils literal notranslate"><span class="pre">primer3plus.Design.settings()</span></code>
 property, which provides many helper methods for setting parameters.
 If you’re using an interactive notebook or terminal, hitting <cite>TAB</cite> after typing
-<cite>design.presets</cite> will provide all of the standard design settings</p>
+<cite>design.settings</cite> will provide all of the standard design settings</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>design = Design()
-design.presets.left_sequence(&#39;AGCGTCGTGTATGGTAGTG&#39;)
-design.presets.template(&#39;AGGGGCGGAGGTGTAGTCGTCGTTAGCGTTAGTCTA&#39;)
+design.settings.left_sequence(&#39;AGCGTCGTGTATGGTAGTG&#39;)
+design.settings.template(&#39;AGGGGCGGAGGTGTAGTCGTCGTTAGCGTTAGTCTA&#39;)
 </pre></div>
 </div>
 <p>You can also interact with the parameters more directly. To get the parameters, use
@@ -265,7 +265,7 @@ parameters such as melting temperature and primer size until primer pairs are fo
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="usage.html#setting-design-parameters">Setting design parameters</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="usage.html#setting-using-presets">setting using presets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="usage.html#settings">settings</a></li>
 <li class="toctree-l3"><a class="reference internal" href="usage.html#setting-from-a-single-key-value-pair">setting from a single key-value pair</a></li>
 <li class="toctree-l3"><a class="reference internal" href="usage.html#setting-from-a-dictionary">setting from a dictionary</a></li>
 <li class="toctree-l3"><a class="reference internal" href="usage.html#getting-help">getting help</a></li>

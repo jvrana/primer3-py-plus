@@ -165,6 +165,7 @@
  | <a href="#D"><strong>D</strong></a>
  | <a href="#E"><strong>E</strong></a>
  | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
  | <a href="#I"><strong>I</strong></a>
  | <a href="#K"><strong>K</strong></a>
  | <a href="#L"><strong>L</strong></a>
@@ -183,8 +184,6 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="developer/api_reference.html#primer3plus.params.BoulderIO._clean_dictionary">_clean_dictionary() (primer3plus.params.BoulderIO static method)</a>
 </li>
-      <li><a href="developer/api_reference.html#primer3plus.design.DesignPresets._fix_length">_fix_length() (primer3plus.design.DesignPresets static method)</a>
-</li>
       <li><a href="developer/api_reference.html#primer3plus.params.BoulderIO._globals">_globals() (primer3plus.params.BoulderIO method)</a>
 </li>
       <li><a href="developer/api_reference.html#primer3plus.params._load_default_boulderio">_load_default_boulderio() (in module primer3plus.params)</a>
@@ -197,15 +196,17 @@
 </li>
       <li><a href="developer/api_reference.html#primer3plus.design.DesignPresets._post_parse">_post_parse() (primer3plus.design.DesignPresets method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="developer/api_reference.html#primer3plus.params.BoulderIO._program">_program() (primer3plus.params.BoulderIO method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="developer/api_reference.html#primer3plus.design.DesignPresets._resolve">_resolve() (primer3plus.design.DesignPresets method)</a>
 </li>
       <li><a href="developer/api_reference.html#primer3plus.design.DesignPresets._resolve_max_lengths">_resolve_max_lengths() (primer3plus.design.DesignPresets method)</a>
 </li>
       <li><a href="developer/api_reference.html#primer3plus.design.DesignPresets._resolve_overhangs">_resolve_overhangs() (primer3plus.design.DesignPresets method)</a>
+</li>
+      <li><a href="developer/api_reference.html#primer3plus.design.DesignPresets._resolve_product_sizes">_resolve_product_sizes() (primer3plus.design.DesignPresets method)</a>
 </li>
       <li><a href="developer/api_reference.html#primer3plus.design.Design._run">_run() (primer3plus.design.Design method)</a>
 
@@ -214,6 +215,8 @@
 </li>
       </ul></li>
       <li><a href="developer/api_reference.html#primer3plus.params.BoulderIO._sequence">_sequence() (primer3plus.params.BoulderIO method)</a>
+</li>
+      <li><a href="developer/api_reference.html#primer3plus.design.DesignPresets._trim_long">_trim_long() (primer3plus.design.DesignPresets static method)</a>
 </li>
       <li><a href="developer/api_reference.html#primer3plus.params.Parameter._value">_value (primer3plus.params.Parameter attribute)</a>
 </li>
@@ -312,6 +315,14 @@
   </ul></td>
 </tr></table>
 
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="developer/api_reference.html#primer3plus.params.Parameter.hold_restore">hold_restore() (primer3plus.params.Parameter method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -337,6 +348,8 @@
 <h2 id="L">L</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="developer/api_reference.html#primer3plus.design.DesignPresets.left_overhang">left_overhang() (primer3plus.design.DesignPresets method)</a>
+</li>
       <li><a href="developer/api_reference.html#primer3plus.design.DesignPresets.left_sequence">left_sequence() (primer3plus.design.DesignPresets method)</a>
 </li>
   </ul></td>
@@ -401,8 +414,6 @@
 </li>
       <li><a href="developer/api_reference.html#primer3plus.design.DesignPresets.pick_right_only">pick_right_only() (primer3plus.design.DesignPresets method)</a>
 </li>
-      <li><a href="developer/api_reference.html#primer3plus.design.Design.presets">presets() (primer3plus.design.Design property)</a>
-</li>
       <li><a href="developer/api_reference.html#module-primer3plus">primer3plus (module)</a>
 </li>
   </ul></td>
@@ -433,6 +444,8 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="developer/api_reference.html#primer3plus.design.DesignPresets.right_overhang">right_overhang() (primer3plus.design.DesignPresets method)</a>
+</li>
       <li><a href="developer/api_reference.html#primer3plus.design.DesignPresets.right_sequence">right_sequence() (primer3plus.design.DesignPresets method)</a>
 </li>
       <li><a href="developer/api_reference.html#primer3plus.design.Design.run">run() (primer3plus.design.Design method)</a>
@@ -459,13 +472,17 @@
 </li>
       <li><a href="developer/api_reference.html#primer3plus.params.ExtraTypes.SEQUENCE_PRIMER_OVERHANG">SEQUENCE_PRIMER_OVERHANG (primer3plus.params.ExtraTypes attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="developer/api_reference.html#primer3plus.params.ExtraTypes.SEQUENCE_PRIMER_REVCOMP_OVERHANG">SEQUENCE_PRIMER_REVCOMP_OVERHANG (primer3plus.params.ExtraTypes attribute)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="developer/api_reference.html#primer3plus.params.Parameter.set_default">set_default() (primer3plus.params.Parameter method)</a>
 </li>
       <li><a href="developer/api_reference.html#primer3plus.params.BoulderIO.set_defaults">set_defaults() (primer3plus.params.BoulderIO method)</a>
+</li>
+      <li><a href="developer/api_reference.html#primer3plus.params.Parameter.set_restore">set_restore() (primer3plus.params.Parameter method)</a>
+</li>
+      <li><a href="developer/api_reference.html#primer3plus.design.Design.settings">settings() (primer3plus.design.Design property)</a>
 </li>
   </ul></td>
 </tr></table>

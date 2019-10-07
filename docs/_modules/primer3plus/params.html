@@ -222,13 +222,14 @@ _default_param_path = os.path.join(
     &quot;&quot;&quot;An instance of a Primer3 parameter. Internally validate its value using
     its :class:&lt;ParameterType &lt;primer3plus.params.ParameterType&gt;`&quot;&quot;&quot;
 
-    def __init__(self, ptype: ParameterType, value=None):
+    def __init__(self, ptype: ParameterType, value=None, restore: Any = None):
         &quot;&quot;&quot;
         Initialize a parameter from a
         :class:`Parameter &lt;primer3plus.params.ParameterType&gt;`
 
         :param ptype: parameter type
         :param value: value to set parameter
+        :param restore: optional restoration value
         &quot;&quot;&quot;
         self.ptype = (
             ptype
@@ -238,6 +239,7 @@ _default_param_path = os.path.join(
             self.value = self.ptype.default
         else:
             self.value = value
+        self._restore = None
 
     @property
     def value(self) -&gt; Any:
@@ -281,6 +283,22 @@ _default_param_path = os.path.join(
         &quot;&quot;&quot;
         self.value = self.ptype.default</div>
 
+<div class="viewcode-block" id="Parameter.hold_restore"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.Parameter.hold_restore">[docs]</a>    def hold_restore(self):
+        &quot;&quot;&quot;
+        Hold current value for later restoration.
+
+        :return:
+        &quot;&quot;&quot;
+        self._restore = self.value</div>
+
+<div class="viewcode-block" id="Parameter.set_restore"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.Parameter.set_restore">[docs]</a>    def set_restore(self):
+        &quot;&quot;&quot;
+        Restores the parameter to some original value.
+        :return:
+        &quot;&quot;&quot;
+        if self._restore is not None:
+            self.value = self._restore</div>
+
 <div class="viewcode-block" id="Parameter.copy"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.Parameter.copy">[docs]</a>    def copy(self) -&gt; &quot;Parameter&quot;:
         &quot;&quot;&quot;
         Make a copy of this parameter.
@@ -290,8 +308,12 @@ _default_param_path = os.path.join(
         p = self.__class__(self.ptype, deepcopy(self.value))
         return p</div>
 
-    def help(self, open: bool = False):
+    @property
+    def help_url(self):
         return &quot;{}#{}&quot;.format(DOCURL, self.name)
+
+    def help(self, open: bool = False):
+        return self.help_url
 
     def __str__(self) -&gt; str:
         return &quot;&lt;{cls} {name} {type} value={value} default={default}&gt;&quot;.format(
@@ -338,7 +360,21 @@ _default_param_path = os.path.join(
         description=&quot;if True, primers longer than the primer3 defaults (35)&quot;
         &quot; will automatically be adjusted&quot;,
         category=ParamTypes.EXTRA,
-    )  #: specifies BoulderIO use long primers (&gt;35bp).</div>
+    )  #: specifies BoulderIO use long primers (&gt;35bp).
+    _SEQUENCE_LONG_OVERHANG = ParameterType(
+        name=&quot;_SEQUENCE_LONG_OVERHANG&quot;,
+        type=str,
+        default=&quot;&quot;,
+        description=&quot;DO NOT SET DIRECTLY. Seq trimmed for long left primer overhangs.&quot;,
+        category=ParamTypes.EXTRA,
+    )
+    _SEQUENCE_REVCOMP_LONG_OVERHANG = ParameterType(
+        name=&quot;_SEQUENCE_REVCOMP_LONG_OVERHANG&quot;,
+        type=str,
+        default=&quot;&quot;,
+        description=&quot;DO NOT SET DIRECTLY. Seq trimmed for long right primer overhangs.&quot;,
+        category=ParamTypes.EXTRA,
+    )</div>
 
 
 <div class="viewcode-block" id="BoulderIO"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.BoulderIO">[docs]</a>class BoulderIO(Mapping):
@@ -353,6 +389,8 @@ _default_param_path = os.path.join(
         ExtraTypes.SEQUENCE_PRIMER_REVCOMP_OVERHANG,
         ExtraTypes.PRIMER_USE_OVERHANGS,
         ExtraTypes.PRIMER_LONG_OK,
+        ExtraTypes._SEQUENCE_LONG_OVERHANG,
+        ExtraTypes._SEQUENCE_REVCOMP_LONG_OVERHANG,
     ]  #: extra parameter types
     PRIMER_MAX_SIZE_HARD_LIM = 35  #: hard coded primer length limit for Primer3.
 

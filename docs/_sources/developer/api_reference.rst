@@ -15,14 +15,14 @@ Design
 
 .. automodule:: primer3plus.design
     :members:
-    :exclude-members: DesignPresets
+    :exclude-members: DesignSettings
 
 .. _api_parameter_interface:
 
 Parameter Interface
 ===================
 
-.. autoclass:: primer3plus.design.DesignPresets
+.. autoclass:: primer3plus.design.DesignSettings
     :members:
 
 .. _api_parameters:
