@@ -720,7 +720,7 @@ class DesignBase:
         ] = None,
         run_kwargs: dict = None,
     ) -> Tuple[List[dict], List[dict]]:
-        """Design primers. If primer design is unsuccessful, relax parameters
+        """Design primers and relax constraints. If primer design is unsuccessful, relax parameters
         as defined in primer3plust.Design.DEFAULT_GRADIENT. Repeat for the specified
         number of max_iterations.
 
