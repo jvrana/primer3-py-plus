@@ -1,4 +1,11 @@
 {
+  "1.0.6": {
+    "description": "removed unnecessay dependency",
+    "date": "2019-11-11T08:52:02.431498",
+    "changes": [
+      "removed keats from development dependencies"
+    ]
+  },
   "1.0.5": {
     "description": "bug fixes",
     "date": "2019-10-07T15:34:50.778683",
