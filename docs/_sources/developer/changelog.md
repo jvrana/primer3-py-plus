@@ -1,4 +1,18 @@
 # primer3plus change log
+## 1.0.6
+**2019-11-11T08:52:02.431498**
+removed unnecessay dependency
+
+ - removed keats from development dependencies
+
+
+## 1.0.5
+**2019-10-07T15:34:50.778683**
+bug fixes
+
+ - design settings now restored with each run
+
+
 ## 1.0.4
 **2019-10-07T15:18:25.381341**
 improved error messages
