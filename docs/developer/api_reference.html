@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>API Reference &mdash; primer3plus 1.0.4 documentation</title>
+  <title>API Reference &mdash; primer3plus 1.0.6 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                1.0.4
+                1.0.6
               </div>
             
           
@@ -442,7 +442,7 @@ instance for this design.</p>
 <td><p>Design primers.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#primer3plus.design.DesignBase.run_and_optimize" title="primer3plus.design.DesignBase.run_and_optimize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_and_optimize</span></code></a>(max_iterations[, params, …])</p></td>
-<td><p>Design primers.</p></td>
+<td><p>Design primers and relax constraints.</p></td>
 </tr>
 </tbody>
 </table>
@@ -525,7 +525,7 @@ the msg, print off some debugging information at the end of the message.</p>
 <dl class="method">
 <dt id="primer3plus.design.DesignBase.run_and_optimize">
 <code class="sig-name descname">run_and_optimize</code><span class="sig-paren">(</span><em class="sig-param">max_iterations</em>, <em class="sig-param">params=None</em>, <em class="sig-param">gradient=None</em>, <em class="sig-param">run_kwargs=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#DesignBase.run_and_optimize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.DesignBase.run_and_optimize" title="Permalink to this definition">¶</a></dt>
-<dd><p>Design primers. If primer design is unsuccessful, relax parameters
+<dd><p>Design primers and relax constraints. If primer design is unsuccessful, relax parameters
 as defined in primer3plust.Design.DEFAULT_GRADIENT. Repeat for the specified
 number of max_iterations.</p>
 <dl class="field-list simple">
