@@ -1,5 +1,6 @@
 # Primer3Plus
 
+![](https://github.com/jvrana/primer3-py-plus/workflows/Build%package/badge.svg)
 [![PyPI version](https://badge.fury.io/py/primer3plus.svg)](https://badge.fury.io/py/primer3plus)
 
 Primer3Plus is a Python DNA primer design tool based off of Primer3 and the

@@ -1,6 +1,12 @@
+import sys
+
 import pandas as pd
+import pytest
 
 from primer3plus import Design
+
+if sys.version_info[0] == 3 and sys.version_info[1] <= 6:
+    pytest.skip("test requires version 3.6", allow_module_level=True)
 
 
 def test_to_pandas():
