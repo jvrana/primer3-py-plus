@@ -12,7 +12,7 @@ class ParameterDescriptor:
 
 
 class AllParameters:
-    """Mixin with all available parameter descriptors"""
+    """Mixin with all available parameter descriptors."""
 
     PRIMER_DNA_CONC = ParameterDescriptor("PRIMER_DNA_CONC")
     PRIMER_MASK_KMERLIST_PATH = ParameterDescriptor("PRIMER_MASK_KMERLIST_PATH")

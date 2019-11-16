@@ -13,9 +13,10 @@ from primer3plus.exceptions import Primer3PlusParserError
 
 
 class ParamTypes:
-    """
-    Parameter types used in BoulderIO. Only the Global and Sequence parameters
-    are actually used in designs.
+    """Parameter types used in BoulderIO.
+
+    Only the Global and Sequence parameters are actually used in
+    designs.
     """
 
     GLOBAL = "GLOBAL"  #: global parameter key
@@ -36,8 +37,7 @@ class ParameterType:
     """Metatype for a Primer3 parameter."""
 
     def __init__(self, name, description, type, default, category):
-        """
-        Initialize a BoulderIO parameter type.
+        """Initialize a BoulderIO parameter type.
 
         :param name: name of the parameter
         :param description: description of the parameter
@@ -67,12 +67,15 @@ class ParameterType:
 
 
 class Parameter:
-    """An instance of a Primer3 parameter. Internally validate its value using
-    its :class:<ParameterType <primer3plus.params.ParameterType>`"""
+    """An instance of a Primer3 parameter.
+
+    Internally validate its value using its :class:<ParameterType
+    <primer3plus.params.ParameterType>`
+    """
 
     def __init__(self, ptype: ParameterType, value=None, restore: Any = None):
-        """
-        Initialize a parameter from a
+        """Initialize a parameter from a.
+
         :class:`Parameter <primer3plus.params.ParameterType>`
 
         :param ptype: parameter type
@@ -91,8 +94,7 @@ class Parameter:
 
     @property
     def value(self) -> Any:
-        """
-        Return the value of the parameter.
+        """Return the value of the parameter.
 
         :return: Any
         """
@@ -100,8 +102,7 @@ class Parameter:
 
     @value.setter
     def value(self, v: Any):
-        """
-        Set the value of the parameter
+        """Set the value of the parameter.
 
         :param v: the value
         :return: None
@@ -116,40 +117,36 @@ class Parameter:
 
     @property
     def name(self):
-        """
-        Return the name of the parameter
+        """Return the name of the parameter.
 
         :return: parameter name
         """
         return self.ptype.name
 
     def set_default(self):
-        """
-        Set the parameter to its default.
+        """Set the parameter to its default.
 
         :return: None
         """
         self.value = self.ptype.default
 
     def hold_restore(self):
-        """
-        Hold current value for later restoration.
+        """Hold current value for later restoration.
 
         :return:
         """
         self._restore = self.value
 
     def restore(self):
-        """
-        Restores the parameter to some original value.
+        """Restores the parameter to some original value.
+
         :return:
         """
         if self._restore is not None:
             self.value = self._restore
 
     def copy(self) -> "Parameter":
-        """
-        Make a copy of this parameter.
+        """Make a copy of this parameter.
 
         :return: None
         """
@@ -226,9 +223,7 @@ class ExtraTypes:
 
 
 class BoulderIO(Mapping):
-    """
-    Class that maintains and validates a list of Primer3 parameters.
-    """
+    """Class that maintains and validates a list of Primer3 parameters."""
 
     POST_LOAD_DEFAULTS = {"PRIMER_EXPLAIN_FLAG": 1}
     EXPECTED = _expected_opts[:]
@@ -243,14 +238,11 @@ class BoulderIO(Mapping):
     PRIMER_MAX_SIZE_HARD_LIM = 35  #: hard coded primer length limit for Primer3.
 
     def __init__(self):
-        """
-        Initializes a new BoulderIO instance.
-        """
+        """Initializes a new BoulderIO instance."""
         self._params = {}  #: parameters
 
     def update(self, data_dict: Dict[str, Any]):
-        """
-        Update the parameters from a dictionary of key:values.
+        """Update the parameters from a dictionary of key:values.
 
         :param data_dict: update dictionary
         :return: None
@@ -266,8 +258,7 @@ class BoulderIO(Mapping):
             self._params[ptype.name] = Parameter(ptype, ptype.default)
 
     def load(self, param_dict):
-        """
-        Load parameters from a dictionary.
+        """Load parameters from a dictionary.
 
         :param param_dict:
         :return:
@@ -304,8 +295,7 @@ class BoulderIO(Mapping):
 
     @staticmethod
     def online_help(open=False, key=None) -> str:
-        """
-        Display online help in a browser tab.
+        """Display online help in a browser tab.
 
         :param open: if True, open browser tab. Else return url.
         :param key: optional parameter key
@@ -325,8 +315,7 @@ class BoulderIO(Mapping):
         }
 
     def _globals(self, clean=True) -> Dict[str, Any]:
-        """
-        Return global parameters.
+        """Return global parameters.
 
         :param clean: if True, will remove empty lists and empty strings from params.
         :return: parameter values as a dict.
@@ -337,8 +326,7 @@ class BoulderIO(Mapping):
         return data
 
     def _program(self, clean=True):
-        """
-        Return program parameters.
+        """Return program parameters.
 
         :param clean: if True, will remove empty lists and empty strings from params.
         :return: parameter values as a dict.
@@ -349,8 +337,7 @@ class BoulderIO(Mapping):
         return data
 
     def _sequence(self, clean=True):
-        """
-        Return sequence parameters.
+        """Return sequence parameters.
 
         :param clean: if True, will remove empty lists and empty strings from params.
         :return: parameter values as a dict.
@@ -361,8 +348,7 @@ class BoulderIO(Mapping):
         return data
 
     def _other(self, clean=True):
-        """
-        Return other parameters.
+        """Return other parameters.
 
         :param clean: if True, will remove empty lists and empty strings from params.
         :return: parameter values as a dict.
@@ -382,8 +368,7 @@ class BoulderIO(Mapping):
         return {k: v for k, v in self.items()}
 
     def set_defaults(self):
-        """
-        Set all parameters to their defaults.
+        """Set all parameters to their defaults.
 
         :return:
         """
@@ -391,8 +376,7 @@ class BoulderIO(Mapping):
             v.set_default()
 
     def values(self) -> Iterator[Any]:
-        """
-        Iterator for parameter values.
+        """Iterator for parameter values.
 
         :return: iterator over parameter values
         """
@@ -568,8 +552,7 @@ class ParamParser:
 
     @classmethod
     def open(cls, filepath=None) -> BoulderIO:
-        """
-        Open the parameters from the filepath.
+        """Open the parameters from the filepath.
 
         :param filepath: filepath
         :return:
@@ -578,8 +561,9 @@ class ParamParser:
 
 
 def _load_default_boulderio() -> BoulderIO:
-    """
-    Open the default parameters as a :class:`BoulderIO <primer3plus.params.params>`
+    """Open the default parameters as a :class:`BoulderIO.
+
+    <primer3plus.params.params>`
 
     :return: the BoulderIO instance.
     """

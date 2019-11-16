@@ -1,4 +1,4 @@
-"""Core design modules
+"""Core design modules.
 
 For examples for how to use the design module, see the :doc:`Usage Docs <../usage>`
 For a list of design parameters available, take a look at the
@@ -47,9 +47,9 @@ from primer3plus.utils import depreciated_warning
 
 
 class DesignPresets:
-    """
-    Interface for setting design parameters. This is typically accessed from
-    a :class:`Design <primer3plus.Design>` instance's
+    """Interface for setting design parameters. This is typically accessed from
+    a :class:`Design <primer3plus.Design>` instance's.
+
     :meth:`Design <primer3plus.Design.set>` method. As in:
 
     .. code-block::
@@ -60,16 +60,17 @@ class DesignPresets:
     """
 
     def __init__(self, design):
-        """
-        Initializes a new interface from a :class:`~primer3plus.design.Design`.
+        """Initializes a new interface from a.
+
+        :class:`~primer3plus.design.Design`.
 
         :param design: The design
         """
         self._design = design
 
     def _resolve(self):
-        """Process any extra parameters and process BoulderIO so
-        that it is digestable by primer3."""
+        """Process any extra parameters and process BoulderIO so that it is
+        digestable by primer3."""
         if self._design.PRIMER_USE_OVERHANGS.value:
             self._resolve_overhangs()
         if self._design.PRIMER_LONG_OK.value:
@@ -162,7 +163,7 @@ class DesignPresets:
         return matches
 
     def update(self, update: Dict[str, Any]):
-        """Update an arbitrary parameter"""
+        """Update an arbitrary parameter."""
         self._design.params.update(update)
         return self
 
@@ -178,8 +179,7 @@ class DesignPresets:
         return self
 
     def as_cloning_task(self) -> "DesignPresets":
-        """
-        Set the design as a cloning task.
+        """Set the design as a cloning task.
 
         http://primer3.ut.ee/primer3web_help.htm#PRIMER_TASK
 
@@ -188,8 +188,7 @@ class DesignPresets:
         return self.task("pick_cloning_primers")
 
     def as_generic_task(self) -> "DesignPresets":
-        """
-        Set the design as a generic task.
+        """Set the design as a generic task.
 
         http://primer3.ut.ee/primer3web_help.htm#PRIMER_TASK
 
@@ -198,9 +197,8 @@ class DesignPresets:
         return self.task("generic")
 
     def template(self, template: str) -> "DesignPresets":
-        """
-        Set the template sequence for the design. This sets the 'SEQUENCE_TEMPLATE'
-        parameter.
+        """Set the template sequence for the design. This sets the
+        'SEQUENCE_TEMPLATE' parameter.
 
         http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_TEMPLATE
 
@@ -212,8 +210,7 @@ class DesignPresets:
 
     # TODO: set_iterations, set_num_return, set_force_return, set_gradient
     def primer_num_return(self, n: int) -> "DesignPresets":
-        """
-        Set the number of primers to return for the design task.
+        """Set the number of primers to return for the design task.
 
         http://primer3.ut.ee/primer3web_help.htm#PRIMER_NUM_RETURN
 
@@ -225,8 +222,7 @@ class DesignPresets:
     def product_size(
         self, interval: Union[Tuple[int, int], List[Tuple[int, int]]], opt=None
     ) -> "DesignPresets":
-        """
-        Set the product size. Optionally include the optimal size.
+        """Set the product size. Optionally include the optimal size.
 
         http://primer3.ut.ee/primer3web_help.htm#PRIMER_PRODUCT_SIZE_RANGE
         http://primer3.ut.ee/primer3web_help.htm#PRIMER_PRODUCT_OPT_SIZE
@@ -246,8 +242,7 @@ class DesignPresets:
     def pair_region_list(
         self, region_list: List[Tuple[int, int, int, int]]
     ) -> "DesignPresets":
-        """
-        The list of regions from which to design primers.
+        """The list of regions from which to design primers.
 
         http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_PRIMER_PAIR_OK_REGION_LIST
 
@@ -287,7 +282,8 @@ class DesignPresets:
 
     @staticmethod
     def _trim_long(overhang: str, anneal: str, lim: int) -> Tuple[str, str, str]:
-        """Fix the overhang and anneal from the hardcoded BoulderIO primer lim."""
+        """Fix the overhang and anneal from the hardcoded BoulderIO primer
+        lim."""
         return overhang, anneal[:-lim], anneal[-lim:]
 
     def _get_left_overhang(self):
@@ -324,8 +320,8 @@ class DesignPresets:
             return "", right
 
     def left_overhang(self, overhang: str) -> "DesignPresets":
-        """
-        Sets the left overhang sequence for the primer. This overhang will
+        """Sets the left overhang sequence for the primer. This overhang will.
+
         *always* be in the overhang sequence regardless of other parameters.
 
         If using a primer that anneals with an overhang, this value will
@@ -337,8 +333,8 @@ class DesignPresets:
         return self.update({"SEQUENCE_PRIMER_OVERHANG": overhang})
 
     def right_overhang(self, overhang: str) -> "DesignPresets":
-        """
-        Sets the right overhang sequence for the primer. This overhang will
+        """Sets the right overhang sequence for the primer. This overhang will.
+
         *always* be in the overhang sequence regardless of other parameters.
 
         If using a primer that anneals with an overhang, this value will
@@ -350,17 +346,15 @@ class DesignPresets:
         return self.update({"SEQUENCE_PRIMER_REVCOMP_OVERHANG": overhang})
 
     def use_overhangs(self, b: bool = True) -> "DesignPresets":
-        """
-        Set the BoulderIO to process overhangs.
+        """Set the BoulderIO to process overhangs.
 
-     :param b: boolean to set
-        :return: self
+        :param b: boolean to set
+           :return: self
         """
         return self.update({"PRIMER_USE_OVERHANGS": b})
 
     def long_ok(self, b: bool = True) -> "DesignPresets":
-        """
-        Set the BoulderIO to process long primers.
+        """Set the BoulderIO to process long primers.
 
         :param b: boolean to set
         :return: self
@@ -368,10 +362,13 @@ class DesignPresets:
         return self.update({"PRIMER_LONG_OK": b})
 
     def _resolve_product_sizes(self):
-        """If there are long primers being used, the product_size
-        is no longer valid as the trimmed sequence is no longer represented
-        in the originally provided product size. This re-adjusts the product
-        size to correspond the adjusted parameters."""
+        """If there are long primers being used, the product_size is no longer
+        valid as the trimmed sequence is no longer represented in the
+        originally provided product size.
+
+        This re-adjusts the product size to correspond the adjusted
+        parameters.
+        """
         # adjust product size range
         left_long_overhang = self._design._SEQUENCE_LONG_OVERHANG.value
         right_long_overhang = self._design._SEQUENCE_REVCOMP_LONG_OVERHANG.value
@@ -390,9 +387,11 @@ class DesignPresets:
 
     def _resolve_max_lengths(self, lim: int):
         """Fixes the annealing and overhang sequences for annealing sequences
-            for primers over the :attr:`BoulderIO
-            <primer3plus.paramsBoulderIO.PRIMER_MAX_SIZE_HARD_LIM>`.
-            Should always be run *after* :meth:`_resolve_overhangs`."""
+        for primers over the :attr:`BoulderIO.
+
+        <primer3plus.paramsBoulderIO.PRIMER_MAX_SIZE_HARD_LIM>`.
+        Should always be run *after* :meth:`_resolve_overhangs`.
+        """
         left_anneal = self._design.SEQUENCE_PRIMER.value
         right_anneal = self._design.SEQUENCE_PRIMER_REVCOMP.value
         left_over = self._design.SEQUENCE_PRIMER_OVERHANG.value
@@ -451,8 +450,7 @@ class DesignPresets:
         self.right_sequence(right_anneal)
 
     def pick_left_only(self) -> "DesignPresets":
-        """
-        Design only the left primer.
+        """Design only the left primer.
 
         http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_LEFT_PRIMER
         http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_RIGHT_PRIMER
@@ -464,8 +462,7 @@ class DesignPresets:
         )
 
     def pick_right_only(self) -> "DesignPresets":
-        """
-        Design only the right primer.
+        """Design only the right primer.
 
         http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_LEFT_PRIMER
         http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_RIGHT_PRIMER
@@ -492,8 +489,7 @@ class DesignPresets:
         )
 
     def primers(self, p1: str, p2: str) -> "DesignPresets":
-        """
-        Set the left and right primer sequences.
+        """Set the left and right primer sequences.
 
         http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_PRIMER
         http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_RIGHT_PRIMER
@@ -529,12 +525,10 @@ class DesignPresets:
         return interval
 
     def included(self, interval: Union[str, Tuple[int, int]]) -> "DesignPresets":
-        """
-        Specify interval from which primers must be selected.
-        A sub-region of the given sequence in which to pick primers. For
-        example, often the first dozen or so bases of a sequence are vector,
-        and should be excluded from consideration. The value for this parameter
-        has the form.
+        """Specify interval from which primers must be selected. A sub-region
+        of the given sequence in which to pick primers. For example, often the
+        first dozen or so bases of a sequence are vector, and should be
+        excluded from consideration. The value for this parameter has the form.
 
         http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_INCLUDED_REGION
 
@@ -561,16 +555,16 @@ class DesignPresets:
     def target(
         self, interval: Union[str, Tuple[int, int], List[Tuple[int, int]]]
     ) -> "DesignPresets":
-        """
-        Specify the interval that designed primers must flank.
-        If one or more targets is specified then a legal primer pair must
-        flank at least one of them. A target might be a simple sequence repeat
-        site (for example a CA repeat) or a single-base-pair polymorphism, or
-        an exon for resequencing. The value should be a space-separated list
-        of <start>,<length> pairs where <start> is the index of the first base of a
-        target,and <length> is its length.  See also PRIMER_INSIDE_PENALTY,
-        PRIMER_OUTSIDE_PENALTY.
-        PRIMER_TASK=pick_sequencing_primers. See PRIMER_TASK for more information.
+        """Specify the interval that designed primers must flank. If one or
+        more targets is specified then a legal primer pair must flank at least
+        one of them. A target might be a simple sequence repeat site (for
+        example a CA repeat) or a single-base-pair polymorphism, or an exon for
+        resequencing. The value should be a space-separated list of.
+
+        <start>,<length> pairs where <start> is the index of the first base of
+        a target,and <length> is its length.  See also PRIMER_INSIDE_PENALTY,
+        PRIMER_OUTSIDE_PENALTY. PRIMER_TASK=pick_sequencing_primers. See
+        PRIMER_TASK for more information.
 
         http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_TEMPLATE
         http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_TARGET
@@ -586,13 +580,12 @@ class DesignPresets:
     def excluded(
         self, interval: Union[str, Tuple[int, int], List[Tuple[int, int]]]
     ) -> "DesignPresets":
-        """
-        Primers and oligos may not overlap any region specified in this tag.
-        The associated value must be a space-separated list of <start>,<length> pairs
-        where <start> is the index of the first base of the
-        excluded region, and <length> is its length. This tag is useful for tasks such
-        as excluding regions of low sequence quality or for excluding regions containing
-        repetitive elements such as ALUs or LINEs.
+        """Primers and oligos may not overlap any region specified in this tag.
+        The associated value must be a space-separated list of <start>,<length>
+        pairs where <start> is the index of the first base of the excluded
+        region, and <length> is its length. This tag is useful for tasks such
+        as excluding regions of low sequence quality or for excluding regions
+        containing repetitive elements such as ALUs or LINEs.
 
         http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_TEMPLATE
         http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_EXCLUDED_REGION
@@ -605,8 +598,7 @@ class DesignPresets:
         return self.update({"SEQUENCE_EXCLUDED_REGION": self._parse_interval(interval)})
 
     def pick_anyway(self, b=1) -> "DesignPresets":
-        """
-        If true use primer provided in SEQUENCE_PRIMER,
+        """If true use primer provided in SEQUENCE_PRIMER,
         SEQUENCE_PRIMER_REVCOMP, or SEQUENCE_INTERNAL_OLIGO even if it violates
         specific constraints.
 
@@ -623,7 +615,7 @@ def clip(x, mn, mx):
 
 
 class DesignBase:
-    """Base design"""
+    """Base design."""
 
     DEFAULT_PARAMS = default_boulderio  #: default parameters
     DEFAULT_GRADIENT = dict(
@@ -648,8 +640,7 @@ class DesignBase:
         params: BoulderIO = None,
         quiet_runtime: bool = False,
     ):
-        """
-        Initializes a new design.
+        """Initializes a new design.
 
         :param gradient: the design gradient.
         :param quiet_runtime: if True will siliently ignore any runtime errors.
@@ -662,9 +653,8 @@ class DesignBase:
         self.quiet_runtime = quiet_runtime
 
     def _raise_run_time_error(self, msg: str) -> Primer3PlusRunTimeError:
-        """
-        Raise a Primer3PlusRunTime exception. If parameters are named in
-        the msg, print off some debugging information at the end of the message.
+        """Raise a Primer3PlusRunTime exception. If parameters are named in the
+        msg, print off some debugging information at the end of the message.
 
         :param msg: the error msg
         :return: the run time exception
@@ -720,9 +710,10 @@ class DesignBase:
         ] = None,
         run_kwargs: dict = None,
     ) -> Tuple[List[dict], List[dict]]:
-        """Design primers and relax constraints. If primer design is unsuccessful, relax parameters
-        as defined in primer3plust.Design.DEFAULT_GRADIENT. Repeat for the specified
-        number of max_iterations.
+        """Design primers and relax constraints. If primer design is
+        unsuccessful, relax parameters as defined in
+        primer3plust.Design.DEFAULT_GRADIENT. Repeat for the specified number
+        of max_iterations.
 
         :param max_iterations: the max number of iterations to perform relaxation
         :param params: optional parameters to provide
@@ -778,7 +769,7 @@ class DesignBase:
 
 
 class RestoreAfterRun:
-    """Class to restore boulderio to its original parameters after a run"""
+    """Class to restore boulderio to its original parameters after a run."""
 
     def __init__(self, boulderio):
         self.params = boulderio
@@ -794,7 +785,8 @@ class RestoreAfterRun:
 
 class Design(DesignBase, AllParameters):
     def __init__(self):
-        """Initialize a new design. Set parameters using
+        """Initialize a new design. Set parameters using.
+
         :attr:`Design.settings`, which
         returns an instance of
         :class:`DesignPresets <primer3plus.design.DesignPresets>`.
@@ -832,7 +824,7 @@ class Design(DesignBase, AllParameters):
         return self.settings
 
     def update(self, data: Dict[str, Any]):
-        """Update an arbitrary parameter"""
+        """Update an arbitrary parameter."""
         return self.params.update(data)
 
     def run(self) -> Tuple[List[Dict], List[Dict]]:
@@ -854,8 +846,8 @@ class Design(DesignBase, AllParameters):
         ] = None,
     ) -> Tuple[List[dict], List[dict]]:
         """Design primers. If primer design is unsuccessful, relax parameters
-        as defined in primer3plust.Design.DEFAULT_GRADIENT. Repeat for the specified
-        number of max_iterations.
+        as defined in primer3plust.Design.DEFAULT_GRADIENT. Repeat for the
+        specified number of max_iterations.
 
         :param max_iterations: the max number of iterations to perform relaxation
         :param params: optional parameters to provide
@@ -870,7 +862,7 @@ class Design(DesignBase, AllParameters):
 
 
 def new(params=None):
-    """Start a new design"""
+    """Start a new design."""
     design = Design()
     if params:
         design.params.update(params)

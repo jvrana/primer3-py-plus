@@ -90,9 +90,8 @@ def anneal_iter(
     n_bases=10,
     ignore_case=True,
 ) -> Tuple[Iterator[Dict[str, Union[str, int]]], Iterator[Dict[str, Union[str, int]]]]:
-    """
-    Anneal a list of primers to the sequence. Returns two iterables with elements
-    of the forms:
+    """Anneal a list of primers to the sequence. Returns two iterables with
+    elements of the forms:
 
     .. code-block:: JSON
 

@@ -1,14 +1,14 @@
 class Primer3PlusException(Exception):
-    """Generic primer3plus exception"""
+    """Generic primer3plus exception."""
 
 
 class Primer3PlusParserError(Primer3PlusException):
-    """Generic parser exception"""
+    """Generic parser exception."""
 
 
 class Primer3PlusRunTimeError(Exception):
-    """Exception for errors returned from primer3"""
+    """Exception for errors returned from primer3."""
 
 
 class Primer3PlusWarning(Warning):
-    """Warning for primer3plus"""
+    """Warning for primer3plus."""

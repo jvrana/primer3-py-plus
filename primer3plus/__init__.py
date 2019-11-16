@@ -8,7 +8,7 @@ from .log import logger
 
 
 def new(params=None):
-    """Start a new design"""
+    """Start a new design."""
     design = Design()
     if params:
         design.params.update(params)
