@@ -155,7 +155,7 @@ class TestOverhangs:
         assert pairs
 
     def test_left_overhang_default_behavior(self, gfp):
-        """Without setting overhangs, should raise run time error"""
+        """Without setting overhangs, should raise run time error."""
         design = Design()
         design.settings.template(gfp)
         design.settings.left_sequence("AGGCGGCTGA" + gfp[20:40])
@@ -173,7 +173,7 @@ class TestOverhangs:
         assert pairs
 
     def test_right_overhang_default_behavior(self, gfp):
-        """Without setting overhangs, should raise run time error"""
+        """Without setting overhangs, should raise run time error."""
         design = Design()
         design.settings.template(gfp)
 
@@ -245,10 +245,12 @@ class TestLongPrimers:
             design.run_and_optimize(10)
 
     def test_long_right_primer_with_overhangs(self, gfp):
-        """We expect no errors with setting long right primers. The
-        settings should automatically readjust the product length
-        to match and the 'SEQUENCE', 'OVERHANG', and 'location'
-        and 'PRODUCT_SIZE' results should automatically be adjusted."""
+        """We expect no errors with setting long right primers.
+
+        The settings should automatically readjust the product length to
+        match and the 'SEQUENCE', 'OVERHANG', and 'location' and
+        'PRODUCT_SIZE' results should automatically be adjusted.
+        """
         design = Design()
         design.settings.template(gfp)
         design.settings.right_sequence(rc(gfp[-50:]))
@@ -282,10 +284,12 @@ class TestLongPrimers:
         assert pairs
 
     def test_long_left_primer_with_overhangs(self, gfp):
-        """We expect no errors with setting long left primers. The
-        settings should automatically readjust the product length
-        to match and the 'SEQUENCE', 'OVERHANG', and 'location'
-        and 'PRODUCT_SIZE' results should automatically be adjusted."""
+        """We expect no errors with setting long left primers.
+
+        The settings should automatically readjust the product length to
+        match and the 'SEQUENCE', 'OVERHANG', and 'location' and
+        'PRODUCT_SIZE' results should automatically be adjusted.
+        """
         design = Design()
         design.settings.template(gfp)
         design.settings.left_sequence(gfp[:50])
@@ -372,10 +376,11 @@ class TestLongPrimers:
         assert pairs
 
 
-class TestOverOrigin:
-    def test_included_over_origin(self, gfp):
-
-        design = Design()
-        design.settings.template(gfp)
-        design.settings.included((len(gfp) - 100, 110))
-        design.run()
+# TODO: TestOverOrigin test
+# class TestOverOrigin:
+#     def test_included_over_origin(self, gfp):
+#
+#         design = Design()
+#         design.settings.template(gfp)
+#         design.settings.included((len(gfp) - 100, 110))
+#         design.run()
