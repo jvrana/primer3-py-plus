@@ -859,6 +859,8 @@ class Design(DesignBase, AllParameters):
         :param gradient: optional gradient to provide. If not provided,
                             Design.DEFAULT_GRADIENT will be used. The gradient is a
                             dictionary off 3 tuples, the step the min and the max.
+        :param pick_anyway: if set to True, if the optimization finds no pairs,
+            pick a pair anyways.
         :return: results
         """
         with RestoreAfterRun(self.params):
