@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>primer3plus change log &mdash; primer3plus 1.0.7 documentation</title>
+  <title>primer3plus change log &mdash; primer3plus 1.0.8 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                1.0.7
+                1.0.8
               </div>
             
           
@@ -88,14 +88,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">primer3plus change log</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">1.0.7</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">1.0.6</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">1.0.5</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id4">1.0.4</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id5">1.0.3</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id6">1.0.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id7">1.0.1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id8">1.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">1.0.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">1.0.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">1.0.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">1.0.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">1.0.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">1.0.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">1.0.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">1.0.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">1.0.0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#b1">1.0.0b1</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#b0">1.0.0b0</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#a1">1.0.0a1</a></li>
@@ -171,36 +172,44 @@
   <div class="section" id="primer3plus-change-log">
 <h1>primer3plus change log<a class="headerlink" href="#primer3plus-change-log" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
-<h2>1.0.7<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2>1.0.8<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p><strong>2020-02-06T22:46:51.807720</strong>
+feature add</p>
+<ul class="simple">
+<li><p>If <code class="docutils literal notranslate"><span class="pre">run_and_optimize(...,</span> <span class="pre">pick_anyway=True)</span></code>, then if after the optimization procedure, no pairs are found, will pick a pair.</p></li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2>1.0.7<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p><strong>2020-02-06T22:35:01.681563</strong>
 new parameter</p>
 <ul class="simple">
 <li><p>Adds PRIMER_MIN_ANNEAL_CHECK, which controls how many bases are required to find a mispriming event for primer designs</p></li>
 </ul>
 </div>
-<div class="section" id="id2">
-<h2>1.0.6<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h2>1.0.6<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p><strong>2019-11-11T08:52:02.431498</strong>
 removed unnecessay dependency</p>
 <ul class="simple">
 <li><p>removed keats from development dependencies</p></li>
 </ul>
 </div>
-<div class="section" id="id3">
-<h2>1.0.5<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id4">
+<h2>1.0.5<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p><strong>2019-10-07T15:34:50.778683</strong>
 bug fixes</p>
 <ul class="simple">
 <li><p>design settings now restored with each run</p></li>
 </ul>
 </div>
-<div class="section" id="id4">
-<h2>1.0.4<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h2>1.0.4<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p><strong>2019-10-07T15:18:25.381341</strong>
 improved error messages</p>
 </div>
-<div class="section" id="id5">
-<h2>1.0.3<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h2>1.0.3<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p><strong>2019-10-07T14:50:00.887961</strong>
 bug fixes around long primer use</p>
 <ul class="simple">
@@ -210,24 +219,24 @@ bug fixes around long primer use</p>
 <li><p>fixes bug in which product size did not match expected size for long primers. Will now automatically readjust product size parameter for long primers</p></li>
 </ul>
 </div>
-<div class="section" id="id6">
-<h2>1.0.2<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id7">
+<h2>1.0.2<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <p><strong>2019-10-07T11:15:48.129415</strong>
 bug fix</p>
 <ul class="simple">
 <li><p>primer3plus.utils.anneal now by default ignores the case of the strings</p></li>
 </ul>
 </div>
-<div class="section" id="id7">
-<h2>1.0.1<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id8">
+<h2>1.0.1<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <p><strong>2019-10-07T08:02:08.512973</strong>
 fix overhang bug</p>
 <ul class="simple">
 <li><p>Now, if overhangs are already explicitly set, the overhangs will be concatented if long_primer and overhangs are being used</p></li>
 </ul>
 </div>
-<div class="section" id="id8">
-<h2>1.0.0<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id9">
+<h2>1.0.0<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <p><strong>2019-10-06T10:48:12.224597</strong>
 stable release</p>
 </div>

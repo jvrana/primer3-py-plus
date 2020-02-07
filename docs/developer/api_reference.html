@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>API Reference &mdash; primer3plus 1.0.7 documentation</title>
+  <title>API Reference &mdash; primer3plus 1.0.8 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                1.0.7
+                1.0.8
               </div>
             
           
@@ -347,7 +347,7 @@ msg, print off some debugging information at the end of the message.</p>
 
 <dl class="method">
 <dt id="primer3plus.design.Design.run_and_optimize">
-<code class="sig-name descname">run_and_optimize</code><span class="sig-paren">(</span><em class="sig-param">max_iterations</em>, <em class="sig-param">params=None</em>, <em class="sig-param">gradient=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#Design.run_and_optimize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.Design.run_and_optimize" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">run_and_optimize</code><span class="sig-paren">(</span><em class="sig-param">max_iterations</em>, <em class="sig-param">params=None</em>, <em class="sig-param">gradient=None</em>, <em class="sig-param">pick_anyway=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/primer3plus/design.html#Design.run_and_optimize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#primer3plus.design.Design.run_and_optimize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Design primers. If primer design is unsuccessful, relax parameters
 as defined in primer3plust.Design.DEFAULT_GRADIENT. Repeat for the
 specified number of max_iterations.</p>
@@ -359,6 +359,8 @@ specified number of max_iterations.</p>
 <li><p><strong>gradient</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>], <code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>], <code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]]]]) – optional gradient to provide. If not provided,
 Design.DEFAULT_GRADIENT will be used. The gradient is a
 dictionary off 3 tuples, the step the min and the max.</p></li>
+<li><p><strong>pick_anyway</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – if set to True, if the optimization finds no pairs,
+pick a pair anyways.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type</dt>

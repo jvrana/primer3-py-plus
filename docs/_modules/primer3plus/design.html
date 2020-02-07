@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>primer3plus.design &mdash; primer3plus 1.0.7 documentation</title>
+  <title>primer3plus.design &mdash; primer3plus 1.0.8 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                1.0.7
+                1.0.8
               </div>
             
           
@@ -1000,6 +1000,7 @@ def clip(x, mn, mx):
         gradient: Dict[
             str, Tuple[Union[float, int], Union[float, int], Union[float, int]]
         ] = None,
+        pick_anyway: bool = False,
     ) -&gt; Tuple[List[dict], List[dict]]:
         &quot;&quot;&quot;Design primers. If primer design is unsuccessful, relax parameters
         as defined in primer3plust.Design.DEFAULT_GRADIENT. Repeat for the
@@ -1010,11 +1011,17 @@ def clip(x, mn, mx):
         :param gradient: optional gradient to provide. If not provided,
                             Design.DEFAULT_GRADIENT will be used. The gradient is a
                             dictionary off 3 tuples, the step the min and the max.
+        :param pick_anyway: if set to True, if the optimization finds no pairs,
+            pick a pair anyways.
         :return: results
         &quot;&quot;&quot;
         with RestoreAfterRun(self.params):
             self.settings._resolve()
-            return super().run_and_optimize(max_iterations)</div></div>
+            pairs, explain = super().run_and_optimize(max_iterations)
+            if pick_anyway and not pairs:
+                self.settings.pick_anyway(1)
+                pairs, explain = super().run()
+            return pairs, explain</div></div>
 
 
 <div class="viewcode-block" id="new"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.new">[docs]</a>def new(params=None):

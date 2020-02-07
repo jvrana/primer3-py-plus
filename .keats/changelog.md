@@ -1,4 +1,11 @@
 # primer3plus change log
+## 1.0.8
+**2020-02-06T22:46:51.807720**
+feature add
+
+ - If `run_and_optimize(..., pick_anyway=True)`, then if after the optimization procedure, no pairs are found, will pick a pair.
+
+
 ## 1.0.7
 **2020-02-06T22:35:01.681563**
 new parameter
