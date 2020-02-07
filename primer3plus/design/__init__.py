@@ -848,6 +848,7 @@ class Design(DesignBase, AllParameters):
         gradient: Dict[
             str, Tuple[Union[float, int], Union[float, int], Union[float, int]]
         ] = None,
+        pick_anyway: bool = False,
     ) -> Tuple[List[dict], List[dict]]:
         """Design primers. If primer design is unsuccessful, relax parameters
         as defined in primer3plust.Design.DEFAULT_GRADIENT. Repeat for the
@@ -862,7 +863,11 @@ class Design(DesignBase, AllParameters):
         """
         with RestoreAfterRun(self.params):
             self.settings._resolve()
-            return super().run_and_optimize(max_iterations)
+            pairs, explain = super().run_and_optimize(max_iterations)
+            if pick_anyway and not pairs:
+                self.settings.pick_anyway(1)
+                pairs, explain = super().run()
+            return pairs, explain
 
 
 def new(params=None):
