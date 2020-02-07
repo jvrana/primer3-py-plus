@@ -220,6 +220,13 @@ class ExtraTypes:
         description="DO NOT SET DIRECTLY. Seq trimmed for long right primer overhangs.",
         category=ParamTypes.EXTRA,
     )
+    PRIMER_MIN_ANNEAL_CHECK = ParameterType(
+        name="PRIMER_MIN_ANNEAL_CHECK",
+        type=int,
+        default=12,
+        description="Number of bases to check for mispriming during designs.",
+        category=ParamTypes.EXTRA,
+    )
 
 
 class BoulderIO(Mapping):
@@ -232,6 +239,7 @@ class BoulderIO(Mapping):
         ExtraTypes.SEQUENCE_PRIMER_REVCOMP_OVERHANG,
         ExtraTypes.PRIMER_USE_OVERHANGS,
         ExtraTypes.PRIMER_LONG_OK,
+        ExtraTypes.PRIMER_MIN_ANNEAL_CHECK,
         ExtraTypes._SEQUENCE_LONG_OVERHANG,
         ExtraTypes._SEQUENCE_REVCOMP_LONG_OVERHANG,
     ]  #: extra parameter types

@@ -275,6 +275,7 @@ class AllParameters:
     _SEQUENCE_REVCOMP_LONG_OVERHANG = ParameterDescriptor(
         "_SEQUENCE_REVCOMP_LONG_OVERHANG"
     )
+    PRIMER_MIN_ANNEAL_CHECK = ParameterDescriptor("PRIMER_MIN_ANNEAL_CHECK")
 
     def __init__(self, params):
         self.params = params

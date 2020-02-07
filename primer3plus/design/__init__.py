@@ -72,7 +72,7 @@ class DesignPresets:
         """Process any extra parameters and process BoulderIO so that it is
         digestable by primer3."""
         if self._design.PRIMER_USE_OVERHANGS.value:
-            self._resolve_overhangs()
+            self._resolve_overhangs(self._design.PRIMER_MIN_ANNEAL_CHECK.value)
         if self._design.PRIMER_LONG_OK.value:
             self._resolve_max_lengths(lim=BoulderIO.PRIMER_MAX_SIZE_HARD_LIM)
             self._resolve_product_sizes()
@@ -286,10 +286,12 @@ class DesignPresets:
         lim."""
         return overhang, anneal[:-lim], anneal[-lim:]
 
-    def _get_left_overhang(self):
+    def _get_left_overhang(self, min_primer_anneal: int):
         left = self._design.SEQUENCE_PRIMER.value
         if left:
-            fwd, _ = anneal_primer(self._design.SEQUENCE_TEMPLATE.value, [left])
+            fwd, _ = anneal_primer(
+                self._design.SEQUENCE_TEMPLATE.value, [left], n_bases=min_primer_anneal
+            )
             if len(fwd) == 0:
                 raise Primer3PlusRunTimeError("No annealing found for left sequence.")
             elif len(fwd) > 1:
@@ -302,10 +304,12 @@ class DesignPresets:
         else:
             return "", left
 
-    def _get_right_overhang(self):
+    def _get_right_overhang(self, min_primer_anneal: int):
         right = self._design.SEQUENCE_PRIMER_REVCOMP.value
         if right:
-            _, rev = anneal_primer(self._design.SEQUENCE_TEMPLATE.value, [right])
+            _, rev = anneal_primer(
+                self._design.SEQUENCE_TEMPLATE.value, [right], n_bases=min_primer_anneal
+            )
             if len(rev) == 0:
                 raise Primer3PlusRunTimeError("No annealing found for right sequence.")
             elif len(rev) > 1:
@@ -426,9 +430,9 @@ class DesignPresets:
     def _right_long_overhang(self, x):
         self.update({"_SEQUENCE_REVCOMP_LONG_OVERHANG": x})
 
-    def _resolve_overhangs(self):
+    def _resolve_overhangs(self, min_primer_anneal: int):
         """Sets the annealing and overhang sequences."""
-        left_over, left_anneal = self._get_left_overhang()
+        left_over, left_anneal = self._get_left_overhang(min_primer_anneal)
         _loverhang = self._design.SEQUENCE_PRIMER_OVERHANG.value
         if _loverhang:
             left_over = _loverhang + left_over
@@ -436,7 +440,7 @@ class DesignPresets:
             #     "Left overhang already set to '{}'.".format(_loverhang)
             # )
 
-        right_over, right_anneal = self._get_right_overhang()
+        right_over, right_anneal = self._get_right_overhang(min_primer_anneal)
         _roverhang = self._design.SEQUENCE_PRIMER_REVCOMP_OVERHANG.value
         if _roverhang:
             right_over = _roverhang + right_over
