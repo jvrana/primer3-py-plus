@@ -226,7 +226,7 @@ class ExtraTypes:
         default=12,
         description="Number of bases to check for mispriming during designs.",
         category=ParamTypes.EXTRA,
-    )
+    )  #: specifies min bases to check for mispriming during primer designs
 
 
 class BoulderIO(Mapping):

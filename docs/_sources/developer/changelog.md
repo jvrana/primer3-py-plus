@@ -1,4 +1,11 @@
 # primer3plus change log
+## 1.0.7
+**2020-02-06T22:35:01.681563**
+new parameter
+
+ - Adds PRIMER_MIN_ANNEAL_CHECK, which controls how many bases are required to find a mispriming event for primer designs
+
+
 ## 1.0.6
 **2019-11-11T08:52:02.431498**
 removed unnecessay dependency

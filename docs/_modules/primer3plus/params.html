@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>primer3plus.params &mdash; primer3plus 1.0.6 documentation</title>
+  <title>primer3plus.params &mdash; primer3plus 1.0.7 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                1.0.6
+                1.0.7
               </div>
             
           
@@ -165,9 +165,10 @@ from primer3plus.exceptions import Primer3PlusParserError
 
 
 <div class="viewcode-block" id="ParamTypes"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.ParamTypes">[docs]</a>class ParamTypes:
-    &quot;&quot;&quot;
-    Parameter types used in BoulderIO. Only the Global and Sequence parameters
-    are actually used in designs.
+    &quot;&quot;&quot;Parameter types used in BoulderIO.
+
+    Only the Global and Sequence parameters are actually used in
+    designs.
     &quot;&quot;&quot;
 
     GLOBAL = &quot;GLOBAL&quot;  #: global parameter key
@@ -188,8 +189,7 @@ _default_param_path = os.path.join(
     &quot;&quot;&quot;Metatype for a Primer3 parameter.&quot;&quot;&quot;
 
     def __init__(self, name, description, type, default, category):
-        &quot;&quot;&quot;
-        Initialize a BoulderIO parameter type.
+        &quot;&quot;&quot;Initialize a BoulderIO parameter type.
 
         :param name: name of the parameter
         :param description: description of the parameter
@@ -219,12 +219,15 @@ _default_param_path = os.path.join(
 
 
 <div class="viewcode-block" id="Parameter"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.Parameter">[docs]</a>class Parameter:
-    &quot;&quot;&quot;An instance of a Primer3 parameter. Internally validate its value using
-    its :class:&lt;ParameterType &lt;primer3plus.params.ParameterType&gt;`&quot;&quot;&quot;
+    &quot;&quot;&quot;An instance of a Primer3 parameter.
+
+    Internally validate its value using its :class:&lt;ParameterType
+    &lt;primer3plus.params.ParameterType&gt;`
+    &quot;&quot;&quot;
 
     def __init__(self, ptype: ParameterType, value=None, restore: Any = None):
-        &quot;&quot;&quot;
-        Initialize a parameter from a
+        &quot;&quot;&quot;Initialize a parameter from a.
+
         :class:`Parameter &lt;primer3plus.params.ParameterType&gt;`
 
         :param ptype: parameter type
@@ -243,8 +246,7 @@ _default_param_path = os.path.join(
 
     @property
     def value(self) -&gt; Any:
-        &quot;&quot;&quot;
-        Return the value of the parameter.
+        &quot;&quot;&quot;Return the value of the parameter.
 
         :return: Any
         &quot;&quot;&quot;
@@ -252,8 +254,7 @@ _default_param_path = os.path.join(
 
     @value.setter
     def value(self, v: Any):
-        &quot;&quot;&quot;
-        Set the value of the parameter
+        &quot;&quot;&quot;Set the value of the parameter.
 
         :param v: the value
         :return: None
@@ -268,40 +269,36 @@ _default_param_path = os.path.join(
 
     @property
     def name(self):
-        &quot;&quot;&quot;
-        Return the name of the parameter
+        &quot;&quot;&quot;Return the name of the parameter.
 
         :return: parameter name
         &quot;&quot;&quot;
         return self.ptype.name
 
 <div class="viewcode-block" id="Parameter.set_default"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.Parameter.set_default">[docs]</a>    def set_default(self):
-        &quot;&quot;&quot;
-        Set the parameter to its default.
+        &quot;&quot;&quot;Set the parameter to its default.
 
         :return: None
         &quot;&quot;&quot;
         self.value = self.ptype.default</div>
 
 <div class="viewcode-block" id="Parameter.hold_restore"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.Parameter.hold_restore">[docs]</a>    def hold_restore(self):
-        &quot;&quot;&quot;
-        Hold current value for later restoration.
+        &quot;&quot;&quot;Hold current value for later restoration.
 
         :return:
         &quot;&quot;&quot;
         self._restore = self.value</div>
 
 <div class="viewcode-block" id="Parameter.restore"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.Parameter.restore">[docs]</a>    def restore(self):
-        &quot;&quot;&quot;
-        Restores the parameter to some original value.
+        &quot;&quot;&quot;Restores the parameter to some original value.
+
         :return:
         &quot;&quot;&quot;
         if self._restore is not None:
             self.value = self._restore</div>
 
 <div class="viewcode-block" id="Parameter.copy"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.Parameter.copy">[docs]</a>    def copy(self) -&gt; &quot;Parameter&quot;:
-        &quot;&quot;&quot;
-        Make a copy of this parameter.
+        &quot;&quot;&quot;Make a copy of this parameter.
 
         :return: None
         &quot;&quot;&quot;
@@ -374,13 +371,18 @@ _default_param_path = os.path.join(
         default=&quot;&quot;,
         description=&quot;DO NOT SET DIRECTLY. Seq trimmed for long right primer overhangs.&quot;,
         category=ParamTypes.EXTRA,
-    )</div>
+    )
+    PRIMER_MIN_ANNEAL_CHECK = ParameterType(
+        name=&quot;PRIMER_MIN_ANNEAL_CHECK&quot;,
+        type=int,
+        default=12,
+        description=&quot;Number of bases to check for mispriming during designs.&quot;,
+        category=ParamTypes.EXTRA,
+    ) #: specifies min bases to check for mispriming during primer designs</div>
 
 
 <div class="viewcode-block" id="BoulderIO"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.BoulderIO">[docs]</a>class BoulderIO(Mapping):
-    &quot;&quot;&quot;
-    Class that maintains and validates a list of Primer3 parameters.
-    &quot;&quot;&quot;
+    &quot;&quot;&quot;Class that maintains and validates a list of Primer3 parameters.&quot;&quot;&quot;
 
     POST_LOAD_DEFAULTS = {&quot;PRIMER_EXPLAIN_FLAG&quot;: 1}
     EXPECTED = _expected_opts[:]
@@ -389,20 +391,18 @@ _default_param_path = os.path.join(
         ExtraTypes.SEQUENCE_PRIMER_REVCOMP_OVERHANG,
         ExtraTypes.PRIMER_USE_OVERHANGS,
         ExtraTypes.PRIMER_LONG_OK,
+        ExtraTypes.PRIMER_MIN_ANNEAL_CHECK,
         ExtraTypes._SEQUENCE_LONG_OVERHANG,
         ExtraTypes._SEQUENCE_REVCOMP_LONG_OVERHANG,
     ]  #: extra parameter types
     PRIMER_MAX_SIZE_HARD_LIM = 35  #: hard coded primer length limit for Primer3.
 
     def __init__(self):
-        &quot;&quot;&quot;
-        Initializes a new BoulderIO instance.
-        &quot;&quot;&quot;
+        &quot;&quot;&quot;Initializes a new BoulderIO instance.&quot;&quot;&quot;
         self._params = {}  #: parameters
 
 <div class="viewcode-block" id="BoulderIO.update"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.BoulderIO.update">[docs]</a>    def update(self, data_dict: Dict[str, Any]):
-        &quot;&quot;&quot;
-        Update the parameters from a dictionary of key:values.
+        &quot;&quot;&quot;Update the parameters from a dictionary of key:values.
 
         :param data_dict: update dictionary
         :return: None
@@ -418,8 +418,7 @@ _default_param_path = os.path.join(
             self._params[ptype.name] = Parameter(ptype, ptype.default)
 
 <div class="viewcode-block" id="BoulderIO.load"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.BoulderIO.load">[docs]</a>    def load(self, param_dict):
-        &quot;&quot;&quot;
-        Load parameters from a dictionary.
+        &quot;&quot;&quot;Load parameters from a dictionary.
 
         :param param_dict:
         :return:
@@ -456,8 +455,7 @@ _default_param_path = os.path.join(
 
 <div class="viewcode-block" id="BoulderIO.online_help"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.BoulderIO.online_help">[docs]</a>    @staticmethod
     def online_help(open=False, key=None) -&gt; str:
-        &quot;&quot;&quot;
-        Display online help in a browser tab.
+        &quot;&quot;&quot;Display online help in a browser tab.
 
         :param open: if True, open browser tab. Else return url.
         :param key: optional parameter key
@@ -477,8 +475,7 @@ _default_param_path = os.path.join(
         }
 
 <div class="viewcode-block" id="BoulderIO._globals"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.BoulderIO._globals">[docs]</a>    def _globals(self, clean=True) -&gt; Dict[str, Any]:
-        &quot;&quot;&quot;
-        Return global parameters.
+        &quot;&quot;&quot;Return global parameters.
 
         :param clean: if True, will remove empty lists and empty strings from params.
         :return: parameter values as a dict.
@@ -489,8 +486,7 @@ _default_param_path = os.path.join(
         return data</div>
 
 <div class="viewcode-block" id="BoulderIO._program"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.BoulderIO._program">[docs]</a>    def _program(self, clean=True):
-        &quot;&quot;&quot;
-        Return program parameters.
+        &quot;&quot;&quot;Return program parameters.
 
         :param clean: if True, will remove empty lists and empty strings from params.
         :return: parameter values as a dict.
@@ -501,8 +497,7 @@ _default_param_path = os.path.join(
         return data</div>
 
 <div class="viewcode-block" id="BoulderIO._sequence"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.BoulderIO._sequence">[docs]</a>    def _sequence(self, clean=True):
-        &quot;&quot;&quot;
-        Return sequence parameters.
+        &quot;&quot;&quot;Return sequence parameters.
 
         :param clean: if True, will remove empty lists and empty strings from params.
         :return: parameter values as a dict.
@@ -513,8 +508,7 @@ _default_param_path = os.path.join(
         return data</div>
 
 <div class="viewcode-block" id="BoulderIO._other"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.BoulderIO._other">[docs]</a>    def _other(self, clean=True):
-        &quot;&quot;&quot;
-        Return other parameters.
+        &quot;&quot;&quot;Return other parameters.
 
         :param clean: if True, will remove empty lists and empty strings from params.
         :return: parameter values as a dict.
@@ -534,8 +528,7 @@ _default_param_path = os.path.join(
         return {k: v for k, v in self.items()}
 
 <div class="viewcode-block" id="BoulderIO.set_defaults"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.BoulderIO.set_defaults">[docs]</a>    def set_defaults(self):
-        &quot;&quot;&quot;
-        Set all parameters to their defaults.
+        &quot;&quot;&quot;Set all parameters to their defaults.
 
         :return:
         &quot;&quot;&quot;
@@ -543,8 +536,7 @@ _default_param_path = os.path.join(
             v.set_default()</div>
 
 <div class="viewcode-block" id="BoulderIO.values"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.BoulderIO.values">[docs]</a>    def values(self) -&gt; Iterator[Any]:
-        &quot;&quot;&quot;
-        Iterator for parameter values.
+        &quot;&quot;&quot;Iterator for parameter values.
 
         :return: iterator over parameter values
         &quot;&quot;&quot;
@@ -720,8 +712,7 @@ _default_param_path = os.path.join(
 
 <div class="viewcode-block" id="ParamParser.open"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.ParamParser.open">[docs]</a>    @classmethod
     def open(cls, filepath=None) -&gt; BoulderIO:
-        &quot;&quot;&quot;
-        Open the parameters from the filepath.
+        &quot;&quot;&quot;Open the parameters from the filepath.
 
         :param filepath: filepath
         :return:
@@ -730,8 +721,9 @@ _default_param_path = os.path.join(
 
 
 <div class="viewcode-block" id="_load_default_boulderio"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design._load_default_boulderio">[docs]</a>def _load_default_boulderio() -&gt; BoulderIO:
-    &quot;&quot;&quot;
-    Open the default parameters as a :class:`BoulderIO &lt;primer3plus.params.params&gt;`
+    &quot;&quot;&quot;Open the default parameters as a :class:`BoulderIO.
+
+    &lt;primer3plus.params.params&gt;`
 
     :return: the BoulderIO instance.
     &quot;&quot;&quot;

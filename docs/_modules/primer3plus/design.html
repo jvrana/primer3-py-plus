@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>primer3plus.design &mdash; primer3plus 1.0.6 documentation</title>
+  <title>primer3plus.design &mdash; primer3plus 1.0.7 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                1.0.6
+                1.0.7
               </div>
             
           
@@ -150,7 +150,7 @@
            <div itemprop="articleBody">
             
   <h1>Source code for primer3plus.design</h1><div class="highlight"><pre>
-<span></span>&quot;&quot;&quot;Core design modules
+<span></span>&quot;&quot;&quot;Core design modules.
 
 For examples for how to use the design module, see the :doc:`Usage Docs &lt;../usage&gt;`
 For a list of design parameters available, take a look at the
@@ -199,9 +199,9 @@ from primer3plus.utils import depreciated_warning
 
 
 <div class="viewcode-block" id="DesignPresets"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets">[docs]</a>class DesignPresets:
-    &quot;&quot;&quot;
-    Interface for setting design parameters. This is typically accessed from
-    a :class:`Design &lt;primer3plus.Design&gt;` instance&#39;s
+    &quot;&quot;&quot;Interface for setting design parameters. This is typically accessed from
+    a :class:`Design &lt;primer3plus.Design&gt;` instance&#39;s.
+
     :meth:`Design &lt;primer3plus.Design.set&gt;` method. As in:
 
     .. code-block::
@@ -212,18 +212,19 @@ from primer3plus.utils import depreciated_warning
     &quot;&quot;&quot;
 
     def __init__(self, design):
-        &quot;&quot;&quot;
-        Initializes a new interface from a :class:`~primer3plus.design.Design`.
+        &quot;&quot;&quot;Initializes a new interface from a.
+
+        :class:`~primer3plus.design.Design`.
 
         :param design: The design
         &quot;&quot;&quot;
         self._design = design
 
 <div class="viewcode-block" id="DesignPresets._resolve"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets._resolve">[docs]</a>    def _resolve(self):
-        &quot;&quot;&quot;Process any extra parameters and process BoulderIO so
-        that it is digestable by primer3.&quot;&quot;&quot;
+        &quot;&quot;&quot;Process any extra parameters and process BoulderIO so that it is
+        digestable by primer3.&quot;&quot;&quot;
         if self._design.PRIMER_USE_OVERHANGS.value:
-            self._resolve_overhangs()
+            self._resolve_overhangs(self._design.PRIMER_MIN_ANNEAL_CHECK.value)
         if self._design.PRIMER_LONG_OK.value:
             self._resolve_max_lengths(lim=BoulderIO.PRIMER_MAX_SIZE_HARD_LIM)
             self._resolve_product_sizes()
@@ -314,7 +315,7 @@ from primer3plus.utils import depreciated_warning
         return matches
 
 <div class="viewcode-block" id="DesignPresets.update"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.update">[docs]</a>    def update(self, update: Dict[str, Any]):
-        &quot;&quot;&quot;Update an arbitrary parameter&quot;&quot;&quot;
+        &quot;&quot;&quot;Update an arbitrary parameter.&quot;&quot;&quot;
         self._design.params.update(update)
         return self</div>
 
@@ -330,8 +331,7 @@ from primer3plus.utils import depreciated_warning
         return self</div>
 
 <div class="viewcode-block" id="DesignPresets.as_cloning_task"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.as_cloning_task">[docs]</a>    def as_cloning_task(self) -&gt; &quot;DesignPresets&quot;:
-        &quot;&quot;&quot;
-        Set the design as a cloning task.
+        &quot;&quot;&quot;Set the design as a cloning task.
 
         http://primer3.ut.ee/primer3web_help.htm#PRIMER_TASK
 
@@ -340,8 +340,7 @@ from primer3plus.utils import depreciated_warning
         return self.task(&quot;pick_cloning_primers&quot;)</div>
 
 <div class="viewcode-block" id="DesignPresets.as_generic_task"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.as_generic_task">[docs]</a>    def as_generic_task(self) -&gt; &quot;DesignPresets&quot;:
-        &quot;&quot;&quot;
-        Set the design as a generic task.
+        &quot;&quot;&quot;Set the design as a generic task.
 
         http://primer3.ut.ee/primer3web_help.htm#PRIMER_TASK
 
@@ -350,9 +349,8 @@ from primer3plus.utils import depreciated_warning
         return self.task(&quot;generic&quot;)</div>
 
 <div class="viewcode-block" id="DesignPresets.template"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.template">[docs]</a>    def template(self, template: str) -&gt; &quot;DesignPresets&quot;:
-        &quot;&quot;&quot;
-        Set the template sequence for the design. This sets the &#39;SEQUENCE_TEMPLATE&#39;
-        parameter.
+        &quot;&quot;&quot;Set the template sequence for the design. This sets the
+        &#39;SEQUENCE_TEMPLATE&#39; parameter.
 
         http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_TEMPLATE
 
@@ -364,8 +362,7 @@ from primer3plus.utils import depreciated_warning
 
     # TODO: set_iterations, set_num_return, set_force_return, set_gradient
 <div class="viewcode-block" id="DesignPresets.primer_num_return"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.primer_num_return">[docs]</a>    def primer_num_return(self, n: int) -&gt; &quot;DesignPresets&quot;:
-        &quot;&quot;&quot;
-        Set the number of primers to return for the design task.
+        &quot;&quot;&quot;Set the number of primers to return for the design task.
 
         http://primer3.ut.ee/primer3web_help.htm#PRIMER_NUM_RETURN
 
@@ -377,8 +374,7 @@ from primer3plus.utils import depreciated_warning
 <div class="viewcode-block" id="DesignPresets.product_size"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.product_size">[docs]</a>    def product_size(
         self, interval: Union[Tuple[int, int], List[Tuple[int, int]]], opt=None
     ) -&gt; &quot;DesignPresets&quot;:
-        &quot;&quot;&quot;
-        Set the product size. Optionally include the optimal size.
+        &quot;&quot;&quot;Set the product size. Optionally include the optimal size.
 
         http://primer3.ut.ee/primer3web_help.htm#PRIMER_PRODUCT_SIZE_RANGE
         http://primer3.ut.ee/primer3web_help.htm#PRIMER_PRODUCT_OPT_SIZE
@@ -398,8 +394,7 @@ from primer3plus.utils import depreciated_warning
 <div class="viewcode-block" id="DesignPresets.pair_region_list"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.pair_region_list">[docs]</a>    def pair_region_list(
         self, region_list: List[Tuple[int, int, int, int]]
     ) -&gt; &quot;DesignPresets&quot;:
-        &quot;&quot;&quot;
-        The list of regions from which to design primers.
+        &quot;&quot;&quot;The list of regions from which to design primers.
 
         http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_PRIMER_PAIR_OK_REGION_LIST
 
@@ -439,13 +434,16 @@ from primer3plus.utils import depreciated_warning
 
 <div class="viewcode-block" id="DesignPresets._trim_long"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets._trim_long">[docs]</a>    @staticmethod
     def _trim_long(overhang: str, anneal: str, lim: int) -&gt; Tuple[str, str, str]:
-        &quot;&quot;&quot;Fix the overhang and anneal from the hardcoded BoulderIO primer lim.&quot;&quot;&quot;
+        &quot;&quot;&quot;Fix the overhang and anneal from the hardcoded BoulderIO primer
+        lim.&quot;&quot;&quot;
         return overhang, anneal[:-lim], anneal[-lim:]</div>
 
-    def _get_left_overhang(self):
+    def _get_left_overhang(self, min_primer_anneal: int):
         left = self._design.SEQUENCE_PRIMER.value
         if left:
-            fwd, _ = anneal_primer(self._design.SEQUENCE_TEMPLATE.value, [left])
+            fwd, _ = anneal_primer(
+                self._design.SEQUENCE_TEMPLATE.value, [left], n_bases=min_primer_anneal
+            )
             if len(fwd) == 0:
                 raise Primer3PlusRunTimeError(&quot;No annealing found for left sequence.&quot;)
             elif len(fwd) &gt; 1:
@@ -458,10 +456,12 @@ from primer3plus.utils import depreciated_warning
         else:
             return &quot;&quot;, left
 
-    def _get_right_overhang(self):
+    def _get_right_overhang(self, min_primer_anneal: int):
         right = self._design.SEQUENCE_PRIMER_REVCOMP.value
         if right:
-            _, rev = anneal_primer(self._design.SEQUENCE_TEMPLATE.value, [right])
+            _, rev = anneal_primer(
+                self._design.SEQUENCE_TEMPLATE.value, [right], n_bases=min_primer_anneal
+            )
             if len(rev) == 0:
                 raise Primer3PlusRunTimeError(&quot;No annealing found for right sequence.&quot;)
             elif len(rev) &gt; 1:
@@ -476,8 +476,8 @@ from primer3plus.utils import depreciated_warning
             return &quot;&quot;, right
 
 <div class="viewcode-block" id="DesignPresets.left_overhang"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.left_overhang">[docs]</a>    def left_overhang(self, overhang: str) -&gt; &quot;DesignPresets&quot;:
-        &quot;&quot;&quot;
-        Sets the left overhang sequence for the primer. This overhang will
+        &quot;&quot;&quot;Sets the left overhang sequence for the primer. This overhang will.
+
         *always* be in the overhang sequence regardless of other parameters.
 
         If using a primer that anneals with an overhang, this value will
@@ -489,8 +489,8 @@ from primer3plus.utils import depreciated_warning
         return self.update({&quot;SEQUENCE_PRIMER_OVERHANG&quot;: overhang})</div>
 
 <div class="viewcode-block" id="DesignPresets.right_overhang"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.right_overhang">[docs]</a>    def right_overhang(self, overhang: str) -&gt; &quot;DesignPresets&quot;:
-        &quot;&quot;&quot;
-        Sets the right overhang sequence for the primer. This overhang will
+        &quot;&quot;&quot;Sets the right overhang sequence for the primer. This overhang will.
+
         *always* be in the overhang sequence regardless of other parameters.
 
         If using a primer that anneals with an overhang, this value will
@@ -502,17 +502,15 @@ from primer3plus.utils import depreciated_warning
         return self.update({&quot;SEQUENCE_PRIMER_REVCOMP_OVERHANG&quot;: overhang})</div>
 
 <div class="viewcode-block" id="DesignPresets.use_overhangs"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.use_overhangs">[docs]</a>    def use_overhangs(self, b: bool = True) -&gt; &quot;DesignPresets&quot;:
-        &quot;&quot;&quot;
-        Set the BoulderIO to process overhangs.
+        &quot;&quot;&quot;Set the BoulderIO to process overhangs.
 
-     :param b: boolean to set
-        :return: self
+        :param b: boolean to set
+           :return: self
         &quot;&quot;&quot;
         return self.update({&quot;PRIMER_USE_OVERHANGS&quot;: b})</div>
 
 <div class="viewcode-block" id="DesignPresets.long_ok"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.long_ok">[docs]</a>    def long_ok(self, b: bool = True) -&gt; &quot;DesignPresets&quot;:
-        &quot;&quot;&quot;
-        Set the BoulderIO to process long primers.
+        &quot;&quot;&quot;Set the BoulderIO to process long primers.
 
         :param b: boolean to set
         :return: self
@@ -520,10 +518,13 @@ from primer3plus.utils import depreciated_warning
         return self.update({&quot;PRIMER_LONG_OK&quot;: b})</div>
 
 <div class="viewcode-block" id="DesignPresets._resolve_product_sizes"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets._resolve_product_sizes">[docs]</a>    def _resolve_product_sizes(self):
-        &quot;&quot;&quot;If there are long primers being used, the product_size
-        is no longer valid as the trimmed sequence is no longer represented
-        in the originally provided product size. This re-adjusts the product
-        size to correspond the adjusted parameters.&quot;&quot;&quot;
+        &quot;&quot;&quot;If there are long primers being used, the product_size is no longer
+        valid as the trimmed sequence is no longer represented in the
+        originally provided product size.
+
+        This re-adjusts the product size to correspond the adjusted
+        parameters.
+        &quot;&quot;&quot;
         # adjust product size range
         left_long_overhang = self._design._SEQUENCE_LONG_OVERHANG.value
         right_long_overhang = self._design._SEQUENCE_REVCOMP_LONG_OVERHANG.value
@@ -542,9 +543,11 @@ from primer3plus.utils import depreciated_warning
 
 <div class="viewcode-block" id="DesignPresets._resolve_max_lengths"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets._resolve_max_lengths">[docs]</a>    def _resolve_max_lengths(self, lim: int):
         &quot;&quot;&quot;Fixes the annealing and overhang sequences for annealing sequences
-            for primers over the :attr:`BoulderIO
-            &lt;primer3plus.paramsBoulderIO.PRIMER_MAX_SIZE_HARD_LIM&gt;`.
-            Should always be run *after* :meth:`_resolve_overhangs`.&quot;&quot;&quot;
+        for primers over the :attr:`BoulderIO.
+
+        &lt;primer3plus.paramsBoulderIO.PRIMER_MAX_SIZE_HARD_LIM&gt;`.
+        Should always be run *after* :meth:`_resolve_overhangs`.
+        &quot;&quot;&quot;
         left_anneal = self._design.SEQUENCE_PRIMER.value
         right_anneal = self._design.SEQUENCE_PRIMER_REVCOMP.value
         left_over = self._design.SEQUENCE_PRIMER_OVERHANG.value
@@ -579,9 +582,9 @@ from primer3plus.utils import depreciated_warning
     def _right_long_overhang(self, x):
         self.update({&quot;_SEQUENCE_REVCOMP_LONG_OVERHANG&quot;: x})
 
-<div class="viewcode-block" id="DesignPresets._resolve_overhangs"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets._resolve_overhangs">[docs]</a>    def _resolve_overhangs(self):
+<div class="viewcode-block" id="DesignPresets._resolve_overhangs"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets._resolve_overhangs">[docs]</a>    def _resolve_overhangs(self, min_primer_anneal: int):
         &quot;&quot;&quot;Sets the annealing and overhang sequences.&quot;&quot;&quot;
-        left_over, left_anneal = self._get_left_overhang()
+        left_over, left_anneal = self._get_left_overhang(min_primer_anneal)
         _loverhang = self._design.SEQUENCE_PRIMER_OVERHANG.value
         if _loverhang:
             left_over = _loverhang + left_over
@@ -589,7 +592,7 @@ from primer3plus.utils import depreciated_warning
             #     &quot;Left overhang already set to &#39;{}&#39;.&quot;.format(_loverhang)
             # )
 
-        right_over, right_anneal = self._get_right_overhang()
+        right_over, right_anneal = self._get_right_overhang(min_primer_anneal)
         _roverhang = self._design.SEQUENCE_PRIMER_REVCOMP_OVERHANG.value
         if _roverhang:
             right_over = _roverhang + right_over
@@ -603,8 +606,7 @@ from primer3plus.utils import depreciated_warning
         self.right_sequence(right_anneal)</div>
 
 <div class="viewcode-block" id="DesignPresets.pick_left_only"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.pick_left_only">[docs]</a>    def pick_left_only(self) -&gt; &quot;DesignPresets&quot;:
-        &quot;&quot;&quot;
-        Design only the left primer.
+        &quot;&quot;&quot;Design only the left primer.
 
         http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_LEFT_PRIMER
         http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_RIGHT_PRIMER
@@ -616,8 +618,7 @@ from primer3plus.utils import depreciated_warning
         )</div>
 
 <div class="viewcode-block" id="DesignPresets.pick_right_only"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.pick_right_only">[docs]</a>    def pick_right_only(self) -&gt; &quot;DesignPresets&quot;:
-        &quot;&quot;&quot;
-        Design only the right primer.
+        &quot;&quot;&quot;Design only the right primer.
 
         http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_LEFT_PRIMER
         http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_RIGHT_PRIMER
@@ -644,8 +645,7 @@ from primer3plus.utils import depreciated_warning
         )</div>
 
 <div class="viewcode-block" id="DesignPresets.primers"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.primers">[docs]</a>    def primers(self, p1: str, p2: str) -&gt; &quot;DesignPresets&quot;:
-        &quot;&quot;&quot;
-        Set the left and right primer sequences.
+        &quot;&quot;&quot;Set the left and right primer sequences.
 
         http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_PRIMER
         http://primer3.ut.ee/primer3web_help.htm#PRIMER_PICK_RIGHT_PRIMER
@@ -681,12 +681,10 @@ from primer3plus.utils import depreciated_warning
         return interval
 
 <div class="viewcode-block" id="DesignPresets.included"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.included">[docs]</a>    def included(self, interval: Union[str, Tuple[int, int]]) -&gt; &quot;DesignPresets&quot;:
-        &quot;&quot;&quot;
-        Specify interval from which primers must be selected.
-        A sub-region of the given sequence in which to pick primers. For
-        example, often the first dozen or so bases of a sequence are vector,
-        and should be excluded from consideration. The value for this parameter
-        has the form.
+        &quot;&quot;&quot;Specify interval from which primers must be selected. A sub-region
+        of the given sequence in which to pick primers. For example, often the
+        first dozen or so bases of a sequence are vector, and should be
+        excluded from consideration. The value for this parameter has the form.
 
         http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_INCLUDED_REGION
 
@@ -713,16 +711,16 @@ from primer3plus.utils import depreciated_warning
 <div class="viewcode-block" id="DesignPresets.target"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.target">[docs]</a>    def target(
         self, interval: Union[str, Tuple[int, int], List[Tuple[int, int]]]
     ) -&gt; &quot;DesignPresets&quot;:
-        &quot;&quot;&quot;
-        Specify the interval that designed primers must flank.
-        If one or more targets is specified then a legal primer pair must
-        flank at least one of them. A target might be a simple sequence repeat
-        site (for example a CA repeat) or a single-base-pair polymorphism, or
-        an exon for resequencing. The value should be a space-separated list
-        of &lt;start&gt;,&lt;length&gt; pairs where &lt;start&gt; is the index of the first base of a
-        target,and &lt;length&gt; is its length.  See also PRIMER_INSIDE_PENALTY,
-        PRIMER_OUTSIDE_PENALTY.
-        PRIMER_TASK=pick_sequencing_primers. See PRIMER_TASK for more information.
+        &quot;&quot;&quot;Specify the interval that designed primers must flank. If one or
+        more targets is specified then a legal primer pair must flank at least
+        one of them. A target might be a simple sequence repeat site (for
+        example a CA repeat) or a single-base-pair polymorphism, or an exon for
+        resequencing. The value should be a space-separated list of.
+
+        &lt;start&gt;,&lt;length&gt; pairs where &lt;start&gt; is the index of the first base of
+        a target,and &lt;length&gt; is its length.  See also PRIMER_INSIDE_PENALTY,
+        PRIMER_OUTSIDE_PENALTY. PRIMER_TASK=pick_sequencing_primers. See
+        PRIMER_TASK for more information.
 
         http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_TEMPLATE
         http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_TARGET
@@ -738,13 +736,12 @@ from primer3plus.utils import depreciated_warning
 <div class="viewcode-block" id="DesignPresets.excluded"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.excluded">[docs]</a>    def excluded(
         self, interval: Union[str, Tuple[int, int], List[Tuple[int, int]]]
     ) -&gt; &quot;DesignPresets&quot;:
-        &quot;&quot;&quot;
-        Primers and oligos may not overlap any region specified in this tag.
-        The associated value must be a space-separated list of &lt;start&gt;,&lt;length&gt; pairs
-        where &lt;start&gt; is the index of the first base of the
-        excluded region, and &lt;length&gt; is its length. This tag is useful for tasks such
-        as excluding regions of low sequence quality or for excluding regions containing
-        repetitive elements such as ALUs or LINEs.
+        &quot;&quot;&quot;Primers and oligos may not overlap any region specified in this tag.
+        The associated value must be a space-separated list of &lt;start&gt;,&lt;length&gt;
+        pairs where &lt;start&gt; is the index of the first base of the excluded
+        region, and &lt;length&gt; is its length. This tag is useful for tasks such
+        as excluding regions of low sequence quality or for excluding regions
+        containing repetitive elements such as ALUs or LINEs.
 
         http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_TEMPLATE
         http://primer3.ut.ee/primer3web_help.htm#SEQUENCE_EXCLUDED_REGION
@@ -757,8 +754,7 @@ from primer3plus.utils import depreciated_warning
         return self.update({&quot;SEQUENCE_EXCLUDED_REGION&quot;: self._parse_interval(interval)})</div>
 
 <div class="viewcode-block" id="DesignPresets.pick_anyway"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.pick_anyway">[docs]</a>    def pick_anyway(self, b=1) -&gt; &quot;DesignPresets&quot;:
-        &quot;&quot;&quot;
-        If true use primer provided in SEQUENCE_PRIMER,
+        &quot;&quot;&quot;If true use primer provided in SEQUENCE_PRIMER,
         SEQUENCE_PRIMER_REVCOMP, or SEQUENCE_INTERNAL_OLIGO even if it violates
         specific constraints.
 
@@ -775,7 +771,7 @@ def clip(x, mn, mx):
 
 
 <div class="viewcode-block" id="DesignBase"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignBase">[docs]</a>class DesignBase:
-    &quot;&quot;&quot;Base design&quot;&quot;&quot;
+    &quot;&quot;&quot;Base design.&quot;&quot;&quot;
 
     DEFAULT_PARAMS = default_boulderio  #: default parameters
     DEFAULT_GRADIENT = dict(
@@ -800,8 +796,7 @@ def clip(x, mn, mx):
         params: BoulderIO = None,
         quiet_runtime: bool = False,
     ):
-        &quot;&quot;&quot;
-        Initializes a new design.
+        &quot;&quot;&quot;Initializes a new design.
 
         :param gradient: the design gradient.
         :param quiet_runtime: if True will siliently ignore any runtime errors.
@@ -814,9 +809,8 @@ def clip(x, mn, mx):
         self.quiet_runtime = quiet_runtime
 
 <div class="viewcode-block" id="DesignBase._raise_run_time_error"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignBase._raise_run_time_error">[docs]</a>    def _raise_run_time_error(self, msg: str) -&gt; Primer3PlusRunTimeError:
-        &quot;&quot;&quot;
-        Raise a Primer3PlusRunTime exception. If parameters are named in
-        the msg, print off some debugging information at the end of the message.
+        &quot;&quot;&quot;Raise a Primer3PlusRunTime exception. If parameters are named in the
+        msg, print off some debugging information at the end of the message.
 
         :param msg: the error msg
         :return: the run time exception
@@ -872,9 +866,10 @@ def clip(x, mn, mx):
         ] = None,
         run_kwargs: dict = None,
     ) -&gt; Tuple[List[dict], List[dict]]:
-        &quot;&quot;&quot;Design primers and relax constraints. If primer design is unsuccessful, relax parameters
-        as defined in primer3plust.Design.DEFAULT_GRADIENT. Repeat for the specified
-        number of max_iterations.
+        &quot;&quot;&quot;Design primers and relax constraints. If primer design is
+        unsuccessful, relax parameters as defined in
+        primer3plust.Design.DEFAULT_GRADIENT. Repeat for the specified number
+        of max_iterations.
 
         :param max_iterations: the max number of iterations to perform relaxation
         :param params: optional parameters to provide
@@ -930,7 +925,7 @@ def clip(x, mn, mx):
 
 
 <div class="viewcode-block" id="RestoreAfterRun"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.RestoreAfterRun">[docs]</a>class RestoreAfterRun:
-    &quot;&quot;&quot;Class to restore boulderio to its original parameters after a run&quot;&quot;&quot;
+    &quot;&quot;&quot;Class to restore boulderio to its original parameters after a run.&quot;&quot;&quot;
 
     def __init__(self, boulderio):
         self.params = boulderio
@@ -946,7 +941,8 @@ def clip(x, mn, mx):
 
 <div class="viewcode-block" id="Design"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.Design">[docs]</a>class Design(DesignBase, AllParameters):
     def __init__(self):
-        &quot;&quot;&quot;Initialize a new design. Set parameters using
+        &quot;&quot;&quot;Initialize a new design. Set parameters using.
+
         :attr:`Design.settings`, which
         returns an instance of
         :class:`DesignPresets &lt;primer3plus.design.DesignPresets&gt;`.
@@ -984,7 +980,7 @@ def clip(x, mn, mx):
         return self.settings
 
 <div class="viewcode-block" id="Design.update"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.Design.update">[docs]</a>    def update(self, data: Dict[str, Any]):
-        &quot;&quot;&quot;Update an arbitrary parameter&quot;&quot;&quot;
+        &quot;&quot;&quot;Update an arbitrary parameter.&quot;&quot;&quot;
         return self.params.update(data)</div>
 
 <div class="viewcode-block" id="Design.run"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.Design.run">[docs]</a>    def run(self) -&gt; Tuple[List[Dict], List[Dict]]:
@@ -1006,8 +1002,8 @@ def clip(x, mn, mx):
         ] = None,
     ) -&gt; Tuple[List[dict], List[dict]]:
         &quot;&quot;&quot;Design primers. If primer design is unsuccessful, relax parameters
-        as defined in primer3plust.Design.DEFAULT_GRADIENT. Repeat for the specified
-        number of max_iterations.
+        as defined in primer3plust.Design.DEFAULT_GRADIENT. Repeat for the
+        specified number of max_iterations.
 
         :param max_iterations: the max number of iterations to perform relaxation
         :param params: optional parameters to provide
@@ -1022,7 +1018,7 @@ def clip(x, mn, mx):
 
 
 <div class="viewcode-block" id="new"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.new">[docs]</a>def new(params=None):
-    &quot;&quot;&quot;Start a new design&quot;&quot;&quot;
+    &quot;&quot;&quot;Start a new design.&quot;&quot;&quot;
     design = Design()
     if params:
         design.params.update(params)</div>
