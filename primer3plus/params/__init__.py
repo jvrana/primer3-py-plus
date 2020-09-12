@@ -50,9 +50,9 @@ class ParameterType:
         self.description = description  #: parameter description as a str
         self.type = type  #: expected python type of the parameter value
         self.default = default  #: default value
-        self.category = (
-            category
-        )  #: category. See :class:`ParamTypes <primer3plus.params.ParamTypes>`
+
+        #: category. See :class:`ParamTypes <primer3plus.params.ParamTypes>`
+        self.category = category
 
     def __repr__(self):
         return str(self)
@@ -83,8 +83,8 @@ class Parameter:
         :param restore: optional restoration value
         """
         self.ptype = (
-            ptype
-        )  #: the :class:`ParameterType <primer3plus.params.ParameterType>`
+            ptype  #: the :class:`ParameterType <primer3plus.params.ParameterType>`
+        )
         self._value = None  #: the parameter value
         if value is None:
             self.value = self.ptype.default
@@ -541,7 +541,7 @@ class ParamParser:
     def _open_primer3_params(cls, filepath=None) -> BoulderIO:
         if filepath is None:
             filepath = _default_param_path
-        with open(filepath, "r") as f:
+        with open(filepath) as f:
             params_txt = f.read()
             params = cls._parse_primer3_docs(params_txt)
 

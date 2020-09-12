@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,28 +11,30 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
 </head>
@@ -49,7 +50,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> primer3plus
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> primer3plus
           
 
           
@@ -76,6 +77,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -92,6 +94,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -130,7 +133,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Module code</a> &raquo;</li>
         
@@ -202,9 +205,9 @@ _default_param_path = os.path.join(
         self.description = description  #: parameter description as a str
         self.type = type  #: expected python type of the parameter value
         self.default = default  #: default value
-        self.category = (
-            category
-        )  #: category. See :class:`ParamTypes &lt;primer3plus.params.ParamTypes&gt;`
+
+        #: category. See :class:`ParamTypes &lt;primer3plus.params.ParamTypes&gt;`
+        self.category = category
 
     def __repr__(self):
         return str(self)
@@ -235,8 +238,8 @@ _default_param_path = os.path.join(
         :param restore: optional restoration value
         &quot;&quot;&quot;
         self.ptype = (
-            ptype
-        )  #: the :class:`ParameterType &lt;primer3plus.params.ParameterType&gt;`
+            ptype  #: the :class:`ParameterType &lt;primer3plus.params.ParameterType&gt;`
+        )
         self._value = None  #: the parameter value
         if value is None:
             self.value = self.ptype.default
@@ -474,7 +477,7 @@ _default_param_path = os.path.join(
             k: v.value for k, v in self._params.items() if v.ptype.category == category
         }
 
-<div class="viewcode-block" id="BoulderIO._globals"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.BoulderIO._globals">[docs]</a>    def _globals(self, clean=True) -&gt; Dict[str, Any]:
+    def _globals(self, clean=True) -&gt; Dict[str, Any]:
         &quot;&quot;&quot;Return global parameters.
 
         :param clean: if True, will remove empty lists and empty strings from params.
@@ -483,9 +486,9 @@ _default_param_path = os.path.join(
         data = self._by_category(ParamTypes.GLOBAL)
         if clean:
             data = self._clean_dictionary(data)
-        return data</div>
+        return data
 
-<div class="viewcode-block" id="BoulderIO._program"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.BoulderIO._program">[docs]</a>    def _program(self, clean=True):
+    def _program(self, clean=True):
         &quot;&quot;&quot;Return program parameters.
 
         :param clean: if True, will remove empty lists and empty strings from params.
@@ -494,9 +497,9 @@ _default_param_path = os.path.join(
         data = self._by_category(ParamTypes.PROGRAM)
         if clean:
             data = self._clean_dictionary(data)
-        return data</div>
+        return data
 
-<div class="viewcode-block" id="BoulderIO._sequence"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.BoulderIO._sequence">[docs]</a>    def _sequence(self, clean=True):
+    def _sequence(self, clean=True):
         &quot;&quot;&quot;Return sequence parameters.
 
         :param clean: if True, will remove empty lists and empty strings from params.
@@ -505,9 +508,9 @@ _default_param_path = os.path.join(
         data = self._by_category(ParamTypes.SEQUENCE)
         if clean:
             data = self._clean_dictionary(data)
-        return data</div>
+        return data
 
-<div class="viewcode-block" id="BoulderIO._other"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.BoulderIO._other">[docs]</a>    def _other(self, clean=True):
+    def _other(self, clean=True):
         &quot;&quot;&quot;Return other parameters.
 
         :param clean: if True, will remove empty lists and empty strings from params.
@@ -516,7 +519,7 @@ _default_param_path = os.path.join(
         data = self._by_category(ParamTypes.OTHER)
         if clean:
             data = self._clean_dictionary(data)
-        return data</div>
+        return data
 
     def _extra(self, clean=True):
         data = self._by_category(ParamTypes.EXTRA)
@@ -553,7 +556,7 @@ _default_param_path = os.path.join(
             copied._params[k] = v.copy()
         return copied
 
-<div class="viewcode-block" id="BoulderIO._clean_dictionary"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.BoulderIO._clean_dictionary">[docs]</a>    @staticmethod
+    @staticmethod
     def _clean_dictionary(params: dict) -&gt; dict:
         &quot;&quot;&quot;Removes empty lists and empty strings from params.
 
@@ -566,7 +569,7 @@ _default_param_path = os.path.join(
                 v = params[k]
                 if hasattr(v, &quot;__len__&quot;) and len(v) == 0:
                     cleaned.pop(k)
-        return cleaned</div>
+        return cleaned
 
     @property
     def defs(self):
@@ -608,7 +611,7 @@ _default_param_path = os.path.join(
     &quot;&quot;&quot;Reads the Primer3 documentation and creates the appropriate
     parameters.&quot;&quot;&quot;
 
-<div class="viewcode-block" id="ParamParser._parse_primer3_docs"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.ParamParser._parse_primer3_docs">[docs]</a>    @staticmethod
+    @staticmethod
     def _parse_primer3_docs(docstr):
         &quot;&quot;&quot;Parse the docs of the primer3 website
         (https://htmlpreview.github.io.
@@ -687,13 +690,13 @@ _default_param_path = os.path.join(
             }
         if not params:
             raise Primer3PlusParserError(&quot;Could not load parameters&quot;)
-        return params</div>
+        return params
 
     @classmethod
     def _open_primer3_params(cls, filepath=None) -&gt; BoulderIO:
         if filepath is None:
             filepath = _default_param_path
-        with open(filepath, &quot;r&quot;) as f:
+        with open(filepath) as f:
             params_txt = f.read()
             params = cls._parse_primer3_docs(params_txt)
 
@@ -720,7 +723,7 @@ _default_param_path = os.path.join(
         return cls._open_primer3_params(filepath)</div></div>
 
 
-<div class="viewcode-block" id="_load_default_boulderio"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design._load_default_boulderio">[docs]</a>def _load_default_boulderio() -&gt; BoulderIO:
+def _load_default_boulderio() -&gt; BoulderIO:
     &quot;&quot;&quot;Open the default parameters as a :class:`BoulderIO.
 
     &lt;primer3plus.params.params&gt;`
@@ -730,7 +733,7 @@ _default_param_path = os.path.join(
     param_dict = ParamParser.open()
     boulderio = BoulderIO()
     boulderio.load(param_dict)
-    return boulderio</div>
+    return boulderio
 
 
 default_boulderio = _load_default_boulderio()  #: default boulder IO parameters
@@ -746,11 +749,19 @@ default_boulderio = _load_default_boulderio()  #: default boulder IO parameters
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2017-2019, University of Washington
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -761,7 +772,6 @@ default_boulderio = _load_default_boulderio()  #: default boulder IO parameters
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

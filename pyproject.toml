@@ -14,24 +14,26 @@ classifiers = [
 readme = "README.md"
     
 [tool.poetry.dependencies]
-python = "^3.5"
+python = "^3.5.2"
 primer3-py = "^0.6.0"
 loggable-jdv = "^0.1.2"
+sphinx = {version = "^3.2.1", optional = true}
+sphinx_autodoc_typehints = {version = "^1.11.0", optional = true}
+sphinx_rtd_theme = {version = "^0.5.0", optional = true}
+recommonmark = {version = "^0.6.0", optional = true}
+tox = {version = "^3.20.0", optional = true}
+tox-conda = {version = "^0.2.1", optional = true}
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.0"
-black = {version = "*", allows-prereleases = true, python ='>=3.6'}
 pre-commit = "^1.18"
-flake8 = "^3.7"
-docformatter = "^1.3"
-sphinx = "^2.2"
-recommonmark = "^0.6.0"
-tox = "^3.14"
-tox-conda = "^0.2.1"
-sphinx_autodoc_typehints = {version = "^1.8", python = ">=3.6"}
-autodocsumm = "^0.1.11"
 pandas = {version = "^0.25.1", python = ">=3.6"}
-sphinx_rtd_theme = "^0.4.3"
+pytest-cov = "^2.10.1"
+
+[tool.poetry.extras]
+docs = ['sphinx', 'sphinx_autodoc_typehints', 'sphinx_rtd_theme', 'recommonmark', 'docformatter']
+xtests = ['tox', 'tox-conda']
+
 [tool.black]
 line-length = 88
 target-version = ['py36', 'py37', 'py38']

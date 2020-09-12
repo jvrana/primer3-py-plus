@@ -1,13 +1,5 @@
-Results of doctest builder run on 2020-02-06 22:47:57
+Results of doctest builder run on 2020-09-11 19:04:14
 =====================================================
-
-Document: index
----------------
-1 items passed all tests:
-   1 tests in intro
-1 tests in 1 items.
-1 passed and 0 failed.
-Test passed.
 
 Document: usage
 ---------------
@@ -15,6 +7,14 @@ Document: usage
    6 tests in default
 6 tests in 1 items.
 6 passed and 0 failed.
+Test passed.
+
+Document: index
+---------------
+1 items passed all tests:
+   1 tests in intro
+1 tests in 1 items.
+1 passed and 0 failed.
 Test passed.
 
 Doctest summary

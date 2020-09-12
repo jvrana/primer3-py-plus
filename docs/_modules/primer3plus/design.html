@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,28 +11,30 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
 </head>
@@ -49,7 +50,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> primer3plus
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> primer3plus
           
 
           
@@ -76,6 +77,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -92,6 +94,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -130,7 +133,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Module code</a> &raquo;</li>
         
@@ -220,7 +223,7 @@ from primer3plus.utils import depreciated_warning
         &quot;&quot;&quot;
         self._design = design
 
-<div class="viewcode-block" id="DesignPresets._resolve"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets._resolve">[docs]</a>    def _resolve(self):
+    def _resolve(self):
         &quot;&quot;&quot;Process any extra parameters and process BoulderIO so that it is
         digestable by primer3.&quot;&quot;&quot;
         if self._design.PRIMER_USE_OVERHANGS.value:
@@ -251,9 +254,9 @@ from primer3plus.utils import depreciated_warning
                         )
                     )
                 )
-        return self</div>
+        return self
 
-<div class="viewcode-block" id="DesignPresets._post_parse"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets._post_parse">[docs]</a>    def _post_parse(self, pairs, explain) -&gt; None:
+    def _post_parse(self, pairs, explain) -&gt; None:
         &quot;&quot;&quot;Modify results from design parameters (e.g. overhangs)&quot;&quot;&quot;
         left_long_overhang = self._design._SEQUENCE_LONG_OVERHANG.value
         right_long_overhang = self._design._SEQUENCE_REVCOMP_LONG_OVERHANG.value
@@ -292,7 +295,7 @@ from primer3plus.utils import depreciated_warning
                     pair[&quot;RIGHT&quot;][&quot;location&quot;] = [
                         loc[0] + len(right_long_overhang),
                         len(pair[&quot;RIGHT&quot;][&quot;SEQUENCE&quot;]),
-                    ]</div>
+                    ]
 
     def _interval_from_sequences(
         self, template: str, target: str
@@ -432,11 +435,11 @@ from primer3plus.utils import depreciated_warning
             {&quot;SEQUENCE_PRIMER_REVCOMP&quot;: primer, &quot;PRIMER_PICK_LEFT_PRIMER&quot;: 1}
         )</div>
 
-<div class="viewcode-block" id="DesignPresets._trim_long"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets._trim_long">[docs]</a>    @staticmethod
+    @staticmethod
     def _trim_long(overhang: str, anneal: str, lim: int) -&gt; Tuple[str, str, str]:
         &quot;&quot;&quot;Fix the overhang and anneal from the hardcoded BoulderIO primer
         lim.&quot;&quot;&quot;
-        return overhang, anneal[:-lim], anneal[-lim:]</div>
+        return overhang, anneal[:-lim], anneal[-lim:]
 
     def _get_left_overhang(self, min_primer_anneal: int):
         left = self._design.SEQUENCE_PRIMER.value
@@ -517,7 +520,7 @@ from primer3plus.utils import depreciated_warning
         &quot;&quot;&quot;
         return self.update({&quot;PRIMER_LONG_OK&quot;: b})</div>
 
-<div class="viewcode-block" id="DesignPresets._resolve_product_sizes"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets._resolve_product_sizes">[docs]</a>    def _resolve_product_sizes(self):
+    def _resolve_product_sizes(self):
         &quot;&quot;&quot;If there are long primers being used, the product_size is no longer
         valid as the trimmed sequence is no longer represented in the
         originally provided product size.
@@ -539,9 +542,9 @@ from primer3plus.utils import depreciated_warning
             self._design.PRIMER_PRODUCT_SIZE_RANGE.value = new_product_sizes
         else:
             size = self._design.PRIMER_PRODUCT_SIZE_RANGE.value
-            self._design.PRIMER_PRODUCT_SIZE_RANGE.value = [size[0] - x, size[1] - x]</div>
+            self._design.PRIMER_PRODUCT_SIZE_RANGE.value = [size[0] - x, size[1] - x]
 
-<div class="viewcode-block" id="DesignPresets._resolve_max_lengths"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets._resolve_max_lengths">[docs]</a>    def _resolve_max_lengths(self, lim: int):
+    def _resolve_max_lengths(self, lim: int):
         &quot;&quot;&quot;Fixes the annealing and overhang sequences for annealing sequences
         for primers over the :attr:`BoulderIO.
 
@@ -574,7 +577,7 @@ from primer3plus.utils import depreciated_warning
         self._right_long_overhang(right_long_overhang)
 
         self.left_sequence(left_anneal)
-        self.right_sequence(right_anneal)</div>
+        self.right_sequence(right_anneal)
 
     def _left_long_overhang(self, x):
         self.update({&quot;_SEQUENCE_LONG_OVERHANG&quot;: x})
@@ -582,7 +585,7 @@ from primer3plus.utils import depreciated_warning
     def _right_long_overhang(self, x):
         self.update({&quot;_SEQUENCE_REVCOMP_LONG_OVERHANG&quot;: x})
 
-<div class="viewcode-block" id="DesignPresets._resolve_overhangs"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets._resolve_overhangs">[docs]</a>    def _resolve_overhangs(self, min_primer_anneal: int):
+    def _resolve_overhangs(self, min_primer_anneal: int):
         &quot;&quot;&quot;Sets the annealing and overhang sequences.&quot;&quot;&quot;
         left_over, left_anneal = self._get_left_overhang(min_primer_anneal)
         _loverhang = self._design.SEQUENCE_PRIMER_OVERHANG.value
@@ -603,7 +606,7 @@ from primer3plus.utils import depreciated_warning
         self.left_overhang(left_over)
         self.right_overhang(right_over)
         self.left_sequence(left_anneal)
-        self.right_sequence(right_anneal)</div>
+        self.right_sequence(right_anneal)
 
 <div class="viewcode-block" id="DesignPresets.pick_left_only"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignPresets.pick_left_only">[docs]</a>    def pick_left_only(self) -&gt; &quot;DesignPresets&quot;:
         &quot;&quot;&quot;Design only the left primer.
@@ -808,7 +811,7 @@ def clip(x, mn, mx):
         self.gradient = gradient
         self.quiet_runtime = quiet_runtime
 
-<div class="viewcode-block" id="DesignBase._raise_run_time_error"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignBase._raise_run_time_error">[docs]</a>    def _raise_run_time_error(self, msg: str) -&gt; Primer3PlusRunTimeError:
+    def _raise_run_time_error(self, msg: str) -&gt; Primer3PlusRunTimeError:
         &quot;&quot;&quot;Raise a Primer3PlusRunTime exception. If parameters are named in the
         msg, print off some debugging information at the end of the message.
 
@@ -820,9 +823,9 @@ def clip(x, mn, mx):
             if name in msg:
                 parameter_explain.add(&quot;\t&quot; + str(value))
         parameter_explain = sorted(parameter_explain)
-        return Primer3PlusRunTimeError(msg + &quot;\n&quot; + &quot;\n&quot;.join(parameter_explain))</div>
+        return Primer3PlusRunTimeError(msg + &quot;\n&quot; + &quot;\n&quot;.join(parameter_explain))
 
-<div class="viewcode-block" id="DesignBase._run"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignBase._run">[docs]</a>    def _run(self, params: BoulderIO = None) -&gt; Tuple[List[Dict], List[Dict]]:
+    def _run(self, params: BoulderIO = None) -&gt; Tuple[List[Dict], List[Dict]]:
         &quot;&quot;&quot;Design primers. Optionally provide additional parameters.
 
         :param params:
@@ -847,7 +850,7 @@ def clip(x, mn, mx):
 
         pairs, explain = parse_primer3_results(res)
         self.settings._post_parse(pairs, explain)
-        return pairs, explain</div>
+        return pairs, explain
 
 <div class="viewcode-block" id="DesignBase.run"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.DesignBase.run">[docs]</a>    def run(self) -&gt; Tuple[List[Dict], List[Dict]]:
         &quot;&quot;&quot;Design primers. Optionally provide additional parameters.
@@ -1041,11 +1044,19 @@ def clip(x, mn, mx):
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2017-2019, University of Washington
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -1056,7 +1067,6 @@ def clip(x, mn, mx):
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 #
 # Trident documentation build configuration file, created by
 # sphinx-quickstart on Sun Nov 19 22:18:51 2017.
@@ -69,7 +68,6 @@ napoleon_use_rtype = False  # More legible
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.intersphinx",
-    "autodocsumm",
     "sphinx_autodoc_typehints",
     "sphinx.ext.mathjax",
     "sphinx.ext.doctest",
