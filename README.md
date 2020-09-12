@@ -2,6 +2,10 @@
 
 ![](https://github.com/jvrana/primer3-py-plus/workflows/Build%package/badge.svg)
 [![PyPI version](https://badge.fury.io/py/primer3plus.svg)](https://badge.fury.io/py/primer3plus)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
+[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/jvrana/primer3-py-plus.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/jvrana/primer3-py-plus/context:python)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/jvrana/primer3-py-plus.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/jvrana/primer3-py-plus/alerts/)
 
 Primer3Plus is a Python DNA primer design tool based off of Primer3 and the
 Python primer3 wrapper (https://pypi.org/project/primer3-py/).
