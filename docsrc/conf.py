@@ -134,7 +134,10 @@ html_context = {
 }
 
 # substitutations for the docsrc
-substitutions = {"homepage": primer3plus.__homepage__, "repo": primer3plus.__repo__}
+substitutions = {
+    "homepage": primer3plus.__homepage__,
+    "repo": primer3plus.__repository__,
+}
 
 rst_epilog = "\n".join(
     ".. |{k}| replace:: {v}".format(k=k, v=v) for k, v in substitutions.items()

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>primer3plus.params &mdash; primer3plus 1.0.8 documentation</title>
+  <title>primer3plus.params &mdash; primer3plus 1.0.9 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                1.0.8
+                1.0.9
               </div>
             
           
@@ -156,11 +156,12 @@
 <span></span>import os
 import re
 import webbrowser
-from collections import Mapping
 from copy import deepcopy
+from pprint import pprint
 from typing import Any
 from typing import Dict
 from typing import Iterator
+from typing import MutableMapping
 
 from .expected_opts import _expected_opts
 from primer3plus.constants import DOCURL
@@ -384,7 +385,7 @@ _default_param_path = os.path.join(
     )  #: specifies min bases to check for mispriming during primer designs</div>
 
 
-<div class="viewcode-block" id="BoulderIO"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.BoulderIO">[docs]</a>class BoulderIO(Mapping):
+<div class="viewcode-block" id="BoulderIO"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.BoulderIO">[docs]</a>class BoulderIO(MutableMapping):
     &quot;&quot;&quot;Class that maintains and validates a list of Primer3 parameters.&quot;&quot;&quot;
 
     POST_LOAD_DEFAULTS = {&quot;PRIMER_EXPLAIN_FLAG&quot;: 1}
@@ -590,11 +591,11 @@ _default_param_path = os.path.join(
         except KeyError:
             raise self._raise_no_key(key)
 
-    # def __delitem__(self, key: str):
-    #     try:
-    #         self._params[key].set_default()
-    #     except KeyError:
-    #         raise self._raise_no_key(key)
+    def __delitem__(self, key: str):
+        try:
+            self._params[key].set_default()
+        except KeyError:
+            raise self._raise_no_key(key)
 
     def __len__(self) -&gt; int:
         return len(self._params)
@@ -604,7 +605,17 @@ _default_param_path = os.path.join(
             yield k
 
     def __str__(self):
-        return str(self._params)</div>
+        return str(self._params)
+
+    def as_dict(self):
+        return dict(self.items())
+
+    def print(self, **kwargs):
+        pprint(self.as_dict(), **kwargs)
+
+    def __repr__(self):
+        s = &quot;{}({})&quot;.format(self.__class__.__name__, self.as_dict())
+        return s</div>
 
 
 <div class="viewcode-block" id="ParamParser"><a class="viewcode-back" href="../../developer/api_reference.html#primer3plus.design.ParamParser">[docs]</a>class ParamParser:
