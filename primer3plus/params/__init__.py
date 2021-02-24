@@ -1,11 +1,11 @@
 import os
 import re
 import webbrowser
-from collections import Mapping
 from copy import deepcopy
 from typing import Any
 from typing import Dict
 from typing import Iterator
+from typing import MutableMapping
 
 from .expected_opts import _expected_opts
 from primer3plus.constants import DOCURL
@@ -229,7 +229,7 @@ class ExtraTypes:
     )  #: specifies min bases to check for mispriming during primer designs
 
 
-class BoulderIO(Mapping):
+class BoulderIO(MutableMapping):
     """Class that maintains and validates a list of Primer3 parameters."""
 
     POST_LOAD_DEFAULTS = {"PRIMER_EXPLAIN_FLAG": 1}
@@ -435,11 +435,11 @@ class BoulderIO(Mapping):
         except KeyError:
             raise self._raise_no_key(key)
 
-    # def __delitem__(self, key: str):
-    #     try:
-    #         self._params[key].set_default()
-    #     except KeyError:
-    #         raise self._raise_no_key(key)
+    def __delitem__(self, key: str):
+        try:
+            self._params[key].set_default()
+        except KeyError:
+            raise self._raise_no_key(key)
 
     def __len__(self) -> int:
         return len(self._params)
@@ -450,6 +450,9 @@ class BoulderIO(Mapping):
 
     def __str__(self):
         return str(self._params)
+
+    def as_dict(self):
+        return dict(self.items())
 
 
 class ParamParser:

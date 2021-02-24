@@ -45,6 +45,7 @@ def _extend_match(
     return anneal
 
 
+# TODO: flip name and seq
 def _iter_anneal(
     seq: str,
     primer_list: List[Union[str, Tuple[str, str]]],
@@ -84,6 +85,7 @@ def _iter_anneal(
             }
 
 
+# TODO: return a generator
 def anneal_iter(
     seq: str,
     primer_list: List[Union[str, Tuple[str, str]]],
