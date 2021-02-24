@@ -17,6 +17,24 @@ def test_open(params):
     assert params
 
 
+def test_as_dict(params):
+    d = params.as_dict()
+    print(d)
+
+
+def test_print(params):
+    params.print()
+
+
+def test_str(params):
+    print(params)
+
+
+def test_dict(params):
+    d = dict(params)
+    print(d)
+
+
 def test_open_and_load():
     param_data = ParamParser.open()
 

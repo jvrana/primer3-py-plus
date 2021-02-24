@@ -2,6 +2,7 @@ import os
 import re
 import webbrowser
 from copy import deepcopy
+from pprint import pprint
 from typing import Any
 from typing import Dict
 from typing import Iterator
@@ -453,6 +454,13 @@ class BoulderIO(MutableMapping):
 
     def as_dict(self):
         return dict(self.items())
+
+    def print(self, **kwargs):
+        pprint(self.as_dict(), **kwargs)
+
+    def __repr__(self):
+        s = "{}({})".format(self.__class__.__name__, self.as_dict())
+        return s
 
 
 class ParamParser:
